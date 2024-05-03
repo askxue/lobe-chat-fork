@@ -1,7 +1,5 @@
 import { redirect } from 'next/navigation';
 
-const Page = () => {
-  return redirect('/settings/common');
-};
+const Page = () => redirect('/settings/common');
 
 export default Page;

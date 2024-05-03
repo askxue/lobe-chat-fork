@@ -27,13 +27,14 @@ enum HarmBlockThreshold {
 
 export class LobeGoogleAI implements LobeRuntimeAI {
   private client: GoogleGenerativeAI;
+
   baseURL?: string;
 
   constructor({ apiKey, baseURL }: { apiKey?: string; baseURL?: string }) {
     if (!apiKey)
-      throw AgentRuntimeError.createError(
+      {throw AgentRuntimeError.createError(
         AgentRuntimeErrorType.InvalidGoogleAPIKey
-      );
+      );}
 
     this.client = new GoogleGenerativeAI(apiKey);
     this.baseURL = baseURL;
@@ -197,7 +198,7 @@ export class LobeGoogleAI implements LobeRuntimeAI {
       const noNeedVision = messages.every((m) => typeof m.content === 'string');
 
       // so we need to downgrade to gemini-pro
-      if (noNeedVision) finalModel = 'gemini-pro';
+      if (noNeedVision) {finalModel = 'gemini-pro';}
     }
 
     return finalModel;
@@ -213,10 +214,10 @@ export class LobeGoogleAI implements LobeRuntimeAI {
     };
 
     if (message.includes('location is not supported'))
-      return {
+      {return {
         error: { message },
         errorType: AgentRuntimeErrorType.LocationNotSupportError
-      };
+      };}
 
     try {
       const startIndex = message.lastIndexOf('[');

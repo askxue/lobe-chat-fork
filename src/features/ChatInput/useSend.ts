@@ -17,8 +17,8 @@ export const useSendMessage = () => {
 
   return useCallback((params: UseSendMessageParams = {}) => {
     const store = useChatStore.getState();
-    if (!!store.chatLoadingId) return;
-    if (!store.inputMessage) return;
+    if (store.chatLoadingId) {return;}
+    if (!store.inputMessage) {return;}
 
     const imageList = filesSelectors.imageUrlOrBase64List(
       useFileStore.getState()

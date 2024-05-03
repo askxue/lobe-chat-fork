@@ -9,8 +9,7 @@ import { Provider, createStore } from './store';
 
 type AgentSettingsProps = StoreUpdaterProps;
 
-const AgentSettings = (props: AgentSettingsProps) => {
-  return (
+const AgentSettings = (props: AgentSettingsProps) => (
     <Provider createStore={createStore}>
       <StoreUpdater {...props} />
       <AgentPrompt />
@@ -21,6 +20,5 @@ const AgentSettings = (props: AgentSettingsProps) => {
       <AgentPlugin />
     </Provider>
   );
-};
 
 export default AgentSettings;

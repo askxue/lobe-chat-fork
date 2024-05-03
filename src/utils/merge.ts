@@ -7,5 +7,5 @@ import { merge as _merge, mergeWith } from 'lodash-es';
  */
 export const merge: typeof _merge = <T = object>(target: T, source: T) =>
   mergeWith({}, target, source, (obj, src) => {
-    if (Array.isArray(obj)) return src;
+    if (Array.isArray(obj)) {return src;}
   });

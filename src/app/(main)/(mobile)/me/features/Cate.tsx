@@ -16,7 +16,7 @@ const SettingCate = memo(() => {
   return (
     <Flexbox width={'100%'}>
       {settingItems?.map(({ key, icon, label, type }: any, index) => {
-        if (type === 'divider') return <Divider key={index} />;
+        if (type === 'divider') {return <Divider key={index} />;}
         return (
           <Cell
             icon={icon}

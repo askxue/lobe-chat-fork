@@ -17,9 +17,11 @@ const LOG_NAME_SPACE = 'DataSync';
 
 class DataSync {
   private _ydoc: Doc | null = null;
+
   private provider: WebrtcProvider | null = null;
 
   private syncParams!: StartDataSyncParams;
+
   private onAwarenessChange!: OnAwarenessChange;
 
   private waitForConnecting: any;
@@ -30,9 +32,7 @@ class DataSync {
     this._ydoc?.transact(fn);
   }
 
-  getYMap = (tableKey: keyof LobeDBSchemaMap) => {
-    return this._ydoc?.getMap(tableKey);
-  };
+  getYMap = (tableKey: keyof LobeDBSchemaMap) => this._ydoc?.getMap(tableKey);
 
   startDataSync = async (params: StartDataSyncParams) => {
     this.syncParams = params;
@@ -154,7 +154,7 @@ class DataSync {
   }
 
   private initYDoc = async () => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') {return;}
 
     this.logger('[YJS] init YDoc...');
     const { Doc } = await import('yjs');
@@ -222,7 +222,7 @@ class DataSync {
 
     yItemMap?.observe(async (event) => {
       // abort local change
-      if (event.transaction.local) return;
+      if (event.transaction.local) {return;}
 
       // 每次有变更时，都先清除之前的定时器（如果有的话），然后设置新的定时器
       clearTimeout(debounceTimer);
@@ -292,7 +292,7 @@ class DataSync {
   private initAwareness = ({
     user
   }: Pick<StartDataSyncParams, 'user' | 'onAwarenessChange'>) => {
-    if (!this.provider) return;
+    if (!this.provider) {return;}
 
     const awareness = this.provider.awareness;
 
@@ -307,7 +307,7 @@ class DataSync {
   private syncAwarenessToUI = async () => {
     const awareness = this.provider?.awareness;
 
-    if (!awareness) return;
+    if (!awareness) {return;}
 
     const state = Array.from(awareness.getStates().values()).map((s) => ({
       ...s.user,

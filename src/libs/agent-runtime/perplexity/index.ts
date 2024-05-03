@@ -22,9 +22,9 @@ export class LobePerplexityAI implements LobeRuntimeAI {
 
   constructor({ apiKey, baseURL = DEFAULT_BASE_URL, ...res }: ClientOptions) {
     if (!apiKey)
-      throw AgentRuntimeError.createError(
+      {throw AgentRuntimeError.createError(
         AgentRuntimeErrorType.InvalidPerplexityAPIKey
-      );
+      );}
 
     this.client = new OpenAI({ apiKey, baseURL, ...res });
     this.baseURL = this.client.baseURL;

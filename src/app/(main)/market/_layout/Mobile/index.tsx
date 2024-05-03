@@ -4,8 +4,7 @@ import { LayoutProps } from '../type';
 import DetailModal from './DetailModal';
 import Header from './Header';
 
-const Layout = ({ children, detail }: LayoutProps) => {
-  return (
+const Layout = ({ children, detail }: LayoutProps) => (
     <>
       <MobileContentLayout
         gap={16}
@@ -18,7 +17,6 @@ const Layout = ({ children, detail }: LayoutProps) => {
       <DetailModal>{detail}</DetailModal>
     </>
   );
-};
 
 Layout.displayName = 'MobileMarketLayout';
 

@@ -62,11 +62,11 @@ export const globalActionSlice: StateCreator<
       preference.expandSessionGroupKeys,
       (draft: string[]) => {
         if (expand) {
-          if (draft.includes(id)) return;
+          if (draft.includes(id)) {return;}
           draft.push(id);
         } else {
           const index = draft.indexOf(id);
-          if (index !== -1) draft.splice(index, 1);
+          if (index !== -1) {draft.splice(index, 1);}
         }
       }
     );
@@ -108,11 +108,11 @@ export const globalActionSlice: StateCreator<
       focusThrottleInterval: 1000 * 60 * 30,
       onSuccess: (data: string) => {
         if (gt(data, CURRENT_VERSION))
-          set(
+          {set(
             { hasNewVersion: true, latestVersion: data },
             false,
             n('checkLatestVersion')
-          );
+          );}
       }
     }),
 
@@ -124,7 +124,7 @@ export const globalActionSlice: StateCreator<
         onSuccess: (preference) => {
           const nextPreference = merge(get().preference, preference);
 
-          if (isEqual(get().preference, nextPreference)) return;
+          if (isEqual(get().preference, nextPreference)) {return;}
 
           set({ preference: nextPreference }, false, n('initPreference'));
         }

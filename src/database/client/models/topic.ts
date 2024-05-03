@@ -40,8 +40,8 @@ class _TopicModel extends BaseModel {
 
     // 将所有主题按星标消息优先，时间倒序进行排序
     const sortedTopics = allTopics.sort((a, b) => {
-      if (a.favorite && !b.favorite) return -1; // a是星标，b不是，a排前面
-      if (!a.favorite && b.favorite) return 1; // b是星标，a不是，b排前面
+      if (a.favorite && !b.favorite) {return -1;} // a是星标，b不是，a排前面
+      if (!a.favorite && b.favorite) {return 1;} // b是星标，a不是，b排前面
 
       // 如果星标状态相同，则按时间倒序排序
       return b.createdAt - a.createdAt;
@@ -66,7 +66,7 @@ class _TopicModel extends BaseModel {
     keyword: string,
     sessionId?: string
   ): Promise<ChatTopic[]> {
-    if (!keyword) return [];
+    if (!keyword) {return [];}
 
     console.time('queryTopicsByKeyword');
     const keywordLowerCase = keyword.toLowerCase();
@@ -87,7 +87,7 @@ class _TopicModel extends BaseModel {
       .filter((message) => {
         // check content
         if (message.content.toLowerCase().includes(keywordLowerCase))
-          return true;
+          {return true;}
 
         // check translate content
         if (message.translate && message.translate.content) {
@@ -224,6 +224,7 @@ class _TopicModel extends BaseModel {
     // Use the bulkDelete method to delete all selected messages in bulk
     return this._bulkDeleteWithSync(topicIds);
   }
+
   /**
    * Deletes multiple topics and all messages associated with them in a transaction.
    */

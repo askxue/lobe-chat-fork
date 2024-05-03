@@ -35,11 +35,17 @@ export interface LobeDBSchemaMap {
 // Define a local DB
 export class BrowserDB extends Dexie {
   public files: BrowserDBTable<'files'>;
+
   public sessions: BrowserDBTable<'sessions'>;
+
   public messages: BrowserDBTable<'messages'>;
+
   public topics: BrowserDBTable<'topics'>;
+
   public plugins: BrowserDBTable<'plugins'>;
+
   public sessionGroups: BrowserDBTable<'sessionGroups'>;
+
   public users: BrowserDBTable<'users'>;
 
   constructor() {
@@ -111,7 +117,7 @@ export class BrowserDB extends Dexie {
           /* empty */
         }
 
-        if (!json?.state?.settings) return;
+        if (!json?.state?.settings) {return;}
 
         const settings = json.state.settings;
 
@@ -129,7 +135,7 @@ export class BrowserDB extends Dexie {
     const users = trans.table('users');
 
     await users.toCollection().modify((user: DB_User) => {
-      if (!user.uuid) user.uuid = uuid();
+      if (!user.uuid) {user.uuid = uuid();}
     });
   };
 

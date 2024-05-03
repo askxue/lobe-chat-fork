@@ -8,8 +8,7 @@ import DetailSidebar from './DetailSidebar';
 import Header from './Header';
 import Hero from './Hero';
 
-const Layout = ({ children, detail }: LayoutProps) => {
-  return (
+const Layout = ({ children, detail }: LayoutProps) => (
     <Flexbox
       height={'100%'}
       id={'lobe-market-container'}
@@ -46,7 +45,6 @@ const Layout = ({ children, detail }: LayoutProps) => {
       </Flexbox>
     </Flexbox>
   );
-};
 
 Layout.displayName = 'DesktopMarketLayout';
 

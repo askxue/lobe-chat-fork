@@ -66,9 +66,9 @@ export class LobeMinimaxAI implements LobeRuntimeAI {
 
   constructor({ apiKey }: { apiKey?: string }) {
     if (!apiKey)
-      throw AgentRuntimeError.createError(
+      {throw AgentRuntimeError.createError(
         AgentRuntimeErrorType.InvalidMinimaxAPIKey
-      );
+      );}
 
     this.apiKey = apiKey;
   }

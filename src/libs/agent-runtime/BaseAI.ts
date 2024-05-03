@@ -17,6 +17,7 @@ export interface LobeRuntimeAI {
 
 export abstract class LobeOpenAICompatibleRuntime {
   abstract baseURL: string;
+
   abstract client: OpenAI;
 
   abstract chat(

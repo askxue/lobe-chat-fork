@@ -32,8 +32,7 @@ export const DEFAULT_FEATURE_FLAGS: IFeatureFlags = {
   dalle: true
 };
 
-export const mapFeatureFlagsEnvToState = (config: IFeatureFlags) => {
-  return {
+export const mapFeatureFlagsEnvToState = (config: IFeatureFlags) => ({
     enableWebrtc: config.webrtc_sync,
     isAgentEditable: config.edit_agent,
 
@@ -44,5 +43,4 @@ export const mapFeatureFlagsEnvToState = (config: IFeatureFlags) => {
     showOpenAIProxyUrl: config.openai_proxy_url,
 
     showDalle: config.dalle
-  };
-};
+  });

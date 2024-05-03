@@ -41,10 +41,10 @@ export const createCommonSlice: StateCreator<
       () => {
         const userAllowTrace = preferenceSelectors.userAllowTrace(get());
         // if not init with server side, return false
-        if (!shouldFetch) return Promise.resolve(false);
+        if (!shouldFetch) {return Promise.resolve(false);}
 
         // if user have set the trace, return false
-        if (typeof userAllowTrace === 'boolean') return Promise.resolve(false);
+        if (typeof userAllowTrace === 'boolean') {return Promise.resolve(false);}
 
         return messageService.messageCountToCheckTrace();
       },

@@ -15,9 +15,7 @@ export const configReducer = (
 ): LobeAgentConfig => {
   switch (payload.type) {
     case 'update': {
-      return produce(state, (draftState) => {
-        return merge(draftState, payload.config);
-      });
+      return produce(state, (draftState) => merge(draftState, payload.config));
     }
 
     case 'togglePlugin': {

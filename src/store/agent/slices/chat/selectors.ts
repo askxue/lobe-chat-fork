@@ -19,9 +19,7 @@ const defaultAgentConfig = (s: AgentStore) =>
 const currentAgentConfig = (s: AgentStore): LobeAgentConfig =>
   merge(s.defaultAgentConfig, s.agentConfig);
 
-const currentAgentSystemRole = (s: AgentStore) => {
-  return currentAgentConfig(s).systemRole;
-};
+const currentAgentSystemRole = (s: AgentStore) => currentAgentConfig(s).systemRole;
 
 const currentAgentModel = (s: AgentStore): string => {
   const config = currentAgentConfig(s);

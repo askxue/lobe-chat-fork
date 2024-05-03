@@ -71,7 +71,7 @@ const AvatarWithUpload = memo<AvatarWithUploadProps>(
           <NextImage
             alt={avatar ? 'userAvatar' : 'LobeChat'}
             height={size}
-            src={!!avatar ? avatar : DEFAULT_USER_AVATAR_URL}
+            src={avatar ? avatar : DEFAULT_USER_AVATAR_URL}
             unoptimized
             width={size}
           />

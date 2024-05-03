@@ -5,11 +5,7 @@ import {
 } from '@/server/globalConfig';
 
 export const configRouter = router({
-  getDefaultAgentConfig: publicProcedure.query(async () => {
-    return getServerDefaultAgentConfig();
-  }),
+  getDefaultAgentConfig: publicProcedure.query(async () => getServerDefaultAgentConfig()),
 
-  getGlobalConfig: publicProcedure.query(async () => {
-    return getServerGlobalConfig();
-  })
+  getGlobalConfig: publicProcedure.query(async () => getServerGlobalConfig())
 });

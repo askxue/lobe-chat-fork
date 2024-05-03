@@ -53,7 +53,7 @@ const Item = memo<ChatListItemProps>(({ index, id }) => {
   const item = useChatStore((s) => {
     const chats = chatSelectors.currentChatsWithGuideMessage(meta)(s);
 
-    if (index >= chats.length) return;
+    if (index >= chats.length) {return;}
 
     return chatSelectors.currentChatsWithGuideMessage(meta)(s)[index];
   }, isEqual);
@@ -81,11 +81,11 @@ const Item = memo<ChatListItemProps>(({ index, id }) => {
       data: ChatMessage;
       editableContent: ReactNode;
     }) => {
-      if (!item?.role) return;
+      if (!item?.role) {return;}
       const RenderFunction =
         renderMessages[item.role] ?? renderMessages['default'];
 
-      if (!RenderFunction) return;
+      if (!RenderFunction) {return;}
 
       return <RenderFunction {...data} editableContent={editableContent} />;
     },
@@ -94,12 +94,12 @@ const Item = memo<ChatListItemProps>(({ index, id }) => {
 
   const MessageExtra = useCallback(
     ({ data }: { data: ChatMessage }) => {
-      if (!renderMessagesExtra || !item?.role) return;
+      if (!renderMessagesExtra || !item?.role) {return;}
       let RenderFunction;
       if (renderMessagesExtra?.[item.role])
-        RenderFunction = renderMessagesExtra[item.role];
+        {RenderFunction = renderMessagesExtra[item.role];}
 
-      if (!RenderFunction) return;
+      if (!RenderFunction) {return;}
       return <RenderFunction {...data} />;
     },
     [item?.role]
@@ -107,7 +107,7 @@ const Item = memo<ChatListItemProps>(({ index, id }) => {
 
   const { t: errorT } = useTranslation('error');
   const error = useMemo<AlertProps | undefined>(() => {
-    if (!item?.error) return;
+    if (!item?.error) {return;}
     const messageError = item.error;
 
     const alertConfig = getErrorAlertConfig(messageError.type);
@@ -145,7 +145,7 @@ const Item = memo<ChatListItemProps>(({ index, id }) => {
           onAvatarClick={onAvatarsClick?.(item.role)}
           onChange={(value) => updateMessageContent(item.id, value)}
           onDoubleClick={(e) => {
-            if (item.id === 'default' || item.error) return;
+            if (item.id === 'default' || item.error) {return;}
             if (
               item.role &&
               ['assistant', 'user'].includes(item.role) &&

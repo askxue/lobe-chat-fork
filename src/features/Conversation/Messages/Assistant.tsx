@@ -18,7 +18,7 @@ export const AssistantMessage = memo<
   );
 
   if (!isFunctionMessageAtStart(content))
-    return <DefaultMessage content={content} id={id} {...props} />;
+    {return <DefaultMessage content={content} id={id} {...props} />;}
 
   return (
     <div id={id}>

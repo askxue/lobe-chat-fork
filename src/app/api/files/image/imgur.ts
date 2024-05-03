@@ -40,6 +40,7 @@ interface UploadData {
 
 export class Imgur {
   clientId: string;
+
   api = 'https://api.imgur.com/3';
 
   constructor() {

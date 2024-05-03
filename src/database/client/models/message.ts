@@ -40,7 +40,7 @@ class _MessageModel extends BaseModel {
   }: QueryMessageParams): Promise<ChatMessage[]> {
     const offset = current * pageSize;
 
-    const query = !!topicId
+    const query = topicId
       ? // TODO: The query {"sessionId":"xxx","topicId":"xxx"} on messages would benefit of a compound index [sessionId+topicId]
         this.table.where({ sessionId, topicId }) // Use a compound index
       : this.table
@@ -64,7 +64,7 @@ class _MessageModel extends BaseModel {
       }
     };
     const messageMap = new Map<string, ChatMessage>();
-    for (const item of messages) messageMap.set(item.id, item);
+    for (const item of messages) {messageMap.set(item.id, item);}
 
     for (const item of messages) {
       if (!item.parentId || !messageMap.has(item.parentId)) {
@@ -160,7 +160,7 @@ class _MessageModel extends BaseModel {
   ): Promise<void> {
     // If topicId is specified, use both assistantId and topicId as the filter criteria in the query.
     // Otherwise, filter by assistantId and require that topicId is undefined.
-    const query = !!topicId
+    const query = topicId
       ? this.table.where({ sessionId, topicId }) // Use a compound index
       : this.table
           .where('sessionId')
@@ -283,14 +283,12 @@ class _MessageModel extends BaseModel {
     translate,
     tts,
     ...item
-  }: DBModel<DB_Message>): ChatMessage => {
-    return {
+  }: DBModel<DB_Message>): ChatMessage => ({
       ...item,
       extra: { fromModel, fromProvider, translate, tts },
       meta: {},
       topicId: item.topicId ?? undefined
-    };
-  };
+    });
 }
 
 export const MessageModel = new _MessageModel();

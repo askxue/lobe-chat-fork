@@ -31,14 +31,14 @@ const PluginDefaultType = memo<PluginDefaultTypeProps>(
       return loading && <Loading />;
     }
 
-    if (!manifest?.ui) return;
+    if (!manifest?.ui) {return;}
 
     const ui = manifest.ui;
 
-    if (!ui.url) return;
+    if (!ui.url) {return;}
 
     if (ui.mode === 'module')
-      return (
+      {return (
         <Suspense fallback={<Skeleton active style={{ width: 400 }} />}>
           <SystemJsRender
             content={data}
@@ -46,7 +46,7 @@ const PluginDefaultType = memo<PluginDefaultTypeProps>(
             url={ui.url}
           />
         </Suspense>
-      );
+      );}
 
     return (
       <IFrameRender

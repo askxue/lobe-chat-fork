@@ -29,21 +29,17 @@ class ConfigService {
    * import sessions from files
    * @param sessions
    */
-  importSessions = async (sessions: LobeSessions) => {
-    return await sessionService.batchCreateSessions(sessions);
-  };
-  importMessages = async (messages: ChatMessage[]) => {
-    return messageService.batchCreateMessages(messages);
-  };
+  importSessions = async (sessions: LobeSessions) => await sessionService.batchCreateSessions(sessions);
+
+  importMessages = async (messages: ChatMessage[]) => messageService.batchCreateMessages(messages);
+
   importSettings = async (settings: GlobalSettings) => {
     useUserStore.getState().importAppSettings(settings);
   };
-  importTopics = async (topics: ChatTopic[]) => {
-    return topicService.batchCreateTopics(topics);
-  };
-  importSessionGroups = async (sessionGroups: SessionGroupItem[]) => {
-    return sessionService.batchCreateSessionGroups(sessionGroups || []);
-  };
+
+  importTopics = async (topics: ChatTopic[]) => topicService.batchCreateTopics(topics);
+
+  importSessionGroups = async (sessionGroups: SessionGroupItem[]) => sessionService.batchCreateSessionGroups(sessionGroups || []);
 
   importConfigState = async (
     config: ConfigFile
@@ -130,7 +126,7 @@ class ConfigService {
    */
   exportSingleSession = async (id: string) => {
     const session = this.getSession(id);
-    if (!session) return;
+    if (!session) {return;}
 
     const messages = await messageService.getAllMessagesInSession(id);
     const topics = await topicService.getTopics({ sessionId: id });
@@ -149,13 +145,13 @@ class ConfigService {
    */
   exportSingleTopic = async (sessionId: string, topicId: string) => {
     const session = this.getSession(sessionId);
-    if (!session) return;
+    if (!session) {return;}
 
     const messages = await messageService.getMessages(sessionId, topicId);
     const topics = await topicService.getTopics({ sessionId });
 
     const topic = topics.find((item) => item.id === topicId);
-    if (!topic) return;
+    if (!topic) {return;}
 
     const config = createConfigFile('singleSession', {
       messages,
@@ -168,7 +164,7 @@ class ConfigService {
 
   exportSingleAgent = async (id: string) => {
     const agent = this.getAgent(id);
-    if (!agent) return;
+    if (!agent) {return;}
 
     const config = createConfigFile('agents', {
       sessionGroups: [],
@@ -223,13 +219,11 @@ class ConfigService {
     added: number;
     errors?: Error[];
     skips: string[];
-  }): ImportResult => {
-    return {
+  }): ImportResult => ({
       added: input.added,
       errors: input.errors?.length || 0,
       skips: input.skips.length
-    };
-  };
+    });
 }
 
 export const configService = new ConfigService();

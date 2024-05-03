@@ -5,14 +5,12 @@ import { getCanonicalUrl } from '@/const/url';
 import Client from './(loading)/Client';
 import Redirect from './(loading)/Redirect';
 
-const Page = () => {
-  return (
+const Page = () => (
     <>
       <Client />
       <Redirect />
     </>
   );
-};
 
 Page.displayName = 'Loading';
 

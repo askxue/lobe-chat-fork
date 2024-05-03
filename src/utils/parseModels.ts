@@ -10,7 +10,7 @@ export const parseModelString = (
   modelString: string = '',
   withDeploymentName = false
 ) => {
-  let models: ChatModelCard[] = [];
+  const models: ChatModelCard[] = [];
   let removeAll = false;
   const removedModels: string[] = [];
   const modelNames = modelString.split(/[,，]/).filter(Boolean);
@@ -26,7 +26,7 @@ export const parseModelString = (
 
     if (withDeploymentName) {
       [id, deploymentName] = id.split('->');
-      if (!deploymentName) deploymentName = id;
+      if (!deploymentName) {deploymentName = id;}
     }
 
     if (disable) {
@@ -102,7 +102,7 @@ export const transformToChatModelCards = ({
   modelString?: string;
   withDeploymentName?: boolean;
 }): ChatModelCard[] | undefined => {
-  if (!modelString) return undefined;
+  if (!modelString) {return undefined;}
 
   const modelConfig = parseModelString(modelString, withDeploymentName);
   let chatModels = modelConfig.removeAll ? [] : defaultChatModels;
@@ -129,7 +129,7 @@ export const transformToChatModelCards = ({
           // if (modelInList.hidden) delete modelInList.hidden;
           modelInList.enabled = true;
           if (toAddModel.displayName)
-            modelInList.displayName = toAddModel.displayName;
+            {modelInList.displayName = toAddModel.displayName;}
         } else {
           // if the model is not in chatModels, add it
           draft.push({
@@ -158,7 +158,7 @@ export const extractEnabledModels = (
   const modelConfig = parseModelString(modelString, withDeploymentName);
   const list = modelConfig.add.map((m) => m.id);
 
-  if (list.length === 0) return;
+  if (list.length === 0) {return;}
 
   return list;
 };

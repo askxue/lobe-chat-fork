@@ -15,8 +15,7 @@ const { ANALYTICS_POSTHOG, ANALYTICS_PLAUSIBLE, ANALYTICS_UMAMI } =
 
 const { ENABLE_VERCEL_ANALYTICS, ENABLE_GOOGLE_ANALYTICS } = getServerConfig();
 
-const Analytics = () => {
-  return (
+const Analytics = () => (
     <>
       {ENABLE_VERCEL_ANALYTICS && <Vercel />}
       {ENABLE_GOOGLE_ANALYTICS && <Google />}
@@ -25,6 +24,5 @@ const Analytics = () => {
       {ANALYTICS_UMAMI && <Umami />}
     </>
   );
-};
 
 export default Analytics;

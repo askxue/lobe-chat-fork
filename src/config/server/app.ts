@@ -50,11 +50,11 @@ export const getAppConfig = () => {
 
     IMGUR_CLIENT_ID: process.env.IMGUR_CLIENT_ID || DEFAULT_IMAGUR_CLIENT_ID,
 
-    AGENTS_INDEX_URL: !!process.env.AGENTS_INDEX_URL
+    AGENTS_INDEX_URL: process.env.AGENTS_INDEX_URL
       ? process.env.AGENTS_INDEX_URL
       : 'https://chat-agents.lobehub.com',
 
-    PLUGINS_INDEX_URL: !!process.env.PLUGINS_INDEX_URL
+    PLUGINS_INDEX_URL: process.env.PLUGINS_INDEX_URL
       ? process.env.PLUGINS_INDEX_URL
       : 'https://chat-plugins.lobehub.com',
 

@@ -5,7 +5,7 @@ export const filterWithKeywords = <T extends BaseDataModel>(
   keywords: string,
   extraSearchStr?: (item: T) => string | string[]
 ) => {
-  if (!keywords) return map;
+  if (!keywords) {return map;}
 
   return Object.fromEntries(
     Object.entries(map).filter(([, item]) => {

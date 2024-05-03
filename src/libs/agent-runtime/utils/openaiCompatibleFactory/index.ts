@@ -63,7 +63,7 @@ export const LobeOpenAICompatibleFactory = ({
     baseURL: string;
 
     constructor({ apiKey, baseURL = DEFAULT_BASE_URL, ...res }: ClientOptions) {
-      if (!apiKey) throw AgentRuntimeError.createError(ErrorType.invalidAPIKey);
+      if (!apiKey) {throw AgentRuntimeError.createError(ErrorType.invalidAPIKey);}
 
       this.client = new OpenAI({
         apiKey,
@@ -139,16 +139,14 @@ export const LobeOpenAICompatibleFactory = ({
 
     async models() {
       if (typeof models === 'function')
-        return models({ apiKey: this.client.apiKey });
+        {return models({ apiKey: this.client.apiKey });}
 
       const list = await this.client.models.list();
 
       return list.data
-        .filter((model) => {
-          return CHAT_MODELS_BLOCK_LIST.every(
+        .filter((model) => CHAT_MODELS_BLOCK_LIST.every(
             (keyword) => !model.id.toLowerCase().includes(keyword)
-          );
-        })
+          ))
         .map((item) => {
           if (models?.transformModel) {
             return models.transformModel(item);
@@ -158,7 +156,7 @@ export const LobeOpenAICompatibleFactory = ({
             (model) => model.id === item.id
           );
 
-          if (knownModel) return knownModel;
+          if (knownModel) {return knownModel;}
 
           return { id: item.id };
         })

@@ -21,7 +21,7 @@ const OpenAiBizError = memo<ChatMessage>(({ error, id }) => {
 
   const errorCode = errorBody.error?.code;
 
-  if (errorCode === 'invalid_api_key') return <InvalidAPIKey id={id} />;
+  if (errorCode === 'invalid_api_key') {return <InvalidAPIKey id={id} />;}
 
   return <ErrorJsonViewer error={error} id={id} />;
 });

@@ -43,7 +43,7 @@ const ImageItem = memo<DallEImageItem & { messageId: string }>(
     );
 
     if (edit)
-      return (
+      {return (
         <Flexbox className={styles.container} padding={8}>
           <EditMode
             imageId={imageId}
@@ -54,10 +54,10 @@ const ImageItem = memo<DallEImageItem & { messageId: string }>(
             style={style}
           />
         </Flexbox>
-      );
+      );}
 
     if (imageId || previewUrl)
-      return imageId ? (
+      {return imageId ? (
         // <Flexbox className={styles.action}>
         //   <ActionIconGroup
         //     items={[{ icon: LucideEdit, key: 'edit', label: t('edit', { ns: 'common' }) }]}
@@ -80,7 +80,7 @@ const ImageItem = memo<DallEImageItem & { messageId: string }>(
             <Image alt={prompt} size={'100%'} src={previewUrl} />
           </Flexbox>
         )
-      );
+      );}
 
     return (
       <Flexbox className={styles.container} padding={8}>

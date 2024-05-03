@@ -5,15 +5,13 @@ import { memo } from 'react';
 
 import ProviderConfig from '../components/ProviderConfig';
 
-const TogetherAIProvider = memo(() => {
-  return (
+const TogetherAIProvider = memo(() => (
     <ProviderConfig
       checkModel={'togethercomputer/alpaca-7b'}
       modelList={{ showModelFetcher: true }}
       provider={'togetherai'}
       title={<Together.Combine size={26} type={'color'} />}
     />
-  );
-});
+  ));
 
 export default TogetherAIProvider;

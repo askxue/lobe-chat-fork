@@ -19,7 +19,7 @@ export class TraceClient {
       LANGFUSE_HOST
     } = getServerConfig();
 
-    if (!ENABLE_LANGFUSE) return;
+    if (!ENABLE_LANGFUSE) {return;}
 
     // when enabled langfuse, make sure the key are ready in envs
     if (!LANGFUSE_PUBLIC_KEY || !LANGFUSE_SECRET_KEY) {
@@ -41,7 +41,7 @@ export class TraceClient {
 
   createEvent(traceId: string) {
     const trace = this.createTrace({ id: traceId });
-    if (!trace) return;
+    if (!trace) {return;}
 
     return new TraceEventClient(trace);
   }
