@@ -50,9 +50,7 @@ export const messagesReducer = (
       return produce(state, (draftState) => {
         const { id, key, value } = payload;
         const message = draftState.find((i) => i.id === id);
-        if (!message) {
-          return;
-        }
+        if (!message) {return;}
 
         // @ts-ignore
         message[key] = value;
@@ -64,9 +62,7 @@ export const messagesReducer = (
       return produce(state, (draftState) => {
         const { id, key, value } = payload;
         const message = draftState.find((i) => i.id === id);
-        if (!message) {
-          return;
-        }
+        if (!message) {return;}
 
         if (!message.extra) {
           message.extra = { [key]: value } as any;
@@ -82,9 +78,7 @@ export const messagesReducer = (
       return produce(state, (draftState) => {
         const { id, key, value } = payload;
         const message = draftState.find((i) => i.id === id);
-        if (!message) {
-          return;
-        }
+        if (!message) {return;}
 
         let newState;
         if (!message.pluginState) {
@@ -93,9 +87,7 @@ export const messagesReducer = (
           newState = merge(message.pluginState, { [key]: value });
         }
 
-        if (isEqual(message.pluginState, newState)) {
-          return;
-        }
+        if (isEqual(message.pluginState, newState)) {return;}
 
         message.pluginState = newState;
         message.updatedAt = Date.now();
@@ -121,9 +113,7 @@ export const messagesReducer = (
 
         const index = draft.findIndex((m) => m.id === id);
 
-        if (index >= 0) {
-          draft.splice(index, 1);
-        }
+        if (index >= 0) {draft.splice(index, 1);}
       });
     }
     default: {

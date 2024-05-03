@@ -7,9 +7,7 @@ export type ErrorType = Error & { digest?: string };
 export const sentryCaptureException = async (
   error: Error & { digest?: string }
 ) => {
-  if (!ENABLE_SENTRY) {
-    return;
-  }
+  if (!ENABLE_SENTRY) {return;}
   const { captureException } = await import('@sentry/nextjs');
   return captureException(error);
 };

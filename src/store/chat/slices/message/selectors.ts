@@ -48,9 +48,7 @@ const currentChatKey = (s: ChatStore) => `${s.activeId}_${s.activeTopicId}`;
 
 // 当前激活的消息列表
 const currentChats = (s: ChatStore): ChatMessage[] => {
-  if (!s.activeId) {
-    return [];
-  }
+  if (!s.activeId) {return [];}
 
   return s.messages.map((i) => ({ ...i, meta: getMeta(i) }));
 };
@@ -59,9 +57,7 @@ const initTime = Date.now();
 
 const showInboxWelcome = (s: ChatStore): boolean => {
   const isInbox = s.activeId === INBOX_SESSION_ID;
-  if (!isInbox) {
-    return false;
-  }
+  if (!isInbox) {return false;}
   const data = currentChats(s);
   const isBrandNewChat = data.length === 0;
   return isBrandNewChat;
@@ -75,9 +71,7 @@ const currentChatsWithGuideMessage =
 
     const isBrandNewChat = data.length === 0;
 
-    if (!isBrandNewChat) {
-      return data;
-    }
+    if (!isBrandNewChat) {return data;}
 
     const [activeId, isInbox] = [s.activeId, s.activeId === INBOX_SESSION_ID];
 

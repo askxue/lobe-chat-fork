@@ -24,9 +24,7 @@ export const HeaderContent = memo<{ mobile?: boolean; modal?: boolean }>(
           key: 'agent',
           label: <div>{t('exportType.agent', { ns: 'common' })}</div>,
           onClick: () => {
-            if (!id) {
-              return;
-            }
+            if (!id) {return;}
 
             configService.exportSingleAgent(id);
           }
@@ -37,9 +35,7 @@ export const HeaderContent = memo<{ mobile?: boolean; modal?: boolean }>(
             <div>{t('exportType.agentWithMessage', { ns: 'common' })}</div>
           ),
           onClick: () => {
-            if (!id) {
-              return;
-            }
+            if (!id) {return;}
 
             configService.exportSingleSession(id);
           }

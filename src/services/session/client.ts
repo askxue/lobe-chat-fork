@@ -39,9 +39,7 @@ export class ClientService implements ISessionService {
   ): Promise<string | undefined> {
     const res = await SessionModel.duplicate(id, newTitle);
 
-    if (res) {
-      return res?.id;
-    }
+    if (res) {return res?.id;}
   }
 
   async getGroupedSessions(): Promise<ChatSessionList> {
@@ -55,9 +53,7 @@ export class ClientService implements ISessionService {
 
     const res = await SessionModel.findById(id);
 
-    if (!res) {
-      throw new Error('Session not found');
-    }
+    if (!res) {throw new Error('Session not found');}
 
     return res.config as LobeAgentConfig;
   }

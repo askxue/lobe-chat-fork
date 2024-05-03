@@ -1,9 +1,7 @@
 import UAParser from 'ua-parser-js';
 
 const getParser = () => {
-  if (typeof window === 'undefined') {
-    return new UAParser('Node');
-  }
+  if (typeof window === 'undefined') {return new UAParser('Node');}
 
   const ua = navigator.userAgent;
   return new UAParser(ua);

@@ -41,9 +41,8 @@ const HotKeys = () => {
         !lastMessage ||
         lastMessage.id === 'default' ||
         lastMessage.role === 'system'
-      ) {
-        return;
-      }
+      )
+        {return;}
       regenerateMessage(lastMessage.id);
     },
     {

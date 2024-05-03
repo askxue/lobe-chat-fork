@@ -12,8 +12,7 @@ const LogoSpline = dynamic(
   { ssr: false }
 );
 
-const Logo = memo<{ mobile?: boolean }>(({ mobile }) =>
-  mobile ? (
+const Logo = memo<{ mobile?: boolean }>(({ mobile }) => mobile ? (
     <Center height={240} width={240}>
       <LogoThree size={240} />
     </Center>
@@ -29,7 +28,6 @@ const Logo = memo<{ mobile?: boolean }>(({ mobile }) =>
     >
       <LogoSpline height={'min(482px, 40vw)'} width={'min(976px, 80vw)'} />
     </Center>
-  )
-);
+  ));
 
 export default Logo;

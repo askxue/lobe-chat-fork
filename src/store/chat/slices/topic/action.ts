@@ -70,9 +70,8 @@ export const chatTopic: StateCreator<
     const { switchTopic, saveToTopic, refreshMessages, activeTopicId } = get();
     const hasTopic = !!activeTopicId;
 
-    if (hasTopic) {
-      switchTopic();
-    } else {
+    if (hasTopic) {switchTopic();}
+    else {
       await saveToTopic();
       refreshMessages();
     }
@@ -81,9 +80,7 @@ export const chatTopic: StateCreator<
   saveToTopic: async () => {
     // if there is no message, stop
     const messages = chatSelectors.currentChats(get());
-    if (messages.length === 0) {
-      return;
-    }
+    if (messages.length === 0) {return;}
 
     const { activeId, summaryTopicTitle, internal_createTopic } = get();
 
@@ -105,9 +102,7 @@ export const chatTopic: StateCreator<
     const { refreshTopic, switchTopic } = get();
 
     const topic = topicSelectors.getTopicById(id)(get());
-    if (!topic) {
-      return;
-    }
+    if (!topic) {return;}
 
     const newTitle = t('duplicateTitle', { ns: 'chat', title: topic?.title });
 
@@ -128,9 +123,7 @@ export const chatTopic: StateCreator<
   summaryTopicTitle: async (topicId, messages) => {
     const { updateTopicTitleInSummary, internal_updateTopicLoading } = get();
     const topic = topicSelectors.getTopicById(topicId)(get());
-    if (!topic) {
-      return;
-    }
+    if (!topic) {return;}
 
     updateTopicTitleInSummary(topicId, LOADING_FLAT);
 
@@ -244,9 +237,7 @@ export const chatTopic: StateCreator<
     await refreshTopic();
 
     // switch bach to default topic
-    if (activeTopicId === id) {
-      switchTopic();
-    }
+    if (activeTopicId === id) {switchTopic();}
   },
   removeUnstarredTopic: async () => {
     const { refreshTopic, switchTopic } = get();
@@ -264,9 +255,7 @@ export const chatTopic: StateCreator<
     const topics = produce(get().topics, (draftState) => {
       const topic = draftState.find((i) => i.id === id);
 
-      if (!topic) {
-        return;
-      }
+      if (!topic) {return;}
       topic.title = title;
     });
 
@@ -277,9 +266,7 @@ export const chatTopic: StateCreator<
   internal_updateTopicLoading: (id, loading) => {
     set(
       (state) => {
-        if (loading) {
-          return { topicLoadingIds: [...state.topicLoadingIds, id] };
-        }
+        if (loading) {return { topicLoadingIds: [...state.topicLoadingIds, id] };}
 
         return {
           topicLoadingIds: state.topicLoadingIds.filter((i) => i !== id)

@@ -64,9 +64,7 @@ class _MessageModel extends BaseModel {
       }
     };
     const messageMap = new Map<string, ChatMessage>();
-    for (const item of messages) {
-      messageMap.set(item.id, item);
-    }
+    for (const item of messages) {messageMap.set(item.id, item);}
 
     for (const item of messages) {
       if (!item.parentId || !messageMap.has(item.parentId)) {
@@ -286,11 +284,11 @@ class _MessageModel extends BaseModel {
     tts,
     ...item
   }: DBModel<DB_Message>): ChatMessage => ({
-    ...item,
-    extra: { fromModel, fromProvider, translate, tts },
-    meta: {},
-    topicId: item.topicId ?? undefined
-  });
+      ...item,
+      extra: { fromModel, fromProvider, translate, tts },
+      meta: {},
+      topicId: item.topicId ?? undefined
+    });
 }
 
 export const MessageModel = new _MessageModel();

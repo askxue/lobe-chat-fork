@@ -117,9 +117,7 @@ export class BrowserDB extends Dexie {
           /* empty */
         }
 
-        if (!json?.state?.settings) {
-          return;
-        }
+        if (!json?.state?.settings) {return;}
 
         const settings = json.state.settings;
 
@@ -137,9 +135,7 @@ export class BrowserDB extends Dexie {
     const users = trans.table('users');
 
     await users.toCollection().modify((user: DB_User) => {
-      if (!user.uuid) {
-        user.uuid = uuid();
-      }
+      if (!user.uuid) {user.uuid = uuid();}
     });
   };
 

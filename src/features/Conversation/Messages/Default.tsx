@@ -10,9 +10,7 @@ export const DefaultMessage = memo<
     editableContent: ReactNode;
   }
 >(({ id, editableContent, content }) => {
-  if (content === LOADING_FLAT) {
-    return <BubblesLoading />;
-  }
+  if (content === LOADING_FLAT) {return <BubblesLoading />;}
 
   return <div id={id}>{editableContent}</div>;
 });

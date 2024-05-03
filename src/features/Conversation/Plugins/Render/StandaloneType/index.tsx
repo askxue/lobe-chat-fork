@@ -16,15 +16,11 @@ const PluginDefaultType = memo<PluginStandaloneTypeProps>(
   ({ payload, id, name = 'unknown' }) => {
     const manifest = useToolStore(pluginSelectors.getPluginManifestById(name));
 
-    if (!manifest?.ui) {
-      return;
-    }
+    if (!manifest?.ui) {return;}
 
     const ui = manifest.ui;
 
-    if (!ui.url) {
-      return;
-    }
+    if (!ui.url) {return;}
 
     return (
       <IFrameRender

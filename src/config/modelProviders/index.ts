@@ -51,8 +51,7 @@ export const DEFAULT_MODEL_PROVIDER_LIST = [
   ZhiPuProvider
 ];
 
-export const filterEnabledModels = (provider: ModelProviderCard) =>
-  provider.chatModels.filter((v) => v.enabled).map((m) => m.id);
+export const filterEnabledModels = (provider: ModelProviderCard) => provider.chatModels.filter((v) => v.enabled).map((m) => m.id);
 
 export { default as AnthropicProviderCard } from './anthropic';
 export { default as AzureProviderCard } from './azure';

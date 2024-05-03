@@ -19,9 +19,7 @@ class TraceService {
   async traceEvent(data: TraceEventPayloads & TraceEventBasePayload) {
     const enabled = preferenceSelectors.userAllowTrace(useUserStore.getState());
 
-    if (!enabled) {
-      return;
-    }
+    if (!enabled) {return;}
 
     return this.request(data);
   }

@@ -117,9 +117,7 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
         key: 'delete',
         label: t('delete'),
         onClick: () => {
-          if (!id) {
-            return;
-          }
+          if (!id) {return;}
 
           modal.confirm({
             centered: true,
@@ -142,12 +140,8 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
       horizontal
       justify={'space-between'}
       onDoubleClick={(e) => {
-        if (!id) {
-          return;
-        }
-        if (e.altKey) {
-          toggleEditing(true);
-        }
+        if (!id) {return;}
+        if (e.altKey) {toggleEditing(true);}
       }}
     >
       <ActionIcon
@@ -156,9 +150,7 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
         icon={isLoading ? LucideLoader2 : Star}
         onClick={(e) => {
           e.stopPropagation();
-          if (!id) {
-            return;
-          }
+          if (!id) {return;}
           favoriteTopic(id, !fav);
         }}
         size={'small'}

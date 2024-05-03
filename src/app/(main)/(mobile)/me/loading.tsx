@@ -6,10 +6,10 @@ import { Center } from 'react-layout-kit';
 import SkeletonLoading from '@/components/SkeletonLoading';
 
 export default () => (
-  <>
-    <Center height={180}>
-      <Skeleton.Avatar shape={'circle'} size={88} />
-    </Center>
-    <SkeletonLoading paragraph={{ rows: 8 }} title={false} />
-  </>
-);
+    <>
+      <Center height={180}>
+        <Skeleton.Avatar shape={'circle'} size={88} />
+      </Center>
+      <SkeletonLoading paragraph={{ rows: 8 }} title={false} />
+    </>
+  );

@@ -27,12 +27,12 @@ class ModelsService {
       }
 
       const res = await fetch(API_ENDPOINTS.chatModels(provider), { headers });
-      if (!res.ok) {
-        return;
-      }
+      if (!res.ok) {return;}
 
       return res.json();
-    } catch {}
+    } catch {
+
+    }
   };
 }
 

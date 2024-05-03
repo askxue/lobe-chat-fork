@@ -15,8 +15,7 @@ export class ClientService {
     return user as unknown as UserConfig;
   };
 
-  updateUserSettings = async (patch: DeepPartial<GlobalSettings>) =>
-    UserModel.updateSettings(patch);
+  updateUserSettings = async (patch: DeepPartial<GlobalSettings>) => UserModel.updateSettings(patch);
 
   resetUserSettings = async () => UserModel.resetSettings();
 

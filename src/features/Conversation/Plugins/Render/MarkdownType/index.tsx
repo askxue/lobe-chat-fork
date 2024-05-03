@@ -16,9 +16,7 @@ const PluginMarkdownType = memo<PluginMarkdownTypeProps>(
     const fontSize = useUserStore(
       (s) => settingsSelectors.currentSettings(s).fontSize
     );
-    if (loading) {
-      return <Loading />;
-    }
+    if (loading) {return <Loading />;}
 
     return (
       <Markdown fontSize={fontSize} variant={'chat'}>

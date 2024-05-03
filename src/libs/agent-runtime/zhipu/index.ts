@@ -37,9 +37,7 @@ export class LobeZhipuAI implements LobeRuntimeAI {
       AgentRuntimeErrorType.InvalidZhipuAPIKey
     );
 
-    if (!apiKey) {
-      throw invalidZhipuAPIKey;
-    }
+    if (!apiKey) {throw invalidZhipuAPIKey;}
 
     let token: string;
 
@@ -109,30 +107,30 @@ export class LobeZhipuAI implements LobeRuntimeAI {
   private transformMessage = (
     message: OpenAIChatMessage
   ): OpenAIChatMessage => ({
-    ...message,
-    content:
-      typeof message.content === 'string'
-        ? message.content
-        : message.content.map((c) => {
-            switch (c.type) {
-              default:
-              case 'text': {
-                return c;
-              }
+      ...message,
+      content:
+        typeof message.content === 'string'
+          ? message.content
+          : message.content.map((c) => {
+              switch (c.type) {
+                default:
+                case 'text': {
+                  return c;
+                }
 
-              case 'image_url': {
-                const { base64 } = parseDataUri(c.image_url.url);
-                return {
-                  image_url: {
-                    ...c.image_url,
-                    url: base64 || c.image_url.url
-                  },
-                  type: 'image_url'
-                };
+                case 'image_url': {
+                  const { base64 } = parseDataUri(c.image_url.url);
+                  return {
+                    image_url: {
+                      ...c.image_url,
+                      url: base64 || c.image_url.url
+                    },
+                    type: 'image_url'
+                  };
+                }
               }
-            }
-          })
-  });
+            })
+    });
 }
 
 export default LobeZhipuAI;

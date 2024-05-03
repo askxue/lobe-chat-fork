@@ -24,8 +24,7 @@ const onlinePluginStore = (s: ToolStoreState) => {
 const isPluginInstallLoading = (id: string) => (s: ToolStoreState) =>
   s.pluginInstallLoading[id];
 
-const getPluginById = (id: string) => (s: ToolStoreState) =>
-  s.pluginStoreList.find((i) => i.identifier === id);
+const getPluginById = (id: string) => (s: ToolStoreState) => s.pluginStoreList.find((i) => i.identifier === id);
 
 export const pluginStoreSelectors = {
   getPluginById,

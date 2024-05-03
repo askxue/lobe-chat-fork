@@ -47,9 +47,7 @@ const InitPlayer = memo<TTSProps>(({ id, content, contentMd5, file }) => {
       setDefaultError(err);
     },
     onSuccess: async () => {
-      if (!response || response.ok) {
-        return;
-      }
+      if (!response || response.ok) {return;}
       const message = await getMessageError(response);
       if (message) {
         setError(message);
@@ -65,9 +63,7 @@ const InitPlayer = memo<TTSProps>(({ id, content, contentMd5, file }) => {
   });
 
   const handleInitStart = useCallback(() => {
-    if (isStart) {
-      return;
-    }
+    if (isStart) {return;}
     start();
     setIsStart(true);
   }, [isStart, start]);
@@ -83,9 +79,7 @@ const InitPlayer = memo<TTSProps>(({ id, content, contentMd5, file }) => {
   }, [start]);
 
   useEffect(() => {
-    if (file) {
-      return;
-    }
+    if (file) {return;}
     setTimeout(() => {
       handleInitStart();
     }, 100);
