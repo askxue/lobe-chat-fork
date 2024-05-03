@@ -43,10 +43,8 @@ export const useQueryRoute = () => {
 
   return useMemo(
     () => ({
-      push: (url: string, options: QueryRouteOptions = {}) =>
-        router.push(genHref({ prevQuery, url, ...options })),
-      replace: (url: string, options: QueryRouteOptions = {}) =>
-        router.replace(genHref({ prevQuery, url, ...options }))
+      push: (url: string, options: QueryRouteOptions = {}) => router.push(genHref({ prevQuery, url, ...options })),
+      replace: (url: string, options: QueryRouteOptions = {}) => router.replace(genHref({ prevQuery, url, ...options }))
     }),
     [prevQuery]
   );

@@ -9,9 +9,7 @@ const getSessionById = (
 ): LobeAgentSession => {
   const session = sessions.find((s) => s.id === id);
 
-  if (!session) {
-    return DEFAULT_AGENT_LOBE_SESSION;
-  }
+  if (!session) {return DEFAULT_AGENT_LOBE_SESSION;}
 
   return session;
 };

@@ -27,11 +27,10 @@ export const createAzureOpenai = (params: {
   const apiVersion = !params.apiVersion ? defaultApiVersion : params.apiVersion;
   const apiKey = !params.userApiKey ? AZURE_API_KEY : params.userApiKey;
 
-  if (!apiKey) {
-    throw new Error('AZURE_API_KEY is empty', {
+  if (!apiKey)
+    {throw new Error('AZURE_API_KEY is empty', {
       cause: ChatErrorType.NoOpenAIAPIKey
-    });
-  }
+    });}
 
   const config: ClientOptions = {
     apiKey,

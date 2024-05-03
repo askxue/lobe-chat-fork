@@ -73,9 +73,7 @@ export const chatPlugin: StateCreator<
 
     await internalUpdateMessageContent(id, content);
 
-    if (triggerAiMessage) {
-      await triggerAIMessage(id);
-    }
+    if (triggerAiMessage) {await triggerAIMessage(id);}
   },
 
   invokeBuiltinTool: async (id, payload) => {
@@ -92,18 +90,14 @@ export const chatPlugin: StateCreator<
     }
     toggleChatLoading(false);
 
-    if (!data) {
-      return;
-    }
+    if (!data) {return;}
 
     await internalUpdateMessageContent(id, data);
 
     // postToolCalling
     // @ts-ignore
     const { [payload.apiName]: action } = get();
-    if (!action) {
-      return;
-    }
+    if (!action) {return;}
 
     let content;
 
@@ -111,9 +105,7 @@ export const chatPlugin: StateCreator<
       content = JSON.parse(data);
     } catch {}
 
-    if (!content) {
-      return;
-    }
+    if (!content) {return;}
 
     await action(id, content);
   },
@@ -123,9 +115,7 @@ export const chatPlugin: StateCreator<
 
     const data = await runPluginApi(id, payload);
 
-    if (!data) {
-      return;
-    }
+    if (!data) {return;}
     const traceId = chatSelectors.getTraceIdByMessageId(id)(get());
 
     await triggerAIMessage(id, traceId);
@@ -141,9 +131,7 @@ export const chatPlugin: StateCreator<
     const result = await useToolStore
       .getState()
       .validatePluginSettings(payload.identifier);
-    if (!result) {
-      return;
-    }
+    if (!result) {return;}
 
     // if the plugin settings is not valid, then set the message with error type
     if (!result.valid) {
@@ -158,6 +146,7 @@ export const chatPlugin: StateCreator<
       });
 
       await get().refreshMessages();
+
     }
   },
 
@@ -203,9 +192,7 @@ export const chatPlugin: StateCreator<
 
     toggleChatLoading(false);
     // 如果报错则结束了
-    if (!data) {
-      return;
-    }
+    if (!data) {return;}
 
     await internalUpdateMessageContent(id, data);
 
@@ -220,9 +207,7 @@ export const chatPlugin: StateCreator<
 
   triggerFunctionCall: async (id) => {
     const message = chatSelectors.getMessageById(id)(get());
-    if (!message) {
-      return;
-    }
+    if (!message) {return;}
 
     const {
       invokeDefaultTypePlugin,
@@ -273,20 +258,14 @@ export const chatPlugin: StateCreator<
         const api = manifest?.api.find(
           (api) => Md5.hashStr(api.name).toString() === md5
         );
-        if (!api) {
-          return;
-        }
+        if (!api) {return;}
         payload.apiName = api.name;
       }
     } else {
-      if (message.plugin) {
-        payload = message.plugin;
-      }
+      if (message.plugin) {payload = message.plugin;}
     }
 
-    if (!payload.apiName) {
-      return;
-    }
+    if (!payload.apiName) {return;}
 
     await messageService.updateMessage(id, {
       content: message.content ? '' : undefined,

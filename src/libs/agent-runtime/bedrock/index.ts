@@ -32,11 +32,10 @@ export class LobeBedrockAI implements LobeRuntimeAI {
   region: string;
 
   constructor({ region, accessKeyId, accessKeySecret }: LobeBedrockAIParams) {
-    if (!(accessKeyId && accessKeySecret)) {
-      throw AgentRuntimeError.createError(
+    if (!(accessKeyId && accessKeySecret))
+      {throw AgentRuntimeError.createError(
         AgentRuntimeErrorType.InvalidBedrockCredentials
-      );
-    }
+      );}
 
     this.region = region ?? 'us-east-1';
 
@@ -50,9 +49,7 @@ export class LobeBedrockAI implements LobeRuntimeAI {
   }
 
   async chat(payload: ChatStreamPayload, options?: ChatCompetitionOptions) {
-    if (payload.model.startsWith('meta')) {
-      return this.invokeLlamaModel(payload);
-    }
+    if (payload.model.startsWith('meta')) {return this.invokeLlamaModel(payload);}
 
     return this.invokeClaudeModel(payload, options);
   }

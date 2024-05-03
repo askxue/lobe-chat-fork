@@ -31,17 +31,13 @@ export const createBuiltinToolSlice: StateCreator<
   invokeBuiltinTool: async (key, params) => {
     const { builtinToolLoading, toggleBuiltinToolLoading } = get();
 
-    if (builtinToolLoading[key]) {
-      return;
-    }
+    if (builtinToolLoading[key]) {return;}
 
     toggleBuiltinToolLoading(key, true);
 
     const { [key as keyof BuiltinToolAction]: action } = get();
 
-    if (!action) {
-      return;
-    }
+    if (!action) {return;}
 
     // @ts-ignore
     const result = await action(params);

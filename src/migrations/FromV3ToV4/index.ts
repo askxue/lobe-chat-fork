@@ -35,9 +35,7 @@ export class MigrationV3ToV4 implements Migration {
   static migrateSettings = (settings: V3Settings): V4Settings => {
     const { languageModel } = settings;
 
-    if (!languageModel) {
-      return { ...settings, languageModel: undefined };
-    }
+    if (!languageModel) {return { ...settings, languageModel: undefined };}
 
     const { openAI, togetherai, openrouter, ollama, ...res } = languageModel;
     const { openai, azure } = this.migrateOpenAI(openAI);
@@ -58,12 +56,11 @@ export class MigrationV3ToV4 implements Migration {
   static migrateOpenAI = (
     openai?: V3OpenAIConfig
   ): { azure: V4AzureOpenAIConfig; openai: V4ProviderConfig } => {
-    if (!openai) {
-      return {
+    if (!openai)
+      {return {
         azure: { apiKey: '', enabled: false },
         openai: { apiKey: '', enabled: true }
-      };
-    }
+      };}
 
     if (openai.useAzure) {
       return {

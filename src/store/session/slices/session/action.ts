@@ -95,9 +95,7 @@ export const createSessionSlice: StateCreator<
   SessionAction
 > = (set, get) => ({
   activeSession: (sessionId) => {
-    if (get().activeId === sessionId) {
-      return;
-    }
+    if (get().activeId === sessionId) {return;}
 
     set({ activeId: sessionId }, false, n(`activeSession/${sessionId}`));
   },
@@ -125,9 +123,7 @@ export const createSessionSlice: StateCreator<
     await refreshSessions();
 
     // Whether to goto  to the new session after creation, the default is to switch to
-    if (isSwitchSession) {
-      activeSession(id);
-    }
+    if (isSwitchSession) {activeSession(id);}
 
     return id;
   },
@@ -135,9 +131,7 @@ export const createSessionSlice: StateCreator<
     const { activeSession, refreshSessions } = get();
     const session = sessionSelectors.getSessionById(id)(get());
 
-    if (!session) {
-      return;
-    }
+    if (!session) {return;}
     const title = sessionMetaSelectors.getTitle(session.meta);
 
     const newTitle = t('duplicateSession.title', { ns: 'chat', title: title });
@@ -193,9 +187,7 @@ export const createSessionSlice: StateCreator<
 
   updateSessionMeta: async (meta) => {
     const session = sessionSelectors.currentSession(get());
-    if (!session) {
-      return;
-    }
+    if (!session) {return;}
 
     const { activeId, refreshSessions } = get();
 
@@ -213,9 +205,8 @@ export const createSessionSlice: StateCreator<
             get().isSessionsFirstFetchFinished &&
             isEqual(get().sessions, data.sessions) &&
             isEqual(get().sessionGroups, data.sessionGroups)
-          ) {
-            return;
-          }
+          )
+            {return;}
 
           get().internal_processSessions(
             data.sessions,
@@ -234,9 +225,7 @@ export const createSessionSlice: StateCreator<
     useSWR<LobeSessions>(
       [SEARCH_SESSIONS_KEY, keyword],
       async () => {
-        if (!keyword) {
-          return [];
-        }
+        if (!keyword) {return [];}
 
         return sessionService.searchSessions(keyword);
       },

@@ -10,18 +10,18 @@ import { ModelProvider } from '@/libs/agent-runtime';
 import ProviderConfig from '../components/ProviderConfig';
 
 const GoogleProvider = memo(() => (
-  <ProviderConfig
-    checkModel={'gemini-pro'}
-    provider={ModelProvider.Google}
-    showEndpoint
-    title={
-      <Flexbox align={'center'} gap={8} horizontal>
-        <Google.BrandColor size={22} />
-        <Divider style={{ margin: '0 4px' }} type={'vertical'} />
-        <Gemini.Combine size={22} type={'color'} />
-      </Flexbox>
-    }
-  />
-));
+    <ProviderConfig
+      checkModel={'gemini-pro'}
+      provider={ModelProvider.Google}
+      showEndpoint
+      title={
+        <Flexbox align={'center'} gap={8} horizontal>
+          <Google.BrandColor size={22} />
+          <Divider style={{ margin: '0 4px' }} type={'vertical'} />
+          <Gemini.Combine size={22} type={'color'} />
+        </Flexbox>
+      }
+    />
+  ));
 
 export default GoogleProvider;

@@ -66,12 +66,8 @@ const run = async () => {
     const data = [...(item.children || []), ...(item.extra || [])];
     data
       .sort((a, b) => {
-        if (a.links.en.includes('index')) {
-          return -1;
-        }
-        if (b.links.en.includes('index')) {
-          return 1;
-        }
+        if (a.links.en.includes('index')) {return -1;}
+        if (b.links.en.includes('index')) {return 1;}
         return a.titles.en.localeCompare(b.titles.en);
       })
       .forEach((child: any) => {

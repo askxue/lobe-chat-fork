@@ -81,8 +81,8 @@ const AgentPrompt = memo<{ modal?: boolean }>(({ modal }) => {
     </Button>
   );
 
-  if (modal) {
-    return (
+  if (modal)
+    {return (
       <Form
         items={[
           {
@@ -100,8 +100,7 @@ const AgentPrompt = memo<{ modal?: boolean }>(({ modal }) => {
         variant={'pure'}
         {...FORM_STYLE}
       />
-    );
-  }
+    );}
 
   return (
     <div className={styles.wrapper}>

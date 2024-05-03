@@ -6,16 +6,20 @@ import { Topic } from './Topic';
 import TopicSearchBar from './TopicSearchBar';
 
 const TopicListContent = memo<{ mobile?: boolean }>(({ mobile }) => (
-  <Flexbox gap={mobile ? 8 : 0} height={'100%'} style={{ overflow: 'hidden' }}>
-    {mobile ? <TopicSearchBar /> : <Header />}
     <Flexbox
-      gap={16}
+      gap={mobile ? 8 : 0}
       height={'100%'}
-      style={{ paddingTop: 6, position: 'relative' }}
+      style={{ overflow: 'hidden' }}
     >
-      <Topic />
+      {mobile ? <TopicSearchBar /> : <Header />}
+      <Flexbox
+        gap={16}
+        height={'100%'}
+        style={{ paddingTop: 6, position: 'relative' }}
+      >
+        <Topic />
+      </Flexbox>
     </Flexbox>
-  </Flexbox>
-));
+  ));
 
 export default TopicListContent;

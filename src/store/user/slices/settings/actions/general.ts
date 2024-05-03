@@ -43,9 +43,7 @@ export const generalSettingsSlice: StateCreator<
 
     const nextSettings = merge(prevSetting, settings);
 
-    if (isEqual(prevSetting, nextSettings)) {
-      return;
-    }
+    if (isEqual(prevSetting, nextSettings)) {return;}
 
     const diffs = difference(nextSettings, defaultSettings);
 

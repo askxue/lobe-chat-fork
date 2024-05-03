@@ -66,6 +66,7 @@ const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const prev = current.nextSibling as HTMLInputElement | null;
     prev?.focus();
     prev?.setSelectionRange(0, 1);
+
   }
 };
 
@@ -97,9 +98,7 @@ const OtpInput = memo<OtpInputProps>((props) => {
     const val = e.target.value;
 
     // check if the value is valid
-    if (!validationPattern.test(val) && val !== '') {
-      return;
-    }
+    if (!validationPattern.test(val) && val !== '') {return;}
 
     // change the value using onChange props
     const valueArr = value?.split('') || [];
@@ -124,19 +123,19 @@ const OtpInput = memo<OtpInputProps>((props) => {
   return (
     <Flexbox gap={12} horizontal>
       {arr.map((_, index) => (
-        <input
-          key={index}
-          {...restProps}
-          className={cx(styles, className)}
-          maxLength={6}
-          onChange={(e) => handleInputChange(e, index)}
-          onKeyUp={handleKeyUp}
-          onPaste={handlePaste}
-          pattern={validationPattern.source}
-          type="text"
-          value={value?.at(index) ?? ''}
-        />
-      ))}
+          <input
+            key={index}
+            {...restProps}
+            className={cx(styles, className)}
+            maxLength={6}
+            onChange={(e) => handleInputChange(e, index)}
+            onKeyUp={handleKeyUp}
+            onPaste={handlePaste}
+            pattern={validationPattern.source}
+            type="text"
+            value={value?.at(index) ?? ''}
+          />
+        ))}
     </Flexbox>
   );
 });

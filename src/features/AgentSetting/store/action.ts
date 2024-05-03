@@ -105,9 +105,7 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (
 
     const systemRole = config.systemRole;
 
-    if (!systemRole) {
-      return;
-    }
+    if (!systemRole) {return;}
 
     const preValue = meta.description;
 
@@ -139,9 +137,7 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (
 
     const systemRole = config.systemRole;
 
-    if (!systemRole) {
-      return;
-    }
+    if (!systemRole) {return;}
 
     const preValue = meta.tags;
 
@@ -175,9 +171,7 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (
 
     const systemRole = config.systemRole;
 
-    if (!systemRole) {
-      return;
-    }
+    if (!systemRole) {return;}
 
     const previousTitle = meta.title;
 
@@ -245,6 +239,7 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (
 
       case 'tags': {
         autocompleteAgentTags();
+
       }
     }
   },

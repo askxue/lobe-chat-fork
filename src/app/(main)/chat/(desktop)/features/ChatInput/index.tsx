@@ -28,9 +28,7 @@ const ChatInput = memo(() => {
       maxHeight={CHAT_TEXTAREA_MAX_HEIGHT}
       minHeight={CHAT_TEXTAREA_HEIGHT}
       onSizeChange={(_, size) => {
-        if (!size) {
-          return;
-        }
+        if (!size) {return;}
 
         updatePreference({
           inputHeight:

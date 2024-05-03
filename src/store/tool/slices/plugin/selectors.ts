@@ -16,9 +16,7 @@ const getInstalledPluginById = (id: string) => (s: ToolStoreState) =>
 const getPluginMetaById = (id: string) => (s: ToolStoreState) => {
   // first try to find meta from store
   const storeMeta = s.pluginStoreList.find((i) => i.identifier === id)?.meta;
-  if (storeMeta) {
-    return storeMeta;
-  }
+  if (storeMeta) {return storeMeta;}
 
   // then use installed meta
   return getInstalledPluginById(id)(s)?.manifest?.meta;

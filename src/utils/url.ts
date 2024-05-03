@@ -17,11 +17,7 @@ export const pathString = (
   const tempBase = 'https://a.com';
   const url = new URL(path, tempBase);
 
-  if (hash) {
-    url.hash = hash;
-  }
-  if (search) {
-    url.search = search;
-  }
+  if (hash) {url.hash = hash;}
+  if (search) {url.search = search;}
   return url.toString().replace(tempBase, '');
 };

@@ -24,9 +24,7 @@ export class LobeOllamaAI implements LobeRuntimeAI {
 
   constructor({ baseURL }: ClientOptions) {
     try {
-      if (baseURL) {
-        new URL(baseURL);
-      }
+      if (baseURL) {new URL(baseURL);}
     } catch {
       throw AgentRuntimeError.createError(
         AgentRuntimeErrorType.InvalidOllamaArgs
@@ -35,9 +33,7 @@ export class LobeOllamaAI implements LobeRuntimeAI {
 
     this.client = new Ollama(!baseURL ? undefined : { host: baseURL });
 
-    if (baseURL) {
-      this.baseURL = baseURL;
-    }
+    if (baseURL) {this.baseURL = baseURL;}
   }
 
   async chat(payload: ChatStreamPayload, options?: ChatCompetitionOptions) {

@@ -16,16 +16,14 @@ export const updateDocs = (path: string, content: string) => {
 
 export const convertMarkdownToMdast = async (md: string) =>
   // @ts-ignore
-  unified().use(remarkParse).use(remarkGfm).parse(md.trim());
+   unified().use(remarkParse).use(remarkGfm).parse(md.trim());
 export const getTitle = async (path: string) => {
   const md = readFileSync(path, 'utf8');
   const mdast: any = await convertMarkdownToMdast(md);
 
   let title = '';
   visit(mdast, 'heading', (node) => {
-    if (node.depth !== 1) {
-      return;
-    }
+    if (node.depth !== 1) {return;}
     visit(node, 'text', (heading) => {
       title += heading.value;
     });

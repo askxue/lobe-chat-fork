@@ -19,16 +19,12 @@ class GlobalService {
     return data['dist-tags']?.latest;
   };
 
-  getGlobalConfig = async (): Promise<GlobalServerConfig> =>
-    trpcClient.config.getGlobalConfig.query();
+  getGlobalConfig = async (): Promise<GlobalServerConfig> => trpcClient.config.getGlobalConfig.query();
 
-  getDefaultAgentConfig = async (): Promise<DeepPartial<LobeAgentConfig>> =>
-    trpcClient.config.getDefaultAgentConfig.query();
+  getDefaultAgentConfig = async (): Promise<DeepPartial<LobeAgentConfig>> => trpcClient.config.getDefaultAgentConfig.query();
 
   enabledSync = async (params: StartDataSyncParams) => {
-    if (typeof window === 'undefined') {
-      return false;
-    }
+    if (typeof window === 'undefined') {return false;}
 
     await dataSync.startDataSync(params);
     return true;

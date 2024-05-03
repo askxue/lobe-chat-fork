@@ -40,9 +40,7 @@ export const chatToolSlice: StateCreator<
       chatSelectors.getMessageById(id)(get());
 
     const message = getMessageById(messageId);
-    if (!message) {
-      return;
-    }
+    if (!message) {return;}
 
     const parent = getMessageById(message!.parentId!);
     const originPrompt = parent?.content;
@@ -85,9 +83,7 @@ export const chatToolSlice: StateCreator<
   },
   updateImageItem: async (id, updater) => {
     const message = chatSelectors.getMessageById(id)(get());
-    if (!message) {
-      return;
-    }
+    if (!message) {return;}
 
     const data: DallEImageItem[] = JSON.parse(message.content);
 

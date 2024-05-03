@@ -16,9 +16,7 @@ class _UserModel extends BaseModel {
   getUser = async (): Promise<DB_User & { id: number }> => {
     const noUser = !(await this.table.count());
 
-    if (noUser) {
-      await this.table.put({ uuid: uuid() });
-    }
+    if (noUser) {await this.table.put({ uuid: uuid() });}
 
     const list = (await this.table.toArray()) as (DB_User & { id: number })[];
 
@@ -62,8 +60,7 @@ class _UserModel extends BaseModel {
 
   // **************** Helper *************** //
 
-  private update = async (id: number, value: DeepPartial<DB_User>) =>
-    this.table.update(id, value);
+  private update = async (id: number, value: DeepPartial<DB_User>) => this.table.update(id, value);
 }
 
 export const UserModel = new _UserModel();

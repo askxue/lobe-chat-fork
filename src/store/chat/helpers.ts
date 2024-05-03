@@ -14,14 +14,10 @@ const getSlicedMessagesWithConfig = (
   config: LobeAgentConfig
 ): ChatMessage[] => {
   // if historyCount is not enabled or set to 0, return all messages
-  if (!config.enableHistoryCount || !config.historyCount) {
-    return messages;
-  }
+  if (!config.enableHistoryCount || !config.historyCount) {return messages;}
 
   // if historyCount is negative, return empty array
-  if (config.historyCount <= 0) {
-    return [];
-  }
+  if (config.historyCount <= 0) {return [];}
 
   // if historyCount is positive, return last N messages
   return messages.slice(-config.historyCount);

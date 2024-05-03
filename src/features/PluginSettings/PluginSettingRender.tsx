@@ -65,16 +65,15 @@ const PluginSettingRender = memo<PluginSettingsProps>(
       }
 
       case 'number': {
-        if (typeof minimum === 'number' || typeof maximum === 'number') {
-          return (
+        if (typeof minimum === 'number' || typeof maximum === 'number')
+          {return (
             <Slider
               defaultValue={defaultValue}
               max={maximum}
               min={minimum}
               {...props}
             />
-          );
-        }
+          );}
         return (
           <InputNumber
             {...props}

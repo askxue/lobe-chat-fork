@@ -14,9 +14,7 @@ export const generateMetadata = async () => {
 
 export default () => {
   const showLLM = serverFeatureFlags().showLLM;
-  if (!showLLM) {
-    return notFound();
-  }
+  if (!showLLM) {return notFound();}
 
   return <Page />;
 };

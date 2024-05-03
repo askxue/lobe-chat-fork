@@ -29,9 +29,7 @@ const AgentModalInner = memo<{ mobile?: boolean }>(({ mobile }) => {
   const { data, isLoading } = useFetchAgent(currentIdentifier);
   const { styles } = useStyles();
 
-  if (isLoading || !data?.meta) {
-    return <Loading />;
-  }
+  if (isLoading || !data?.meta) {return <Loading />;}
 
   const { config, meta, identifier } = data;
   const { systemRole } = config;

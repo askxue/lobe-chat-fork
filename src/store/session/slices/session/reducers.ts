@@ -28,9 +28,7 @@ export const sessionsReducer = (
     case 'addSession': {
       return produce(state, (draft) => {
         const { session } = payload;
-        if (!session) {
-          return;
-        }
+        if (!session) {return;}
 
         // TODO: 后续将 Date 类型做个迁移，就可以移除这里的 ignore 了
         // @ts-ignore

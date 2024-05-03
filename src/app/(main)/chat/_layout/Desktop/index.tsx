@@ -4,18 +4,18 @@ import { LayoutProps } from '../type';
 import ResponsiveSessionList from './SessionList';
 
 const Layout = ({ children }: LayoutProps) => (
-  <>
-    <ResponsiveSessionList />
-    <Flexbox
-      flex={1}
-      height={'100%'}
-      id={'lobe-conversion-container'}
-      style={{ position: 'relative' }}
-    >
-      {children}
-    </Flexbox>
-  </>
-);
+    <>
+      <ResponsiveSessionList />
+      <Flexbox
+        flex={1}
+        height={'100%'}
+        id={'lobe-conversion-container'}
+        style={{ position: 'relative' }}
+      >
+        {children}
+      </Flexbox>
+    </>
+  );
 
 Layout.displayName = 'DesktopChatLayout';
 

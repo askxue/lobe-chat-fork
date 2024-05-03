@@ -78,9 +78,7 @@ export const llmSettingsSlice: StateCreator<
   dispatchCustomModelCards: async (provider, payload) => {
     const prevState = settingsSelectors.providerConfig(provider)(get());
 
-    if (!prevState) {
-      return;
-    }
+    if (!prevState) {return;}
 
     const nextState = customModelCardsReducer(
       prevState.customModelCards,
@@ -164,9 +162,7 @@ export const llmSettingsSlice: StateCreator<
             get()
           );
 
-          if (!models) {
-            return model;
-          }
+          if (!models) {return model;}
 
           return {
             ...model,

@@ -62,8 +62,8 @@ const ModelSwitchPanel = memo<PropsWithChildren>(({ children }) => {
       }));
 
       // if there is empty items, add a placeholder guide
-      if (items.length === 0) {
-        return [
+      if (items.length === 0)
+        {return [
           {
             key: 'empty',
             label: (
@@ -80,8 +80,7 @@ const ModelSwitchPanel = memo<PropsWithChildren>(({ children }) => {
               router.push(withBasePath('/settings/llm'));
             }
           }
-        ];
-      }
+        ];}
 
       return items;
     };

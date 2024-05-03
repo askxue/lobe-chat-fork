@@ -24,13 +24,12 @@ export const getErrorAlertConfig = (
   if (
     typeof errorType === 'string' &&
     (errorType.includes('Biz') || errorType.includes('Invalid'))
-  ) {
-    return {
+  )
+    {return {
       extraDefaultExpand: true,
       extraIsolate: true,
       type: 'warning'
-    };
-  }
+    };}
 
   switch (errorType) {
     case AgentRuntimeErrorType.LocationNotSupportError: {
@@ -55,9 +54,7 @@ export const getErrorAlertConfig = (
 
 const ErrorMessageExtra = memo<{ data: ChatMessage }>(({ data }) => {
   const error = data.error as ChatMessageError;
-  if (!error?.type) {
-    return;
-  }
+  if (!error?.type) {return;}
 
   switch (error.type) {
     case PluginErrorType.PluginSettingsInvalid: {

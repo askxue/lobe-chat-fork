@@ -31,9 +31,7 @@ const MobileContentLayout = ({
     </Flexbox>
   );
 
-  if (!header) {
-    return content;
-  }
+  if (!header) {return content;}
 
   return (
     <Flexbox

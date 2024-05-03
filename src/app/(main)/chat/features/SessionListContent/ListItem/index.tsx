@@ -6,24 +6,24 @@ import { memo, useMemo, useRef } from 'react';
 const { Item } = List;
 
 const useStyles = createStyles(({ css, token, responsive }) => ({
-  container: css`
-    position: relative;
+    container: css`
+      position: relative;
 
-    margin-block: 2px;
-    padding-right: 16px;
-    padding-left: 8px;
+      margin-block: 2px;
+      padding-right: 16px;
+      padding-left: 8px;
 
-    border-radius: ${token.borderRadius}px;
-    ${responsive.mobile} {
-      margin-block: 0;
-      padding-left: 12px;
-      border-radius: 0;
-    }
-  `,
-  title: css`
-    line-height: 1.2;
-  `
-}));
+      border-radius: ${token.borderRadius}px;
+      ${responsive.mobile} {
+        margin-block: 0;
+        padding-left: 12px;
+        border-radius: 0;
+      }
+    `,
+    title: css`
+      line-height: 1.2;
+    `
+  }));
 
 const ListItem = memo<
   ListItemProps & { avatar: string; avatarBackground?: string }

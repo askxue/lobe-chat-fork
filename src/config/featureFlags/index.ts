@@ -33,14 +33,14 @@ export const DEFAULT_FEATURE_FLAGS: IFeatureFlags = {
 };
 
 export const mapFeatureFlagsEnvToState = (config: IFeatureFlags) => ({
-  enableWebrtc: config.webrtc_sync,
-  isAgentEditable: config.edit_agent,
+    enableWebrtc: config.webrtc_sync,
+    isAgentEditable: config.edit_agent,
 
-  showCreateSession: config.create_session,
-  showLLM: config.language_model_settings,
+    showCreateSession: config.create_session,
+    showLLM: config.language_model_settings,
 
-  showOpenAIApiKey: config.openai_api_key,
-  showOpenAIProxyUrl: config.openai_proxy_url,
+    showOpenAIApiKey: config.openai_api_key,
+    showOpenAIProxyUrl: config.openai_proxy_url,
 
-  showDalle: config.dalle
-});
+    showDalle: config.dalle
+  });

@@ -6,14 +6,11 @@ import { ssoProviders } from './sso-providers';
 
 const { NEXTAUTH_SECRET, ENABLE_OAUTH_SSO, SSO_PROVIDERS } = getServerConfig();
 
-export const initSSOProviders = () =>
-  ENABLE_OAUTH_SSO
+export const initSSOProviders = () => ENABLE_OAUTH_SSO
     ? SSO_PROVIDERS.split(/[,，]/).map((provider) => {
         const validProvider = ssoProviders.find((item) => item.id === provider);
 
-        if (validProvider) {
-          return validProvider.provider;
-        }
+        if (validProvider) {return validProvider.provider;}
 
         throw new Error(`[NextAuth] provider ${provider} is not supported`);
       })
