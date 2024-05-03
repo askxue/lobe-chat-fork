@@ -11,7 +11,7 @@ const Anthropic: ModelProviderCard = {
       id: 'claude-3-sonnet-20240229',
       maxOutput: 4096,
       tokens: 200_000,
-      vision: true,
+      vision: true
     },
     {
       description:
@@ -21,7 +21,7 @@ const Anthropic: ModelProviderCard = {
       id: 'claude-3-opus-20240229',
       maxOutput: 4096,
       tokens: 200_000,
-      vision: true,
+      vision: true
     },
     {
       description:
@@ -31,31 +31,31 @@ const Anthropic: ModelProviderCard = {
       id: 'claude-3-haiku-20240307',
       maxOutput: 4096,
       tokens: 200_000,
-      vision: true,
+      vision: true
     },
     {
       displayName: 'Claude 2.1',
       enabled: false,
       id: 'claude-2.1',
       maxOutput: 4096,
-      tokens: 200_000,
+      tokens: 200_000
     },
     {
       displayName: 'Claude 2.0',
       enabled: false,
       id: 'claude-2.0',
       maxOutput: 4096,
-      tokens: 100_000,
+      tokens: 100_000
     },
     {
       displayName: 'Claude Instant 1.2',
       enabled: false,
       id: 'claude-instant-1.2',
       maxOutput: 4096,
-      tokens: 100_000,
-    },
+      tokens: 100_000
+    }
   ],
-  id: 'anthropic',
+  id: 'anthropic'
 };
 
 export default Anthropic;

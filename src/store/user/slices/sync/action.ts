@@ -21,7 +21,7 @@ export interface SyncAction {
   useEnabledSync: (
     userEnableSync: boolean,
     userId: string | undefined,
-    onEvent: OnSyncEvent,
+    onEvent: OnSyncEvent
   ) => SWRResponse;
 }
 
@@ -53,7 +53,7 @@ export const createSyncSlice: StateCreator<
     return globalService.enabledSync({
       channel: {
         name: sync.channelName,
-        password: sync.channelPassword,
+        password: sync.channelPassword
       },
       onAwarenessChange(state) {
         set({ syncAwareness: state });
@@ -67,8 +67,8 @@ export const createSyncSlice: StateCreator<
         id: userId,
         // if user don't set the name, use default name
         name: name || defaultUserName,
-        ...browserInfo,
-      },
+        ...browserInfo
+      }
     });
   },
 
@@ -88,7 +88,7 @@ export const createSyncSlice: StateCreator<
         onSuccess: (syncEnabled) => {
           set({ syncEnabled }, false, n('useEnabledSync'));
         },
-        revalidateOnFocus: false,
-      },
-    ),
+        revalidateOnFocus: false
+      }
+    )
 });

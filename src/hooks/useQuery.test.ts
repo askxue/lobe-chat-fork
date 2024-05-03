@@ -6,7 +6,7 @@ import { useQuery } from './useQuery';
 
 // Mocks
 vi.mock('next/navigation', () => ({
-  useSearchParams: vi.fn(() => 'baz=qux&foo=bar'),
+  useSearchParams: vi.fn(() => 'baz=qux&foo=bar')
 }));
 
 describe('useQuery', () => {
@@ -14,7 +14,7 @@ describe('useQuery', () => {
     const { result } = renderHook(() => useQuery());
     expect(result.current).toEqual({
       baz: 'qux',
-      foo: 'bar',
+      foo: 'bar'
     });
   });
 });

@@ -10,7 +10,7 @@ const initialStore = initialState as ChatStore;
 
 const mockTopics = [
   { id: 'topic1', name: 'Topic 1' },
-  { id: 'topic2', name: 'Topic 2' },
+  { id: 'topic2', name: 'Topic 2' }
 ];
 
 describe('topicSelectors', () => {

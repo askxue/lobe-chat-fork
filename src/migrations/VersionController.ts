@@ -54,12 +54,20 @@ export class VersionController<T> {
 
     for (let i = currentVersion || 0; i < targetVersion; i++) {
       const migration = this.migrations.find((m) => m.version === i);
-      if (!migration) throw new Error(t('migrateError.noMigration', { ns: 'migration' }));
+      if (!migration)
+        throw new Error(t('migrateError.noMigration', { ns: 'migration' }));
 
       nextData = migration.migrate(nextData);
 
       nextData.version += 1;
-      console.debug('迁移器：', migration, '数据：', nextData, '迁移后版本:', nextData.version);
+      console.debug(
+        '迁移器：',
+        migration,
+        '数据：',
+        nextData,
+        '迁移后版本:',
+        nextData.version
+      );
     }
 
     return nextData;

@@ -12,9 +12,11 @@ export const desensitizeUrl = (url: string) => {
       if (hostnameParts[secondLevelDomainIndex].length < 5) {
         hostnameParts[secondLevelDomainIndex] = '***';
       } else {
-        hostnameParts[secondLevelDomainIndex] = hostnameParts[secondLevelDomainIndex].replace(
+        hostnameParts[secondLevelDomainIndex] = hostnameParts[
+          secondLevelDomainIndex
+        ].replace(
           /^(.*?)(\w{2})(\w+)(\w{2})$/,
-          (_, prefix, start, middle, end) => `${prefix}${start}****${end}`,
+          (_, prefix, start, middle, end) => `${prefix}${start}****${end}`
         );
       }
     }

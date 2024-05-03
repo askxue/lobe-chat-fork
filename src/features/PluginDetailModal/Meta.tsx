@@ -20,13 +20,16 @@ const useStyles = createStyles(({ css, token }) => ({
     font-size: 20px;
     font-weight: 600;
     text-align: center;
-  `,
+  `
 }));
 
 const Meta = memo<{
   id: string;
 }>(({ id }) => {
-  const pluginMeta = useToolStore(pluginSelectors.getPluginMetaById(id), isEqual);
+  const pluginMeta = useToolStore(
+    pluginSelectors.getPluginMetaById(id),
+    isEqual
+  );
   const { styles, theme } = useStyles();
 
   return (
@@ -39,17 +42,23 @@ const Meta = memo<{
         size={100}
       />
 
-      <div className={styles.title}>{pluginHelpers.getPluginTitle(pluginMeta)}</div>
+      <div className={styles.title}>
+        {pluginHelpers.getPluginTitle(pluginMeta)}
+      </div>
       {(pluginMeta?.tags as string[])?.length > 0 && (
         <Center gap={6} horizontal style={{ flexWrap: 'wrap' }}>
-          {(pluginHelpers.getPluginTags(pluginMeta) as string[]).map((tag: string, index) => (
-            <Tag key={index} style={{ margin: 0 }}>
-              {startCase(tag).trim()}
-            </Tag>
-          ))}
+          {(pluginHelpers.getPluginTags(pluginMeta) as string[]).map(
+            (tag: string, index) => (
+              <Tag key={index} style={{ margin: 0 }}>
+                {startCase(tag).trim()}
+              </Tag>
+            )
+          )}
         </Center>
       )}
-      <div className={styles.desc}>{pluginHelpers.getPluginDesc(pluginMeta)}</div>
+      <div className={styles.desc}>
+        {pluginHelpers.getPluginDesc(pluginMeta)}
+      </div>
     </Center>
   );
 });

@@ -12,7 +12,7 @@ describe('UserModel', () => {
     userData = {
       uuid: 'user1',
       settings: {},
-      avatar: 'avatar.png',
+      avatar: 'avatar.png'
     };
   });
 
@@ -32,8 +32,8 @@ describe('UserModel', () => {
       expect.objectContaining({
         uuid: userData.uuid,
         settings: userData.settings,
-        avatar: userData.avatar,
-      }),
+        avatar: userData.avatar
+      })
     );
   });
 

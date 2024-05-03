@@ -8,7 +8,7 @@ import {
   LucideBugOff,
   LucideChevronDown,
   LucideChevronUp,
-  LucideToyBrick,
+  LucideToyBrick
 } from 'lucide-react';
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -40,7 +40,7 @@ const Inspector = memo<InspectorProps>(
     loading,
     setShow,
     content,
-    id = 'unknown',
+    id = 'unknown'
     // type,
   }) => {
     const { t } = useTranslation('plugin');
@@ -52,7 +52,8 @@ const Inspector = memo<InspectorProps>(
     const showRightAction = useToolStore(pluginSelectors.isPluginHasUI(id));
     const pluginAvatar = pluginHelpers.getPluginAvatar(pluginMeta);
 
-    const pluginTitle = pluginHelpers.getPluginTitle(pluginMeta) ?? t('plugins.loading');
+    const pluginTitle =
+      pluginHelpers.getPluginTitle(pluginMeta) ?? t('plugins.loading');
 
     const avatar = pluginAvatar ? (
       <Avatar avatar={pluginAvatar} size={32} />
@@ -71,7 +72,12 @@ const Inspector = memo<InspectorProps>(
 
     return (
       <Flexbox gap={8}>
-        <Flexbox align={'center'} distribution={'space-between'} gap={24} horizontal>
+        <Flexbox
+          align={'center'}
+          distribution={'space-between'}
+          gap={24}
+          horizontal
+        >
           <Flexbox
             align={'center'}
             className={styles.container}
@@ -89,7 +95,9 @@ const Inspector = memo<InspectorProps>(
               avatar
             )}
             {pluginTitle}
-            {showRightAction && <Icon icon={showRender ? LucideChevronUp : LucideChevronDown} />}
+            {showRightAction && (
+              <Icon icon={showRender ? LucideChevronUp : LucideChevronDown} />
+            )}
           </Flexbox>
           {
             <Flexbox horizontal>
@@ -111,25 +119,25 @@ const Inspector = memo<InspectorProps>(
               {
                 children: <Highlighter language={'json'}>{args}</Highlighter>,
                 key: 'function_call',
-                label: t('debug.function_call'),
+                label: t('debug.function_call')
               },
               {
                 children: <Highlighter language={'json'}>{params}</Highlighter>,
                 key: 'arguments',
-                label: t('debug.arguments'),
+                label: t('debug.arguments')
               },
               {
                 children: <PluginResult content={content} />,
                 key: 'response',
-                label: t('debug.response'),
-              },
+                label: t('debug.response')
+              }
             ]}
             style={{ display: 'grid', maxWidth: 800, minWidth: 400 }}
           />
         )}
       </Flexbox>
     );
-  },
+  }
 );
 
 export default Inspector;

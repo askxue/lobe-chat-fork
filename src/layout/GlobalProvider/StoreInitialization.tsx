@@ -13,14 +13,19 @@ import { useGlobalStore } from '@/store/global';
 import { useUserStore } from '@/store/user';
 
 const StoreInitialization = memo(() => {
-  const [useFetchServerConfig, useFetchUserConfig, useInitPreference] = useUserStore((s) => [
-    s.useFetchServerConfig,
-    s.useFetchUserConfig,
-    s.useInitPreference,
-  ]);
-  const useInitGlobalPreference = useGlobalStore((s) => s.useInitGlobalPreference);
+  const [useFetchServerConfig, useFetchUserConfig, useInitPreference] =
+    useUserStore((s) => [
+      s.useFetchServerConfig,
+      s.useFetchUserConfig,
+      s.useInitPreference
+    ]);
+  const useInitGlobalPreference = useGlobalStore(
+    (s) => s.useInitGlobalPreference
+  );
 
-  const useFetchDefaultAgentConfig = useAgentStore((s) => s.useFetchDefaultAgentConfig);
+  const useFetchDefaultAgentConfig = useAgentStore(
+    (s) => s.useFetchDefaultAgentConfig
+  );
   // init the system preference
   useInitPreference();
   useInitGlobalPreference();

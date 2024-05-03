@@ -9,14 +9,14 @@ import { initialState } from '@/store/global/initialState';
 vi.mock('zustand/traditional');
 
 vi.mock('@/utils/client/switchLang', () => ({
-  switchLang: vi.fn(),
+  switchLang: vi.fn()
 }));
 
 vi.mock('swr', async (importOriginal) => {
   const modules = await importOriginal();
   return {
     ...(modules as any),
-    mutate: vi.fn(),
+    mutate: vi.fn()
   };
 });
 
@@ -51,7 +51,9 @@ describe('createPreferenceSlice', () => {
         result.current.toggleExpandSessionGroup(groupId, true);
       });
 
-      expect(result.current.preference.expandSessionGroupKeys).toContain(groupId);
+      expect(result.current.preference.expandSessionGroupKeys).toContain(
+        groupId
+      );
     });
   });
 
@@ -111,11 +113,16 @@ describe('createPreferenceSlice', () => {
     it('should set hasNewVersion to false if there is no new version', async () => {
       const latestVersion = '0.0.1';
 
-      vi.spyOn(globalService, 'getLatestVersion').mockResolvedValueOnce(latestVersion);
+      vi.spyOn(globalService, 'getLatestVersion').mockResolvedValueOnce(
+        latestVersion
+      );
 
-      const { result } = renderHook(() => useGlobalStore().useCheckLatestVersion(), {
-        wrapper: withSWR,
-      });
+      const { result } = renderHook(
+        () => useGlobalStore().useCheckLatestVersion(),
+        {
+          wrapper: withSWR
+        }
+      );
 
       await waitFor(() => {
         expect(result.current.data).toBe(latestVersion);
@@ -128,11 +135,16 @@ describe('createPreferenceSlice', () => {
     it('should set hasNewVersion to true if there is a new version', async () => {
       const latestVersion = '10000000.0.0';
 
-      vi.spyOn(globalService, 'getLatestVersion').mockResolvedValueOnce(latestVersion);
+      vi.spyOn(globalService, 'getLatestVersion').mockResolvedValueOnce(
+        latestVersion
+      );
 
-      const { result } = renderHook(() => useGlobalStore().useCheckLatestVersion(), {
-        wrapper: withSWR,
-      });
+      const { result } = renderHook(
+        () => useGlobalStore().useCheckLatestVersion(),
+        {
+          wrapper: withSWR
+        }
+      );
 
       await waitFor(() => {
         expect(result.current.data).toBe(latestVersion);
@@ -147,30 +159,38 @@ describe('createPreferenceSlice', () => {
     it('should init global preference if there is empty object', async () => {
       vi.spyOn(
         useGlobalStore.getState().preferenceStorage,
-        'getFromLocalStorage',
+        'getFromLocalStorage'
       ).mockReturnValueOnce({} as any);
 
-      const { result } = renderHook(() => useGlobalStore().useInitGlobalPreference(), {
-        wrapper: withSWR,
-      });
+      const { result } = renderHook(
+        () => useGlobalStore().useInitGlobalPreference(),
+        {
+          wrapper: withSWR
+        }
+      );
 
       await waitFor(() => {
         expect(result.current.data).toEqual({});
       });
 
-      expect(useGlobalStore.getState().preference).toEqual(initialState.preference);
+      expect(useGlobalStore.getState().preference).toEqual(
+        initialState.preference
+      );
     });
 
     it('should update with data', async () => {
       const { result } = renderHook(() => useGlobalStore());
       vi.spyOn(
         useGlobalStore.getState().preferenceStorage,
-        'getFromLocalStorage',
+        'getFromLocalStorage'
       ).mockReturnValueOnce({ inputHeight: 300 } as any);
 
-      const { result: hooks } = renderHook(() => result.current.useInitGlobalPreference(), {
-        wrapper: withSWR,
-      });
+      const { result: hooks } = renderHook(
+        () => result.current.useInitGlobalPreference(),
+        {
+          wrapper: withSWR
+        }
+      );
 
       await waitFor(() => {
         expect(hooks.current.data).toEqual({ inputHeight: 300 });

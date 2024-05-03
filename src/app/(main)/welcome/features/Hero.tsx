@@ -23,7 +23,7 @@ const useStyles = createStyles(({ css, token }) => {
       line-height: 1;
       text-align: center;
       text-wrap: balance;
-    `,
+    `
   };
 });
 

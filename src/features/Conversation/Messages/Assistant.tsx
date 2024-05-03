@@ -13,7 +13,9 @@ export const AssistantMessage = memo<
     editableContent: ReactNode;
   }
 >(({ id, plugin, content, ...props }) => {
-  const fcProps = useChatStore(chatSelectors.getFunctionMessageProps({ content, id, plugin }));
+  const fcProps = useChatStore(
+    chatSelectors.getFunctionMessageProps({ content, id, plugin })
+  );
 
   if (!isFunctionMessageAtStart(content))
     return <DefaultMessage content={content} id={id} {...props} />;

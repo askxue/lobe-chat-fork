@@ -15,13 +15,14 @@ const useStyles = createStyles(({ css, token, prefixCls, isDarkMode }) => ({
           ${rgba(token.colorBgElevated, 0)},
           ${token.colorBgContainer} ${isDarkMode ? '80' : '140'}px
         ),
-        fixed 0 0 /10px 10px radial-gradient(${token.colorFill} 1px, transparent 0);
+        fixed 0 0 /10px 10px radial-gradient(${token.colorFill} 1px, transparent
+              0);
     }
 
     & .${prefixCls}-modal-title {
       font-size: 24px;
     }
-  `,
+  `
 }));
 
 interface DataStyleModalProps {
@@ -42,7 +43,7 @@ const DataStyleModal = memo<DataStyleModalProps>(
         afterOpenChange={onOpenChange}
         centered
         classNames={{
-          header: styles.modalTitle,
+          header: styles.modalTitle
         }}
         closable={false}
         footer={null}
@@ -58,7 +59,7 @@ const DataStyleModal = memo<DataStyleModalProps>(
         {children}
       </Modal>
     );
-  },
+  }
 );
 
 export default DataStyleModal;

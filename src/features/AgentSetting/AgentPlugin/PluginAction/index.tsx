@@ -8,11 +8,14 @@ import { useToolStore } from '@/store/tool';
 import { useStore } from '../../store';
 
 const PluginSwitch = memo<{ identifier: string }>(({ identifier }) => {
-  const pluginManifestLoading = useToolStore((s) => s.pluginInstallLoading, isEqual);
+  const pluginManifestLoading = useToolStore(
+    (s) => s.pluginInstallLoading,
+    isEqual
+  );
   const [userEnabledPlugins, hasPlugin, toggleAgentPlugin] = useStore((s) => [
     s.config.plugins || [],
     !!s.config.plugins,
-    s.toggleAgentPlugin,
+    s.toggleAgentPlugin
   ]);
 
   return (

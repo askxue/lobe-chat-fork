@@ -9,7 +9,7 @@ export type DBModel<T> = T & {
 export const DBBaseFieldsSchema = z.object({
   createdAt: z.number(),
   id: z.string(),
-  updatedAt: z.number(),
+  updatedAt: z.number()
 });
 
 export const LOBE_CHAT_LOCAL_DB_NAME = 'LOBE_CHAT_DB';

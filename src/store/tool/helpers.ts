@@ -3,7 +3,8 @@ import { PluginSchema } from '@lobehub/chat-plugin-sdk';
 import { MetaData } from '@/types/meta';
 import { LobeTool } from '@/types/tool';
 
-const getPluginFormList = (list: LobeTool[], id: string) => list?.find((p) => p.identifier === id);
+const getPluginFormList = (list: LobeTool[], id: string) =>
+  list?.find((p) => p.identifier === id);
 
 const getPluginTitle = (meta?: MetaData) => meta?.title;
 const getPluginDesc = (meta?: MetaData) => meta?.description;
@@ -24,5 +25,5 @@ export const pluginHelpers = {
   getPluginTags,
   getPluginTitle,
   isCustomPlugin,
-  isSettingSchemaNonEmpty,
+  isSettingSchemaNonEmpty
 };

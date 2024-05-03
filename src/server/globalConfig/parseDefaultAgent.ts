@@ -26,13 +26,18 @@ export const parseAgentConfig = (envStr: string) => {
       finalValue = Number(value);
     }
     // Handle boolean values
-    else if (value.toLowerCase() === 'true' || value.toLowerCase() === 'false') {
+    else if (
+      value.toLowerCase() === 'true' ||
+      value.toLowerCase() === 'false'
+    ) {
       finalValue = value.toLowerCase() === 'true';
     }
     // Handle arrays
     else if (value.includes(',') || value.includes('，')) {
       const array = value.replaceAll('，', ',').split(',');
-      finalValue = array.map((item) => (isNaN(item as any) ? item : Number(item)));
+      finalValue = array.map((item) =>
+        isNaN(item as any) ? item : Number(item)
+      );
     }
 
     // handle plugins if it's a string

@@ -17,7 +17,7 @@ import { ErrorActionContainer } from './style';
 enum Tab {
   Api = 'api',
   Oauth = 'oauth',
-  Password = 'password',
+  Password = 'password'
 }
 
 interface InvalidAccessCodeProps {
@@ -27,7 +27,9 @@ interface InvalidAccessCodeProps {
 
 const InvalidAccessCode = memo<InvalidAccessCodeProps>(({ id, provider }) => {
   const { t } = useTranslation('error');
-  const isEnabledOAuth = useServerConfigStore(serverConfigSelectors.enabledOAuthSSO);
+  const isEnabledOAuth = useServerConfigStore(
+    serverConfigSelectors.enabledOAuthSSO
+  );
   const defaultTab = isEnabledOAuth ? Tab.Oauth : Tab.Password;
   const [mode, setMode] = useState<Tab>(defaultTab);
 
@@ -42,15 +44,19 @@ const InvalidAccessCode = memo<InvalidAccessCodeProps>(({ id, provider }) => {
               ? {
                   icon: <Icon icon={ScanFace} />,
                   label: t('oauth', { ns: 'common' }),
-                  value: Tab.Oauth,
+                  value: Tab.Oauth
                 }
               : undefined,
             {
               icon: <Icon icon={AsteriskSquare} />,
               label: t('unlock.tabs.password'),
-              value: Tab.Password,
+              value: Tab.Password
             },
-            { icon: <Icon icon={KeySquare} />, label: t('unlock.tabs.apiKey'), value: Tab.Api },
+            {
+              icon: <Icon icon={KeySquare} />,
+              label: t('unlock.tabs.apiKey'),
+              value: Tab.Api
+            }
           ].filter(Boolean) as SegmentedLabeledOption[]
         }
         style={{ width: '100%' }}

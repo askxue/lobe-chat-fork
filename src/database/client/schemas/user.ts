@@ -6,7 +6,7 @@ import { LobeMetaDataSchema } from '@/types/meta';
 const settingsSchema = z.object({
   defaultAgent: z.object({
     config: AgentSchema,
-    meta: LobeMetaDataSchema,
+    meta: LobeMetaDataSchema
   }),
   fontSize: z.number().default(14),
   language: z.string(),
@@ -16,17 +16,17 @@ const settingsSchema = z.object({
   tts: z.object({
     openAI: z.object({
       sttModel: z.string(),
-      ttsModel: z.string(),
+      ttsModel: z.string()
     }),
     sttAutoStop: z.boolean(),
-    sttServer: z.string(),
-  }),
+    sttServer: z.string()
+  })
 });
 
 export const DB_UserSchema = z.object({
   avatar: z.string().optional(),
   settings: settingsSchema.partial(),
-  uuid: z.string(),
+  uuid: z.string()
 });
 
 export type DB_User = z.infer<typeof DB_UserSchema>;

@@ -31,7 +31,7 @@ const useStyles = createStyles(({ css, token }) => ({
     &:hover {
       color: ${token.colorSuccess};
     }
-  `,
+  `
 }));
 
 interface PluginTagProps extends Pick<InstallPluginMeta, 'author' | 'type'> {
@@ -39,20 +39,36 @@ interface PluginTagProps extends Pick<InstallPluginMeta, 'author' | 'type'> {
   showText?: boolean;
 }
 
-const PluginTag = memo<PluginTagProps>(({ showIcon = true, author, type, showText = true }) => {
-  const { t } = useTranslation('plugin');
-  const { styles, cx } = useStyles();
-  const isCustom = type === 'customPlugin';
-  const isOfficial = author === 'LobeHub';
+const PluginTag = memo<PluginTagProps>(
+  ({ showIcon = true, author, type, showText = true }) => {
+    const { t } = useTranslation('plugin');
+    const { styles, cx } = useStyles();
+    const isCustom = type === 'customPlugin';
+    const isOfficial = author === 'LobeHub';
 
-  return (
-    <Tag
-      className={cx(isCustom ? styles.custom : isOfficial ? styles.official : styles.community)}
-      icon={showIcon && <Icon icon={isCustom ? Package : isOfficial ? BadgeCheck : CircleUser} />}
-    >
-      {showText && (author || t(isCustom ? 'store.customPlugin' : 'store.communityPlugin'))}
-    </Tag>
-  );
-});
+    return (
+      <Tag
+        className={cx(
+          isCustom
+            ? styles.custom
+            : isOfficial
+              ? styles.official
+              : styles.community
+        )}
+        icon={
+          showIcon && (
+            <Icon
+              icon={isCustom ? Package : isOfficial ? BadgeCheck : CircleUser}
+            />
+          )
+        }
+      >
+        {showText &&
+          (author ||
+            t(isCustom ? 'store.customPlugin' : 'store.communityPlugin'))}
+      </Tag>
+    );
+  }
+);
 
 export default PluginTag;

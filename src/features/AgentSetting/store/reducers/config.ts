@@ -9,7 +9,10 @@ export type ConfigDispatch =
   | { pluginId: string; state?: boolean; type: 'togglePlugin' }
   | { type: 'reset' };
 
-export const configReducer = (state: LobeAgentConfig, payload: ConfigDispatch): LobeAgentConfig => {
+export const configReducer = (
+  state: LobeAgentConfig,
+  payload: ConfigDispatch
+): LobeAgentConfig => {
   switch (payload.type) {
     case 'update': {
       return produce(state, (draftState) => {

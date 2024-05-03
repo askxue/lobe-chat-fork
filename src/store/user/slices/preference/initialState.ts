@@ -29,7 +29,7 @@ export const initialPreferenceState: UserPreferenceState = {
   preference: {
     guide: {},
     telemetry: null,
-    useCmdEnterToSend: false,
+    useCmdEnterToSend: false
   },
-  preferenceStorage: new AsyncLocalStorage('LOBE_PREFERENCE'),
+  preferenceStorage: new AsyncLocalStorage('LOBE_PREFERENCE')
 };

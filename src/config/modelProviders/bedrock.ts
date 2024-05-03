@@ -8,7 +8,7 @@ const Bedrock: ModelProviderCard = {
         'Amazon Titan Text G1 - Express v1，上下文长度可达 8000 个 token，适合广泛的用途。',
       displayName: 'Titan Text G1 - Express',
       id: 'amazon.titan-text-express-v1:0:8k',
-      tokens: 8000,
+      tokens: 8000
     },
     {
       description:
@@ -17,7 +17,7 @@ const Bedrock: ModelProviderCard = {
       enabled: true,
       id: 'anthropic.claude-3-opus-20240229-v1:0',
       tokens: 200_000,
-      vision: true,
+      vision: true
     },
     {
       description:
@@ -26,7 +26,7 @@ const Bedrock: ModelProviderCard = {
       enabled: true,
       id: 'anthropic.claude-3-sonnet-20240229-v1:0',
       tokens: 200_000,
-      vision: true,
+      vision: true
     },
     {
       description:
@@ -35,38 +35,40 @@ const Bedrock: ModelProviderCard = {
       enabled: true,
       id: 'anthropic.claude-3-haiku-20240307-v1:0',
       tokens: 200_000,
-      vision: true,
+      vision: true
     },
     {
       description:
         'Claude 2.1 v2.1，上下文大小等于 200k。Claude 2 的更新版本，采用双倍的上下文窗口，并在长文档和 RAG 上下文中提高可靠性、幻觉率和循证准确性。',
       displayName: 'Claude 2.1',
       id: 'anthropic.claude-v2:1',
-      tokens: 200_000,
+      tokens: 200_000
     },
     {
       description:
         'Claude Instant 1.2 v1.2，上下文大小等于 100k。一种更快速、更实惠但仍然非常强大的模型，它可以处理一系列任务，包括随意对话、文本分析、摘要和文档问题回答。',
       displayName: 'Claude Instant 1.2',
       id: 'anthropic.claude-instant-v1',
-      tokens: 100_000,
+      tokens: 100_000
     },
     {
-      description: 'Llama 2 Chat 13B v1，上下文大小为 4k，Llama 2 模型的对话用例优化变体。',
+      description:
+        'Llama 2 Chat 13B v1，上下文大小为 4k，Llama 2 模型的对话用例优化变体。',
       displayName: 'Llama 2 Chat 13B',
       enabled: true,
       id: 'meta.llama2-13b-chat-v1',
-      tokens: 4096,
+      tokens: 4096
     },
     {
-      description: 'Llama 2 Chat 70B v1，上下文大小为 4k，Llama 2 模型的对话用例优化变体。',
+      description:
+        'Llama 2 Chat 70B v1，上下文大小为 4k，Llama 2 模型的对话用例优化变体。',
       displayName: 'Llama 2 Chat 70B',
       enabled: true,
       id: 'meta.llama2-70b-chat-v1',
-      tokens: 4096,
-    },
+      tokens: 4096
+    }
   ],
-  id: 'bedrock',
+  id: 'bedrock'
 };
 
 export default Bedrock;

@@ -27,7 +27,11 @@ const Error = memo<{ error: ChatMessageError }>(({ error }) => {
         banner
         extra={
           <Flexbox>
-            <Highlighter copyButtonSize={'small'} language={'json'} type={'pure'}>
+            <Highlighter
+              copyButtonSize={'small'}
+              language={'json'}
+              type={'pure'}
+            >
               {JSON.stringify(error.body || error, null, 2)}
             </Highlighter>
           </Flexbox>
@@ -62,17 +66,17 @@ const Checker = memo<ConnectionCheckerProps>(({ model, provider }) => {
         messages: [
           {
             content: '你好',
-            role: 'user',
-          },
+            role: 'user'
+          }
         ],
         model,
-        provider,
+        provider
       },
       trace: {
         sessionId: `connection:${provider}`,
         topicId: model,
-        traceName: TraceNameMap.ConnectivityChecker,
-      },
+        traceName: TraceNameMap.ConnectivityChecker
+      }
     });
 
     if (data) {
@@ -84,12 +88,16 @@ const Checker = memo<ConnectionCheckerProps>(({ model, provider }) => {
 
   return (
     <Flexbox align={isMobile ? 'flex-start' : 'flex-end'} gap={8}>
-      <Flexbox align={'center'} direction={isMobile ? 'horizontal-reverse' : 'horizontal'} gap={12}>
+      <Flexbox
+        align={'center'}
+        direction={isMobile ? 'horizontal-reverse' : 'horizontal'}
+        gap={12}
+      >
         {pass && (
           <Flexbox gap={4} horizontal>
             <CheckCircleFilled
               style={{
-                color: theme.colorSuccess,
+                color: theme.colorSuccess
               }}
             />
             {t('llm.checker.pass')}

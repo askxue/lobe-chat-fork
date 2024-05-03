@@ -10,7 +10,11 @@ const Files = memo(() => {
 
   return (
     <div style={{ position: 'relative', width: '100vw' }}>
-      <EditableFileList alwaysShowClose items={inputFilesList} padding={'0 8px'} />
+      <EditableFileList
+        alwaysShowClose
+        items={inputFilesList}
+        padding={'0 8px'}
+      />
     </div>
   );
 });

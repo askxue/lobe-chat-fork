@@ -12,9 +12,11 @@ import { type GlobalState, initialState } from './initialState';
 
 export type GlobalStore = GlobalState & GlobalStoreAction;
 
-const createStore: StateCreator<GlobalStore, [['zustand/devtools', never]]> = (...parameters) => ({
+const createStore: StateCreator<GlobalStore, [['zustand/devtools', never]]> = (
+  ...parameters
+) => ({
   ...initialState,
-  ...globalActionSlice(...parameters),
+  ...globalActionSlice(...parameters)
 });
 
 //  ===============  实装 useStore ============ //
@@ -22,8 +24,8 @@ const createStore: StateCreator<GlobalStore, [['zustand/devtools', never]]> = (.
 export const useGlobalStore = createWithEqualityFn<GlobalStore>()(
   subscribeWithSelector(
     devtools(createStore, {
-      name: 'LobeChat_Global' + (isDev ? '_DEV' : ''),
-    }),
+      name: 'LobeChat_Global' + (isDev ? '_DEV' : '')
+    })
   ),
-  shallow,
+  shallow
 );

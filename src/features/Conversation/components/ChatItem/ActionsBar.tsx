@@ -1,4 +1,8 @@
-import { ActionEvent, ActionIconGroup, type ActionIconGroupProps } from '@lobehub/ui';
+import {
+  ActionEvent,
+  ActionIconGroup,
+  type ActionIconGroupProps
+} from '@lobehub/ui';
 import isEqual from 'fast-deep-equal';
 import { memo, useCallback } from 'react';
 
@@ -33,7 +37,7 @@ const Actions = memo<ActionsProps>(({ index, setEditing }) => {
 
   const item = useChatStore(
     (s) => chatSelectors.currentChatsWithGuideMessage(meta)(s)[index],
-    isEqual,
+    isEqual
   );
   const onActionsClick = useActionsClick();
 
@@ -47,7 +51,7 @@ const Actions = memo<ActionsProps>(({ index, setEditing }) => {
 
       onActionsClick(action, item);
     },
-    [item],
+    [item]
   );
 
   const RenderFunction = renderActions[item?.role] ?? ActionsBar;

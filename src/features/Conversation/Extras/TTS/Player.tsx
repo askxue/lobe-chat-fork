@@ -14,48 +14,63 @@ interface PlayerProps extends AudioPlayerProps {
   onRetry?: () => void;
 }
 
-const Player = memo<PlayerProps>(({ onRetry, error, onDelete, audio, isLoading, onInitPlay }) => {
-  const { t } = useTranslation('chat');
+const Player = memo<PlayerProps>(
+  ({ onRetry, error, onDelete, audio, isLoading, onInitPlay }) => {
+    const { t } = useTranslation('chat');
 
-  return (
-    <Flexbox align={'center'} horizontal style={{ minWidth: 200, width: '100%' }}>
-      {error ? (
-        <Alert
-          action={
-            <Button onClick={onRetry} size={'small'} type={'primary'}>
-              {t('retry', { ns: 'common' })}
-            </Button>
-          }
-          closable
-          extra={
-            error.body && (
-              <Highlighter copyButtonSize={'small'} language={'json'} type={'pure'}>
-                {JSON.stringify(error.body, null, 2)}
-              </Highlighter>
-            )
-          }
-          message={error.message}
-          onClose={onDelete}
-          style={{ alignItems: 'center', width: '100%' }}
-          type="error"
-        />
-      ) : (
-        <>
-          <AudioPlayer
-            allowPause={false}
-            audio={audio}
-            buttonSize={'small'}
-            isLoading={isLoading}
-            onInitPlay={onInitPlay}
-            onLoadingStop={stop}
-            timeRender={'tag'}
-            timeStyle={{ margin: 0 }}
+    return (
+      <Flexbox
+        align={'center'}
+        horizontal
+        style={{ minWidth: 200, width: '100%' }}
+      >
+        {error ? (
+          <Alert
+            action={
+              <Button onClick={onRetry} size={'small'} type={'primary'}>
+                {t('retry', { ns: 'common' })}
+              </Button>
+            }
+            closable
+            extra={
+              error.body && (
+                <Highlighter
+                  copyButtonSize={'small'}
+                  language={'json'}
+                  type={'pure'}
+                >
+                  {JSON.stringify(error.body, null, 2)}
+                </Highlighter>
+              )
+            }
+            message={error.message}
+            onClose={onDelete}
+            style={{ alignItems: 'center', width: '100%' }}
+            type="error"
           />
-          <ActionIcon icon={TrashIcon} onClick={onDelete} size={'small'} title={t('tts.clear')} />
-        </>
-      )}
-    </Flexbox>
-  );
-});
+        ) : (
+          <>
+            <AudioPlayer
+              allowPause={false}
+              audio={audio}
+              buttonSize={'small'}
+              isLoading={isLoading}
+              onInitPlay={onInitPlay}
+              onLoadingStop={stop}
+              timeRender={'tag'}
+              timeStyle={{ margin: 0 }}
+            />
+            <ActionIcon
+              icon={TrashIcon}
+              onClick={onDelete}
+              size={'small'}
+              title={t('tts.clear')}
+            />
+          </>
+        )}
+      </Flexbox>
+    );
+  }
+);
 
 export default Player;

@@ -35,7 +35,12 @@ export const AssistantMessageExtra: RenderMessageExtra = memo<ChatMessage>(
         <>
           {extra?.tts && (
             <ExtraContainer>
-              <TTS content={content} id={id} loading={loading} {...extra?.tts} />
+              <TTS
+                content={content}
+                id={id}
+                loading={loading}
+                {...extra?.tts}
+              />
             </ExtraContainer>
           )}
           {extra?.translate && (
@@ -46,5 +51,5 @@ export const AssistantMessageExtra: RenderMessageExtra = memo<ChatMessage>(
         </>
       </Flexbox>
     );
-  },
+  }
 );

@@ -33,19 +33,22 @@ export const useStyles = createStyles(({ css, token, responsive }) => ({
       padding-block: 8px;
       padding-inline: 4px;
     }
-  `,
+  `
 }));
 
 const AgentPrompt = memo<{ modal?: boolean }>(({ modal }) => {
   const { t } = useTranslation('setting');
   const { styles } = useStyles();
   const [editing, setEditing] = useState(false);
-  const [systemRole, updateConfig] = useStore((s) => [s.config.systemRole, s.setAgentConfig]);
+  const [systemRole, updateConfig] = useStore((s) => [
+    s.config.systemRole,
+    s.setAgentConfig
+  ]);
 
   const content = (
     <EditableMessage
       classNames={{
-        markdown: styles.markdown,
+        markdown: styles.markdown
       }}
       editButtonSize={'small'}
       editing={editing}
@@ -59,7 +62,7 @@ const AgentPrompt = memo<{ modal?: boolean }>(({ modal }) => {
       showEditWhenEmpty
       text={{
         cancel: t('cancel', { ns: 'common' }),
-        confirm: t('ok', { ns: 'common' }),
+        confirm: t('ok', { ns: 'common' })
       }}
       value={systemRole}
     />
@@ -90,8 +93,8 @@ const AgentPrompt = memo<{ modal?: boolean }>(({ modal }) => {
               </>
             ),
             extra: editButton,
-            title: t('settingAgent.prompt.title'),
-          },
+            title: t('settingAgent.prompt.title')
+          }
         ]}
         itemsType={'group'}
         variant={'pure'}
@@ -102,7 +105,12 @@ const AgentPrompt = memo<{ modal?: boolean }>(({ modal }) => {
   return (
     <div className={styles.wrapper}>
       <Flexbox className={styles.container} padding={4}>
-        <Flexbox horizontal justify={'space-between'} paddingBlock={8} paddingInline={12}>
+        <Flexbox
+          horizontal
+          justify={'space-between'}
+          paddingBlock={8}
+          paddingInline={12}
+        >
           <h1 style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 4 }}>
             {t('settingAgent.prompt.title')}
           </h1>

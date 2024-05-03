@@ -34,13 +34,16 @@ export const useScreenshot = (imageType: ImageType) => {
         }
       }
 
-      const dataUrl = await screenshotFn(document.querySelector('#preview') as HTMLDivElement, {
-        features: {
-          // 不启用移除控制符，否则会导致 safari emoji 报错
-          removeControlCharacter: false,
-        },
-        scale: 2,
-      });
+      const dataUrl = await screenshotFn(
+        document.querySelector('#preview') as HTMLDivElement,
+        {
+          features: {
+            // 不启用移除控制符，否则会导致 safari emoji 报错
+            removeControlCharacter: false
+          },
+          scale: 2
+        }
+      );
       const link = document.createElement('a');
       link.download = `LobeChat_${title}_${dayjs().format('YYYY-MM-DD')}.${imageType}`;
       link.href = dataUrl;
@@ -55,6 +58,6 @@ export const useScreenshot = (imageType: ImageType) => {
   return {
     loading,
     onDownload: handleDownload,
-    title,
+    title
   };
 };

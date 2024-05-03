@@ -9,7 +9,7 @@ import {
   HardDriveUpload,
   Heart,
   Settings,
-  Settings2,
+  Settings2
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -17,7 +17,14 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Flexbox } from 'react-layout-kit';
 
-import { ABOUT, CHANGELOG, DISCORD, DOCUMENTS, FEEDBACK, GITHUB } from '@/const/url';
+import {
+  ABOUT,
+  CHANGELOG,
+  DISCORD,
+  DOCUMENTS,
+  FEEDBACK,
+  GITHUB
+} from '@/const/url';
 import DataImporter from '@/features/DataImporter';
 import { configService } from '@/services/config';
 import { useGlobalStore } from '@/store/global';
@@ -33,7 +40,7 @@ const BottomActions = memo<BottomActionProps>(({ tab }) => {
 
   const [hasNewVersion, useCheckLatestVersion] = useGlobalStore((s) => [
     s.hasNewVersion,
-    s.useCheckLatestVersion,
+    s.useCheckLatestVersion
   ]);
 
   useCheckLatestVersion();
@@ -42,80 +49,86 @@ const BottomActions = memo<BottomActionProps>(({ tab }) => {
     {
       icon: <Icon icon={HardDriveUpload} />,
       key: 'import',
-      label: <DataImporter>{t('import')}</DataImporter>,
+      label: <DataImporter>{t('import')}</DataImporter>
     },
     {
       children: [
         {
           key: 'allAgent',
           label: <div>{t('exportType.allAgent')}</div>,
-          onClick: configService.exportAgents,
+          onClick: configService.exportAgents
         },
         {
           key: 'allAgentWithMessage',
           label: <div>{t('exportType.allAgentWithMessage')}</div>,
-          onClick: configService.exportSessions,
+          onClick: configService.exportSessions
         },
         {
           key: 'globalSetting',
           label: <div>{t('exportType.globalSetting')}</div>,
-          onClick: configService.exportSettings,
+          onClick: configService.exportSettings
         },
         {
-          type: 'divider',
+          type: 'divider'
         },
         {
           key: 'all',
           label: <div>{t('exportType.all')}</div>,
-          onClick: configService.exportAll,
-        },
+          onClick: configService.exportAll
+        }
       ],
       icon: <Icon icon={HardDriveDownload} />,
       key: 'export',
-      label: t('export'),
+      label: t('export')
     },
     {
-      type: 'divider',
+      type: 'divider'
     },
     {
       icon: <Icon icon={Feather} />,
       key: 'feedback',
       label: t('feedback'),
-      onClick: () => window.open(FEEDBACK, '__blank'),
+      onClick: () => window.open(FEEDBACK, '__blank')
     },
     {
       icon: <Icon icon={FileClock} />,
       key: 'changelog',
       label: t('changelog'),
-      onClick: () => window.open(CHANGELOG, '__blank'),
+      onClick: () => window.open(CHANGELOG, '__blank')
     },
     {
       icon: <Icon icon={DiscordIcon} />,
       key: 'wiki',
       label: 'Discord',
-      onClick: () => window.open(DISCORD, '__blank'),
+      onClick: () => window.open(DISCORD, '__blank')
     },
     {
       icon: <Icon icon={Heart} />,
       key: 'about',
       label: t('about'),
-      onClick: () => window.open(ABOUT, '__blank'),
+      onClick: () => window.open(ABOUT, '__blank')
     },
     {
-      type: 'divider',
+      type: 'divider'
     },
     {
       icon: <Icon icon={Settings} />,
       key: 'setting',
       label: (
-        <Flexbox align={'center'} distribution={'space-between'} gap={8} horizontal>
-          {t('setting')} {hasNewVersion && <Badge count={t('upgradeVersion.hasNew')} />}
+        <Flexbox
+          align={'center'}
+          distribution={'space-between'}
+          gap={8}
+          horizontal
+        >
+          {t('setting')}{' '}
+          {hasNewVersion && <Badge count={t('upgradeVersion.hasNew')} />}
         </Flexbox>
       ),
       onClick: () => {
         router.push('/settings/common');
-      },
-    },
+      }
+    }
   ];
 
   return (
@@ -131,7 +144,10 @@ const BottomActions = memo<BottomActionProps>(({ tab }) => {
           <Flexbox>
             <ConfigProvider theme={{ components: { Badge: { dotSize: 8 } } }}>
               <Badge dot offset={[-4, 4]}>
-                <ActionIcon active={tab === SidebarTabKey.Setting} icon={Settings2} />
+                <ActionIcon
+                  active={tab === SidebarTabKey.Setting}
+                  icon={Settings2}
+                />
               </Badge>
             </ConfigProvider>
           </Flexbox>

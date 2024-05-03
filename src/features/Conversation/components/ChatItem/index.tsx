@@ -29,7 +29,7 @@ const useStyles = createStyles(({ css, prefixCls }) => ({
     .${prefixCls}-input {
       max-height: 900px;
     }
-  `,
+  `
 }));
 
 export interface ChatListItemProps {
@@ -38,7 +38,9 @@ export interface ChatListItemProps {
 }
 
 const Item = memo<ChatListItemProps>(({ index, id }) => {
-  const fontSize = useUserStore((s) => settingsSelectors.currentSettings(s).fontSize);
+  const fontSize = useUserStore(
+    (s) => settingsSelectors.currentSettings(s).fontSize
+  );
   const { t } = useTranslation('common');
   const { styles, cx } = useStyles();
   const [editing, setEditing] = useState(false);
@@ -56,39 +58,51 @@ const Item = memo<ChatListItemProps>(({ index, id }) => {
     return chatSelectors.currentChatsWithGuideMessage(meta)(s)[index];
   }, isEqual);
 
-  const historyLength = useChatStore((s) => chatSelectors.currentChats(s).length);
+  const historyLength = useChatStore(
+    (s) => chatSelectors.currentChats(s).length
+  );
 
   const [loading, updateMessageContent] = useChatStore((s) => [
     s.chatLoadingId === id || s.messageLoadingIds.includes(id),
-    s.modifyMessageContent,
+    s.modifyMessageContent
   ]);
 
-  const [isMessageLoading] = useChatStore((s) => [s.messageLoadingIds.includes(id)]);
+  const [isMessageLoading] = useChatStore((s) => [
+    s.messageLoadingIds.includes(id)
+  ]);
 
   const onAvatarsClick = useAvatarsClick();
 
   const RenderMessage = useCallback(
-    ({ editableContent, data }: { data: ChatMessage; editableContent: ReactNode }) => {
+    ({
+      editableContent,
+      data
+    }: {
+      data: ChatMessage;
+      editableContent: ReactNode;
+    }) => {
       if (!item?.role) return;
-      const RenderFunction = renderMessages[item.role] ?? renderMessages['default'];
+      const RenderFunction =
+        renderMessages[item.role] ?? renderMessages['default'];
 
       if (!RenderFunction) return;
 
       return <RenderFunction {...data} editableContent={editableContent} />;
     },
-    [item?.role],
+    [item?.role]
   );
 
   const MessageExtra = useCallback(
     ({ data }: { data: ChatMessage }) => {
       if (!renderMessagesExtra || !item?.role) return;
       let RenderFunction;
-      if (renderMessagesExtra?.[item.role]) RenderFunction = renderMessagesExtra[item.role];
+      if (renderMessagesExtra?.[item.role])
+        RenderFunction = renderMessagesExtra[item.role];
 
       if (!RenderFunction) return;
       return <RenderFunction {...data} />;
     },
-    [item?.role],
+    [item?.role]
   );
 
   const { t: errorT } = useTranslation('error');
@@ -98,7 +112,10 @@ const Item = memo<ChatListItemProps>(({ index, id }) => {
 
     const alertConfig = getErrorAlertConfig(messageError.type);
 
-    return { message: errorT(`response.${messageError.type}` as any), ...alertConfig };
+    return {
+      message: errorT(`response.${messageError.type}` as any),
+      ...alertConfig
+    };
   }, [item?.error]);
 
   const enableHistoryDivider = useAgentStore((s) => {
@@ -129,12 +146,18 @@ const Item = memo<ChatListItemProps>(({ index, id }) => {
           onChange={(value) => updateMessageContent(item.id, value)}
           onDoubleClick={(e) => {
             if (item.id === 'default' || item.error) return;
-            if (item.role && ['assistant', 'user'].includes(item.role) && e.altKey) {
+            if (
+              item.role &&
+              ['assistant', 'user'].includes(item.role) &&
+              e.altKey
+            ) {
               setEditing(true);
             }
           }}
           onEditingChange={setEditing}
-          placement={type === 'chat' ? (item.role === 'user' ? 'right' : 'left') : 'left'}
+          placement={
+            type === 'chat' ? (item.role === 'user' ? 'right' : 'left') : 'left'
+          }
           primary={item.role === 'user'}
           renderMessage={(editableContent) => (
             <RenderMessage data={item} editableContent={editableContent} />
@@ -142,7 +165,7 @@ const Item = memo<ChatListItemProps>(({ index, id }) => {
           text={{
             cancel: t('cancel'),
             confirm: t('ok'),
-            edit: t('edit'),
+            edit: t('edit')
           }}
           time={item.updatedAt || item.createdAt}
           type={type === 'chat' ? 'block' : 'pure'}

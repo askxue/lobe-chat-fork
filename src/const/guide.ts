@@ -10,7 +10,7 @@ import {
   OFFICIAL_URL,
   SELF_HOSTING_DOCUMENTS,
   USAGE_DOCUMENTS,
-  WIKI,
+  WIKI
 } from '@/const/url';
 
 export const INBOX_GUIDE_SYSTEMROLE = `# Role: LobeChat Support Assistant

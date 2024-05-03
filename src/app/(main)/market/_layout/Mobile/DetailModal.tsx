@@ -9,7 +9,7 @@ import { agentMarketSelectors, useMarketStore } from '@/store/market';
 const DetailModal = memo<PropsWithChildren>(({ children }) => {
   const [showAgentSidebar, deactivateAgent] = useMarketStore((s) => [
     agentMarketSelectors.showSideBar(s),
-    s.deactivateAgent,
+    s.deactivateAgent
   ]);
 
   const { t } = useTranslation('market');

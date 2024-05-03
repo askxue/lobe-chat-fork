@@ -50,12 +50,15 @@ export const createSessionGroupSlice: StateCreator<
   updateSessionGroupSort: async (items) => {
     const sortMap = items.map((item, index) => ({ id: item.id, sort: index }));
 
-    get().internal_dispatchSessionGroups({ sortMap, type: 'updateSessionGroupOrder' });
+    get().internal_dispatchSessionGroups({
+      sortMap,
+      type: 'updateSessionGroupOrder'
+    });
 
     message.loading({
       content: t('sessionGroup.sorting', { ns: 'chat' }),
       duration: 0,
-      key: 'updateSessionGroupSort',
+      key: 'updateSessionGroupSort'
     });
 
     await sessionService.updateSessionGroupOrder(sortMap);
@@ -67,7 +70,14 @@ export const createSessionGroupSlice: StateCreator<
 
   /* eslint-disable sort-keys-fix/sort-keys-fix */
   internal_dispatchSessionGroups: (payload) => {
-    const nextSessionGroups = sessionGroupsReducer(get().sessionGroups, payload);
-    get().internal_processSessions(get().sessions, nextSessionGroups, 'updateSessionGroups');
-  },
+    const nextSessionGroups = sessionGroupsReducer(
+      get().sessionGroups,
+      payload
+    );
+    get().internal_processSessions(
+      get().sessions,
+      nextSessionGroups,
+      'updateSessionGroups'
+    );
+  }
 });

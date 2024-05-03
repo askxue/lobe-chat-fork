@@ -15,26 +15,26 @@ import { useScreenshot } from './useScreenshot';
 
 enum Tab {
   Screenshot = 'screenshot',
-  ShareGPT = 'sharegpt',
+  ShareGPT = 'sharegpt'
 }
 
 export const imageTypeOptions: SegmentedProps['options'] = [
   {
     label: 'JPG',
-    value: ImageType.JPG,
+    value: ImageType.JPG
   },
   {
     label: 'PNG',
-    value: ImageType.PNG,
+    value: ImageType.PNG
   },
   {
     label: 'SVG',
-    value: ImageType.SVG,
+    value: ImageType.SVG
   },
   {
     label: 'WEBP',
-    value: ImageType.WEBP,
-  },
+    value: ImageType.WEBP
+  }
 ];
 
 const DEFAULT_FIELD_VALUE: FieldType = {
@@ -42,7 +42,7 @@ const DEFAULT_FIELD_VALUE: FieldType = {
   withBackground: true,
   withFooter: false,
   withPluginInfo: false,
-  withSystemRole: false,
+  withSystemRole: false
 };
 
 const ShareModal = memo<ModalProps>(({ onCancel, open }) => {
@@ -50,21 +50,24 @@ const ShareModal = memo<ModalProps>(({ onCancel, open }) => {
   const [tab, setTab] = useState<Tab>(Tab.Screenshot);
   const { t } = useTranslation('chat');
   const avatar = useUserStore(userProfileSelectors.userAvatar);
-  const [shareLoading, shareToShareGPT] = useChatStore((s) => [s.shareLoading, s.shareToShareGPT]);
+  const [shareLoading, shareToShareGPT] = useChatStore((s) => [
+    s.shareLoading,
+    s.shareToShareGPT
+  ]);
   const { loading, onDownload, title } = useScreenshot(fieldValue.imageType);
 
   const options: SegmentedProps['options'] = useMemo(
     () => [
       {
         label: t('shareModal.screenshot'),
-        value: Tab.Screenshot,
+        value: Tab.Screenshot
       },
       {
         label: 'ShareGPT',
-        value: Tab.ShareGPT,
-      },
+        value: Tab.ShareGPT
+      }
     ],
-    [],
+    []
   );
 
   const settings: FormItemProps[] = useMemo(
@@ -74,7 +77,7 @@ const ShareModal = memo<ModalProps>(({ onCancel, open }) => {
         label: t('shareModal.withSystemRole'),
         minWidth: undefined,
         name: 'withSystemRole',
-        valuePropName: 'checked',
+        valuePropName: 'checked'
       },
       {
         children: <Switch />,
@@ -82,7 +85,7 @@ const ShareModal = memo<ModalProps>(({ onCancel, open }) => {
         label: t('shareModal.withBackground'),
         minWidth: undefined,
         name: 'withBackground',
-        valuePropName: 'checked',
+        valuePropName: 'checked'
       },
       {
         children: <Switch />,
@@ -90,14 +93,14 @@ const ShareModal = memo<ModalProps>(({ onCancel, open }) => {
         label: t('shareModal.withFooter'),
         minWidth: undefined,
         name: 'withFooter',
-        valuePropName: 'checked',
+        valuePropName: 'checked'
       },
       {
         children: <Segmented options={imageTypeOptions} />,
         hidden: tab !== Tab.Screenshot,
         label: t('shareModal.imageType'),
         minWidth: undefined,
-        name: 'imageType',
+        name: 'imageType'
       },
       {
         children: <Switch />,
@@ -105,10 +108,10 @@ const ShareModal = memo<ModalProps>(({ onCancel, open }) => {
         label: t('shareModal.withPluginInfo'),
         minWidth: undefined,
         name: 'withPluginInfo',
-        valuePropName: 'checked',
-      },
+        valuePropName: 'checked'
+      }
     ],
-    [tab],
+    [tab]
   );
 
   return (
@@ -118,7 +121,13 @@ const ShareModal = memo<ModalProps>(({ onCancel, open }) => {
       footer={
         <>
           {tab === Tab.Screenshot && (
-            <Button block loading={loading} onClick={onDownload} size={'large'} type={'primary'}>
+            <Button
+              block
+              loading={loading}
+              onClick={onDownload}
+              size={'large'}
+              type={'primary'}
+            >
               {t('shareModal.download')}
             </Button>
           )}

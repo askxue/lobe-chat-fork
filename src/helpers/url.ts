@@ -2,7 +2,10 @@ import { ChatMessage } from '@lobehub/ui';
 
 import { Compressor } from '@/utils/compass';
 
-export const genShareMessagesUrl = (messages: ChatMessage[], systemRole?: string) => {
+export const genShareMessagesUrl = (
+  messages: ChatMessage[],
+  systemRole?: string
+) => {
   const compassedMsg = systemRole
     ? [{ content: systemRole, role: 'system' }, ...messages]
     : messages;

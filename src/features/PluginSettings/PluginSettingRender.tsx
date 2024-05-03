@@ -14,7 +14,16 @@ interface PluginSettingsProps {
 }
 
 const PluginSettingRender = memo<PluginSettingsProps>(
-  ({ type, defaultValue, enum: enumItems, onChange, format, minimum, maximum, props }) => {
+  ({
+    type,
+    defaultValue,
+    enum: enumItems,
+    onChange,
+    format,
+    minimum,
+    maximum,
+    props
+  }) => {
     switch (type) {
       case 'string': {
         switch (format) {
@@ -38,7 +47,7 @@ const PluginSettingRender = memo<PluginSettingsProps>(
               defaultValue={defaultValue}
               onChange={onChange}
               options={enumItems.map((i) =>
-                typeof i === 'string' ? { label: i, value: i } : (i as any),
+                typeof i === 'string' ? { label: i, value: i } : (i as any)
               )}
             />
           );
@@ -57,7 +66,14 @@ const PluginSettingRender = memo<PluginSettingsProps>(
 
       case 'number': {
         if (typeof minimum === 'number' || typeof maximum === 'number')
-          return <Slider defaultValue={defaultValue} max={maximum} min={minimum} {...props} />;
+          return (
+            <Slider
+              defaultValue={defaultValue}
+              max={maximum}
+              min={minimum}
+              {...props}
+            />
+          );
         return (
           <InputNumber
             {...props}
@@ -80,7 +96,7 @@ const PluginSettingRender = memo<PluginSettingsProps>(
         );
       }
     }
-  },
+  }
 );
 
 export default PluginSettingRender;

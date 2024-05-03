@@ -115,7 +115,7 @@ const useStyles = createStyles(({ css, token }) => {
             ${size * 3}px ${size}px 0 0;
         }
       }
-    `,
+    `
   };
 });
 
@@ -123,7 +123,7 @@ enum ImportState {
   Start,
   Loading,
   Finished,
-  Close,
+  Close
 }
 
 interface DataImporterProps {
@@ -142,7 +142,10 @@ const DataImporter = memo<DataImporterProps>(({ children, onFinishImport }) => {
     <>
       <DataStyleModal
         icon={ImportIcon}
-        open={importState === ImportState.Loading || importState === ImportState.Finished}
+        open={
+          importState === ImportState.Loading ||
+          importState === ImportState.Finished
+        }
         title={t('importModal.title')}
         width={importState === ImportState.Finished ? 500 : 400}
       >
@@ -150,7 +153,7 @@ const DataImporter = memo<DataImporterProps>(({ children, onFinishImport }) => {
           gap={24}
           padding={40}
           style={{
-            paddingBlock: importState === ImportState.Finished ? 0 : undefined,
+            paddingBlock: importState === ImportState.Finished ? 0 : undefined
           }}
         >
           {importState === ImportState.Finished ? (
@@ -178,22 +181,38 @@ const DataImporter = memo<DataImporterProps>(({ children, onFinishImport }) => {
                   t('importModal.finish.onlySettings')
                 ) : (
                   <Flexbox gap={16} width={400}>
-                    {t('importModal.finish.subTitle', { duration: (duration / 1000).toFixed(2) })}
+                    {t('importModal.finish.subTitle', {
+                      duration: (duration / 1000).toFixed(2)
+                    })}
                     <Table
                       bordered
                       columns={[
-                        { dataIndex: 'title', title: t('importModal.result.type') },
-                        { dataIndex: 'added', title: t('importModal.result.added') },
-                        { dataIndex: 'skips', title: t('importModal.result.skips') },
-                        { dataIndex: 'error', title: t('importModal.result.errors') },
+                        {
+                          dataIndex: 'title',
+                          title: t('importModal.result.type')
+                        },
+                        {
+                          dataIndex: 'added',
+                          title: t('importModal.result.added')
+                        },
+                        {
+                          dataIndex: 'skips',
+                          title: t('importModal.result.skips')
+                        },
+                        {
+                          dataIndex: 'error',
+                          title: t('importModal.result.errors')
+                        }
                       ]}
                       dataSource={Object.entries(importData).map(
                         ([item, value]: [string, ImportResult]) => ({
                           added: value.added,
                           error: value.errors,
                           skips: value.skips,
-                          title: t(`importModal.result.${item as keyof ImportResults}`),
-                        }),
+                          title: t(
+                            `importModal.result.${item as keyof ImportResults}`
+                          )
+                        })
                       )}
                       pagination={false}
                       size={'small'}

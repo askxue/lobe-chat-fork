@@ -1,5 +1,9 @@
 import { DB_Message } from '@/database/client/schemas/message';
-import { ChatMessage, ChatMessageError, ChatPluginPayload } from '@/types/message';
+import {
+  ChatMessage,
+  ChatMessageError,
+  ChatPluginPayload
+} from '@/types/message';
 
 /* eslint-disable typescript-sort-keys/interface */
 

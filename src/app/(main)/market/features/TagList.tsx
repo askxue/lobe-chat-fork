@@ -20,13 +20,17 @@ const useStyles = createStyles(({ css, token, isDarkMode }) => ({
     }
   `,
   tag: css`
-    background: ${isDarkMode ? token.colorBgContainer : token.colorFillTertiary};
+    background: ${isDarkMode
+      ? token.colorBgContainer
+      : token.colorFillTertiary};
     border: none;
 
     &:hover {
-      background: ${isDarkMode ? token.colorBgElevated : token.colorFill} !important;
+      background: ${isDarkMode
+        ? token.colorBgElevated
+        : token.colorFill} !important;
     }
-  `,
+  `
 }));
 
 const TagList = memo(() => {
@@ -34,9 +38,12 @@ const TagList = memo(() => {
   const { md = true } = useResponsive();
   const [searchKeywords, setSearchKeywords] = useMarketStore((s) => [
     s.searchKeywords,
-    s.setSearchKeywords,
+    s.setSearchKeywords
   ]);
-  const agentTagList = useMarketStore(agentMarketSelectors.getAgentTagList, isEqual);
+  const agentTagList = useMarketStore(
+    agentMarketSelectors.getAgentTagList,
+    isEqual
+  );
 
   if (agentTagList?.length === 0) {
     return <Skeleton paragraph={{ rows: 4 }} title={false} />;

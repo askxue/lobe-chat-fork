@@ -15,16 +15,17 @@ class ShareService {
     for (const item of conversation.items) {
       items.push({
         from: item.from,
-        value: item.from === 'gpt' ? await parseMarkdown(item.value) : item.value,
+        value:
+          item.from === 'gpt' ? await parseMarkdown(item.value) : item.value
       });
     }
 
     const res = await fetch(SHARE_GPT_URL, {
       body: JSON.stringify({ ...conversation, items }),
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      method: 'POST',
+      method: 'POST'
     });
 
     const { id } = await res.json();
@@ -41,7 +42,9 @@ class ShareService {
    * @returns The share settings URL.
    */
   public createShareSettingsUrl(settings: DeepPartial<GlobalSettings>) {
-    return withBasePath(`/?${LOBE_URL_IMPORT_NAME}=${encodeURI(JSON.stringify(settings))}`);
+    return withBasePath(
+      `/?${LOBE_URL_IMPORT_NAME}=${encodeURI(JSON.stringify(settings))}`
+    );
   }
 
   /**

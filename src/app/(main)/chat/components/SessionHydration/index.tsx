@@ -18,14 +18,16 @@ const SessionHydration = memo(() => {
   // two-way bindings the url and session store
   const [session, setSession] = useQueryState(
     'session',
-    parseAsString.withDefault('inbox').withOptions({ history: 'replace', throttleMs: 500 }),
+    parseAsString
+      .withDefault('inbox')
+      .withOptions({ history: 'replace', throttleMs: 500 })
   );
   useStoreUpdater('activeId', session);
 
   useEffect(() => {
     const unsubscribe = useSessionStore.subscribe(
       (s) => s.activeId,
-      (state) => setSession(state),
+      (state) => setSession(state)
     );
 
     return () => {

@@ -14,8 +14,23 @@ const StopLoadingIcon = memo(() => {
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
       <g fill="none">
-        <circle cx="512" cy="512" fill="none" r="426" stroke={theme.colorBorder} strokeWidth="72" />
-        <rect fill="currentColor" height="252" rx="24" ry="24" width="252" x="386" y="386" />
+        <circle
+          cx="512"
+          cy="512"
+          fill="none"
+          r="426"
+          stroke={theme.colorBorder}
+          strokeWidth="72"
+        />
+        <rect
+          fill="currentColor"
+          height="252"
+          rx="24"
+          ry="24"
+          width="252"
+          x="386"
+          y="386"
+        />
         <path
           d="M938.667 512C938.667 276.359 747.64 85.333 512 85.333"
           stroke="currentColor"

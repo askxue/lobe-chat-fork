@@ -9,7 +9,7 @@ class TraceService {
       return fetch(API_ENDPOINTS.trace, {
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' },
-        method: 'POST',
+        method: 'POST'
       });
     } catch (e) {
       console.error(e);

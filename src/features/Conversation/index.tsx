@@ -17,7 +17,7 @@ const useStyles = createStyles(
     ${responsive.mobile} {
       width: 100%;
     }
-  `,
+  `
 );
 
 interface ConversationProps {

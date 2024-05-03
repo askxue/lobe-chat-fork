@@ -1,7 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import { DBModel } from '@/database/client/core/types/db';
-import { CreateMessageParams, MessageModel } from '@/database/client/models/message';
+import {
+  CreateMessageParams,
+  MessageModel
+} from '@/database/client/models/message';
 import { DB_Message } from '@/database/client/schemas/message';
 import { DB_Topic } from '@/database/client/schemas/topic';
 import { nanoid } from '@/utils/uuid';
@@ -17,7 +20,7 @@ describe('TopicModel', () => {
     topicData = {
       sessionId: currentSessionId,
       title: 'Test Topic',
-      favorite: false,
+      favorite: false
     };
   });
 
@@ -38,15 +41,15 @@ describe('TopicModel', () => {
         expect.objectContaining({
           title: topicData.title,
           favorite: topicData.favorite ? 1 : 0,
-          sessionId: topicData.sessionId,
-        }),
+          sessionId: topicData.sessionId
+        })
       );
     });
 
     it('should create a topic with favorite set to true', async () => {
       const favoriteTopicData: CreateTopicParams = {
         ...topicData,
-        favorite: true,
+        favorite: true
       };
       const result = await TopicModel.create(favoriteTopicData);
 
@@ -56,8 +59,8 @@ describe('TopicModel', () => {
         expect.objectContaining({
           title: favoriteTopicData.title,
           favorite: 1,
-          sessionId: favoriteTopicData.sessionId,
-        }),
+          sessionId: favoriteTopicData.sessionId
+        })
       );
     });
 
@@ -65,12 +68,16 @@ describe('TopicModel', () => {
       const messagesToUpdate = [nanoid(), nanoid()];
       // 假设这些消息存在于数据库中
       for (const messageId of messagesToUpdate) {
-        await MessageModel.table.add({ id: messageId, text: 'Sample message', topicId: null });
+        await MessageModel.table.add({
+          id: messageId,
+          text: 'Sample message',
+          topicId: null
+        });
       }
 
       const topicDataWithMessages = {
         ...topicData,
-        messages: messagesToUpdate,
+        messages: messagesToUpdate
       };
 
       const topic = await TopicModel.create(topicDataWithMessages);
@@ -111,8 +118,8 @@ describe('TopicModel', () => {
           expect.objectContaining({
             title: topicData.title,
             favorite: topicData.favorite ? 1 : 0,
-            sessionId: topicData.sessionId,
-          }),
+            sessionId: topicData.sessionId
+          })
         );
       }
     });
@@ -120,7 +127,7 @@ describe('TopicModel', () => {
     it('should batch create topics with mixed favorite values', async () => {
       const mixedTopicsData: CreateTopicParams[] = [
         { ...topicData, favorite: true },
-        { ...topicData, favorite: false },
+        { ...topicData, favorite: false }
       ];
 
       const results = await TopicModel.batchCreate(mixedTopicsData);
@@ -139,7 +146,11 @@ describe('TopicModel', () => {
     // Create multiple topics to test the query method
     await TopicModel.batchCreate([topicData, topicData]);
 
-    const queryParams: QueryTopicParams = { pageSize: 1, current: 0, sessionId: 'session1' };
+    const queryParams: QueryTopicParams = {
+      pageSize: 1,
+      current: 0,
+      sessionId: 'session1'
+    };
     const queriedTopics = await TopicModel.query(queryParams);
 
     expect(queriedTopics).toHaveLength(1);
@@ -149,10 +160,14 @@ describe('TopicModel', () => {
     // Create multiple topics to test the findBySessionId method
     await TopicModel.batchCreate([topicData, topicData]);
 
-    const topicsBySessionId = await TopicModel.findBySessionId(topicData.sessionId);
+    const topicsBySessionId = await TopicModel.findBySessionId(
+      topicData.sessionId
+    );
 
     expect(topicsBySessionId).toHaveLength(2);
-    expect(topicsBySessionId.every((i) => i.sessionId === topicData.sessionId)).toBeTruthy();
+    expect(
+      topicsBySessionId.every((i) => i.sessionId === topicData.sessionId)
+    ).toBeTruthy();
   });
 
   it('should delete a topic and its associated messages', async () => {
@@ -203,9 +218,9 @@ describe('TopicModel', () => {
 
     it('should handle toggleFavorite when topic does not exist', async () => {
       const nonExistentTopicId = 'non-existent-id';
-      await expect(TopicModel.toggleFavorite(nonExistentTopicId)).rejects.toThrow(
-        `Topic with id ${nonExistentTopicId} not found`,
-      );
+      await expect(
+        TopicModel.toggleFavorite(nonExistentTopicId)
+      ).rejects.toThrow(`Topic with id ${nonExistentTopicId} not found`);
     });
 
     it('should set favorite to specific state using toggleFavorite', async () => {
@@ -230,7 +245,7 @@ describe('TopicModel', () => {
       content: 'Test Message',
       topicId: createdTopic.id,
       sessionId: topicData.sessionId,
-      role: 'user',
+      role: 'user'
     };
     await MessageModel.create(messageData);
 
@@ -244,7 +259,7 @@ describe('TopicModel', () => {
     // 验证与话题关联的消息是否也被删除
     const messagesInDb = await MessageModel.query({
       sessionId: topicData.sessionId,
-      topicId: createdTopic.id,
+      topicId: createdTopic.id
     });
     expect(messagesInDb).toHaveLength(0);
   });
@@ -258,13 +273,13 @@ describe('TopicModel', () => {
       content: 'Test Message 1',
       topicId: createdTopic1.id,
       sessionId: topicData.sessionId,
-      role: 'user',
+      role: 'user'
     };
     const messageData2: CreateMessageParams = {
       content: 'Test Message 2',
       topicId: createdTopic2.id,
       sessionId: topicData.sessionId,
-      role: 'user',
+      role: 'user'
     };
     await MessageModel.create(messageData1);
     await MessageModel.create(messageData2);
@@ -281,11 +296,11 @@ describe('TopicModel', () => {
     // 验证与话题关联的消息是否也被删除
     const messagesInDb1 = await MessageModel.query({
       sessionId: topicData.sessionId,
-      topicId: createdTopic1.id,
+      topicId: createdTopic1.id
     });
     const messagesInDb2 = await MessageModel.query({
       sessionId: topicData.sessionId,
-      topicId: createdTopic2.id,
+      topicId: createdTopic2.id
     });
     expect(messagesInDb1).toHaveLength(0);
     expect(messagesInDb2).toHaveLength(0);
@@ -300,7 +315,7 @@ describe('TopicModel', () => {
       const { id } = await TopicModel.create({
         title: 'Original Topic',
         sessionId: 'session1',
-        favorite: false,
+        favorite: false
       });
       originalTopic = await TopicModel.findById(id);
 
@@ -311,9 +326,9 @@ describe('TopicModel', () => {
             content: text,
             topicId: originalTopic.id,
             sessionId: originalTopic.sessionId!,
-            role: 'user',
-          }),
-        ),
+            role: 'user'
+          })
+        )
       );
     });
 
@@ -328,13 +343,15 @@ describe('TopicModel', () => {
       await TopicModel.duplicateTopic(originalTopic.id);
 
       // 验证复制后的主题是否存在
-      const duplicatedTopic = await TopicModel.findBySessionId(originalTopic.sessionId!);
+      const duplicatedTopic = await TopicModel.findBySessionId(
+        originalTopic.sessionId!
+      );
       expect(duplicatedTopic).toHaveLength(2);
 
       // 验证复制后的消息是否存在
       const duplicatedMessages = await MessageModel.query({
         sessionId: originalTopic.sessionId!,
-        topicId: duplicatedTopic[1].id, // 假设复制的主题是第二个
+        topicId: duplicatedTopic[1].id // 假设复制的主题是第二个
       });
       expect(duplicatedMessages).toHaveLength(originalMessages.length);
     });
@@ -342,9 +359,9 @@ describe('TopicModel', () => {
     it('should throw an error if the topic does not exist', async () => {
       // 尝试复制一个不存在的主题
       const nonExistentTopicId = nanoid();
-      await expect(TopicModel.duplicateTopic(nonExistentTopicId)).rejects.toThrow(
-        `Topic with id ${nonExistentTopicId} not found`,
-      );
+      await expect(
+        TopicModel.duplicateTopic(nonExistentTopicId)
+      ).rejects.toThrow(`Topic with id ${nonExistentTopicId} not found`);
     });
 
     it('should preserve the properties of the duplicated topic', async () => {
@@ -353,14 +370,16 @@ describe('TopicModel', () => {
 
       // 获取复制的主题
       const topics = await TopicModel.findBySessionId(originalTopic.sessionId!);
-      const duplicatedTopic = topics.find((topic) => topic.id !== originalTopic.id);
+      const duplicatedTopic = topics.find(
+        (topic) => topic.id !== originalTopic.id
+      );
 
       // 验证复制的主题是否保留了原始主题的属性
       expect(duplicatedTopic).toBeDefined();
       expect(duplicatedTopic).toMatchObject({
         title: originalTopic.title,
         favorite: originalTopic.favorite,
-        sessionId: originalTopic.sessionId,
+        sessionId: originalTopic.sessionId
       });
       // 确保生成了新的 ID
       expect(duplicatedTopic.id).not.toBe(originalTopic.id);
@@ -373,7 +392,7 @@ describe('TopicModel', () => {
         topicId: originalTopic.id,
         parentId: originalMessages[0].id,
         sessionId: originalTopic.sessionId!,
-        role: 'user',
+        role: 'user'
       });
       const childMessage = await MessageModel.findById(id);
 
@@ -381,11 +400,15 @@ describe('TopicModel', () => {
       await TopicModel.duplicateTopic(originalTopic.id);
 
       // 获取复制的消息
-      const duplicatedMessages = await MessageModel.queryBySessionId(originalTopic.sessionId!);
+      const duplicatedMessages = await MessageModel.queryBySessionId(
+        originalTopic.sessionId!
+      );
 
       // 验证复制的子消息是否存在并且 parentId 已更新
       const duplicatedChildMessage = duplicatedMessages.find(
-        (message) => message.content === childMessage.content && message.id !== childMessage.id,
+        (message) =>
+          message.content === childMessage.content &&
+          message.id !== childMessage.id
       );
 
       expect(duplicatedChildMessage).toBeDefined();
@@ -396,31 +419,39 @@ describe('TopicModel', () => {
     it('should fail if the database transaction fails', async () => {
       // 强制数据库事务失败，例如通过在复制过程中抛出异常
       const dbTransactionFailedError = new Error('DB transaction failed');
-      const spyOn = vi.spyOn(TopicModel['db'], 'transaction').mockImplementation((async () => {
-        throw dbTransactionFailedError;
-      }) as any);
+      const spyOn = vi
+        .spyOn(TopicModel['db'], 'transaction')
+        .mockImplementation((async () => {
+          throw dbTransactionFailedError;
+        }) as any);
 
       // 尝试复制主题并捕捉期望的错误
       await expect(TopicModel.duplicateTopic(originalTopic.id)).rejects.toThrow(
-        dbTransactionFailedError,
+        dbTransactionFailedError
       );
       spyOn.mockRestore();
     });
 
     it('should not create partial duplicates if the process fails at some point', async () => {
       // 假设复制消息的过程中发生了错误
-      vi.spyOn(MessageModel, 'duplicateMessages').mockImplementation(async () => {
-        throw new Error('Failed to duplicate messages');
-      });
+      vi.spyOn(MessageModel, 'duplicateMessages').mockImplementation(
+        async () => {
+          throw new Error('Failed to duplicate messages');
+        }
+      );
 
       // 尝试复制主题，期望会抛出错误
-      await expect(TopicModel.duplicateTopic(originalTopic.id)).rejects.toThrow();
+      await expect(
+        TopicModel.duplicateTopic(originalTopic.id)
+      ).rejects.toThrow();
 
       // 确保没有创建任何副本
       const topics = await TopicModel.findBySessionId(originalTopic.sessionId!);
       expect(topics).toHaveLength(1); // 只有原始主题
 
-      const messages = await MessageModel.queryBySessionId(originalTopic.sessionId!);
+      const messages = await MessageModel.queryBySessionId(
+        originalTopic.sessionId!
+      );
       expect(messages).toHaveLength(originalMessages.length); // 只有原始消息
     });
   });
@@ -502,7 +533,10 @@ describe('TopicModel', () => {
       await TopicModel.create({ ...topicData, title: uniqueTitle });
 
       // Query topics by the unique title
-      const topics = await TopicModel.queryByKeyword(uniqueTitle, currentSessionId);
+      const topics = await TopicModel.queryByKeyword(
+        uniqueTitle,
+        currentSessionId
+      );
 
       // Verify the correct topic is queried
       expect(topics).toHaveLength(1);
@@ -514,7 +548,10 @@ describe('TopicModel', () => {
       await TopicModel.create({ ...topicData, title: uniqueTitle });
 
       // Query topics by the unique title
-      const topics = await TopicModel.queryByKeyword(uniqueTitle, 'session-id-2');
+      const topics = await TopicModel.queryByKeyword(
+        uniqueTitle,
+        'session-id-2'
+      );
 
       // Verify the correct topic is queried
       expect(topics).toHaveLength(0);

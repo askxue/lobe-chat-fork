@@ -29,7 +29,7 @@ const styles = {
     top: 50%;
     inset-inline-end: 28px;
     transform: translateY(-50%);
-  `,
+  `
 };
 
 interface CustomModelSelectProps {
@@ -41,30 +41,39 @@ interface CustomModelSelectProps {
 }
 
 const ProviderModelListSelect = memo<CustomModelSelectProps>(
-  ({ showModelFetcher = false, provider, showAzureDeployName, notFoundContent, placeholder }) => {
+  ({
+    showModelFetcher = false,
+    provider,
+    showAzureDeployName,
+    notFoundContent,
+    placeholder
+  }) => {
     const { t } = useTranslation('common');
     const { t: transSetting } = useTranslation('setting');
-    const [setModelProviderConfig, dispatchCustomModelCards] = useUserStore((s) => [
-      s.setModelProviderConfig,
-      s.dispatchCustomModelCards,
-      s.useFetchProviderModelList,
-    ]);
+    const [setModelProviderConfig, dispatchCustomModelCards] = useUserStore(
+      (s) => [
+        s.setModelProviderConfig,
+        s.dispatchCustomModelCards,
+        s.useFetchProviderModelList
+      ]
+    );
 
     const chatModelCards = useUserStore(
       modelProviderSelectors.getModelCardsById(provider),
-      isEqual,
+      isEqual
     );
 
     const defaultEnableModel = useUserStore(
       modelProviderSelectors.getDefaultEnabledModelsById(provider),
-      isEqual,
+      isEqual
     );
     const enabledModels = useUserStore(
       modelProviderSelectors.getEnableModelsById(provider),
-      isEqual,
+      isEqual
     );
 
-    const showReset = !!enabledModels && !isEqual(defaultEnableModel, enabledModels);
+    const showReset =
+      !!enabledModels && !isEqual(defaultEnableModel, enabledModels);
 
     return (
       <>
@@ -87,21 +96,28 @@ const ProviderModelListSelect = memo<CustomModelSelectProps>(
               mode="tags"
               notFoundContent={notFoundContent}
               onChange={(value, options) => {
-                setModelProviderConfig(provider, { enabledModels: value.filter(Boolean) });
+                setModelProviderConfig(provider, {
+                  enabledModels: value.filter(Boolean)
+                });
 
                 // if there is a new model, add it to `customModelCards`
-                options.forEach((option: { label?: string; value?: string }, index: number) => {
-                  // if is a known model, it should have value
-                  // if is an unknown model, the option will be {}
-                  if (option.value) return;
+                options.forEach(
+                  (
+                    option: { label?: string; value?: string },
+                    index: number
+                  ) => {
+                    // if is a known model, it should have value
+                    // if is an unknown model, the option will be {}
+                    if (option.value) return;
 
-                  const modelId = value[index];
+                    const modelId = value[index];
 
-                  dispatchCustomModelCards(provider, {
-                    modelCard: { id: modelId },
-                    type: 'add',
-                  });
-                });
+                    dispatchCustomModelCards(provider, {
+                      modelCard: { id: modelId },
+                      type: 'add'
+                    });
+                  }
+                );
               }}
               optionFilterProp="label"
               optionRender={({ label, value }) => {
@@ -125,7 +141,7 @@ const ProviderModelListSelect = memo<CustomModelSelectProps>(
               }}
               options={chatModelCards.map((model) => ({
                 label: model.displayName || model.id,
-                value: model.id,
+                value: model.id
               }))}
               placeholder={placeholder}
               popupClassName={cx(styles.popup)}
@@ -134,10 +150,13 @@ const ProviderModelListSelect = memo<CustomModelSelectProps>(
           </div>
           {showModelFetcher && <ModelFetcher provider={provider} />}
         </Flexbox>
-        <ModelConfigModal provider={provider} showAzureDeployName={showAzureDeployName} />
+        <ModelConfigModal
+          provider={provider}
+          showAzureDeployName={showAzureDeployName}
+        />
       </>
     );
-  },
+  }
 );
 
 export default ProviderModelListSelect;

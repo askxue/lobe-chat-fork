@@ -17,4 +17,5 @@ export const runtime = 'edge';
 // refs: https://github.com/lobehub/lobe-chat/pull/2149
 export const preferredRegion = ['cle1', 'iad1', 'pdx1', 'sfo1'];
 
-export const POST = async (req: Request) => UniverseRoute(req, { params: { provider: 'google' } });
+export const POST = async (req: Request) =>
+  UniverseRoute(req, { params: { provider: 'google' } });

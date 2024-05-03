@@ -11,7 +11,7 @@ export const getMessageById = (messages: ChatMessage[], id: string) =>
 
 const getSlicedMessagesWithConfig = (
   messages: ChatMessage[],
-  config: LobeAgentConfig,
+  config: LobeAgentConfig
 ): ChatMessage[] => {
   // if historyCount is not enabled or set to 0, return all messages
   if (!config.enableHistoryCount || !config.historyCount) return messages;
@@ -26,5 +26,5 @@ const getSlicedMessagesWithConfig = (
 export const chatHelpers = {
   getMessageById,
   getMessagesTokenCount,
-  getSlicedMessagesWithConfig,
+  getSlicedMessagesWithConfig
 };

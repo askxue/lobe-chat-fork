@@ -4,7 +4,10 @@ import { AgentMarket } from '../AgentMarket';
 
 export const runtime = 'edge';
 
-export const GET = async (req: Request, { params }: { params: { id: string } }) => {
+export const GET = async (
+  req: Request,
+  { params }: { params: { id: string } }
+) => {
   const { searchParams } = new URL(req.url);
 
   const locale = searchParams.get('locale');

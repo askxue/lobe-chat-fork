@@ -6,7 +6,10 @@ import { ChatModelCard } from '@/types/llm';
 /**
  * Parse model string to add or remove models.
  */
-export const parseModelString = (modelString: string = '', withDeploymentName = false) => {
+export const parseModelString = (
+  modelString: string = '',
+  withDeploymentName = false
+) => {
   let models: ChatModelCard[] = [];
   let removeAll = false;
   const removedModels: string[] = [];
@@ -14,7 +17,8 @@ export const parseModelString = (modelString: string = '', withDeploymentName = 
 
   for (const item of modelNames) {
     const disable = item.startsWith('-');
-    const nameConfig = item.startsWith('+') || item.startsWith('-') ? item.slice(1) : item;
+    const nameConfig =
+      item.startsWith('+') || item.startsWith('-') ? item.slice(1) : item;
     const [idAndDisplayName, ...capabilities] = nameConfig.split('<');
     let [id, displayName] = idAndDisplayName.split('=');
 
@@ -42,7 +46,7 @@ export const parseModelString = (modelString: string = '', withDeploymentName = 
 
     const model: ChatModelCard = {
       displayName: displayName || undefined,
-      id,
+      id
     };
 
     if (deploymentName) {
@@ -50,7 +54,9 @@ export const parseModelString = (modelString: string = '', withDeploymentName = 
     }
 
     if (capabilities.length > 0) {
-      const [maxTokenStr, ...capabilityList] = capabilities[0].replace('>', '').split(':');
+      const [maxTokenStr, ...capabilityList] = capabilities[0]
+        .replace('>', '')
+        .split(':');
       model.tokens = parseInt(maxTokenStr, 10) || undefined;
 
       for (const capability of capabilityList) {
@@ -80,7 +86,7 @@ export const parseModelString = (modelString: string = '', withDeploymentName = 
   return {
     add: models,
     removeAll,
-    removed: removedModels,
+    removed: removedModels
   };
 };
 
@@ -90,7 +96,7 @@ export const parseModelString = (modelString: string = '', withDeploymentName = 
 export const transformToChatModelCards = ({
   modelString = '',
   defaultChatModels,
-  withDeploymentName = false,
+  withDeploymentName = false
 }: {
   defaultChatModels: ChatModelCard[];
   modelString?: string;
@@ -110,7 +116,9 @@ export const transformToChatModelCards = ({
     // 处理添加或替换逻辑
     for (const toAddModel of modelConfig.add) {
       // first try to find the model in LOBE_DEFAULT_MODEL_LIST to confirm if it is a known model
-      const knownModel = LOBE_DEFAULT_MODEL_LIST.find((model) => model.id === toAddModel.id);
+      const knownModel = LOBE_DEFAULT_MODEL_LIST.find(
+        (model) => model.id === toAddModel.id
+      );
 
       // if the model is known, update it based on the known model
       if (knownModel) {
@@ -120,13 +128,15 @@ export const transformToChatModelCards = ({
         if (modelInList) {
           // if (modelInList.hidden) delete modelInList.hidden;
           modelInList.enabled = true;
-          if (toAddModel.displayName) modelInList.displayName = toAddModel.displayName;
+          if (toAddModel.displayName)
+            modelInList.displayName = toAddModel.displayName;
         } else {
           // if the model is not in chatModels, add it
           draft.push({
             ...knownModel,
-            displayName: toAddModel.displayName || knownModel.displayName || knownModel.id,
-            enabled: true,
+            displayName:
+              toAddModel.displayName || knownModel.displayName || knownModel.id,
+            enabled: true
           });
         }
       } else {
@@ -134,14 +144,17 @@ export const transformToChatModelCards = ({
         draft.push({
           ...toAddModel,
           displayName: toAddModel.displayName || toAddModel.id,
-          enabled: true,
+          enabled: true
         });
       }
     }
   });
 };
 
-export const extractEnabledModels = (modelString: string = '', withDeploymentName = false) => {
+export const extractEnabledModels = (
+  modelString: string = '',
+  withDeploymentName = false
+) => {
   const modelConfig = parseModelString(modelString, withDeploymentName);
   const list = modelConfig.add.map((m) => m.id);
 

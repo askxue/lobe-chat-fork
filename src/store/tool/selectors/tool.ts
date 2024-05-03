@@ -2,7 +2,10 @@ import { LobeChatPluginManifest } from '@lobehub/chat-plugin-sdk';
 import { uniqBy } from 'lodash-es';
 import { Md5 } from 'ts-md5';
 
-import { PLUGIN_SCHEMA_API_MD5_PREFIX, PLUGIN_SCHEMA_SEPARATOR } from '@/const/plugin';
+import {
+  PLUGIN_SCHEMA_API_MD5_PREFIX,
+  PLUGIN_SCHEMA_SEPARATOR
+} from '@/const/plugin';
 import { MetaData } from '@/types/meta';
 import { ChatCompletionTool } from '@/types/openai/chat';
 import { LobeToolMeta } from '@/types/tool/tool';
@@ -13,7 +16,8 @@ import { builtinToolSelectors } from '../slices/builtin/selectors';
 import { pluginSelectors } from '../slices/plugin/selectors';
 
 const getAPIName = (identifier: string, name: string, type?: string) => {
-  const pluginType = type && type !== 'default' ? `${PLUGIN_SCHEMA_SEPARATOR + type}` : '';
+  const pluginType =
+    type && type !== 'default' ? `${PLUGIN_SCHEMA_SEPARATOR + type}` : '';
 
   // 将插件的 identifier 作为前缀，避免重复
   let apiName = identifier + PLUGIN_SCHEMA_SEPARATOR + name + pluginType;
@@ -22,7 +26,8 @@ const getAPIName = (identifier: string, name: string, type?: string) => {
   // So we need to use md5 to shorten the name
   // and then find the correct apiName in response by md5
   if (apiName.length >= 64) {
-    const md5Content = PLUGIN_SCHEMA_API_MD5_PREFIX + Md5.hashStr(name).toString();
+    const md5Content =
+      PLUGIN_SCHEMA_API_MD5_PREFIX + Md5.hashStr(name).toString();
 
     apiName = identifier + PLUGIN_SCHEMA_SEPARATOR + md5Content + pluginType;
   }
@@ -42,8 +47,8 @@ const enabledSchema =
         manifest.api.map((m) => ({
           description: m.description,
           name: getAPIName(manifest.identifier, m.name, manifest.type),
-          parameters: m.parameters,
-        })),
+          parameters: m.parameters
+        }))
       );
 
     return uniqBy(list, 'name').map((i) => ({ function: i, type: 'function' }));
@@ -63,17 +68,24 @@ const enabledSystemRoles =
         const meta = manifest.meta || {};
 
         const title = pluginHelpers.getPluginTitle(meta) || manifest.identifier;
-        const systemRole = manifest.systemRole || pluginHelpers.getPluginDesc(meta);
+        const systemRole =
+          manifest.systemRole || pluginHelpers.getPluginDesc(meta);
 
         const methods = manifest.api
           .map((m) =>
-            [`#### ${getAPIName(manifest.identifier, m.name, manifest.type)}`, m.description].join(
-              '\n\n',
-            ),
+            [
+              `#### ${getAPIName(manifest.identifier, m.name, manifest.type)}`,
+              m.description
+            ].join('\n\n')
           )
           .join('\n\n');
 
-        return [`### ${title}`, systemRole, 'The APIs you can use:', methods].join('\n\n');
+        return [
+          `### ${title}`,
+          systemRole,
+          'The APIs you can use:',
+          methods
+        ].join('\n\n');
       })
       .filter(Boolean);
 
@@ -89,7 +101,9 @@ const enabledSystemRoles =
 const metaList =
   (showDalle?: boolean) =>
   (s: ToolStoreState): LobeToolMeta[] => {
-    const pluginList = pluginSelectors.installedPluginMetaList(s) as LobeToolMeta[];
+    const pluginList = pluginSelectors.installedPluginMetaList(
+      s
+    ) as LobeToolMeta[];
 
     return builtinToolSelectors.metaList(showDalle)(s).concat(pluginList);
   };
@@ -124,5 +138,5 @@ export const toolSelectors = {
   getManifestById,
   getManifestLoadingStatus,
   getMetaById,
-  metaList,
+  metaList
 };

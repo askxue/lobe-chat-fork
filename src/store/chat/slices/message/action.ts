@@ -6,7 +6,11 @@ import { template } from 'lodash-es';
 import { SWRResponse, mutate } from 'swr';
 import { StateCreator } from 'zustand/vanilla';
 
-import { LOADING_FLAT, isFunctionMessageAtStart, testFunctionMessageAtEnd } from '@/const/message';
+import {
+  LOADING_FLAT,
+  isFunctionMessageAtStart,
+  testFunctionMessageAtEnd
+} from '@/const/message';
 import { TraceEventType, TraceNameMap } from '@/const/trace';
 import { useClientDataSWR } from '@/libs/swr';
 import { chatService } from '@/services/chat';
@@ -68,7 +72,10 @@ export interface ChatMessageAction {
   updateInputMessage: (message: string) => void;
   modifyMessageContent: (id: string, content: string) => Promise<void>;
   // query
-  useFetchMessages: (sessionId: string, topicId?: string) => SWRResponse<ChatMessage[]>;
+  useFetchMessages: (
+    sessionId: string,
+    topicId?: string
+  ) => SWRResponse<ChatMessage[]>;
   stopGenerateMessage: () => void;
   copyMessage: (id: string, content: string) => Promise<void>;
 
@@ -87,7 +94,7 @@ export interface ChatMessageAction {
   coreProcessMessage: (
     messages: ChatMessage[],
     parentId: string,
-    params?: ProcessMessageParams,
+    params?: ProcessMessageParams
   ) => Promise<void>;
   /**
    * 实际获取 AI 响应
@@ -97,7 +104,7 @@ export interface ChatMessageAction {
   fetchAIChatMessage: (
     messages: ChatMessage[],
     assistantMessageId: string,
-    params?: ProcessMessageParams,
+    params?: ProcessMessageParams
   ) => Promise<{
     content: string;
     functionCallAtEnd: boolean;
@@ -108,7 +115,7 @@ export interface ChatMessageAction {
   toggleChatLoading: (
     loading: boolean,
     id?: string,
-    action?: string,
+    action?: string
   ) => AbortController | undefined;
   toggleMessageLoading: (loading: boolean, id: string) => void;
   refreshMessages: () => Promise<void>;
@@ -127,10 +134,14 @@ export interface ChatMessageAction {
   internalUpdateMessageContent: (id: string, content: string) => Promise<void>;
   internalCreateMessage: (params: CreateMessageParams) => Promise<string>;
   internalResendMessage: (id: string, traceId?: string) => Promise<void>;
-  internalTraceMessage: (id: string, payload: TraceEventPayloads) => Promise<void>;
+  internalTraceMessage: (
+    id: string,
+    payload: TraceEventPayloads
+  ) => Promise<void>;
 }
 
-const getAgentConfig = () => agentSelectors.currentAgentConfig(useAgentStore.getState());
+const getAgentConfig = () =>
+  agentSelectors.currentAgentConfig(useAgentStore.getState());
 
 const preventLeavingFn = (e: BeforeUnloadEvent) => {
   // set returnValue to trigger alert modal
@@ -155,17 +166,27 @@ export const chatMessage: StateCreator<
     get().deleteMessage(id);
 
     // trace the delete and regenerate message
-    get().internalTraceMessage(id, { eventType: TraceEventType.DeleteAndRegenerateMessage });
+    get().internalTraceMessage(id, {
+      eventType: TraceEventType.DeleteAndRegenerateMessage
+    });
   },
   regenerateMessage: async (id: string) => {
     const traceId = chatSelectors.getTraceIdByMessageId(id)(get());
     await get().internalResendMessage(id, traceId);
 
     // trace the delete and regenerate message
-    get().internalTraceMessage(id, { eventType: TraceEventType.RegenerateMessage });
+    get().internalTraceMessage(id, {
+      eventType: TraceEventType.RegenerateMessage
+    });
   },
   clearMessage: async () => {
-    const { activeId, activeTopicId, refreshMessages, refreshTopic, switchTopic } = get();
+    const {
+      activeId,
+      activeTopicId,
+      refreshMessages,
+      refreshTopic,
+      switchTopic
+    } = get();
 
     await messageService.removeMessages(activeId, activeTopicId);
 
@@ -183,7 +204,12 @@ export const chatMessage: StateCreator<
     await messageService.removeAllMessages();
     await refreshMessages();
   },
-  sendMessage: async ({ message, files, onlyAddUserMessage, isWelcomeQuestion }) => {
+  sendMessage: async ({
+    message,
+    files,
+    onlyAddUserMessage,
+    isWelcomeQuestion
+  }) => {
     const { coreProcessMessage, activeTopicId, activeId } = get();
     if (!activeId) return;
 
@@ -199,7 +225,7 @@ export const chatMessage: StateCreator<
       role: 'user',
       sessionId: activeId,
       // if there is activeTopicId，then add topicId to message
-      topicId: activeTopicId,
+      topicId: activeTopicId
     };
 
     const id = await get().internalCreateMessage(newMessage);
@@ -219,15 +245,23 @@ export const chatMessage: StateCreator<
     // if autoCreateTopic is false, then stop
     if (!agentConfig.enableAutoCreateTopic) return;
 
-    if (!activeTopicId && chats.length >= agentConfig.autoCreateTopicThreshold) {
+    if (
+      !activeTopicId &&
+      chats.length >= agentConfig.autoCreateTopicThreshold
+    ) {
       const { saveToTopic, switchTopic } = get();
       const id = await saveToTopic();
       if (id) switchTopic(id);
     }
   },
   addAIMessage: async () => {
-    const { internalCreateMessage, updateInputMessage, activeTopicId, activeId, inputMessage } =
-      get();
+    const {
+      internalCreateMessage,
+      updateInputMessage,
+      activeTopicId,
+      activeId,
+      inputMessage
+    } = get();
     if (!activeId) return;
 
     await internalCreateMessage({
@@ -235,7 +269,7 @@ export const chatMessage: StateCreator<
       role: 'assistant',
       sessionId: activeId,
       // if there is activeTopicId，then add topicId to message
-      topicId: activeTopicId,
+      topicId: activeTopicId
     });
 
     updateInputMessage('');
@@ -262,7 +296,7 @@ export const chatMessage: StateCreator<
     // due to message content will change, so we need send trace before update,or will get wrong data
     get().internalTraceMessage(id, {
       eventType: TraceEventType.ModifyMessage,
-      nextContent: content,
+      nextContent: content
     });
 
     await get().internalUpdateMessageContent(id, content);
@@ -281,11 +315,11 @@ export const chatMessage: StateCreator<
             false,
             n('useFetchMessages', {
               messages,
-              queryKey: key,
-            }),
+              queryKey: key
+            })
           );
-        },
-      },
+        }
+      }
     ),
   refreshMessages: async () => {
     await mutate([SWR_USE_FETCH_MESSAGES, get().activeId, get().activeTopicId]);
@@ -293,7 +327,12 @@ export const chatMessage: StateCreator<
 
   // the internal process method of the AI message
   coreProcessMessage: async (messages, userMessageId, params) => {
-    const { fetchAIChatMessage, triggerFunctionCall, refreshMessages, activeTopicId } = get();
+    const {
+      fetchAIChatMessage,
+      triggerFunctionCall,
+      refreshMessages,
+      activeTopicId
+    } = get();
 
     const { model, provider } = getAgentConfig();
 
@@ -306,14 +345,19 @@ export const chatMessage: StateCreator<
 
       parentId: userMessageId,
       sessionId: get().activeId,
-      topicId: activeTopicId, // if there is activeTopicId，then add it to topicId
+      topicId: activeTopicId // if there is activeTopicId，then add it to topicId
     };
 
     const mid = await get().internalCreateMessage(assistantMessage);
 
     // 2. fetch the AI response
-    const { isFunctionCall, content, functionCallAtEnd, functionCallContent, traceId } =
-      await fetchAIChatMessage(messages, mid, params);
+    const {
+      isFunctionCall,
+      content,
+      functionCallAtEnd,
+      functionCallContent,
+      traceId
+    } = await fetchAIChatMessage(messages, mid, params);
 
     // 3. if it's the function call message, trigger the function method
     if (isFunctionCall) {
@@ -323,7 +367,10 @@ export const chatMessage: StateCreator<
       if (functionCallAtEnd) {
         // create a new separate message and remove the function call from the prev message
 
-        await get().internalUpdateMessageContent(mid, content.replace(functionCallContent, ''));
+        await get().internalUpdateMessageContent(
+          mid,
+          content.replace(functionCallContent, '')
+        );
 
         const functionMessage: CreateMessageParams = {
           role: 'function',
@@ -334,7 +381,7 @@ export const chatMessage: StateCreator<
           parentId: userMessageId,
           sessionId: get().activeId,
           topicId: activeTopicId,
-          traceId,
+          traceId
         };
 
         functionId = await get().internalCreateMessage(functionMessage);
@@ -359,25 +406,30 @@ export const chatMessage: StateCreator<
       refreshMessages,
       internalUpdateMessageContent,
       dispatchMessage,
-      createSmoothMessage,
+      createSmoothMessage
     } = get();
 
     const abortController = toggleChatLoading(
       true,
       assistantId,
-      n('generateMessage(start)', { assistantId, messages }) as string,
+      n('generateMessage(start)', { assistantId, messages }) as string
     );
 
     const config = getAgentConfig();
 
-    const compiler = template(config.inputTemplate, { interpolate: /{{([\S\s]+?)}}/g });
+    const compiler = template(config.inputTemplate, {
+      interpolate: /{{([\S\s]+?)}}/g
+    });
 
     // ================================== //
     //   messages uniformly preprocess    //
     // ================================== //
 
     // 1. slice messages with config
-    let preprocessMsgs = chatHelpers.getSlicedMessagesWithConfig(messages, config);
+    let preprocessMsgs = chatHelpers.getSlicedMessagesWithConfig(
+      messages,
+      config
+    );
 
     // 2. replace inputMessage template
     preprocessMsgs = !config.inputTemplate
@@ -398,11 +450,16 @@ export const chatMessage: StateCreator<
 
     // 3. add systemRole
     if (config.systemRole) {
-      preprocessMsgs.unshift({ content: config.systemRole, role: 'system' } as ChatMessage);
+      preprocessMsgs.unshift({
+        content: config.systemRole,
+        role: 'system'
+      } as ChatMessage);
     }
 
     // 4. handle max_tokens
-    config.params.max_tokens = config.enableMaxTokens ? config.params.max_tokens : undefined;
+    config.params.max_tokens = config.enableMaxTokens
+      ? config.params.max_tokens
+      : undefined;
 
     // 5. handle config for the vision model
     // Due to the gpt-4-vision-preview model's default max_tokens is very small
@@ -430,13 +487,13 @@ export const chatMessage: StateCreator<
         model: config.model,
         provider: config.provider,
         ...config.params,
-        plugins: config.plugins,
+        plugins: config.plugins
       },
       trace: {
         traceId: params?.traceId,
         sessionId: get().activeId,
         topicId: get().activeTopicId,
-        traceName: TraceNameMap.Conversation,
+        traceName: TraceNameMap.Conversation
       },
       isWelcomeQuestion: params?.isWelcomeQuestion,
       onErrorHandle: async (error) => {
@@ -453,7 +510,7 @@ export const chatMessage: StateCreator<
           msgTraceId = traceId;
           await messageService.updateMessage(assistantId, {
             traceId,
-            observationId: observationId ?? undefined,
+            observationId: observationId ?? undefined
           });
         }
 
@@ -478,7 +535,7 @@ export const chatMessage: StateCreator<
             id: assistantId,
             key: 'content',
             type: 'updateMessage',
-            value: output,
+            value: output
           });
           isFunctionCall = true;
         }
@@ -487,7 +544,7 @@ export const chatMessage: StateCreator<
         // and the message is not a function call
         // then start the animation
         if (!isAnimationActive && !isFunctionCall) startAnimation();
-      },
+      }
     });
 
     toggleChatLoading(false, undefined, n('generateMessage(end)') as string);
@@ -510,7 +567,7 @@ export const chatMessage: StateCreator<
       functionCallAtEnd,
       functionCallContent,
       isFunctionCall,
-      traceId: msgTraceId,
+      traceId: msgTraceId
     };
   },
   toggleChatLoading: (loading, id, action) => {
@@ -522,7 +579,11 @@ export const chatMessage: StateCreator<
 
       return abortController;
     } else {
-      set({ abortController: undefined, chatLoadingId: undefined }, false, action);
+      set(
+        { abortController: undefined, chatLoadingId: undefined },
+        false,
+        action
+      );
 
       window.removeEventListener('beforeunload', preventLeavingFn);
     }
@@ -538,10 +599,10 @@ export const chatMessage: StateCreator<
 
             if (index >= 0) draft.splice(index, 1);
           }
-        }),
+        })
       },
       false,
-      'toggleMessageLoading',
+      'toggleMessageLoading'
     );
   },
 
@@ -567,7 +628,10 @@ export const chatMessage: StateCreator<
         const userId = currentMessage.parentId;
         const userIndex = chats.findIndex((c) => c.id === userId);
         // 如果消息没有 parentId，那么同 user/function 模式
-        contextMessages = chats.slice(0, userIndex < 0 ? currentIndex + 1 : userIndex + 1);
+        contextMessages = chats.slice(
+          0,
+          userIndex < 0 ? currentIndex + 1 : userIndex + 1
+        );
         break;
       }
     }
@@ -589,7 +653,12 @@ export const chatMessage: StateCreator<
     // Due to the async update method and refresh need about 100ms
     // we need to update the message content at the frontend to avoid the update flick
     // refs: https://medium.com/@kyledeguzmanx/what-are-optimistic-updates-483662c3e171
-    dispatchMessage({ id, key: 'content', type: 'updateMessage', value: content });
+    dispatchMessage({
+      id,
+      key: 'content',
+      type: 'updateMessage',
+      value: content
+    });
 
     await messageService.updateMessage(id, { content });
     await refreshMessages();
@@ -658,7 +727,12 @@ export const chatMessage: StateCreator<
             buffer += charsToAdd;
 
             // 更新消息内容，这里可能需要结合实际情况调整
-            dispatchMessage({ id, key: 'content', type: 'updateMessage', value: buffer });
+            dispatchMessage({
+              id,
+              key: 'content',
+              type: 'updateMessage',
+              value: buffer
+            });
 
             // 设置下一个字符的延迟
             animationTimeoutId = setTimeout(updateText, 16); // 16 毫秒的延迟模拟打字机效果
@@ -686,8 +760,13 @@ export const chatMessage: StateCreator<
 
     if (traceId && message?.role === 'assistant') {
       traceService
-        .traceEvent({ traceId, observationId, content: message.content, ...payload })
+        .traceEvent({
+          traceId,
+          observationId,
+          content: message.content,
+          ...payload
+        })
         .catch();
     }
-  },
+  }
 });

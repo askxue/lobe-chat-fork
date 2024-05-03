@@ -14,7 +14,9 @@ interface UserMessageContentPartImage {
   type: 'image_url';
 }
 
-export type UserMessageContentPart = UserMessageContentPartText | UserMessageContentPartImage;
+export type UserMessageContentPart =
+  | UserMessageContentPartText
+  | UserMessageContentPartImage;
 
 export interface OpenAIChatMessage {
   /**

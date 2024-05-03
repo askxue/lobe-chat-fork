@@ -1,8 +1,16 @@
 import { DEFAULT_LANG } from '@/const/locale';
 import { DEFAULT_AGENT_META } from '@/const/meta';
-import { DEFAULT_AGENT, DEFAULT_AGENT_CONFIG, DEFAULT_TTS_CONFIG } from '@/const/settings';
+import {
+  DEFAULT_AGENT,
+  DEFAULT_AGENT_CONFIG,
+  DEFAULT_TTS_CONFIG
+} from '@/const/settings';
 import { Locales } from '@/locales/resources';
-import { GeneralModelProviderConfig, GlobalLLMProviderKey, GlobalSettings } from '@/types/settings';
+import {
+  GeneralModelProviderConfig,
+  GlobalLLMProviderKey,
+  GlobalSettings
+} from '@/types/settings';
 import { isOnServerSide } from '@/utils/env';
 import { merge } from '@/utils/merge';
 
@@ -11,19 +19,26 @@ import { UserStore } from '../../../store';
 export const currentSettings = (s: UserStore): GlobalSettings =>
   merge(s.defaultSettings, s.settings);
 
-export const currentLLMSettings = (s: UserStore) => currentSettings(s).languageModel;
+export const currentLLMSettings = (s: UserStore) =>
+  currentSettings(s).languageModel;
 
 export const getProviderConfigById = (provider: string) => (s: UserStore) =>
-  currentLLMSettings(s)[provider as GlobalLLMProviderKey] as GeneralModelProviderConfig | undefined;
+  currentLLMSettings(s)[provider as GlobalLLMProviderKey] as
+    | GeneralModelProviderConfig
+    | undefined;
 
 const password = (s: UserStore) => currentSettings(s).password;
 
-const currentTTS = (s: UserStore) => merge(DEFAULT_TTS_CONFIG, currentSettings(s).tts);
+const currentTTS = (s: UserStore) =>
+  merge(DEFAULT_TTS_CONFIG, currentSettings(s).tts);
 
-const defaultAgent = (s: UserStore) => merge(DEFAULT_AGENT, currentSettings(s).defaultAgent);
-const defaultAgentConfig = (s: UserStore) => merge(DEFAULT_AGENT_CONFIG, defaultAgent(s).config);
+const defaultAgent = (s: UserStore) =>
+  merge(DEFAULT_AGENT, currentSettings(s).defaultAgent);
+const defaultAgentConfig = (s: UserStore) =>
+  merge(DEFAULT_AGENT_CONFIG, defaultAgent(s).config);
 
-const defaultAgentMeta = (s: UserStore) => merge(DEFAULT_AGENT_META, defaultAgent(s).meta);
+const defaultAgentMeta = (s: UserStore) =>
+  merge(DEFAULT_AGENT_META, defaultAgent(s).meta);
 
 // TODO: Maybe we can also export settings difference
 const exportSettings = (s: UserStore) => {
@@ -46,7 +61,8 @@ const currentLanguage = (s: UserStore) => {
 };
 
 const dalleConfig = (s: UserStore) => currentSettings(s).tool?.dalle || {};
-const isDalleAutoGenerating = (s: UserStore) => currentSettings(s).tool?.dalle?.autoGenerate;
+const isDalleAutoGenerating = (s: UserStore) =>
+  currentSettings(s).tool?.dalle?.autoGenerate;
 
 export const settingsSelectors = {
   currentLanguage,
@@ -59,5 +75,5 @@ export const settingsSelectors = {
   exportSettings,
   isDalleAutoGenerating,
   password,
-  providerConfig: getProviderConfigById,
+  providerConfig: getProviderConfigById
 };

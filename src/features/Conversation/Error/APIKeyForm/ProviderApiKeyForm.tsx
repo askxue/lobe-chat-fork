@@ -26,7 +26,7 @@ const ProviderApiKeyForm = memo<ProviderApiKeyFormProps>(
     const [apiKey, proxyUrl, setConfig] = useUserStore((s) => [
       settingsSelectors.providerConfig(provider)(s)?.apiKey,
       settingsSelectors.providerConfig(provider)(s)?.endpoint,
-      s.setModelProviderConfig,
+      s.setModelProviderConfig
     ]);
 
     return (
@@ -67,7 +67,7 @@ const ProviderApiKeyForm = memo<ProviderApiKeyFormProps>(
           ))}
       </FormAction>
     );
-  },
+  }
 );
 
 export default ProviderApiKeyForm;

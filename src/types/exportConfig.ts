@@ -8,7 +8,12 @@ import { ChatTopic } from '@/types/topic';
  * @enum ['agents', 'sessions', 'singleSession', 'settings', 'all']
  * @enumNames ['agents', 'sessions', 'singleSession', 'settings', 'all']
  */
-export type ExportType = 'agents' | 'sessions' | 'singleSession' | 'settings' | 'all';
+export type ExportType =
+  | 'agents'
+  | 'sessions'
+  | 'singleSession'
+  | 'settings'
+  | 'all';
 
 /**
  * 配置模型映射
@@ -75,7 +80,9 @@ export interface ConfigStateSettings {
 /**
  * 配置状态：全部
  */
-export interface ConfigStateAll extends ConfigStateSessions, ConfigStateSettings {}
+export interface ConfigStateAll
+  extends ConfigStateSessions,
+    ConfigStateSettings {}
 
 // =============   配置文件类型   ============= //
 
@@ -127,4 +134,8 @@ export interface ConfigFileAll {
 /**
  * 配置文件
  */
-export type ConfigFile = ConfigFileSettings | ConfigFileSessions | ConfigFileAll | ConfigFileAgents;
+export type ConfigFile =
+  | ConfigFileSettings
+  | ConfigFileSessions
+  | ConfigFileAll
+  | ConfigFileAgents;

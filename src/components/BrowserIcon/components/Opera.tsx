@@ -4,7 +4,12 @@ import { SVGComponent } from '../types';
 
 export default ({ ...props }: SVGComponent) => {
   return (
-    <svg aria-label="Opera" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      aria-label="Opera"
+      viewBox="0 0 512 512"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
       <rect fill="#fff" height={512} rx="15%" width={512} />
       <path
         d="M185.2 377.2c-23.7-28-39.1-69.6-40.2-116.1v-10.2c1-46.5 16.5-88 40.2-116 30.9-40.1 76.7-65.5 128-65.5 31.4 0 60.9 9.6 86 26.3A214.2 214.2 0 00256.9 41h-.8a215 215 0 10143.3 375.3 155.1 155.1 0 01-86.2 26.3c-51.2 0-97-25.4-127.9-65.4"

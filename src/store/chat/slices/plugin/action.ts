@@ -3,7 +3,10 @@ import { t } from 'i18next';
 import { Md5 } from 'ts-md5';
 import { StateCreator } from 'zustand/vanilla';
 
-import { PLUGIN_SCHEMA_API_MD5_PREFIX, PLUGIN_SCHEMA_SEPARATOR } from '@/const/plugin';
+import {
+  PLUGIN_SCHEMA_API_MD5_PREFIX,
+  PLUGIN_SCHEMA_SEPARATOR
+} from '@/const/plugin';
 import { chatService } from '@/services/chat';
 import { CreateMessageParams, messageService } from '@/services/message';
 import { ChatStore } from '@/store/chat/store';
@@ -18,17 +21,29 @@ import { chatSelectors } from '../../slices/message/selectors';
 const n = setNamespace('plugin');
 
 export interface ChatPluginAction {
-  createAssistantMessageByPlugin: (content: string, parentId: string) => Promise<void>;
+  createAssistantMessageByPlugin: (
+    content: string,
+    parentId: string
+  ) => Promise<void>;
   fillPluginMessageContent: (
     id: string,
     content: string,
-    triggerAiMessage?: boolean,
+    triggerAiMessage?: boolean
   ) => Promise<void>;
   invokeBuiltinTool: (id: string, payload: ChatPluginPayload) => Promise<void>;
   invokeDefaultTypePlugin: (id: string, payload: any) => Promise<void>;
-  invokeMarkdownTypePlugin: (id: string, payload: ChatPluginPayload) => Promise<void>;
-  invokeStandaloneTypePlugin: (id: string, payload: ChatPluginPayload) => Promise<void>;
-  runPluginApi: (id: string, payload: ChatPluginPayload) => Promise<string | undefined>;
+  invokeMarkdownTypePlugin: (
+    id: string,
+    payload: ChatPluginPayload
+  ) => Promise<void>;
+  invokeStandaloneTypePlugin: (
+    id: string,
+    payload: ChatPluginPayload
+  ) => Promise<void>;
+  runPluginApi: (
+    id: string,
+    payload: ChatPluginPayload
+  ) => Promise<string | undefined>;
   triggerAIMessage: (id: string, traceId?: string) => Promise<void>;
   triggerFunctionCall: (id: string) => Promise<void>;
   updatePluginState: (id: string, key: string, value: any) => Promise<void>;
@@ -46,7 +61,7 @@ export const chatPlugin: StateCreator<
       parentId,
       role: 'assistant',
       sessionId: get().activeId,
-      topicId: get().activeTopicId, // if there is activeTopicId，then add it to topicId
+      topicId: get().activeTopicId // if there is activeTopicId，then add it to topicId
     };
 
     await messageService.createMessage(newMessage);
@@ -67,7 +82,9 @@ export const chatPlugin: StateCreator<
     toggleChatLoading(true, id, n('invokeBuiltinTool') as string);
     let data;
     try {
-      data = await useToolStore.getState().invokeBuiltinTool(payload.apiName, params);
+      data = await useToolStore
+        .getState()
+        .invokeBuiltinTool(payload.apiName, params);
     } catch (error) {
       console.log(error);
     }
@@ -111,7 +128,9 @@ export const chatPlugin: StateCreator<
   },
 
   invokeStandaloneTypePlugin: async (id, payload) => {
-    const result = await useToolStore.getState().validatePluginSettings(payload.identifier);
+    const result = await useToolStore
+      .getState()
+      .validatePluginSettings(payload.identifier);
     if (!result) return;
 
     // if the plugin settings is not valid, then set the message with error type
@@ -119,10 +138,11 @@ export const chatPlugin: StateCreator<
       await messageService.updateMessageError(id, {
         body: {
           error: result.errors,
-          message: '[plugin] your settings is invalid with plugin manifest setting schema',
+          message:
+            '[plugin] your settings is invalid with plugin manifest setting schema'
         },
         message: t('response.PluginSettingsInvalid', { ns: 'error' }),
-        type: PluginErrorType.PluginSettingsInvalid as any,
+        type: PluginErrorType.PluginSettingsInvalid as any
       });
 
       await get().refreshMessages();
@@ -131,17 +151,25 @@ export const chatPlugin: StateCreator<
   },
 
   runPluginApi: async (id, payload) => {
-    const { internalUpdateMessageContent, refreshMessages, toggleChatLoading } = get();
+    const { internalUpdateMessageContent, refreshMessages, toggleChatLoading } =
+      get();
     let data: string;
 
     try {
-      const abortController = toggleChatLoading(true, id, n('fetchPlugin') as string);
+      const abortController = toggleChatLoading(
+        true,
+        id,
+        n('fetchPlugin') as string
+      );
 
       const message = chatSelectors.getMessageById(id)(get());
 
       const res = await chatService.runPluginApi(payload, {
         signal: abortController?.signal,
-        trace: { observationId: message?.observationId, traceId: message?.traceId },
+        trace: {
+          observationId: message?.observationId,
+          traceId: message?.traceId
+        }
       });
       data = res.text;
 
@@ -188,7 +216,7 @@ export const chatPlugin: StateCreator<
       invokeBuiltinTool,
       refreshMessages,
       internalResendMessage,
-      deleteMessage,
+      deleteMessage
     } = get();
 
     let payload = { apiName: '', identifier: '' } as ChatPluginPayload;
@@ -202,13 +230,15 @@ export const chatPlugin: StateCreator<
 
       const function_call = tool_calls[0].function;
 
-      const [identifier, apiName, type] = function_call.name.split(PLUGIN_SCHEMA_SEPARATOR);
+      const [identifier, apiName, type] = function_call.name.split(
+        PLUGIN_SCHEMA_SEPARATOR
+      );
 
       payload = {
         apiName,
         arguments: function_call.arguments,
         identifier,
-        type: (type ?? 'default') as any,
+        type: (type ?? 'default') as any
       };
 
       // fix https://github.com/lobehub/lobe-chat/issues/1094, remove and retry after experiencing plugin illusion
@@ -221,9 +251,13 @@ export const chatPlugin: StateCreator<
       // if the apiName is md5, try to find the correct apiName in the plugins
       if (apiName.startsWith(PLUGIN_SCHEMA_API_MD5_PREFIX)) {
         const md5 = apiName.replace(PLUGIN_SCHEMA_API_MD5_PREFIX, '');
-        const manifest = pluginSelectors.getPluginManifestById(identifier)(useToolStore.getState());
+        const manifest = pluginSelectors.getPluginManifestById(identifier)(
+          useToolStore.getState()
+        );
 
-        const api = manifest?.api.find((api) => Md5.hashStr(api.name).toString() === md5);
+        const api = manifest?.api.find(
+          (api) => Md5.hashStr(api.name).toString() === md5
+        );
         if (!api) return;
         payload.apiName = api.name;
       }
@@ -236,7 +270,7 @@ export const chatPlugin: StateCreator<
     await messageService.updateMessage(id, {
       content: !!message.content ? '' : undefined,
       plugin: payload,
-      role: 'function',
+      role: 'function'
     });
     await refreshMessages();
 
@@ -267,5 +301,5 @@ export const chatPlugin: StateCreator<
 
     await messageService.updateMessagePluginState(id, key, value);
     await refreshMessages();
-  },
+  }
 });

@@ -3,7 +3,10 @@ import { AlignJustify } from 'lucide-react';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { DESKTOP_HEADER_ICON_SIZE, MOBILE_HEADER_ICON_SIZE } from '@/const/layoutTokens';
+import {
+  DESKTOP_HEADER_ICON_SIZE,
+  MOBILE_HEADER_ICON_SIZE
+} from '@/const/layoutTokens';
 import { useQueryRoute } from '@/hooks/useQueryRoute';
 import { useGlobalStore } from '@/store/global';
 import { SidebarTabKey } from '@/store/global/initialState';
@@ -21,7 +24,7 @@ const SettingButton = memo<{ mobile?: boolean }>(({ mobile }) => {
       onClick={() => {
         if (isInbox) {
           useGlobalStore.setState({
-            sidebarKey: SidebarTabKey.Setting,
+            sidebarKey: SidebarTabKey.Setting
           });
           router.push('/settings/agent');
         } else {

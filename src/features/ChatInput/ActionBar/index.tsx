@@ -1,7 +1,12 @@
 import { ChatInputActionBar } from '@lobehub/ui';
 import { ReactNode, memo, useMemo } from 'react';
 
-import { ActionKeys, actionMap, getLeftActionList, getRightActionList } from './config';
+import {
+  ActionKeys,
+  actionMap,
+  getLeftActionList,
+  getRightActionList
+} from './config';
 
 const RenderActionList = ({ dataSource }: { dataSource: ActionKeys[] }) => (
   <>
@@ -28,7 +33,7 @@ const ActionBar = memo<ActionBarProps>(
     rightAreaStartRender,
     rightAreaEndRender,
     leftAreaStartRender,
-    leftAreaEndRender,
+    leftAreaEndRender
   }) => {
     const leftActionList = useMemo(() => getLeftActionList(mobile), [mobile]);
     const rightActionList = useMemo(() => getRightActionList(mobile), [mobile]);
@@ -52,7 +57,7 @@ const ActionBar = memo<ActionBarProps>(
         }
       />
     );
-  },
+  }
 );
 
 export default ActionBar;

@@ -3,7 +3,8 @@ import { FilesStoreState } from '../../initialState';
 const getImageDetailByList = (list: string[]) => (s: FilesStoreState) =>
   list.map((i) => s.imagesMap[i]).filter(Boolean);
 
-const imageDetailList = (s: FilesStoreState) => getImageDetailByList(s.inputFilesList)(s);
+const imageDetailList = (s: FilesStoreState) =>
+  getImageDetailByList(s.inputFilesList)(s);
 
 const getImageUrlOrBase64ById =
   (id: string) =>
@@ -12,7 +13,10 @@ const getImageUrlOrBase64ById =
 
     if (!preview) return undefined;
 
-    const url = preview.saveMode === 'local' ? (preview.base64Url as string) : preview.url;
+    const url =
+      preview.saveMode === 'local'
+        ? (preview.base64Url as string)
+        : preview.url;
 
     return { id, url: url };
   };
@@ -23,12 +27,13 @@ const getImageUrlOrBase64ByList = (idList: string[]) => (s: FilesStoreState) =>
     url: string;
   }[];
 
-const imageUrlOrBase64List = (s: FilesStoreState) => getImageUrlOrBase64ByList(s.inputFilesList)(s);
+const imageUrlOrBase64List = (s: FilesStoreState) =>
+  getImageUrlOrBase64ByList(s.inputFilesList)(s);
 
 export const filesSelectors = {
   getImageDetailByList,
   getImageUrlOrBase64ById,
   getImageUrlOrBase64ByList,
   imageDetailList,
-  imageUrlOrBase64List,
+  imageUrlOrBase64List
 };

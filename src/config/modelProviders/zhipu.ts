@@ -8,12 +8,13 @@ import { ModelProviderCard } from '@/types/llm';
 const ZhiPu: ModelProviderCard = {
   chatModels: [
     {
-      description: '最新的 GLM-4 、最大支持 128k 上下文、支持 Function Call 、Retreival',
+      description:
+        '最新的 GLM-4 、最大支持 128k 上下文、支持 Function Call 、Retreival',
       displayName: 'GLM-4',
       enabled: true,
       // functionCall: true,
       id: 'glm-4',
-      tokens: 128_000,
+      tokens: 128_000
     },
     {
       description:
@@ -22,18 +23,19 @@ const ZhiPu: ModelProviderCard = {
       enabled: true,
       id: 'glm-4v',
       tokens: 2000,
-      vision: true,
+      vision: true
     },
     {
-      description: '最新的glm-3-turbo、最大支持 128k上下文、支持Function Call、Retreival',
+      description:
+        '最新的glm-3-turbo、最大支持 128k上下文、支持Function Call、Retreival',
       displayName: 'GLM-3 Turbo',
       enabled: true,
       // functionCall: true,
       id: 'glm-3-turbo',
-      tokens: 128_000,
-    },
+      tokens: 128_000
+    }
   ],
-  id: 'zhipu',
+  id: 'zhipu'
 };
 
 export default ZhiPu;

@@ -1,13 +1,21 @@
 import {
   BedrockRuntimeClient,
-  InvokeModelWithResponseStreamCommand,
+  InvokeModelWithResponseStreamCommand
 } from '@aws-sdk/client-bedrock-runtime';
-import { AWSBedrockLlama2Stream, AWSBedrockStream, StreamingTextResponse } from 'ai';
+import {
+  AWSBedrockLlama2Stream,
+  AWSBedrockStream,
+  StreamingTextResponse
+} from 'ai';
 import { experimental_buildLlama2Prompt } from 'ai/prompts';
 
 import { LobeRuntimeAI } from '../BaseAI';
 import { AgentRuntimeErrorType } from '../error';
-import { ChatCompetitionOptions, ChatStreamPayload, ModelProvider } from '../types';
+import {
+  ChatCompetitionOptions,
+  ChatStreamPayload,
+  ModelProvider
+} from '../types';
 import { buildAnthropicMessages } from '../utils/anthropicHelpers';
 import { AgentRuntimeError } from '../utils/createError';
 import { debugStream } from '../utils/debugStream';
@@ -25,16 +33,18 @@ export class LobeBedrockAI implements LobeRuntimeAI {
 
   constructor({ region, accessKeyId, accessKeySecret }: LobeBedrockAIParams) {
     if (!(accessKeyId && accessKeySecret))
-      throw AgentRuntimeError.createError(AgentRuntimeErrorType.InvalidBedrockCredentials);
+      throw AgentRuntimeError.createError(
+        AgentRuntimeErrorType.InvalidBedrockCredentials
+      );
 
     this.region = region ?? 'us-east-1';
 
     this.client = new BedrockRuntimeClient({
       credentials: {
         accessKeyId: accessKeyId,
-        secretAccessKey: accessKeySecret,
+        secretAccessKey: accessKeySecret
       },
-      region: this.region,
+      region: this.region
     });
   }
 
@@ -46,7 +56,7 @@ export class LobeBedrockAI implements LobeRuntimeAI {
 
   private invokeClaudeModel = async (
     payload: ChatStreamPayload,
-    options?: ChatCompetitionOptions,
+    options?: ChatCompetitionOptions
   ): Promise<StreamingTextResponse> => {
     const { max_tokens, messages, model, temperature, top_p } = payload;
     const system_message = messages.find((m) => m.role === 'system');
@@ -60,21 +70,23 @@ export class LobeBedrockAI implements LobeRuntimeAI {
         messages: buildAnthropicMessages(user_messages),
         system: system_message?.content as string,
         temperature: temperature,
-        top_p: top_p,
+        top_p: top_p
       }),
       contentType: 'application/json',
-      modelId: model,
+      modelId: model
     });
 
     try {
       // Ask Claude for a streaming chat completion given the prompt
-      const bedrockResponse = await this.client.send(command, { abortSignal: options?.signal });
+      const bedrockResponse = await this.client.send(command, {
+        abortSignal: options?.signal
+      });
 
       // Convert the response into a friendly text-stream
       const stream = AWSBedrockStream(
         bedrockResponse,
         options?.callback,
-        (chunk) => chunk.delta?.text,
+        (chunk) => chunk.delta?.text
       );
 
       const [debug, output] = stream.tee();
@@ -92,25 +104,27 @@ export class LobeBedrockAI implements LobeRuntimeAI {
         error: {
           body: err.$metadata,
           message: err.message,
-          type: err.name,
+          type: err.name
         },
         errorType: AgentRuntimeErrorType.BedrockBizError,
         provider: ModelProvider.Bedrock,
-        region: this.region,
+        region: this.region
       });
     }
   };
 
-  private invokeLlamaModel = async (payload: ChatStreamPayload): Promise<StreamingTextResponse> => {
+  private invokeLlamaModel = async (
+    payload: ChatStreamPayload
+  ): Promise<StreamingTextResponse> => {
     const { max_tokens, messages, model } = payload;
     const command = new InvokeModelWithResponseStreamCommand({
       accept: 'application/json',
       body: JSON.stringify({
         max_gen_len: max_tokens || 400,
-        prompt: experimental_buildLlama2Prompt(messages as any),
+        prompt: experimental_buildLlama2Prompt(messages as any)
       }),
       contentType: 'application/json',
-      modelId: model,
+      modelId: model
     });
 
     try {
@@ -135,11 +149,11 @@ export class LobeBedrockAI implements LobeRuntimeAI {
           body: err.$metadata,
           message: err.message,
           region: this.region,
-          type: err.name,
+          type: err.name
         },
         errorType: AgentRuntimeErrorType.BedrockBizError,
         provider: ModelProvider.Bedrock,
-        region: this.region,
+        region: this.region
       });
     }
   };

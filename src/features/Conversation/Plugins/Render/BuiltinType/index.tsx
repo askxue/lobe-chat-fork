@@ -12,18 +12,20 @@ export interface BuiltinTypeProps {
   loading?: boolean;
 }
 
-const BuiltinType = memo<BuiltinTypeProps>(({ content, id, identifier, loading }) => {
-  const { isJSON, data } = useParseContent(content);
+const BuiltinType = memo<BuiltinTypeProps>(
+  ({ content, id, identifier, loading }) => {
+    const { isJSON, data } = useParseContent(content);
 
-  if (!isJSON) {
-    return loading && <Loading />;
+    if (!isJSON) {
+      return loading && <Loading />;
+    }
+
+    const Render = BuiltinToolsRenders[identifier || ''];
+
+    if (!Render) return;
+
+    return <Render content={data} identifier={identifier} messageId={id} />;
   }
-
-  const Render = BuiltinToolsRenders[identifier || ''];
-
-  if (!Render) return;
-
-  return <Render content={data} identifier={identifier} messageId={id} />;
-});
+);
 
 export default BuiltinType;

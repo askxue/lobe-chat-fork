@@ -3,7 +3,7 @@ import {
   Swatches,
   findCustomThemeName,
   neutralColors,
-  neutralColorsSwatches,
+  neutralColorsSwatches
 } from '@lobehub/ui';
 import { memo } from 'react';
 
@@ -13,7 +13,7 @@ import { settingsSelectors } from '@/store/user/selectors';
 const ThemeSwatchesNeutral = memo(() => {
   const [neutralColor, setSettings] = useUserStore((s) => [
     settingsSelectors.currentSettings(s).neutralColor,
-    s.setSettings,
+    s.setSettings
   ]);
 
   const handleSelect = (v: any) => {

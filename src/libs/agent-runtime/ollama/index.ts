@@ -8,7 +8,11 @@ import { ChatModelCard } from '@/types/llm';
 
 import { LobeRuntimeAI } from '../BaseAI';
 import { AgentRuntimeErrorType } from '../error';
-import { ChatCompetitionOptions, ChatStreamPayload, ModelProvider } from '../types';
+import {
+  ChatCompetitionOptions,
+  ChatStreamPayload,
+  ModelProvider
+} from '../types';
 import { AgentRuntimeError } from '../utils/createError';
 import { parseDataUri } from '../utils/uriParser';
 import { OllamaMessage } from './type';
@@ -22,7 +26,9 @@ export class LobeOllamaAI implements LobeRuntimeAI {
     try {
       if (baseURL) new URL(baseURL);
     } catch {
-      throw AgentRuntimeError.createError(AgentRuntimeErrorType.InvalidOllamaArgs);
+      throw AgentRuntimeError.createError(
+        AgentRuntimeErrorType.InvalidOllamaArgs
+      );
     }
 
     this.client = new Ollama(!baseURL ? undefined : { host: baseURL });
@@ -46,21 +52,24 @@ export class LobeOllamaAI implements LobeRuntimeAI {
           frequency_penalty: payload.frequency_penalty,
           presence_penalty: payload.presence_penalty,
           temperature: payload.temperature,
-          top_p: payload.top_p,
+          top_p: payload.top_p
         },
-        stream: true,
+        stream: true
       });
 
-      return new StreamingTextResponse(OllamaStream(response, options?.callback), {
-        headers: options?.headers,
-      });
+      return new StreamingTextResponse(
+        OllamaStream(response, options?.callback),
+        {
+          headers: options?.headers
+        }
+      );
     } catch (error) {
       const e = error as { message: string; name: string; status_code: number };
 
       throw AgentRuntimeError.chat({
         error: { message: e.message, name: e.name, status_code: e.status_code },
         errorType: AgentRuntimeErrorType.OllamaBizError,
-        provider: ModelProvider.Ollama,
+        provider: ModelProvider.Ollama
       });
     }
   }
@@ -68,22 +77,26 @@ export class LobeOllamaAI implements LobeRuntimeAI {
   async models(): Promise<ChatModelCard[]> {
     const list = await this.client.list();
     return list.models.map((model) => ({
-      id: model.name,
+      id: model.name
     }));
   }
 
   private buildOllamaMessages(messages: OpenAIChatMessage[]) {
-    return messages.map((message) => this.convertContentToOllamaMessage(message));
+    return messages.map((message) =>
+      this.convertContentToOllamaMessage(message)
+    );
   }
 
-  private convertContentToOllamaMessage = (message: OpenAIChatMessage): OllamaMessage => {
+  private convertContentToOllamaMessage = (
+    message: OpenAIChatMessage
+  ): OllamaMessage => {
     if (typeof message.content === 'string') {
       return { content: message.content, role: message.role };
     }
 
     const ollamaMessage: OllamaMessage = {
       content: '',
-      role: message.role,
+      role: message.role
     };
 
     for (const content of message.content) {

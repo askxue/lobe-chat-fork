@@ -57,8 +57,8 @@ http(s)://your-domain/api/auth/callback/zitadel
   - You can fill in or modify redirect URIs after creating the application, but make sure the filled
   URL is consistent with the deployed URL.
 
-  - Replace `http(s)://your-domain` with the actual URL that LobeChat is deployed to.
-</Callout>
+- Replace `http(s)://your-domain` with the actual URL that LobeChat is deployed to.
+  </Callout>
 
 Confirm the configuration and click **Create**.
 
@@ -97,16 +97,16 @@ Navigate to the **URLs** tab, and save the **issuer** URL.
 
 When deploying LobeChat, you need to configure the following environment variables:
 
-| Environment Variable | Type | Description |
-| --- | --- | --- |
-| `ENABLE_OAUTH_SSO` | Required | Enable single sign-on (SSO) for LobeChat. Set to `1` to enable single sign-on. |
-| `NEXTAUTH_SECRET` | Required | Key used to encrypt Auth.js session tokens. You can generate a key using the following command: `openssl rand -base64 32` |
-| `SSO_PROVIDERS` | Optional | Select the single sign-on provider for LoboChat. Use `zitadel` for ZITADEL. |
-| `ZITADEL_CLIENT_ID` | Required | Client ID (`ClientId` as shown in ZITADEL) of the ZITADEL application |
-| `ZITADEL_CLIENT_SECRET` | Required | Client Secret (`ClientSecret` as shown in ZITADEL) of the ZITADEL application |
-| `ZITADEL_ISSUER` | Required | Issuer URL of the ZITADEL application |
-| `ACCESS_CODE` | Required | Add a password to access this service. You can set a sufficiently long random password to "disable" access code authorization. |
-| `NEXTAUTH_URL` | Optional | The URL is used to specify the callback address for the execution of OAuth authentication in Auth.js. It needs to be set only when the default address is incorrect. `https://example.com/api/auth` |
+| Environment Variable    | Type     | Description                                                                                                                                                                                         |
+| ----------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ENABLE_OAUTH_SSO`      | Required | Enable single sign-on (SSO) for LobeChat. Set to `1` to enable single sign-on.                                                                                                                      |
+| `NEXTAUTH_SECRET`       | Required | Key used to encrypt Auth.js session tokens. You can generate a key using the following command: `openssl rand -base64 32`                                                                           |
+| `SSO_PROVIDERS`         | Optional | Select the single sign-on provider for LoboChat. Use `zitadel` for ZITADEL.                                                                                                                         |
+| `ZITADEL_CLIENT_ID`     | Required | Client ID (`ClientId` as shown in ZITADEL) of the ZITADEL application                                                                                                                               |
+| `ZITADEL_CLIENT_SECRET` | Required | Client Secret (`ClientSecret` as shown in ZITADEL) of the ZITADEL application                                                                                                                       |
+| `ZITADEL_ISSUER`        | Required | Issuer URL of the ZITADEL application                                                                                                                                                               |
+| `ACCESS_CODE`           | Required | Add a password to access this service. You can set a sufficiently long random password to "disable" access code authorization.                                                                      |
+| `NEXTAUTH_URL`          | Optional | The URL is used to specify the callback address for the execution of OAuth authentication in Auth.js. It needs to be set only when the default address is incorrect. `https://example.com/api/auth` |
 
   <Callout type={'tip'}>
     You can refer to the related variable details at [📘Environment Variables](/docs/self-hosting/environment-variables/auth#zitadel).
@@ -115,6 +115,6 @@ When deploying LobeChat, you need to configure the following environment variabl
 </Steps>
 
 <Callout>
-  After successful deployment, users will be able to authenticate and use LobeChat using existing
-  users configured in ZITADEL.
+  After successful deployment, users will be able to authenticate and use
+  LobeChat using existing users configured in ZITADEL.
 </Callout>

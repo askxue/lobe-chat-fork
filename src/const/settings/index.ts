@@ -13,7 +13,7 @@ import {
   TogetherAIProviderCard,
   ZeroOneProviderCard,
   ZhiPuProviderCard,
-  filterEnabledModels,
+  filterEnabledModels
 } from '@/config/modelProviders';
 import { DEFAULT_AGENT_META } from '@/const/meta';
 import { ModelProvider } from '@/libs/agent-runtime';
@@ -24,14 +24,14 @@ import {
   GlobalLLMConfig,
   GlobalSettings,
   GlobalSyncSettings,
-  GlobalTTSConfig,
+  GlobalTTSConfig
 } from '@/types/settings';
 
 export const DEFAULT_BASE_SETTINGS: GlobalBaseSettings = {
   fontSize: 14,
   language: 'auto',
   password: '',
-  themeMode: 'auto',
+  themeMode: 'auto'
 };
 
 export const DEFAUTT_AGENT_TTS_CONFIG: LobeAgentTTSConfig = {
@@ -39,8 +39,8 @@ export const DEFAUTT_AGENT_TTS_CONFIG: LobeAgentTTSConfig = {
   sttLocale: 'auto',
   ttsService: 'openai',
   voice: {
-    openai: 'alloy',
-  },
+    openai: 'alloy'
+  }
 };
 
 export const COOKIE_CACHE_DAYS = 30;
@@ -55,117 +55,117 @@ export const DEFAULT_AGENT_CONFIG: LobeAgentConfig = {
     frequency_penalty: 0,
     presence_penalty: 0,
     temperature: 0.6,
-    top_p: 1,
+    top_p: 1
   },
   plugins: [],
   provider: ModelProvider.OpenAI,
   systemRole: '',
-  tts: DEFAUTT_AGENT_TTS_CONFIG,
+  tts: DEFAUTT_AGENT_TTS_CONFIG
 };
 
 export const DEFAULT_LLM_CONFIG: GlobalLLMConfig = {
   anthropic: {
     apiKey: '',
     enabled: false,
-    enabledModels: filterEnabledModels(AnthropicProviderCard),
+    enabledModels: filterEnabledModels(AnthropicProviderCard)
   },
   azure: {
     apiKey: '',
     enabled: false,
-    endpoint: '',
+    endpoint: ''
   },
   bedrock: {
     accessKeyId: '',
     enabled: false,
     enabledModels: filterEnabledModels(BedrockProviderCard),
     region: 'us-east-1',
-    secretAccessKey: '',
+    secretAccessKey: ''
   },
   google: {
     apiKey: '',
     enabled: false,
-    enabledModels: filterEnabledModels(GoogleProviderCard),
+    enabledModels: filterEnabledModels(GoogleProviderCard)
   },
   groq: {
     apiKey: '',
     enabled: false,
-    enabledModels: filterEnabledModels(GroqProviderCard),
+    enabledModels: filterEnabledModels(GroqProviderCard)
   },
   minimax: {
     apiKey: '',
     enabled: false,
-    enabledModels: filterEnabledModels(MinimaxProviderCard),
+    enabledModels: filterEnabledModels(MinimaxProviderCard)
   },
   mistral: {
     apiKey: '',
     enabled: false,
-    enabledModels: filterEnabledModels(MistralProviderCard),
+    enabledModels: filterEnabledModels(MistralProviderCard)
   },
   moonshot: {
     apiKey: '',
     enabled: false,
-    enabledModels: filterEnabledModels(MoonshotProviderCard),
+    enabledModels: filterEnabledModels(MoonshotProviderCard)
   },
   ollama: {
     enabled: true,
     enabledModels: filterEnabledModels(OllamaProviderCard),
     endpoint: '',
-    fetchOnClient: true,
+    fetchOnClient: true
   },
   openai: {
     apiKey: '',
     enabled: true,
-    enabledModels: filterEnabledModels(OpenAIProviderCard),
+    enabledModels: filterEnabledModels(OpenAIProviderCard)
   },
   openrouter: {
     apiKey: '',
     enabled: false,
-    enabledModels: filterEnabledModels(OpenRouterProviderCard),
+    enabledModels: filterEnabledModels(OpenRouterProviderCard)
   },
   perplexity: {
     apiKey: '',
     enabled: false,
-    enabledModels: filterEnabledModels(PerplexityProviderCard),
+    enabledModels: filterEnabledModels(PerplexityProviderCard)
   },
   togetherai: {
     apiKey: '',
     enabled: false,
-    enabledModels: filterEnabledModels(TogetherAIProviderCard),
+    enabledModels: filterEnabledModels(TogetherAIProviderCard)
   },
   zeroone: {
     apiKey: '',
     enabled: false,
-    enabledModels: filterEnabledModels(ZeroOneProviderCard),
+    enabledModels: filterEnabledModels(ZeroOneProviderCard)
   },
   zhipu: {
     apiKey: '',
     enabled: false,
-    enabledModels: filterEnabledModels(ZhiPuProviderCard),
-  },
+    enabledModels: filterEnabledModels(ZhiPuProviderCard)
+  }
 };
 
 export const DEFAULT_AGENT: GlobalDefaultAgent = {
   config: DEFAULT_AGENT_CONFIG,
-  meta: DEFAULT_AGENT_META,
+  meta: DEFAULT_AGENT_META
 };
 
 export const DEFAULT_TTS_CONFIG: GlobalTTSConfig = {
   openAI: {
     sttModel: 'whisper-1',
-    ttsModel: 'tts-1',
+    ttsModel: 'tts-1'
   },
   sttAutoStop: true,
-  sttServer: 'openai',
+  sttServer: 'openai'
 };
 
 export const DEFAULT_TOOL_CONFIG = {
   dalle: {
-    autoGenerate: false,
-  },
+    autoGenerate: false
+  }
 };
 
 const DEFAULT_SYNC_CONFIG: GlobalSyncSettings = {
-  webrtc: { enabled: false },
+  webrtc: { enabled: false }
 };
 
 export const DEFAULT_SETTINGS: GlobalSettings = {
@@ -174,5 +174,5 @@ export const DEFAULT_SETTINGS: GlobalSettings = {
   sync: DEFAULT_SYNC_CONFIG,
   tool: DEFAULT_TOOL_CONFIG,
   tts: DEFAULT_TTS_CONFIG,
-  ...DEFAULT_BASE_SETTINGS,
+  ...DEFAULT_BASE_SETTINGS
 };

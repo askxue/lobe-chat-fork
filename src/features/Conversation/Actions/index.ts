@@ -15,7 +15,7 @@ export const renderActions: Record<LLMRoleType, RenderAction> = {
   assistant: AssistantActionsBar,
   function: FunctionActionsBar,
   system: DefaultActionsBar,
-  user: UserActionsBar,
+  user: UserActionsBar
 };
 
 export const useActionsClick = (): OnActionsClick => {
@@ -26,14 +26,14 @@ export const useActionsClick = (): OnActionsClick => {
     translateMessage,
     ttsMessage,
     delAndRegenerateMessage,
-    copyMessage,
+    copyMessage
   ] = useChatStore((s) => [
     s.deleteMessage,
     s.regenerateMessage,
     s.translateMessage,
     s.ttsMessage,
     s.delAndRegenerateMessage,
-    s.copyMessage,
+    s.copyMessage
   ]);
   const { message } = App.useApp();
 

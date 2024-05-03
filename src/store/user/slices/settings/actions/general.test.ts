@@ -13,8 +13,8 @@ import { GlobalSettings } from '@/types/settings';
 vi.mock('@/services/user', () => ({
   userService: {
     updateUserSettings: vi.fn(),
-    resetUserSettings: vi.fn(),
-  },
+    resetUserSettings: vi.fn()
+  }
 }));
 
 describe('SettingsAction', () => {
@@ -23,7 +23,7 @@ describe('SettingsAction', () => {
       const { result } = renderHook(() => useUserStore());
       const newSettings: GlobalSettings = {
         ...DEFAULT_SETTINGS,
-        themeMode: 'dark',
+        themeMode: 'dark'
       };
 
       // Mock the internal setSettings function call
@@ -38,11 +38,13 @@ describe('SettingsAction', () => {
       expect(setSettingsSpy).toHaveBeenCalledWith({
         ...DEFAULT_SETTINGS,
         password: undefined,
-        themeMode: 'dark',
+        themeMode: 'dark'
       });
 
       // Assert that the state has been updated
-      expect(userService.updateUserSettings).toHaveBeenCalledWith({ themeMode: 'dark' });
+      expect(userService.updateUserSettings).toHaveBeenCalledWith({
+        themeMode: 'dark'
+      });
 
       // Restore the spy
       setSettingsSpy.mockRestore();
@@ -77,7 +79,9 @@ describe('SettingsAction', () => {
       });
 
       // Assert that updateUserSettings was called with the correct settings
-      expect(userService.updateUserSettings).toHaveBeenCalledWith(partialSettings);
+      expect(userService.updateUserSettings).toHaveBeenCalledWith(
+        partialSettings
+      );
     });
   });
 
@@ -92,7 +96,9 @@ describe('SettingsAction', () => {
       });
 
       // Assert that updateUserSettings was called with the correct theme mode
-      expect(userService.updateUserSettings).toHaveBeenCalledWith({ themeMode });
+      expect(userService.updateUserSettings).toHaveBeenCalledWith({
+        themeMode
+      });
     });
   });
 
@@ -100,7 +106,7 @@ describe('SettingsAction', () => {
     it('should update default agent settings', async () => {
       const { result } = renderHook(() => useUserStore());
       const updatedAgent: Partial<LobeAgentSettings> = {
-        meta: { title: 'docs' },
+        meta: { title: 'docs' }
       };
 
       // Perform the action
@@ -109,7 +115,9 @@ describe('SettingsAction', () => {
       });
 
       // Assert that updateUserSettings was called with the merged agent settings
-      expect(userService.updateUserSettings).toHaveBeenCalledWith({ defaultAgent: updatedAgent });
+      expect(userService.updateUserSettings).toHaveBeenCalledWith({
+        defaultAgent: updatedAgent
+      });
     });
   });
 });

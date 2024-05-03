@@ -1,6 +1,12 @@
 import { Theme, css } from 'antd-style';
 
-export default ({ prefixCls, token }: { prefixCls: string; token: Theme }) => css`
+export default ({
+  prefixCls,
+  token
+}: {
+  prefixCls: string;
+  token: Theme;
+}) => css`
   html,
   body,
   #__next,

@@ -16,7 +16,11 @@ const Layout = ({ children }: PropsWithChildren) => (
       width={'100%'}
     >
       <SafeSpacing height={HEADER_HEIGHT - 16} />
-      <Flexbox gap={64} style={{ maxWidth: 1024, padding: '32px 24px' }} width={'100%'}>
+      <Flexbox
+        gap={64}
+        style={{ maxWidth: 1024, padding: '32px 24px' }}
+        width={'100%'}
+      >
         {children}
       </Flexbox>
     </Flexbox>

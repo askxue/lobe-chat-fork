@@ -15,25 +15,25 @@ export enum TraceNameMap {
   SummaryTopicTitle = 'Summary Topic Title',
   Translator = 'Translator',
   // mean user have relative events
-  UserEvents = 'User Events',
+  UserEvents = 'User Events'
 }
 
 export enum TraceEventType {
   CopyMessage = 'Copy Message',
   DeleteAndRegenerateMessage = 'Delete And Regenerate Message',
   ModifyMessage = 'Modify Message',
-  RegenerateMessage = 'Regenerate Message',
+  RegenerateMessage = 'Regenerate Message'
 }
 
 export enum TraceTopicType {
-  AgentSettings = 'Agent Settings',
+  AgentSettings = 'Agent Settings'
 }
 
 export enum TraceTagMap {
   Chat = 'Chat Competition',
   SystemChain = 'System Chain',
   ToolCalling = 'Tool Calling',
-  ToolsCall = 'Tools Call',
+  ToolsCall = 'Tools Call'
 }
 
 export interface TracePayload {

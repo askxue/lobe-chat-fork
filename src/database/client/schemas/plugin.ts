@@ -6,7 +6,7 @@ export const DB_PluginSchema = z.object({
   id: z.string(),
   type: z.enum(['plugin', 'customPlugin']),
   manifest: z.any().optional(),
-  settings: z.any().optional(),
+  settings: z.any().optional()
 });
 
 export type DB_Plugin = z.infer<typeof DB_PluginSchema>;

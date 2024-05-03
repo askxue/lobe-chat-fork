@@ -11,7 +11,10 @@ import { Center, Flexbox } from 'react-layout-kit';
 import { FORM_STYLE } from '@/const/layoutTokens';
 import PluginStore from '@/features/PluginStore';
 import PluginTag from '@/features/PluginStore/PluginItem/PluginTag';
-import { featureFlagsSelectors, useServerConfigStore } from '@/store/serverConfig';
+import {
+  featureFlagsSelectors,
+  useServerConfigStore
+} from '@/store/serverConfig';
 import { pluginHelpers, useToolStore } from '@/store/tool';
 import { toolSelectors } from '@/store/tool/selectors';
 
@@ -28,16 +31,22 @@ const AgentPlugin = memo(() => {
 
   const [userEnabledPlugins, toggleAgentPlugin] = useStore((s) => [
     s.config.plugins || [],
-    s.toggleAgentPlugin,
+    s.toggleAgentPlugin
   ]);
 
   const { showDalle } = useServerConfigStore(featureFlagsSelectors);
-  const installedPlugins = useToolStore(toolSelectors.metaList(showDalle), isEqual);
-  const useFetchInstalledPlugins = useToolStore((s) => s.useFetchInstalledPlugins);
+  const installedPlugins = useToolStore(
+    toolSelectors.metaList(showDalle),
+    isEqual
+  );
+  const useFetchInstalledPlugins = useToolStore(
+    (s) => s.useFetchInstalledPlugins
+  );
 
   const { isLoading } = useFetchInstalledPlugins();
 
-  const isEmpty = installedPlugins.length === 0 && userEnabledPlugins.length === 0;
+  const isEmpty =
+    installedPlugins.length === 0 && userEnabledPlugins.length === 0;
 
   //  =========== Plugin List =========== //
 
@@ -45,7 +54,12 @@ const AgentPlugin = memo(() => {
     const isCustomPlugin = type === 'customPlugin';
 
     return {
-      avatar: <Avatar avatar={pluginHelpers.getPluginAvatar(meta)} style={{ flex: 'none' }} />,
+      avatar: (
+        <Avatar
+          avatar={pluginHelpers.getPluginAvatar(meta)}
+          style={{ flex: 'none' }}
+        />
+      ),
       children: isCustomPlugin ? (
         <LocalPluginItem id={identifier} />
       ) : (
@@ -58,7 +72,7 @@ const AgentPlugin = memo(() => {
           <PluginTag author={author} type={type} />
         </Flexbox>
       ),
-      minWidth: undefined,
+      minWidth: undefined
     };
   });
 
@@ -66,7 +80,10 @@ const AgentPlugin = memo(() => {
 
   // 检查出不在 installedPlugins 中的插件
   const deprecatedList = userEnabledPlugins
-    .filter((pluginId) => installedPlugins.findIndex((p) => p.identifier === pluginId) < 0)
+    .filter(
+      (pluginId) =>
+        installedPlugins.findIndex((p) => p.identifier === pluginId) < 0
+    )
     .map((id) => ({
       avatar: <Avatar avatar={'♻️'} />,
       children: (
@@ -86,7 +103,7 @@ const AgentPlugin = memo(() => {
         </Flexbox>
       ),
       minWidth: undefined,
-      tag: id,
+      tag: id
     }));
 
   const hasDeprecated = deprecatedList.length > 0;
@@ -147,15 +164,24 @@ const AgentPlugin = memo(() => {
   );
 
   const plugin: ItemGroup = {
-    children: isLoading ? loadingSkeleton : isEmpty ? empty : [...deprecatedList, ...list],
+    children: isLoading
+      ? loadingSkeleton
+      : isEmpty
+        ? empty
+        : [...deprecatedList, ...list],
     extra,
-    title: t('settingPlugin.title'),
+    title: t('settingPlugin.title')
   };
 
   return (
     <>
       <PluginStore open={showStore} setOpen={setShowStore} />
-      <Form items={[plugin]} itemsType={'group'} variant={'pure'} {...FORM_STYLE} />
+      <Form
+        items={[plugin]}
+        itemsType={'group'}
+        variant={'pure'}
+        {...FORM_STYLE}
+      />
     </>
   );
 });

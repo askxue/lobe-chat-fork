@@ -5,7 +5,7 @@ import { Flexbox } from 'react-layout-kit';
 import {
   CHAT_TEXTAREA_HEIGHT,
   CHAT_TEXTAREA_MAX_HEIGHT,
-  HEADER_HEIGHT,
+  HEADER_HEIGHT
 } from '@/const/layoutTokens';
 import { useGlobalStore } from '@/store/global';
 
@@ -18,7 +18,7 @@ const ChatInput = memo(() => {
 
   const [inputHeight, updatePreference] = useGlobalStore((s) => [
     s.preference.inputHeight,
-    s.updatePreference,
+    s.updatePreference
   ]);
 
   return (
@@ -31,7 +31,10 @@ const ChatInput = memo(() => {
         if (!size) return;
 
         updatePreference({
-          inputHeight: typeof size.height === 'string' ? Number.parseInt(size.height) : size.height,
+          inputHeight:
+            typeof size.height === 'string'
+              ? Number.parseInt(size.height)
+              : size.height
         });
       }}
       placement="bottom"

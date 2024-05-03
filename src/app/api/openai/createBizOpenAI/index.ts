@@ -12,7 +12,8 @@ import { createOpenai } from './createOpenai';
  * if auth not pass ,just return error response
  */
 export const createBizOpenAI = (req: Request): Response | OpenAI => {
-  const { apiKey, accessCode, endpoint, oauthAuthorized } = getOpenAIAuthFromRequest(req);
+  const { apiKey, accessCode, endpoint, oauthAuthorized } =
+    getOpenAIAuthFromRequest(req);
 
   const result = checkAuth({ accessCode, apiKey, oauthAuthorized });
 

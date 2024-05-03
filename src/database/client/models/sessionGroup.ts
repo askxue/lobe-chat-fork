@@ -1,5 +1,8 @@
 import { BaseModel } from '@/database/client/core';
-import { DB_SessionGroup, DB_SessionGroupSchema } from '@/database/client/schemas/sessionGroup';
+import {
+  DB_SessionGroup,
+  DB_SessionGroupSchema
+} from '@/database/client/schemas/sessionGroup';
 import { SessionGroups } from '@/types/session';
 import { nanoid } from '@/utils/uuid';
 
@@ -62,7 +65,10 @@ class _SessionGroupModel extends BaseModel {
     if (!removeGroupItem) {
       return this._deleteWithSync(id);
     } else {
-      const sessionIds = await this.db.sessions.where('group').equals(id).primaryKeys();
+      const sessionIds = await this.db.sessions
+        .where('group')
+        .equals(id)
+        .primaryKeys();
 
       return await SessionModel.batchDelete(sessionIds);
     }

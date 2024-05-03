@@ -12,7 +12,7 @@ import PluginRender from '../Plugins/Render';
 export const FunctionMessage = memo<ChatMessage>(({ id, content, plugin }) => {
   const fcProps = useChatStore(
     chatSelectors.getFunctionMessageProps({ content, id, plugin }),
-    isEqual,
+    isEqual
   );
 
   const [showRender, setShow] = useState(true);

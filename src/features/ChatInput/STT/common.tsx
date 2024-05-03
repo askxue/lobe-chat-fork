@@ -14,7 +14,7 @@ const useStyles = createStyles(({ css, token }) => ({
     height: 8px;
     background: ${token.colorError};
     border-radius: 50%;
-  `,
+  `
 }));
 
 const CommonSTT = memo<{
@@ -39,7 +39,7 @@ const CommonSTT = memo<{
     handleRetry,
     handleTriggerStartStop,
     handleCloseError,
-    desc,
+    desc
   }) => {
     const { t } = useTranslation('chat');
     const { styles } = useStyles();
@@ -51,14 +51,22 @@ const CommonSTT = memo<{
             ? () => (
                 <Alert
                   action={
-                    <Button onClick={handleRetry} size={'small'} type={'primary'}>
+                    <Button
+                      onClick={handleRetry}
+                      size={'small'}
+                      type={'primary'}
+                    >
                       {t('retry', { ns: 'common' })}
                     </Button>
                   }
                   closable
                   extra={
                     error.body && (
-                      <Highlighter copyButtonSize={'small'} language={'json'} type={'pure'}>
+                      <Highlighter
+                        copyButtonSize={'small'}
+                        language={'json'}
+                        type={'pure'}
+                      >
                         {JSON.stringify(error.body, null, 2)}
                       </Highlighter>
                     )
@@ -79,11 +87,13 @@ const CommonSTT = memo<{
               label: (
                 <Flexbox align={'center'} gap={8} horizontal>
                   <div className={styles.recording} />
-                  {time > 0 ? formattedTime : t(isRecording ? 'stt.loading' : 'stt.prettifying')}
+                  {time > 0
+                    ? formattedTime
+                    : t(isRecording ? 'stt.loading' : 'stt.prettifying')}
                 </Flexbox>
-              ),
-            },
-          ],
+              )
+            }
+          ]
         }}
         open={!!error || isRecording || isLoading}
         placement={mobile ? 'topRight' : 'top'}
@@ -100,7 +110,7 @@ const CommonSTT = memo<{
         />
       </Dropdown>
     );
-  },
+  }
 );
 
 export default CommonSTT;

@@ -30,5 +30,5 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => ({
     margin-bottom: 0;
     font-weight: bold;
     text-align: center;
-  `,
+  `
 }));

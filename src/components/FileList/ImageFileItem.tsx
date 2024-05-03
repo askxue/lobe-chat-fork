@@ -23,7 +23,7 @@ export const useStyles = createStyles(({ css, token }) => ({
   `,
   image: css`
     margin-block: 0 !important;
-  `,
+  `
 }));
 
 interface FileItemProps {
@@ -34,44 +34,49 @@ interface FileItemProps {
   onClick?: () => void;
   style?: CSSProperties;
 }
-const ImageFileItem = memo<FileItemProps>(({ editable, id, alwaysShowClose }) => {
-  const [useFetchFile, removeFile] = useFileStore((s) => [s.useFetchFile, s.removeFile]);
-  const IMAGE_SIZE = editable ? MIN_IMAGE_SIZE : '100%';
-  const { data, isLoading } = useFetchFile(id);
-  const { styles, cx } = useStyles();
-  const { isSafari } = usePlatform();
+const ImageFileItem = memo<FileItemProps>(
+  ({ editable, id, alwaysShowClose }) => {
+    const [useFetchFile, removeFile] = useFileStore((s) => [
+      s.useFetchFile,
+      s.removeFile
+    ]);
+    const IMAGE_SIZE = editable ? MIN_IMAGE_SIZE : '100%';
+    const { data, isLoading } = useFetchFile(id);
+    const { styles, cx } = useStyles();
+    const { isSafari } = usePlatform();
 
-  const handleRemoveFile = useCallback(
-    (e: any) => {
-      e.stopPropagation();
-      removeFile(id);
-    },
-    [id],
-  );
+    const handleRemoveFile = useCallback(
+      (e: any) => {
+        e.stopPropagation();
+        removeFile(id);
+      },
+      [id]
+    );
 
-  return (
-    <Image
-      actions={
-        editable && (
-          <ActionIcon
-            className={styles.deleteButton}
-            glass
-            icon={Trash}
-            onClick={handleRemoveFile}
-            size={'small'}
-          />
-        )
-      }
-      alt={data?.name || id || ''}
-      alwaysShowActions={alwaysShowClose}
-      height={isSafari ? 'auto' : '100%'}
-      isLoading={isLoading}
-      size={IMAGE_SIZE as any}
-      src={data?.url}
-      style={{ height: isSafari ? 'auto' : '100%' }}
-      wrapperClassName={cx(styles.image, editable && styles.editableImage)}
-    />
-  );
-});
+    return (
+      <Image
+        actions={
+          editable && (
+            <ActionIcon
+              className={styles.deleteButton}
+              glass
+              icon={Trash}
+              onClick={handleRemoveFile}
+              size={'small'}
+            />
+          )
+        }
+        alt={data?.name || id || ''}
+        alwaysShowActions={alwaysShowClose}
+        height={isSafari ? 'auto' : '100%'}
+        isLoading={isLoading}
+        size={IMAGE_SIZE as any}
+        src={data?.url}
+        style={{ height: isSafari ? 'auto' : '100%' }}
+        wrapperClassName={cx(styles.image, editable && styles.editableImage)}
+      />
+    );
+  }
+);
 
 export default ImageFileItem;

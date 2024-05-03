@@ -24,10 +24,16 @@ export interface ChatEnhanceAction {
   translateMessage: (id: string, targetLang: string) => Promise<void>;
   ttsMessage: (
     id: string,
-    state?: { contentMd5?: string; file?: string; voice?: string },
+    state?: { contentMd5?: string; file?: string; voice?: string }
   ) => Promise<void>;
-  updateMessageTTS: (id: string, data: Partial<ChatTTS> | false) => Promise<void>;
-  updateMessageTranslate: (id: string, data: Partial<ChatTranslate> | false) => Promise<void>;
+  updateMessageTTS: (
+    id: string,
+    data: Partial<ChatTTS> | false
+  ) => Promise<void>;
+  updateMessageTranslate: (
+    id: string,
+    data: Partial<ChatTranslate> | false
+  ) => Promise<void>;
 }
 
 export const chatEnhance: StateCreator<
@@ -46,10 +52,11 @@ export const chatEnhance: StateCreator<
   getCurrentTracePayload: (data) => ({
     sessionId: get().activeId,
     topicId: get().activeTopicId,
-    ...data,
+    ...data
   }),
   translateMessage: async (id, targetLang) => {
-    const { toggleChatLoading, updateMessageTranslate, dispatchMessage } = get();
+    const { toggleChatLoading, updateMessageTranslate, dispatchMessage } =
+      get();
 
     const message = chatSelectors.getMessageById(id)(get());
     if (!message) return;
@@ -66,7 +73,9 @@ export const chatEnhance: StateCreator<
     chatService
       .fetchPresetTaskResult({
         params: chainLangDetect(message.content),
-        trace: get().getCurrentTracePayload({ traceName: TraceNameMap.LanguageDetect }),
+        trace: get().getCurrentTracePayload({
+          traceName: TraceNameMap.LanguageDetect
+        })
       })
       .then(async (data) => {
         if (data && supportLocales.includes(data)) from = data;
@@ -84,11 +93,13 @@ export const chatEnhance: StateCreator<
           value: produce({ content: '', from, to: targetLang }, (draft) => {
             content += text;
             draft.content += content;
-          }),
+          })
         });
       },
       params: chainTranslate(message.content, targetLang),
-      trace: get().getCurrentTracePayload({ traceName: TraceNameMap.Translator }),
+      trace: get().getCurrentTracePayload({
+        traceName: TraceNameMap.Translator
+      })
     });
 
     await updateMessageTranslate(id, { content, from, to: targetLang });
@@ -106,7 +117,9 @@ export const chatEnhance: StateCreator<
   },
 
   updateMessageTranslate: async (id, data) => {
-    await messageService.updateMessage(id, { translate: data as ChatTranslate });
+    await messageService.updateMessage(id, {
+      translate: data as ChatTranslate
+    });
     await get().refreshMessages();
-  },
+  }
 });

@@ -12,7 +12,12 @@ export const createLocalStorage = <State extends any>() => ({
   removeItem: (name: string) => {
     if (global.localStorage) localStorage.removeItem(name);
   },
-  setItem: <T extends State>(name: string, state: T, version: number | undefined) => {
-    if (global.localStorage) localStorage.setItem(name, JSON.stringify({ state, version }));
-  },
+  setItem: <T extends State>(
+    name: string,
+    state: T,
+    version: number | undefined
+  ) => {
+    if (global.localStorage)
+      localStorage.setItem(name, JSON.stringify({ state, version }));
+  }
 });

@@ -9,8 +9,8 @@ describe('anthropicHelpers', () => {
   vi.mock('./uriParser', () => ({
     parseDataUri: vi.fn().mockReturnValue({
       mimeType: 'image/jpeg',
-      base64: 'base64EncodedString',
-    }),
+      base64: 'base64EncodedString'
+    })
   }));
 
   describe('buildAnthropicBlock', () => {
@@ -23,7 +23,7 @@ describe('anthropicHelpers', () => {
     it('should transform an image URL into an Anthropic.ImageBlockParam', () => {
       const content: UserMessageContentPart = {
         type: 'image_url',
-        image_url: { url: 'data:image/jpeg;base64,base64EncodedString' },
+        image_url: { url: 'data:image/jpeg;base64,base64EncodedString' }
       };
       const result = buildAnthropicBlock(content);
       expect(parseDataUri).toHaveBeenCalledWith(content.image_url.url);
@@ -31,9 +31,9 @@ describe('anthropicHelpers', () => {
         source: {
           data: 'base64EncodedString',
           media_type: 'image/jpeg',
-          type: 'base64',
+          type: 'base64'
         },
-        type: 'image',
+        type: 'image'
       });
     });
   });
@@ -42,10 +42,13 @@ describe('anthropicHelpers', () => {
     it('should correctly convert system message to assistant message', () => {
       const message: OpenAIChatMessage = {
         content: [{ type: 'text', text: 'Hello!' }],
-        role: 'system',
+        role: 'system'
       };
       const result = buildAnthropicMessage(message);
-      expect(result).toEqual({ content: [{ type: 'text', text: 'Hello!' }], role: 'assistant' });
+      expect(result).toEqual({
+        content: [{ type: 'text', text: 'Hello!' }],
+        role: 'assistant'
+      });
     });
   });
 });

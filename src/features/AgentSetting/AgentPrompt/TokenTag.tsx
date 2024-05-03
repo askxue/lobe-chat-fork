@@ -11,11 +11,18 @@ import { useStore } from '../store';
 
 const Tokens = memo(() => {
   const { t } = useTranslation('chat');
-  const [systemRole, model] = useStore((s) => [s.config.systemRole, s.config.model]);
+  const [systemRole, model] = useStore((s) => [
+    s.config.systemRole,
+    s.config.model
+  ]);
   const systemTokenCount = useTokenCount(systemRole);
 
-  const showTag = useUserStore(modelProviderSelectors.isModelHasMaxToken(model));
-  const modelMaxTokens = useUserStore(modelProviderSelectors.modelMaxToken(model));
+  const showTag = useUserStore(
+    modelProviderSelectors.isModelHasMaxToken(model)
+  );
+  const modelMaxTokens = useUserStore(
+    modelProviderSelectors.modelMaxToken(model)
+  );
 
   return (
     <Flexbox align={'center'} gap={8} horizontal>
@@ -27,7 +34,7 @@ const Tokens = memo(() => {
           text={{
             overload: t('tokenTag.overload'),
             remained: t('tokenTag.remained'),
-            used: t('tokenTag.used'),
+            used: t('tokenTag.used')
           }}
           value={systemTokenCount}
         />

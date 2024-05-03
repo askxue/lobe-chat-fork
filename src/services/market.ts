@@ -14,7 +14,9 @@ class MarketService {
    */
   getAgentManifest = async (identifier: string, locale: string) => {
     if (!identifier) return;
-    const res = await fetch(`${API_ENDPOINTS.marketItem(identifier)}?locale=${locale}`);
+    const res = await fetch(
+      `${API_ENDPOINTS.marketItem(identifier)}?locale=${locale}`
+    );
 
     return res.json();
   };

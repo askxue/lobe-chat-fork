@@ -1,7 +1,13 @@
 import { SessionGroupItem } from '@/types/session';
 
-export type AddSessionGroupAction = { item: SessionGroupItem; type: 'addSessionGroupItem' };
-export type DeleteSessionGroupAction = { id: string; type: 'deleteSessionGroupItem' };
+export type AddSessionGroupAction = {
+  item: SessionGroupItem;
+  type: 'addSessionGroupItem';
+};
+export type DeleteSessionGroupAction = {
+  id: string;
+  type: 'deleteSessionGroupItem';
+};
 export type UpdateSessionGroupAction = {
   id: string;
   item: Partial<SessionGroupItem>;
@@ -20,7 +26,7 @@ export type SessionGroupsDispatch =
 
 export const sessionGroupsReducer = (
   state: SessionGroupItem[],
-  payload: SessionGroupsDispatch,
+  payload: SessionGroupsDispatch
 ): SessionGroupItem[] => {
   switch (payload.type) {
     case 'addSessionGroupItem': {

@@ -8,14 +8,17 @@ interface FetchOptions {
 }
 
 class ImageGenerationService {
-  async generateImage(params: Omit<OpenAIImagePayload, 'model' | 'n'>, options?: FetchOptions) {
+  async generateImage(
+    params: Omit<OpenAIImagePayload, 'model' | 'n'>,
+    options?: FetchOptions
+  ) {
     const payload: OpenAIImagePayload = { ...params, model: 'dall-e-3', n: 1 };
 
     const res = await fetch(API_ENDPOINTS.images, {
       body: JSON.stringify(payload),
       headers: createHeaderWithOpenAI({ 'Content-Type': 'application/json' }),
       method: 'POST',
-      signal: options?.signal,
+      signal: options?.signal
     });
 
     const urls = await res.json();

@@ -10,15 +10,15 @@ import Safari from './components/Safari';
 import Samsung from './components/Samsung';
 
 const lastVersion = {
-  'Brave': Brave,
-  'Chrome': Chrome,
-  'Chromium': Chromium,
-  'Edge': Edge,
-  'Firefox': Firefox,
+  Brave: Brave,
+  Chrome: Chrome,
+  Chromium: Chromium,
+  Edge: Edge,
+  Firefox: Firefox,
   'Mobile Safari': Safari,
-  'Opera': Opera,
-  'Safari': Safari,
-  'Samsung': Samsung,
+  Opera: Opera,
+  Safari: Safari,
+  Samsung: Samsung
 };
 
 export type Browsers = keyof typeof lastVersion;
@@ -30,21 +30,23 @@ interface BrowserIconProps {
   style?: React.CSSProperties;
 }
 
-export const BrowserIcon = memo<BrowserIconProps>(({ browser, className, style, size }) => {
-  const Component = lastVersion[browser as Browsers];
+export const BrowserIcon = memo<BrowserIconProps>(
+  ({ browser, className, style, size }) => {
+    const Component = lastVersion[browser as Browsers];
 
-  if (!Component) return null;
+    if (!Component) return null;
 
-  return (
-    <Component
-      className={className}
-      height={size}
-      style={{
-        ...style,
-        minHeight: size,
-        minWidth: size,
-      }}
-      width={size}
-    />
-  );
-});
+    return (
+      <Component
+        className={className}
+        height={size}
+        style={{
+          ...style,
+          minHeight: size,
+          minWidth: size
+        }}
+        width={size}
+      />
+    );
+  }
+);

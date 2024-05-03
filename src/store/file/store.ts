@@ -13,17 +13,19 @@ import { TTSFileAction, createTTSFileSlice } from './slices/tts';
 
 export type FileStore = FilesStoreState & FileAction & TTSFileAction;
 
-const createStore: StateCreator<FileStore, [['zustand/devtools', never]]> = (...parameters) => ({
+const createStore: StateCreator<FileStore, [['zustand/devtools', never]]> = (
+  ...parameters
+) => ({
   ...initialState,
   ...createFileSlice(...parameters),
-  ...createTTSFileSlice(...parameters),
+  ...createTTSFileSlice(...parameters)
 });
 
 //  ===============  实装 useStore ============ //
 
 export const useFileStore = createWithEqualityFn<FileStore>()(
   devtools(createStore, {
-    name: 'LobeChat_File' + (isDev ? '_DEV' : ''),
+    name: 'LobeChat_File' + (isDev ? '_DEV' : '')
   }),
-  shallow,
+  shallow
 );

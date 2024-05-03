@@ -35,13 +35,18 @@ export const OnlineList = memo(() => {
   const filteredPluginList = useMemo(
     () =>
       pluginStoreList.filter((item) =>
-        [item.meta?.title, item.meta?.description, item.author, ...(item.meta?.tags || [])]
+        [
+          item.meta?.title,
+          item.meta?.description,
+          item.author,
+          ...(item.meta?.tags || [])
+        ]
           .filter(Boolean)
           .join('')
           .toLowerCase()
-          .includes((keywords || '')?.toLowerCase()),
+          .includes((keywords || '')?.toLowerCase())
       ),
-    [pluginStoreList, keywords],
+    [pluginStoreList, keywords]
   );
 
   return (
@@ -69,7 +74,10 @@ export const OnlineList = memo(() => {
               {t('store.networkError')}
             </>
           ) : (
-            <Empty description={t('store.empty')} image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            <Empty
+              description={t('store.empty')}
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+            />
           )}
         </Center>
       ) : (

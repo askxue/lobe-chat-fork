@@ -54,13 +54,15 @@ const useStyles = createStyles(({ css, token }) => ({
 
     background: ${token.colorFillTertiary};
     border-radius: 4px;
-  `,
+  `
 }));
 const formatTokenNumber = (num: number): string => {
   if (num < 1000) return '1K';
   const kiloToken = Math.floor(num / 1000);
-  return kiloToken < 1000 ? `${kiloToken}K` : `${Math.floor(kiloToken / 1000)}M`;
-}
+  return kiloToken < 1000
+    ? `${kiloToken}K`
+    : `${Math.floor(kiloToken / 1000)}M`;
+};
 
 interface ModelInfoTagsProps extends ChatModelCard {
   directionReverse?: boolean;
@@ -73,16 +75,25 @@ export const ModelInfoTags = memo<ModelInfoTagsProps>(
     const { styles, cx } = useStyles();
 
     return (
-      <Flexbox direction={directionReverse ? 'horizontal-reverse' : 'horizontal'} gap={4}>
+      <Flexbox
+        direction={directionReverse ? 'horizontal-reverse' : 'horizontal'}
+        gap={4}
+      >
         {model.files && (
-          <Tooltip placement={placement} title={t('ModelSelect.featureTag.file')}>
+          <Tooltip
+            placement={placement}
+            title={t('ModelSelect.featureTag.file')}
+          >
             <div className={cx(styles.tag, styles.tagGreen)}>
               <Icon icon={LucidePaperclip} />
             </div>
           </Tooltip>
         )}
         {model.vision && (
-          <Tooltip placement={placement} title={t('ModelSelect.featureTag.vision')}>
+          <Tooltip
+            placement={placement}
+            title={t('ModelSelect.featureTag.vision')}
+          >
             <div className={cx(styles.tag, styles.tagGreen)}>
               <Icon icon={LucideEye} />
             </div>
@@ -104,10 +115,12 @@ export const ModelInfoTags = memo<ModelInfoTagsProps>(
             overlayStyle={{ maxWidth: 'unset' }}
             placement={placement}
             title={t('ModelSelect.featureTag.tokens', {
-              tokens: numeral(model.tokens).format('0,0'),
+              tokens: numeral(model.tokens).format('0,0')
             })}
           >
-            <Center className={styles.token}>{formatTokenNumber(model.tokens)}</Center>
+            <Center className={styles.token}>
+              {formatTokenNumber(model.tokens)}
+            </Center>
           </Tooltip>
         )}
         {/*{model.isCustom && (*/}
@@ -121,37 +134,41 @@ export const ModelInfoTags = memo<ModelInfoTagsProps>(
         {/*)}*/}
       </Flexbox>
     );
-  },
+  }
 );
 
 interface ModelItemRenderProps extends ChatModelCard {
   showInfoTag?: boolean;
 }
 
-export const ModelItemRender = memo<ModelItemRenderProps>(({ showInfoTag = true, ...model }) => {
-  return (
-    <Flexbox align={'center'} gap={32} horizontal justify={'space-between'}>
-      <Flexbox align={'center'} gap={8} horizontal>
-        <ModelIcon model={model.id} size={20} />
-        {model.displayName || model.id}
-      </Flexbox>
+export const ModelItemRender = memo<ModelItemRenderProps>(
+  ({ showInfoTag = true, ...model }) => {
+    return (
+      <Flexbox align={'center'} gap={32} horizontal justify={'space-between'}>
+        <Flexbox align={'center'} gap={8} horizontal>
+          <ModelIcon model={model.id} size={20} />
+          {model.displayName || model.id}
+        </Flexbox>
 
-      {showInfoTag && <ModelInfoTags {...model} />}
-    </Flexbox>
-  );
-});
+        {showInfoTag && <ModelInfoTags {...model} />}
+      </Flexbox>
+    );
+  }
+);
 
 interface ProviderItemRenderProps {
   provider: string;
 }
 
-export const ProviderItemRender = memo<ProviderItemRenderProps>(({ provider }) => {
-  const { t } = useTranslation('modelProvider');
+export const ProviderItemRender = memo<ProviderItemRenderProps>(
+  ({ provider }) => {
+    const { t } = useTranslation('modelProvider');
 
-  return (
-    <Flexbox align={'center'} gap={4} horizontal>
-      <ModelProviderIcon provider={provider} />
-      {t(`${provider}.title` as any)}
-    </Flexbox>
-  );
-});
+    return (
+      <Flexbox align={'center'} gap={4} horizontal>
+        <ModelProviderIcon provider={provider} />
+        {t(`${provider}.title` as any)}
+      </Flexbox>
+    );
+  }
+);
