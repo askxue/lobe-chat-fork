@@ -39,7 +39,8 @@ export type Locales = keyof Resources;
 `;
 };
 
-export const genNamespaceList = (files: string[], locale: string) => files.map((file) => ({
+export const genNamespaceList = (files: string[], locale: string) =>
+  files.map((file) => ({
     name: file.replace('.json', ''),
     path: resolve(i18nConfig.output, locale, file)
   }));

@@ -6,11 +6,11 @@ import Client from './(loading)/Client';
 import Redirect from './(loading)/Redirect';
 
 const Page = () => (
-    <>
-      <Client />
-      <Redirect />
-    </>
-  );
+  <>
+    <Client />
+    <Redirect />
+  </>
+);
 
 Page.displayName = 'Loading';
 

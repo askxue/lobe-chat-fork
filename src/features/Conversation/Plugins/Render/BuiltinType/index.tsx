@@ -22,7 +22,9 @@ const BuiltinType = memo<BuiltinTypeProps>(
 
     const Render = BuiltinToolsRenders[identifier || ''];
 
-    if (!Render) {return;}
+    if (!Render) {
+      return;
+    }
 
     return <Render content={data} identifier={identifier} messageId={id} />;
   }

@@ -42,7 +42,9 @@ export const createPluginStoreSlice: StateCreator<
 > = (set, get) => ({
   installPlugin: async (name, type = 'plugin') => {
     const plugin = pluginStoreSelectors.getPluginById(name)(get());
-    if (!plugin) {return;}
+    if (!plugin) {
+      return;
+    }
 
     const { updateInstallLoadingState, refreshPlugins } = get();
     try {

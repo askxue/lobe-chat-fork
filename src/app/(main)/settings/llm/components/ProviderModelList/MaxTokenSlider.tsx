@@ -62,11 +62,15 @@ const MaxTokenSlider = memo<MaxTokenSliderProps>(
             step={1}
             tooltip={{
               formatter: (x) => {
-                if (typeof x === 'undefined') {return;}
+                if (typeof x === 'undefined') {
+                  return;
+                }
 
                 const value = getRealValue(x);
 
-                if (value < 1000) {return value.toFixed(0) + 'K';}
+                if (value < 1000) {
+                  return value.toFixed(0) + 'K';
+                }
 
                 return (value / 1000).toFixed(0) + 'M';
               }
@@ -77,7 +81,9 @@ const MaxTokenSlider = memo<MaxTokenSliderProps>(
         <div>
           <InputNumber
             onChange={(e) => {
-              if (!e) {return;}
+              if (!e) {
+                return;
+              }
 
               updateWithRealValue(e);
             }}

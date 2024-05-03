@@ -24,11 +24,12 @@ const Locale = memo<LocaleLayoutProps>(
       i18n.init();
     } else {
       // if on browser side, init i18n instance only once
-      if (!i18n.instance.isInitialized)
+      if (!i18n.instance.isInitialized) {
         // console.debug('locale', lang);
-        {i18n.init().then(() => {
+        i18n.init().then(() => {
           // console.debug('inited.');
-        });}
+        });
+      }
     }
 
     // handle i18n instance language change
@@ -36,7 +37,9 @@ const Locale = memo<LocaleLayoutProps>(
       const handleLang = async (lng: string) => {
         setLang(lng);
 
-        if (lang === lng) {return;}
+        if (lang === lng) {
+          return;
+        }
 
         const newLocale = await getAntdLocale(lng);
         setLocale(newLocale);

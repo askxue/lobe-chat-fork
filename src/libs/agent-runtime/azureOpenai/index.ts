@@ -20,10 +20,11 @@ export class LobeAzureOpenAI implements LobeRuntimeAI {
   client: OpenAIClient;
 
   constructor(endpoint?: string, apikey?: string, apiVersion?: string) {
-    if (!apikey || !endpoint)
-      {throw AgentRuntimeError.createError(
+    if (!apikey || !endpoint) {
+      throw AgentRuntimeError.createError(
         AgentRuntimeErrorType.InvalidAzureAPIKey
-      );}
+      );
+    }
 
     this.client = new OpenAIClient(endpoint, new AzureKeyCredential(apikey), {
       apiVersion

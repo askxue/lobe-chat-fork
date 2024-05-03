@@ -11,7 +11,8 @@ export interface InstallPluginParams {
 }
 
 export class ClientService {
-  installPlugin = async (plugin: InstallPluginParams) => PluginModel.create(plugin);
+  installPlugin = async (plugin: InstallPluginParams) =>
+    PluginModel.create(plugin);
 
   getInstalledPlugins = () => PluginModel.getList() as Promise<LobeTool[]>;
 

@@ -56,12 +56,16 @@ export const createAuthSlice: StateCreator<
     useSWR<UserConfig | undefined>(
       [USER_CONFIG_FETCH_KEY, initServer],
       async () => {
-        if (!initServer) {return;}
+        if (!initServer) {
+          return;
+        }
         return userService.getUserConfig();
       },
       {
         onSuccess: (data) => {
-          if (!data) {return;}
+          if (!data) {
+            return;
+          }
 
           set(
             { avatar: data.avatar, settings: data.settings, userId: data.uuid },

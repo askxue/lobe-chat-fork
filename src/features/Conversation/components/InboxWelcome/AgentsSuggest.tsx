@@ -83,7 +83,9 @@ const AgentsSuggest = memo(() => {
   );
 
   const handleRefresh = () => {
-    if (!agentList) {return;}
+    if (!agentList) {
+      return;
+    }
     setSliceStart(Math.floor((Math.random() * agentList.length) / 2));
   };
 

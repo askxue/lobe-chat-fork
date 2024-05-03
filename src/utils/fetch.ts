@@ -65,7 +65,9 @@ export const fetchSSE = async (
 
   const data = response.body;
 
-  if (!data) {return;}
+  if (!data) {
+    return;
+  }
   let output = '';
   const reader = data.getReader();
   const decoder = new TextDecoder();

@@ -9,7 +9,9 @@ const { POSTHOG_HOST, POSTHOG_KEY, POSTHOG_DEBUG } = getClientConfig();
 
 const PostHog: FC = memo(() => {
   useEffect(() => {
-    if (!POSTHOG_KEY) {return;}
+    if (!POSTHOG_KEY) {
+      return;
+    }
 
     posthog.init(POSTHOG_KEY, {
       api_host: POSTHOG_HOST ?? 'https://app.posthog.com',

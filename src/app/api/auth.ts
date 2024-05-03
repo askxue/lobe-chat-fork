@@ -25,7 +25,9 @@ export const checkAuth = ({
   }
 
   // if accessCode doesn't exist
-  if (!ACCESS_CODES.length) {return { auth: true };}
+  if (!ACCESS_CODES.length) {
+    return { auth: true };
+  }
 
   if (!accessCode || !ACCESS_CODES.includes(accessCode)) {
     return { auth: false, error: ChatErrorType.InvalidAccessCode };

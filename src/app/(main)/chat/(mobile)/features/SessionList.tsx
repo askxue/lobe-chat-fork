@@ -4,12 +4,12 @@ import SessionListContent from '../../features/SessionListContent';
 import SessionSearchBar from '../../features/SessionSearchBar';
 
 const Sessions = memo(() => (
-    <>
-      <div style={{ padding: '8px 16px' }}>
-        <SessionSearchBar mobile />
-      </div>
-      <SessionListContent />
-    </>
-  ));
+  <>
+    <div style={{ padding: '8px 16px' }}>
+      <SessionSearchBar mobile />
+    </div>
+    <SessionListContent />
+  </>
+));
 
 export default Sessions;

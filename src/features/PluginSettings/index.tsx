@@ -11,7 +11,9 @@ import { pluginSelectors } from '@/store/tool/selectors';
 import PluginSettingRender from './PluginSettingRender';
 
 export const transformPluginSettings = (pluginSettings: PluginSchema) => {
-  if (!pluginSettings?.properties) {return [];}
+  if (!pluginSettings?.properties) {
+    return [];
+  }
 
   return Object.entries(pluginSettings.properties).map(([name, i]) => ({
     desc: i.description,

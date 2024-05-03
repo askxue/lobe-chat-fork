@@ -7,17 +7,20 @@ interface UrlSearchHelper {
 }
 
 const createUrlSearch = (mode: 'search' | 'hash' = 'hash'): UrlSearchHelper => {
-  if (mode === 'hash')
-    {return {
+  if (mode === 'hash') {
+    return {
       getUrlSearch: () => location.hash.slice(1),
       setUrlSearch: (params: URLSearchParams) =>
         (location.hash = params.toString())
-    };}
+    };
+  }
 
   return {
     getUrlSearch: () => location.search.slice(1),
     setUrlSearch: (params: URLSearchParams) => {
-      if (params.size === 0) {return;}
+      if (params.size === 0) {
+        return;
+      }
 
       history.replaceState({}, '', '?' + params.toString());
     }
@@ -33,7 +36,9 @@ export const creatUrlStorage = <State extends object>(
     getItem: <T extends State>(): StorageValue<T> | undefined => {
       const searchParameters = new URLSearchParams(getUrlSearch());
 
-      if (searchParameters.size === 0) {return undefined;}
+      if (searchParameters.size === 0) {
+        return undefined;
+      }
 
       const state = Object.fromEntries(searchParameters.entries()) as T;
 
@@ -41,7 +46,9 @@ export const creatUrlStorage = <State extends object>(
     },
     removeItem: (key?: string) => {
       const searchParameters = new URLSearchParams(getUrlSearch());
-      if (key) {searchParameters.delete(key);}
+      if (key) {
+        searchParameters.delete(key);
+      }
 
       setUrlSearch(searchParameters);
     },

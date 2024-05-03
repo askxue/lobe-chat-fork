@@ -70,8 +70,9 @@ const AgentList = memo<AgentListProps>(({ mobile }) => {
   }
 
   if (searchKeywords) {
-    if (agentList.length === 0)
-      {return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;}
+    if (agentList.length === 0) {
+      return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+    }
     return (
       <Grid rows={3}>
         {agentList.map((item) => (

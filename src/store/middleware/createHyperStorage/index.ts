@@ -46,13 +46,17 @@ export const createHyperStorage = <T extends object>(
           localState = await indexedDB.getItem(name);
         }
         // 如果 indexedDB 中不存在，则再试试 localStorage
-        if (!localState) {localState = localStorage.getItem(name);}
+        if (!localState) {
+          localState = localStorage.getItem(name);
+        }
 
         if (localState) {
           version = localState.version;
           for (const [k, v] of Object.entries(localState.state)) {
             const key = getStateKeyFromStorageKey(k, 'localStorage');
-            if (key) {state[key] = v;}
+            if (key) {
+              state[key] = v;
+            }
           }
         }
       }
@@ -98,7 +102,9 @@ export const createHyperStorage = <T extends object>(
       const localState: Record<string, any> = {};
       for (const [k, v] of Object.entries(newValue.state)) {
         const localKey = mapStateKeyToStorageKey(k, 'localStorage');
-        if (localKey) {localState[localKey] = v;}
+        if (localKey) {
+          localState[localKey] = v;
+        }
       }
 
       if (!skipLocalStorage) {
@@ -115,7 +121,9 @@ export const createHyperStorage = <T extends object>(
         const finalEntries = Object.entries(newValue.state)
           .map(([k, v]) => {
             const urlKey = mapStateKeyToStorageKey(k, 'url');
-            if (!urlKey) {return undefined;}
+            if (!urlKey) {
+              return undefined;
+            }
             return [urlKey, v];
           })
           .filter(Boolean) as [string, any][];

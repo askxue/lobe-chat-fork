@@ -6,14 +6,14 @@ import Theme from './features/Theme';
 const { SHOW_ACCESS_CODE_CONFIG, ENABLE_OAUTH_SSO } = getServerConfig();
 
 const Page = () => (
-    <>
-      <Theme />
-      <Common
-        showAccessCodeConfig={SHOW_ACCESS_CODE_CONFIG}
-        showOAuthLogin={ENABLE_OAUTH_SSO}
-      />
-    </>
-  );
+  <>
+    <Theme />
+    <Common
+      showAccessCodeConfig={SHOW_ACCESS_CODE_CONFIG}
+      showOAuthLogin={ENABLE_OAUTH_SSO}
+    />
+  </>
+);
 
 Page.displayName = 'CommonSetting';
 

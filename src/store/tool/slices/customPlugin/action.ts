@@ -44,7 +44,9 @@ export const createCustomPluginSlice: StateCreator<
   },
   reinstallCustomPlugin: async (id) => {
     const plugin = pluginSelectors.getCustomPluginById(id)(get());
-    if (!plugin) {return;}
+    if (!plugin) {
+      return;
+    }
 
     const { refreshPlugins, updateInstallLoadingState } = get();
     try {

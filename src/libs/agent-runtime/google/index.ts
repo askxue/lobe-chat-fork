@@ -31,10 +31,11 @@ export class LobeGoogleAI implements LobeRuntimeAI {
   baseURL?: string;
 
   constructor({ apiKey, baseURL }: { apiKey?: string; baseURL?: string }) {
-    if (!apiKey)
-      {throw AgentRuntimeError.createError(
+    if (!apiKey) {
+      throw AgentRuntimeError.createError(
         AgentRuntimeErrorType.InvalidGoogleAPIKey
-      );}
+      );
+    }
 
     this.client = new GoogleGenerativeAI(apiKey);
     this.baseURL = baseURL;
@@ -198,7 +199,9 @@ export class LobeGoogleAI implements LobeRuntimeAI {
       const noNeedVision = messages.every((m) => typeof m.content === 'string');
 
       // so we need to downgrade to gemini-pro
-      if (noNeedVision) {finalModel = 'gemini-pro';}
+      if (noNeedVision) {
+        finalModel = 'gemini-pro';
+      }
     }
 
     return finalModel;
@@ -213,11 +216,12 @@ export class LobeGoogleAI implements LobeRuntimeAI {
       errorType: AgentRuntimeErrorType.GoogleBizError
     };
 
-    if (message.includes('location is not supported'))
-      {return {
+    if (message.includes('location is not supported')) {
+      return {
         error: { message },
         errorType: AgentRuntimeErrorType.LocationNotSupportError
-      };}
+      };
+    }
 
     try {
       const startIndex = message.lastIndexOf('[');

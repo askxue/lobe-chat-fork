@@ -11,7 +11,9 @@ const SessionSettingsLayout = ServerLayout({ Desktop, Mobile });
 
 const Layout = ({ children }: PropsWithChildren) => {
   const isAgentEditable = serverFeatureFlags().isAgentEditable;
-  if (!isAgentEditable) {return notFound();}
+  if (!isAgentEditable) {
+    return notFound();
+  }
 
   return <SessionSettingsLayout>{children}</SessionSettingsLayout>;
 };

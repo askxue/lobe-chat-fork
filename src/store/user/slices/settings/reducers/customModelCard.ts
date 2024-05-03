@@ -31,8 +31,12 @@ export const customModelCardsReducer = (
     case 'add': {
       return produce(state || [], (draftState) => {
         const { id } = payload.modelCard;
-        if (!id) {return;}
-        if (draftState.some((card) => card.id === id)) {return;}
+        if (!id) {
+          return;
+        }
+        if (draftState.some((card) => card.id === id)) {
+          return;
+        }
 
         draftState.push(payload.modelCard);
       });

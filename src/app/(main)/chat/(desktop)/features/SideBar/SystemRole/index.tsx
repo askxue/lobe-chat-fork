@@ -50,13 +50,17 @@ const SystemRole = memo(() => {
   const { t } = useTranslation('common');
 
   const handleOpenWithEdit = () => {
-    if (!init) {return;}
+    if (!init) {
+      return;
+    }
     setEditing(true);
     setOpen(true);
   };
 
   const handleOpen = () => {
-    if (!init) {return;}
+    if (!init) {
+      return;
+    }
 
     setOpen(true);
   };
@@ -79,7 +83,9 @@ const SystemRole = memo(() => {
         height={200}
         onClick={handleOpen}
         onDoubleClick={(e) => {
-          if (e.altKey) {handleOpenWithEdit();}
+          if (e.altKey) {
+            handleOpenWithEdit();
+          }
         }}
       >
         {!init ? (

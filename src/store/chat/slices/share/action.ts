@@ -86,14 +86,15 @@ export const chatShare: StateCreator<
             break;
           }
           case 'function': {
-            if (withPluginInfo)
-              {draft.push(
+            if (withPluginInfo) {
+              draft.push(
                 PLUGIN_INFO({
                   apiName: i.plugin?.apiName || 'undefined',
                   content: i.content,
                   identifier: i.plugin?.identifier || 'undefined'
                 })
-              );}
+              );
+            }
             break;
           }
           case 'user': {

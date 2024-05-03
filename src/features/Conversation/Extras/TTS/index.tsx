@@ -27,8 +27,7 @@ const TTS = memo<TTSProps>(
 
     return <PlayerRender {...props} contentMd5={md5} />;
   },
-  (prevProps, nextProps) => (
-      prevProps.id === nextProps.id && prevProps.content === nextProps.content
-    )
+  (prevProps, nextProps) =>
+    prevProps.id === nextProps.id && prevProps.content === nextProps.content
 );
 export default TTS;

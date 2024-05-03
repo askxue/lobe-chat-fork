@@ -12,7 +12,9 @@ interface ErrorJSONViewerProps {
 const ErrorJsonViewer = memo<ErrorJSONViewerProps>(({ error, id }) => {
   const errorBody = error?.body || error;
 
-  if (!errorBody) {return;}
+  if (!errorBody) {
+    return;
+  }
 
   return (
     <Flexbox id={id} style={{ maxWidth: 600 }}>

@@ -16,18 +16,18 @@ import { Flexbox } from 'react-layout-kit';
 import { DISCORD, GITHUB, MEDIDUM, X } from '@/const/url';
 
 const useStyles = createStyles(({ css, token }) => ({
-    icon: css`
-      svg {
-        fill: ${token.colorTextDescription};
-      }
+  icon: css`
+    svg {
+      fill: ${token.colorTextDescription};
+    }
 
-      &:hover {
-        svg {
-          fill: ${token.colorText};
-        }
+    &:hover {
+      svg {
+        fill: ${token.colorText};
       }
-    `
-  }));
+    }
+  `
+}));
 
 const Follow = memo(() => {
   const { styles } = useStyles();

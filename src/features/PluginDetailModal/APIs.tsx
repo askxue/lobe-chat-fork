@@ -16,7 +16,9 @@ const APIs = memo<{
     isEqual
   );
 
-  if (!pluginManifest?.api) {return <Empty />;}
+  if (!pluginManifest?.api) {
+    return <Empty />;
+  }
 
   return (
     <Flexbox paddingBlock={16} width={'100%'}>

@@ -37,10 +37,13 @@ const CreateGroupModal = memo<CreateGroupModalProps>(
             onCancel?.(e);
           }}
           onOk={async (e: MouseEvent<HTMLButtonElement>) => {
-            if (!input) {return;}
+            if (!input) {
+              return;
+            }
 
-            if (input.length === 0 || input.length > 20)
-              {return message.warning(t('sessionGroup.tooLong'));}
+            if (input.length === 0 || input.length > 20) {
+              return message.warning(t('sessionGroup.tooLong'));
+            }
 
             setLoading(true);
             const groupId = await addCustomGroup(input);

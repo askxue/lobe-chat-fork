@@ -10,15 +10,15 @@ import { Provider, createStore } from './store';
 type AgentSettingsProps = StoreUpdaterProps;
 
 const AgentSettings = (props: AgentSettingsProps) => (
-    <Provider createStore={createStore}>
-      <StoreUpdater {...props} />
-      <AgentPrompt />
-      <AgentMeta />
-      <AgentChat />
-      <AgentModal />
-      <AgentTTS />
-      <AgentPlugin />
-    </Provider>
-  );
+  <Provider createStore={createStore}>
+    <StoreUpdater {...props} />
+    <AgentPrompt />
+    <AgentMeta />
+    <AgentChat />
+    <AgentModal />
+    <AgentTTS />
+    <AgentPlugin />
+  </Provider>
+);
 
 export default AgentSettings;

@@ -21,7 +21,9 @@ class _SessionGroupModel extends BaseModel {
       // 如果两个项都有 sort，则按 sort 排序
       if (a.sort !== undefined && b.sort !== undefined) {
         // 如果sort 一样，按时间倒序排序
-        if (a.sort === b.sort) {return b.createdAt - a.createdAt;}
+        if (a.sort === b.sort) {
+          return b.createdAt - a.createdAt;
+        }
 
         return a.sort - b.sort;
       }

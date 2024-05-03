@@ -17,8 +17,9 @@ export const AssistantMessage = memo<
     chatSelectors.getFunctionMessageProps({ content, id, plugin })
   );
 
-  if (!isFunctionMessageAtStart(content))
-    {return <DefaultMessage content={content} id={id} {...props} />;}
+  if (!isFunctionMessageAtStart(content)) {
+    return <DefaultMessage content={content} id={id} {...props} />;
+  }
 
   return (
     <div id={id}>
