@@ -47,7 +47,7 @@ export const createFileSlice: StateCreator<
   setImageMapItem: (id, item) => {
     set(
       produce((draft) => {
-        if (draft.imagesMap[id]) return;
+        if (draft.imagesMap[id]) {return;}
 
         draft.imagesMap[id] = item;
       }),

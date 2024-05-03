@@ -66,7 +66,7 @@ const IFrameRender = memo<IFrameRenderProps>(
         const message = chatSelectors.getMessageById(id)(
           useChatStore.getState()
         );
-        if (!message) return;
+        if (!message) {return;}
         const props = { content: '' };
 
         try {
@@ -91,7 +91,7 @@ const IFrameRender = memo<IFrameRenderProps>(
 
       if (iframeWin) {
         const message = getMessage(id);
-        if (!message) return;
+        if (!message) {return;}
 
         sendPluginStateToPlugin(iframeWin, key, message.pluginState?.[key]);
       }
@@ -108,7 +108,7 @@ const IFrameRender = memo<IFrameRenderProps>(
       const iframeWin = iframeRef.current?.contentWindow;
 
       if (iframeWin) {
-        if (!payload?.identifier) return;
+        if (!payload?.identifier) {return;}
 
         const settings = getSettings(payload.identifier);
 
@@ -119,7 +119,7 @@ const IFrameRender = memo<IFrameRenderProps>(
     // when plugin update settings, we should update it to the plugin settings
     const updatePluginSettings = useToolStore((s) => s.updatePluginSettings);
     useOnPluginSettingsUpdate((value) => {
-      if (!payload?.identifier) return;
+      if (!payload?.identifier) {return;}
 
       updatePluginSettings(payload?.identifier, value);
     });
@@ -128,7 +128,7 @@ const IFrameRender = memo<IFrameRenderProps>(
     const triggerAIMessage = useChatStore((s) => s.triggerAIMessage);
     useOnPluginTriggerAIMessage((messageId) => {
       // we need to know which message to trigger
-      if (messageId !== id) return;
+      if (messageId !== id) {return;}
 
       triggerAIMessage(id);
     });

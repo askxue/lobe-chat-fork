@@ -26,19 +26,17 @@ const getSessionMetaById =
   (s: SessionStore): MetaData => {
     const session = getSessionById(id)(s);
 
-    if (!session) return {};
+    if (!session) {return {};}
     return session.meta;
   };
 
 const currentSession = (s: SessionStore): LobeAgentSession | undefined => {
-  if (!s.activeId) return;
+  if (!s.activeId) {return;}
 
   return allSessions(s).find((i) => i.id === s.activeId);
 };
 
-const currentSessionSafe = (s: SessionStore): LobeAgentSession => {
-  return currentSession(s) || DEFAULT_AGENT_LOBE_SESSION;
-};
+const currentSessionSafe = (s: SessionStore): LobeAgentSession => currentSession(s) || DEFAULT_AGENT_LOBE_SESSION;
 
 const hasCustomAgents = (s: SessionStore) => defaultSessions(s).length > 0;
 

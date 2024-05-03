@@ -12,7 +12,9 @@ export class BaseModel<
   T = BrowserDBSchema[N]['table']
 > {
   protected readonly db: BrowserDB;
+
   private readonly schema: ZodObject<any>;
+
   private readonly _tableName: keyof BrowserDBSchema;
 
   constructor(table: N, schema: ZodObject<any>, db = browserDB) {

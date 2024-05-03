@@ -13,9 +13,7 @@ export const formatSize = (bytes: number): string => {
   }
 };
 
-const formatSpeed = (speed: number): string => {
-  return `${formatSize(speed)}/s`;
-};
+const formatSpeed = (speed: number): string => `${formatSize(speed)}/s`;
 
 const formatTime = (timeInSeconds: number): string => {
   if (timeInSeconds < 60) {

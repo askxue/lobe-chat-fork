@@ -17,7 +17,7 @@ const FilePlayer = memo<TTSProps>(({ file, id }) => {
     clearTTS(id);
   }, [id]);
 
-  if (!audio || isFileLoading) return;
+  if (!audio || isFileLoading) {return;}
 
   return <Player audio={audio} isLoading={isLoading} onDelete={handleDelete} />;
 });

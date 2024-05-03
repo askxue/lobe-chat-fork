@@ -13,14 +13,12 @@ import ChatHeader from './ChatHeader';
 
 const TopicList = dynamic(() => import('../features/TopicList'));
 
-const Chat = memo(() => {
-  return (
+const Chat = memo(() => (
     <MobileContentLayout header={<ChatHeader />}>
       <Conversation chatInput={<ChatInput />} mobile />
       <TopicList />
       <TelemetryNotification mobile />
       <SessionHydration />
     </MobileContentLayout>
-  );
-});
+  ));
 export default Chat;

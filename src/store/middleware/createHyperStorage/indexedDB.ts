@@ -12,7 +12,7 @@ export const createIndexedDB = <State extends any>(
       createStore(dbName, name)
     );
 
-    if (!state) return undefined;
+    if (!state) {return undefined;}
 
     return { state, version };
   },

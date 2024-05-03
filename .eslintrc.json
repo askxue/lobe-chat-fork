@@ -9,7 +9,7 @@
   "plugins": ["react", "@typescript-eslint", "prettier"],
   "extends": [
     "prettier",
-//    "next/core-web-vitals",
+    //    "next/core-web-vitals",
     // 会启用所有推荐的规则： https://zh-hans.eslint.org/docs/latest/rules
     "eslint:recommended",
     "plugin:react/recommended",

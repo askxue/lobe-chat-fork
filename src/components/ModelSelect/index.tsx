@@ -57,7 +57,7 @@ const useStyles = createStyles(({ css, token }) => ({
   `
 }));
 const formatTokenNumber = (num: number): string => {
-  if (num < 1000) return '1K';
+  if (num < 1000) {return '1K';}
   const kiloToken = Math.floor(num / 1000);
   return kiloToken < 1000
     ? `${kiloToken}K`
@@ -142,8 +142,7 @@ interface ModelItemRenderProps extends ChatModelCard {
 }
 
 export const ModelItemRender = memo<ModelItemRenderProps>(
-  ({ showInfoTag = true, ...model }) => {
-    return (
+  ({ showInfoTag = true, ...model }) => (
       <Flexbox align={'center'} gap={32} horizontal justify={'space-between'}>
         <Flexbox align={'center'} gap={8} horizontal>
           <ModelIcon model={model.id} size={20} />
@@ -152,8 +151,7 @@ export const ModelItemRender = memo<ModelItemRenderProps>(
 
         {showInfoTag && <ModelInfoTags {...model} />}
       </Flexbox>
-    );
-  }
+    )
 );
 
 interface ProviderItemRenderProps {

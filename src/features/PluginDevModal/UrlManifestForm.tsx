@@ -79,7 +79,7 @@ const UrlManifestForm = memo<{ form: FormInstance; isEditMode: boolean }>(
             },
             {
               validator: async (_, value) => {
-                if (!value) return true;
+                if (!value) {return true;}
 
                 try {
                   const useProxy = form.getFieldValue(proxyKey);
@@ -106,7 +106,7 @@ const UrlManifestForm = memo<{ form: FormInstance; isEditMode: boolean }>(
                   message: t('dev.meta.identifier.errorDuplicate'),
                   validator: async () => {
                     const id = form.getFieldValue('identifier');
-                    if (!id) return true;
+                    if (!id) {return true;}
 
                     if (pluginIds.includes(id)) {
                       throw new Error('Duplicate');

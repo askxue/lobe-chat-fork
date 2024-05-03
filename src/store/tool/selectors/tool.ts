@@ -63,7 +63,7 @@ const enabledSystemRoles =
       // 如果存在 enabledPlugins，那么只启用 enabledPlugins 中的插件
       .filter((m) => tools.includes(m?.identifier))
       .map((manifest) => {
-        if (!manifest) return '';
+        if (!manifest) {return '';}
 
         const meta = manifest.meta || {};
 
@@ -125,11 +125,11 @@ const getManifestById =
 const getManifestLoadingStatus = (id: string) => (s: ToolStoreState) => {
   const manifest = getManifestById(id)(s);
 
-  if (s.pluginInstallLoading[id]) return 'loading';
+  if (s.pluginInstallLoading[id]) {return 'loading';}
 
-  if (!manifest) return 'error';
+  if (!manifest) {return 'error';}
 
-  if (!!manifest) return 'success';
+  if (manifest) {return 'success';}
 };
 
 export const toolSelectors = {

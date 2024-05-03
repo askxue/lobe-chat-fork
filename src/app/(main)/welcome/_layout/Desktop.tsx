@@ -6,8 +6,7 @@ import Follow from '@/features/Follow';
 
 const COPYRIGHT = `© ${new Date().getFullYear()} LobeHub, LLC`;
 
-const DesktopLayout = ({ children }: PropsWithChildren) => {
-  return (
+const DesktopLayout = ({ children }: PropsWithChildren) => (
     <Flexbox
       align={'center'}
       height={'100%'}
@@ -30,6 +29,5 @@ const DesktopLayout = ({ children }: PropsWithChildren) => {
       </Flexbox>
     </Flexbox>
   );
-};
 
 export default DesktopLayout;

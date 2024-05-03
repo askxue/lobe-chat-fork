@@ -7,8 +7,6 @@ export const LOBE_LOCALE_COOKIE = 'LOBE_LOCALE';
  * Check if the language is supported
  * @param locale
  */
-export const isLocaleNotSupport = (locale: string) => {
-  return (
+export const isLocaleNotSupport = (locale: string) => (
     normalizeLocale(locale) === DEFAULT_LANG || !supportLocales.includes(locale)
   );
-};

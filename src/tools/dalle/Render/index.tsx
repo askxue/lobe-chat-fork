@@ -17,7 +17,7 @@ const DallE = memo<BuiltinRenderProps<DallEImageItem[]>>(
     const handleDownload = async () => {
       // 1. Retrieve the blob URL of an image by its imageId
       const id = content[currentRef.current]?.imageId;
-      if (!id) return;
+      if (!id) {return;}
       const { url, name } = await fileService.getFile(id);
       // 2. Download the image
       const link = document.createElement('a');

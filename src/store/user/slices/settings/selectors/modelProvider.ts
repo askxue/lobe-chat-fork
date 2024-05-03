@@ -18,7 +18,7 @@ const serverProviderModelCards =
       | ServerModelProviderConfig
       | undefined;
 
-    if (!config) return;
+    if (!config) {return;}
 
     return config.serverModelCards;
   };
@@ -29,7 +29,7 @@ const remoteProviderModelCards =
     const cards = currentSettings(s).languageModel?.[provider]
       ?.remoteModelCards as ChatModelCard[] | undefined;
 
-    if (!cards) return;
+    if (!cards) {return;}
 
     return cards;
   };
@@ -57,7 +57,7 @@ export const getDefaultModeProviderById =
 const getDefaultEnabledModelsById = (provider: string) => (s: UserStore) => {
   const modelProvider = getDefaultModeProviderById(provider)(s);
 
-  if (modelProvider) return filterEnabledModels(modelProvider);
+  if (modelProvider) {return filterEnabledModels(modelProvider);}
 
   return undefined;
 };
@@ -87,7 +87,7 @@ const getModelCardsById =
   };
 
 const getEnableModelsById = (provider: string) => (s: UserStore) => {
-  if (!getProviderConfigById(provider)(s)?.enabledModels) return;
+  if (!getProviderConfigById(provider)(s)?.enabledModels) {return;}
 
   return getProviderConfigById(provider)(s)?.enabledModels?.filter(Boolean);
 };

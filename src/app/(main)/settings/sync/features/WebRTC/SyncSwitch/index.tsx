@@ -6,8 +6,7 @@ interface SyncSwitchProps {
   onChange?: (checked: boolean) => void;
   value?: boolean;
 }
-const SyncSwitch = memo<SyncSwitchProps>(({ value, onChange }) => {
-  return (
+const SyncSwitch = memo<SyncSwitchProps>(({ value, onChange }) => (
     <div className={'wrapper'}>
       <label className="switch">
         <input
@@ -95,7 +94,6 @@ const SyncSwitch = memo<SyncSwitchProps>(({ value, onChange }) => {
         <span className="switch__text">Power</span>
       </label>
     </div>
-  );
-});
+  ));
 
 export default SyncSwitch;

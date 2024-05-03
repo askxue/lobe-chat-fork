@@ -26,7 +26,7 @@ const OptionRender = memo<OptionRenderProps>(
 
     // if there is isCustom, it means it is a user defined custom model
     if (model?.isCustom || isAzure)
-      return <CustomModelOption id={id} provider={provider} />;
+      {return <CustomModelOption id={id} provider={provider} />;}
 
     return (
       <Flexbox align={'center'} gap={8} horizontal>

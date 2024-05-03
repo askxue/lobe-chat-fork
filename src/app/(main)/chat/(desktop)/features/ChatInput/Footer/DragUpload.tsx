@@ -12,8 +12,7 @@ import { useFileStore } from '@/store/file';
 import { useUserStore } from '@/store/user';
 import { modelProviderSelectors } from '@/store/user/selectors';
 
-const useStyles = createStyles(({ css, token, stylish }) => {
-  return {
+const useStyles = createStyles(({ css, token, stylish }) => ({
     container: css`
       width: 300px;
       height: 300px;
@@ -57,8 +56,7 @@ const useStyles = createStyles(({ css, token, stylish }) => {
       background: ${token.colorBgMask};
       ${stylish.blur};
     `
-  };
-});
+  }));
 
 const handleDragOver = (e: DragEvent) => {
   e.preventDefault();
@@ -82,11 +80,11 @@ const DragUpload = memo(() => {
   );
 
   const uploadImages = async (fileList: FileList | undefined) => {
-    if (!fileList || fileList.length === 0) return;
+    if (!fileList || fileList.length === 0) {return;}
 
     const pools = Array.from(fileList).map(async (file) => {
       // skip none-file items
-      if (!file.type.startsWith('image') && !enabledFiles) return;
+      if (!file.type.startsWith('image') && !enabledFiles) {return;}
       await uploadFile(file);
     });
 

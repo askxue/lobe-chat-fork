@@ -15,8 +15,7 @@ import { Flexbox } from 'react-layout-kit';
 
 import { DISCORD, GITHUB, MEDIDUM, X } from '@/const/url';
 
-const useStyles = createStyles(({ css, token }) => {
-  return {
+const useStyles = createStyles(({ css, token }) => ({
     icon: css`
       svg {
         fill: ${token.colorTextDescription};
@@ -28,8 +27,7 @@ const useStyles = createStyles(({ css, token }) => {
         }
       }
     `
-  };
-});
+  }));
 
 const Follow = memo(() => {
   const { styles } = useStyles();

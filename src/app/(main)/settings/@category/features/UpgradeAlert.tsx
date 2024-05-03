@@ -14,7 +14,7 @@ const UpgradeAlert = memo(() => {
   ]);
   const { t } = useTranslation('common');
 
-  if (!hasNewVersion) return null;
+  if (!hasNewVersion) {return null;}
 
   return (
     <Alert

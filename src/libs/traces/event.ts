@@ -24,6 +24,7 @@ type EventParams<T> = T & TraceEventBasePayload;
 
 export class TraceEventClient {
   private _trace: LangfuseTraceClient;
+
   constructor(client: LangfuseTraceClient) {
     this._trace = client;
   }

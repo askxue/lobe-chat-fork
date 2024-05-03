@@ -59,7 +59,7 @@ export const chatEnhance: StateCreator<
       get();
 
     const message = chatSelectors.getMessageById(id)(get());
-    if (!message) return;
+    if (!message) {return;}
 
     // create translate extra
     await updateMessageTranslate(id, { content: '', from: '', to: targetLang });
@@ -78,7 +78,7 @@ export const chatEnhance: StateCreator<
         })
       })
       .then(async (data) => {
-        if (data && supportLocales.includes(data)) from = data;
+        if (data && supportLocales.includes(data)) {from = data;}
 
         await updateMessageTranslate(id, { content, from, to: targetLang });
       });

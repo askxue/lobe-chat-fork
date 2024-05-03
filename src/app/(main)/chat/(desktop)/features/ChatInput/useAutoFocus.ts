@@ -8,7 +8,7 @@ export const useAutoFocus = (inputRef: RefObject<TextAreaRef>) => {
     const onMousedown = (e: MouseEvent) => {
       isInputOrMarkdown = false;
       const element = document.elementFromPoint(e.clientX, e.clientY);
-      if (!element) return;
+      if (!element) {return;}
       let currentElement: Element | null = element;
       // 因为点击 Markdown 元素时，element 会是 article 标签的子元素
       // Debug 信息时，element 会是 pre 标签

@@ -18,7 +18,7 @@ const WELCOME_ID = 'welcome';
 const itemContent = (index: number, id: string) => {
   const isMobile = isMobileScreen();
 
-  if (id === WELCOME_ID) return <InboxWelcome />;
+  if (id === WELCOME_ID) {return <InboxWelcome />;}
 
   return index === 0 ? (
     <div style={{ height: 24 + (isMobile ? 0 : 64) }} />
