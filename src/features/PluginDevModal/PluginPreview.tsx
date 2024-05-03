@@ -15,7 +15,12 @@ const PluginPreview = memo<{ form: FormInstance }>(({ form }) => {
   const meta = plugin?.manifest?.meta;
 
   const items = {
-    avatar: <Avatar avatar={pluginHelpers.getPluginAvatar(meta)} style={{ flex: 'none' }} />,
+    avatar: (
+      <Avatar
+        avatar={pluginHelpers.getPluginAvatar(meta)}
+        style={{ flex: 'none' }}
+      />
+    ),
     desc: pluginHelpers.getPluginDesc(meta) || 'Plugin Description',
     label: (
       <Flexbox align={'center'} gap={8} horizontal>
@@ -23,12 +28,20 @@ const PluginPreview = memo<{ form: FormInstance }>(({ form }) => {
         <PluginTag type={'customPlugin'} />
       </Flexbox>
     ),
-    minWidth: undefined,
+    minWidth: undefined
   };
 
   return (
-    <Card bodyStyle={{ padding: '0 16px' }} size={'small'} title={t('dev.preview.card')}>
-      <Form.Item {...items} colon={false} style={{ alignItems: 'center', marginBottom: 0 }} />
+    <Card
+      bodyStyle={{ padding: '0 16px' }}
+      size={'small'}
+      title={t('dev.preview.card')}
+    >
+      <Form.Item
+        {...items}
+        colon={false}
+        style={{ alignItems: 'center', marginBottom: 0 }}
+      />
     </Card>
   );
 });

@@ -16,7 +16,7 @@ import { merge } from '@/utils/merge';
 import { chatSelectors } from './selectors';
 
 vi.mock('i18next', () => ({
-  t: vi.fn((key) => key), // Simplified mock return value
+  t: vi.fn((key) => key) // Simplified mock return value
 }));
 
 const initialStore = initialState as ChatStore;
@@ -25,12 +25,12 @@ const mockMessages = [
   {
     id: 'msg1',
     content: 'Hello World',
-    role: 'user',
+    role: 'user'
   },
   {
     id: 'msg2',
     content: 'Goodbye World',
-    role: 'user',
+    role: 'user'
   },
   {
     id: 'msg3',
@@ -39,9 +39,9 @@ const mockMessages = [
     plugin: {
       arguments: ['arg1', 'arg2'],
       identifier: 'func1',
-      type: 'pluginType',
-    },
-  },
+      type: 'pluginType'
+    }
+  }
 ] as ChatMessage[];
 
 const mockedChats = [
@@ -50,16 +50,16 @@ const mockedChats = [
     content: 'Hello World',
     role: 'user',
     meta: {
-      avatar: '😀',
-    },
+      avatar: '😀'
+    }
   },
   {
     id: 'msg2',
     content: 'Goodbye World',
     role: 'user',
     meta: {
-      avatar: '😀',
-    },
+      avatar: '😀'
+    }
   },
   {
     id: 'msg3',
@@ -67,14 +67,14 @@ const mockedChats = [
     role: 'function',
     meta: {
       avatar: '🧩',
-      title: 'plugin-unknown',
+      title: 'plugin-unknown'
     },
     plugin: {
       arguments: ['arg1', 'arg2'],
       identifier: 'func1',
-      type: 'pluginType',
-    },
-  },
+      type: 'pluginType'
+    }
+  }
 ] as ChatMessage[];
 
 const mockChatStore = { messages: mockMessages } as ChatStore;
@@ -82,7 +82,8 @@ const mockChatStore = { messages: mockMessages } as ChatStore;
 describe('chatSelectors', () => {
   describe('getMessageById', () => {
     it('should return undefined if the message with the given id does not exist', () => {
-      const message = chatSelectors.getMessageById('non-existent-id')(initialStore);
+      const message =
+        chatSelectors.getMessageById('non-existent-id')(initialStore);
       expect(message).toBeUndefined();
     });
 
@@ -98,7 +99,8 @@ describe('chatSelectors', () => {
     });
 
     it('should return undefined if no message matches the id', () => {
-      const message = chatSelectors.getMessageById('nonexistent')(mockChatStore);
+      const message =
+        chatSelectors.getMessageById('nonexistent')(mockChatStore);
       expect(message).toBeUndefined();
     });
   });
@@ -107,22 +109,29 @@ describe('chatSelectors', () => {
     it('should return the properties of a function message', () => {
       const state = merge(initialStore, {
         messages: mockMessages,
-        chatLoadingId: 'msg3', // Assuming this id represents a loading state
+        chatLoadingId: 'msg3' // Assuming this id represents a loading state
       });
-      const props = chatSelectors.getFunctionMessageProps(mockMessages[2])(state);
+      const props = chatSelectors.getFunctionMessageProps(mockMessages[2])(
+        state
+      );
       expect(props).toEqual({
         arguments: ['arg1', 'arg2'],
         command: mockMessages[2].plugin,
         content: 'Function Message',
         id: 'func1',
         loading: true,
-        type: 'pluginType',
+        type: 'pluginType'
       });
     });
 
     it('should return loading as false if the message id is not the current loading id', () => {
-      const state = merge(initialStore, { messages: mockMessages, chatLoadingId: 'msg1' });
-      const props = chatSelectors.getFunctionMessageProps(mockMessages[2])(state);
+      const state = merge(initialStore, {
+        messages: mockMessages,
+        chatLoadingId: 'msg1'
+      });
+      const props = chatSelectors.getFunctionMessageProps(mockMessages[2])(
+        state
+      );
       expect(props.loading).toBe(false);
     });
 
@@ -130,21 +139,22 @@ describe('chatSelectors', () => {
       const messageWithoutPlugin = {
         id: 'msg4',
         content: 'No Plugin Message',
-        role: 'function',
+        role: 'function'
         // No plugin property
       };
       const state = merge(initialStore, {
         messages: [...mockMessages, messageWithoutPlugin],
-        chatLoadingId: 'msg1',
+        chatLoadingId: 'msg1'
       });
-      const props = chatSelectors.getFunctionMessageProps(messageWithoutPlugin)(state);
+      const props =
+        chatSelectors.getFunctionMessageProps(messageWithoutPlugin)(state);
       expect(props).toEqual({
         arguments: undefined,
         command: undefined,
         content: 'No Plugin Message',
         id: undefined,
         loading: false,
-        type: undefined,
+        type: undefined
       });
     });
   });
@@ -165,8 +175,8 @@ describe('chatSelectors', () => {
           agentConfig: {
             historyCount: 2,
             enableHistoryCount: true,
-            model: 'abc',
-          } as LobeAgentConfig,
+            model: 'abc'
+          } as LobeAgentConfig
         });
       });
 
@@ -179,8 +189,8 @@ describe('chatSelectors', () => {
           content: 'Goodbye World',
           role: 'user',
           meta: {
-            avatar: '😀',
-          },
+            avatar: '😀'
+          }
         },
         {
           id: 'msg3',
@@ -188,27 +198,35 @@ describe('chatSelectors', () => {
           role: 'function',
           meta: {
             avatar: '🧩',
-            title: 'plugin-unknown',
+            title: 'plugin-unknown'
           },
           plugin: {
             arguments: ['arg1', 'arg2'],
             identifier: 'func1',
-            type: 'pluginType',
-          },
-        },
+            type: 'pluginType'
+          }
+        }
       ]);
     });
   });
 
   describe('currentChatsWithGuideMessage', () => {
     it('should return existing messages if there are any', () => {
-      const state = merge(initialStore, { messages: mockMessages, activeId: 'someActiveId' });
-      const chats = chatSelectors.currentChatsWithGuideMessage({} as MetaData)(state);
+      const state = merge(initialStore, {
+        messages: mockMessages,
+        activeId: 'someActiveId'
+      });
+      const chats = chatSelectors.currentChatsWithGuideMessage({} as MetaData)(
+        state
+      );
       expect(chats).toEqual(mockedChats);
     });
 
     it('should add a guide message if the chat is brand new', () => {
-      const state = merge(initialStore, { messages: [], activeId: 'someActiveId' });
+      const state = merge(initialStore, {
+        messages: [],
+        activeId: 'someActiveId'
+      });
       const metaData = { title: 'Mock Agent', description: 'Mock Description' };
 
       const chats = chatSelectors.currentChatsWithGuideMessage(metaData)(state);
@@ -220,7 +238,10 @@ describe('chatSelectors', () => {
     });
 
     it('should use inbox message for INBOX_SESSION_ID', () => {
-      const state = merge(initialStore, { messages: [], activeId: INBOX_SESSION_ID });
+      const state = merge(initialStore, {
+        messages: [],
+        activeId: INBOX_SESSION_ID
+      });
       const metaData = { title: 'Mock Agent', description: 'Mock Description' };
 
       const chats = chatSelectors.currentChatsWithGuideMessage(metaData)(state);
@@ -229,7 +250,10 @@ describe('chatSelectors', () => {
     });
 
     it('should use agent default message for non-inbox sessions', () => {
-      const state = merge(initialStore, { messages: [], activeId: 'someActiveId' });
+      const state = merge(initialStore, {
+        messages: [],
+        activeId: 'someActiveId'
+      });
       const metaData = { title: 'Mock Agent' };
 
       const chats = chatSelectors.currentChatsWithGuideMessage(metaData)(state);
@@ -243,7 +267,7 @@ describe('chatSelectors', () => {
       // Prepare a state with a few messages
       const state = merge(initialStore, {
         messages: mockMessages,
-        activeId: 'active-session',
+        activeId: 'active-session'
       });
 
       // Assume that the currentChatsWithHistoryConfig will return the last two messages
@@ -271,7 +295,7 @@ describe('chatSelectors', () => {
     it('should return false if there are existing messages in the inbox session', () => {
       const state = merge(initialStore, {
         activeId: INBOX_SESSION_ID,
-        messages: mockMessages,
+        messages: mockMessages
       });
       const result = chatSelectors.showInboxWelcome(state);
       expect(result).toBe(false);
@@ -280,7 +304,7 @@ describe('chatSelectors', () => {
     it('should return true if the active session is the inbox session and there are no existing messages', () => {
       const state = merge(initialStore, {
         activeId: INBOX_SESSION_ID,
-        messages: [],
+        messages: []
       });
       const result = chatSelectors.showInboxWelcome(state);
       expect(result).toBe(true);

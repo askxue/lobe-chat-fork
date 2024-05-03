@@ -1,7 +1,14 @@
 import { Mock, describe, expect, it, vi } from 'vitest';
 
-import { CreateMessageParams, MessageModel } from '@/database/client/models/message';
-import { ChatMessage, ChatMessageError, ChatPluginPayload } from '@/types/message';
+import {
+  CreateMessageParams,
+  MessageModel
+} from '@/database/client/models/message';
+import {
+  ChatMessage,
+  ChatMessageError,
+  ChatPluginPayload
+} from '@/types/message';
 
 import { messageService } from './index';
 
@@ -9,8 +16,8 @@ import { messageService } from './index';
 vi.mock('@/database/client/models/message', () => {
   return {
     MessageModel: {
-      count: vi.fn(),
-    },
+      count: vi.fn()
+    }
   };
 });
 

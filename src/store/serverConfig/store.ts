@@ -13,7 +13,7 @@ import { StoreApiWithSelector } from '@/utils/zustand';
 
 const initialState: ServerConfigStore = {
   featureFlags: DEFAULT_FEATURE_FLAGS,
-  serverConfig: { telemetry: {} },
+  serverConfig: { telemetry: {} }
 };
 
 //  ===============  聚合 createStoreFn ============ //
@@ -25,11 +25,11 @@ export interface ServerConfigStore {
 }
 
 type CreateStore = (
-  initState: Partial<ServerConfigStore>,
+  initState: Partial<ServerConfigStore>
 ) => StateCreator<ServerConfigStore, [['zustand/devtools', never]]>;
 
 const createStore: CreateStore = (runtimeState) => () => ({
-  ...merge(initialState, runtimeState),
+  ...merge(initialState, runtimeState)
 });
 
 //  ===============  实装 useStore ============ //
@@ -39,19 +39,21 @@ let store: StoreApi<ServerConfigStore>;
 export const initServerConfigStore = (initState: Partial<ServerConfigStore>) =>
   createWithEqualityFn<ServerConfigStore>()(
     devtools(createStore(initState || {}), {
-      name: 'LobeChat_ServerConfig' + (isDev ? '_DEV' : ''),
+      name: 'LobeChat_ServerConfig' + (isDev ? '_DEV' : '')
     }),
-    shallow,
+    shallow
   );
 
-export const createServerConfigStore = (initState?: Partial<ServerConfigStore>) => {
+export const createServerConfigStore = (
+  initState?: Partial<ServerConfigStore>
+) => {
   // make sure there is only one store
   if (!store) {
     store = createWithEqualityFn<ServerConfigStore>()(
       devtools(createStore(initState || {}), {
-        name: 'LobeChat_ServerConfig' + (isDev ? '_DEV' : ''),
+        name: 'LobeChat_ServerConfig' + (isDev ? '_DEV' : '')
       }),
-      shallow,
+      shallow
     );
   }
 

@@ -8,7 +8,7 @@ import {
   useOnPluginFetchPluginSettings,
   useOnPluginFetchPluginState,
   useOnPluginFillContent,
-  useOnPluginTriggerAIMessage,
+  useOnPluginTriggerAIMessage
 } from './listenToPlugin';
 
 afterEach(() => {
@@ -20,9 +20,12 @@ describe('useOnPluginFetchMessage', () => {
     const mockOnRequest = vi.fn();
     renderHook(() => useOnPluginFetchMessage(mockOnRequest));
 
-    const testData = { key: 'testData', type: PluginChannel.fetchPluginMessage };
+    const testData = {
+      key: 'testData',
+      type: PluginChannel.fetchPluginMessage
+    };
     const event = new MessageEvent('message', {
-      data: testData,
+      data: testData
     });
 
     window.dispatchEvent(event);
@@ -35,7 +38,7 @@ describe('useOnPluginFetchMessage', () => {
     renderHook(() => useOnPluginFetchMessage(mockOnRequest));
 
     const event = new MessageEvent('message', {
-      data: { type: 'otherMessageType' },
+      data: { type: 'otherMessageType' }
     });
 
     window.dispatchEvent(event);
@@ -51,7 +54,7 @@ describe('useOnPluginFetchPluginState', () => {
 
     const testKey = 'testKey';
     const event = new MessageEvent('message', {
-      data: { type: PluginChannel.fetchPluginState, key: testKey },
+      data: { type: PluginChannel.fetchPluginState, key: testKey }
     });
 
     window.dispatchEvent(event);
@@ -67,7 +70,10 @@ describe('useOnPluginFillContent', () => {
 
     const testContent = 'testContent';
     const event = new MessageEvent('message', {
-      data: { type: PluginChannel.fillStandalonePluginContent, content: testContent },
+      data: {
+        type: PluginChannel.fillStandalonePluginContent,
+        content: testContent
+      }
     });
 
     window.dispatchEvent(event);
@@ -81,12 +87,18 @@ describe('useOnPluginFillContent', () => {
 
     const testContent = { some: 'data' };
     const event = new MessageEvent('message', {
-      data: { type: PluginChannel.fillStandalonePluginContent, content: testContent },
+      data: {
+        type: PluginChannel.fillStandalonePluginContent,
+        content: testContent
+      }
     });
 
     window.dispatchEvent(event);
 
-    expect(mockCallback).toHaveBeenCalledWith(JSON.stringify(testContent), undefined);
+    expect(mockCallback).toHaveBeenCalledWith(
+      JSON.stringify(testContent),
+      undefined
+    );
   });
 });
 
@@ -96,7 +108,7 @@ describe('useOnPluginFetchPluginSettings', () => {
     renderHook(() => useOnPluginFetchPluginSettings(mockOnRequest));
 
     const event = new MessageEvent('message', {
-      data: { type: PluginChannel.fetchPluginSettings },
+      data: { type: PluginChannel.fetchPluginSettings }
     });
 
     window.dispatchEvent(event);
@@ -112,7 +124,7 @@ describe('useOnPluginTriggerAIMessage', () => {
 
     const testId = 'testId';
     const event = new MessageEvent('message', {
-      data: { type: PluginChannel.triggerAIMessage, id: testId },
+      data: { type: PluginChannel.triggerAIMessage, id: testId }
     });
 
     window.dispatchEvent(event);
@@ -125,7 +137,7 @@ describe('useOnPluginTriggerAIMessage', () => {
     renderHook(() => useOnPluginTriggerAIMessage(mockCallback));
 
     const event = new MessageEvent('message', {
-      data: { type: 'otherMessageType', id: 'testId' },
+      data: { type: 'otherMessageType', id: 'testId' }
     });
 
     window.dispatchEvent(event);
@@ -141,7 +153,7 @@ describe('useOnPluginCreateAssistantMessage', () => {
 
     const testContent = 'testContent';
     const event = new MessageEvent('message', {
-      data: { type: PluginChannel.createAssistantMessage, content: testContent },
+      data: { type: PluginChannel.createAssistantMessage, content: testContent }
     });
 
     window.dispatchEvent(event);
@@ -154,7 +166,7 @@ describe('useOnPluginCreateAssistantMessage', () => {
     renderHook(() => useOnPluginCreateAssistantMessage(mockCallback));
 
     const event = new MessageEvent('message', {
-      data: { type: 'otherMessageType', content: 'testContent' },
+      data: { type: 'otherMessageType', content: 'testContent' }
     });
 
     window.dispatchEvent(event);

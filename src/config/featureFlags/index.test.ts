@@ -11,7 +11,7 @@ describe('FeatureFlagsSchema', () => {
       openai_proxy_url: false,
       create_session: true,
       edit_agent: false,
-      dalle: true,
+      dalle: true
     });
 
     expect(result.success).toBe(true);
@@ -19,7 +19,7 @@ describe('FeatureFlagsSchema', () => {
 
   it('should reject invalid feature flags', () => {
     const result = FeatureFlagsSchema.safeParse({
-      webrtc_sync: 'yes', // Invalid type, should be boolean
+      webrtc_sync: 'yes' // Invalid type, should be boolean
     });
 
     expect(result.success).toBe(false);
@@ -35,7 +35,7 @@ describe('mapFeatureFlagsEnvToState', () => {
       openai_proxy_url: false,
       create_session: true,
       edit_agent: false,
-      dalle: true,
+      dalle: true
     };
 
     const expectedState = {
@@ -45,7 +45,7 @@ describe('mapFeatureFlagsEnvToState', () => {
       showLLM: false,
       showOpenAIApiKey: true,
       showOpenAIProxyUrl: false,
-      showDalle: true,
+      showDalle: true
     };
 
     const mappedState = mapFeatureFlagsEnvToState(config);

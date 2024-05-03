@@ -6,7 +6,7 @@ import {
   AddCustomModelCard,
   DeleteCustomModelCard,
   UpdateCustomModelCard,
-  customModelCardsReducer,
+  customModelCardsReducer
 } from './customModelCard';
 
 describe('customModelCardsReducer', () => {
@@ -22,7 +22,7 @@ describe('customModelCardsReducer', () => {
       legacy: false,
       maxOutput: 1000,
       tokens: 2048,
-      vision: false,
+      vision: false
     },
     {
       id: 'model2',
@@ -34,8 +34,8 @@ describe('customModelCardsReducer', () => {
       legacy: true,
       maxOutput: 500,
       tokens: 1024,
-      vision: true,
-    },
+      vision: true
+    }
   ];
 
   it('should add a new custom model card', () => {
@@ -50,12 +50,12 @@ describe('customModelCardsReducer', () => {
       legacy: false,
       maxOutput: 2000,
       tokens: 4096,
-      vision: false,
+      vision: false
     };
 
     const action: AddCustomModelCard = {
       type: 'add',
-      modelCard: newModelCard,
+      modelCard: newModelCard
     };
 
     const newState = customModelCardsReducer(initialState, action);
@@ -76,12 +76,12 @@ describe('customModelCardsReducer', () => {
       legacy: false,
       maxOutput: 1000,
       tokens: 2048,
-      vision: false,
+      vision: false
     };
 
     const action: AddCustomModelCard = {
       type: 'add',
-      modelCard: duplicateModelCard,
+      modelCard: duplicateModelCard
     };
 
     const newState = customModelCardsReducer(initialState, action);
@@ -92,7 +92,7 @@ describe('customModelCardsReducer', () => {
   it('should delete a custom model card', () => {
     const action: DeleteCustomModelCard = {
       type: 'delete',
-      id: 'model1',
+      id: 'model1'
     };
 
     const newState = customModelCardsReducer(initialState, action);
@@ -105,30 +105,32 @@ describe('customModelCardsReducer', () => {
     const action: UpdateCustomModelCard = {
       type: 'update',
       id: 'model1',
-      value: { displayName: 'Updated Model 1' },
+      value: { displayName: 'Updated Model 1' }
     };
 
     const newState = customModelCardsReducer(initialState, action);
 
-    expect(newState.find((card) => card.id === 'model1')?.displayName).toBe('Updated Model 1');
+    expect(newState.find((card) => card.id === 'model1')?.displayName).toBe(
+      'Updated Model 1'
+    );
     expect(newState.length).toBe(initialState.length);
   });
 
   it('should throw an error for unhandled action type', () => {
     const invalidAction = {
-      type: 'invalid',
+      type: 'invalid'
     };
 
-    expect(() => customModelCardsReducer(initialState, invalidAction as any)).toThrowError(
-      'Unhandled action type in customModelCardsReducer',
-    );
+    expect(() =>
+      customModelCardsReducer(initialState, invalidAction as any)
+    ).toThrowError('Unhandled action type in customModelCardsReducer');
   });
 
   it('should return the original state if the model card is not found during update', () => {
     const action: UpdateCustomModelCard = {
       type: 'update',
       id: 'nonexistent',
-      value: { displayName: 'Updated Nonexistent Model' },
+      value: { displayName: 'Updated Nonexistent Model' }
     };
 
     const newState = customModelCardsReducer(initialState, action);
@@ -148,12 +150,12 @@ describe('customModelCardsReducer', () => {
       legacy: false,
       maxOutput: 1500,
       tokens: 2048,
-      vision: false,
+      vision: false
     };
 
     const action: AddCustomModelCard = {
       type: 'add',
-      modelCard: newModelCard,
+      modelCard: newModelCard
     };
 
     const newState = customModelCardsReducer(initialState, action);
@@ -163,12 +165,12 @@ describe('customModelCardsReducer', () => {
 
   it('should handle optional properties correctly', () => {
     const newModelCard: ChatModelCard = {
-      id: 'model4',
+      id: 'model4'
     };
 
     const action: AddCustomModelCard = {
       type: 'add',
-      modelCard: newModelCard,
+      modelCard: newModelCard
     };
 
     const newState = customModelCardsReducer(initialState, action);
@@ -188,12 +190,12 @@ describe('customModelCardsReducer', () => {
       legacy: false,
       maxOutput: 1500,
       tokens: 2048,
-      vision: false,
+      vision: false
     };
 
     const action: AddCustomModelCard = {
       type: 'add',
-      modelCard: newModelCard,
+      modelCard: newModelCard
     };
 
     const newState = customModelCardsReducer(undefined, action);

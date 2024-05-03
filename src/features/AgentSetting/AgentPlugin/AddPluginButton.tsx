@@ -14,7 +14,7 @@ const AddPluginButton = forwardRef<HTMLButtonElement>((props, ref) => {
   const [toggleAgentPlugin] = useStore((s) => [s.toggleAgentPlugin]);
   const [installCustomPlugin, updateNewDevPlugin] = useToolStore((s) => [
     s.installCustomPlugin,
-    s.updateNewCustomPlugin,
+    s.updateNewCustomPlugin
   ]);
 
   return (

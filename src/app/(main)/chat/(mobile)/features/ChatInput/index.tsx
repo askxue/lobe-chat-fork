@@ -13,7 +13,8 @@ import Files from './Files';
 const ChatInputMobileLayout = memo(() => {
   const { t } = useTranslation('chat');
   const theme = useTheme();
-  const { ref, onSend, loading, value, onInput, onStop, expand, setExpand } = useChatInput();
+  const { ref, onSend, loading, value, onInput, onStop, expand, setExpand } =
+    useChatInput();
 
   return (
     <MobileChatInputArea
@@ -27,16 +28,24 @@ const ChatInputMobileLayout = memo(() => {
       setExpand={setExpand}
       style={{
         background: `linear-gradient(to bottom, ${theme.colorFillQuaternary}, transparent)`,
-        width: '100%',
+        width: '100%'
       }}
       textAreaLeftAddons={<STT mobile />}
       textAreaRightAddons={
-        <MobileChatSendButton loading={loading} onSend={onSend} onStop={onStop} />
+        <MobileChatSendButton
+          loading={loading}
+          onSend={onSend}
+          onStop={onStop}
+        />
       }
       topAddons={
         <>
           <Files />
-          <ActionBar mobile padding={'0 8px'} rightAreaStartRender={<SaveTopic mobile />} />
+          <ActionBar
+            mobile
+            padding={'0 8px'}
+            rightAreaStartRender={<SaveTopic mobile />}
+          />
         </>
       }
       value={value}

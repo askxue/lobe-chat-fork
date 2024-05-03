@@ -10,17 +10,24 @@ interface AutoScrollProps {
   isScrolling: boolean;
   onScrollToBottom: (type: 'auto' | 'click') => void;
 }
-const AutoScroll = memo<AutoScrollProps>(({ atBottom, isScrolling, onScrollToBottom }) => {
-  const trackVisibility = useChatStore((s) => !!s.chatLoadingId);
-  const str = useChatStore(chatSelectors.chatsMessageString);
+const AutoScroll = memo<AutoScrollProps>(
+  ({ atBottom, isScrolling, onScrollToBottom }) => {
+    const trackVisibility = useChatStore((s) => !!s.chatLoadingId);
+    const str = useChatStore(chatSelectors.chatsMessageString);
 
-  useEffect(() => {
-    if (atBottom && trackVisibility && !isScrolling) {
-      onScrollToBottom?.('auto');
-    }
-  }, [atBottom, trackVisibility, str]);
+    useEffect(() => {
+      if (atBottom && trackVisibility && !isScrolling) {
+        onScrollToBottom?.('auto');
+      }
+    }, [atBottom, trackVisibility, str]);
 
-  return <BackBottom onScrollToBottom={() => onScrollToBottom('click')} visible={!atBottom} />;
-});
+    return (
+      <BackBottom
+        onScrollToBottom={() => onScrollToBottom('click')}
+        visible={!atBottom}
+      />
+    );
+  }
+);
 
 export default AutoScroll;

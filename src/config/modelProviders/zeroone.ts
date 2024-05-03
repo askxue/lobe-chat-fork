@@ -8,7 +8,7 @@ const ZeroOne: ModelProviderCard = {
       displayName: 'YI 34B Chat',
       enabled: true,
       id: 'yi-34b-chat-0205',
-      tokens: 4096, // https://huggingface.co/01-ai/Yi-34B-Chat/blob/main/config.json
+      tokens: 4096 // https://huggingface.co/01-ai/Yi-34B-Chat/blob/main/config.json
     },
     {
       description:
@@ -17,17 +17,18 @@ const ZeroOne: ModelProviderCard = {
       enabled: true,
       id: 'yi-vl-plus',
       tokens: 4096,
-      vision: true,
+      vision: true
     },
     {
-      description: '增强了问答对话交互和深度内容创作能力。文档问答和构建知识库小能手。',
+      description:
+        '增强了问答对话交互和深度内容创作能力。文档问答和构建知识库小能手。',
       displayName: 'YI 34B Chat 200k',
       enabled: true,
       id: 'yi-34b-chat-200k',
-      tokens: 200_000, // https://huggingface.co/01-ai/Yi-34B-200K/blob/main/config.json
-    },
+      tokens: 200_000 // https://huggingface.co/01-ai/Yi-34B-200K/blob/main/config.json
+    }
   ],
-  id: 'zeroone',
+  id: 'zeroone'
 };
 
 export default ZeroOne;

@@ -19,7 +19,7 @@ const useStyles = createStyles(({ css }) => ({
     height: 28px;
     line-height: 28px;
     text-align: start;
-  `,
+  `
 }));
 
 const GroupItem = memo<SessionGroupItem>(({ id, name }) => {
@@ -30,7 +30,7 @@ const GroupItem = memo<SessionGroupItem>(({ id, name }) => {
   const [editing, setEditing] = useState(false);
   const [updateSessionGroupName, removeSessionGroup] = useSessionStore((s) => [
     s.updateSessionGroupName,
-    s.removeSessionGroup,
+    s.removeSessionGroup
   ]);
 
   return (
@@ -39,7 +39,11 @@ const GroupItem = memo<SessionGroupItem>(({ id, name }) => {
       {!editing ? (
         <>
           <span className={styles.title}>{name}</span>
-          <ActionIcon icon={PencilLine} onClick={() => setEditing(true)} size={'small'} />
+          <ActionIcon
+            icon={PencilLine}
+            onClick={() => setEditing(true)}
+            size={'small'}
+          />
           <ActionIcon
             icon={Trash}
             onClick={() => {
@@ -47,12 +51,12 @@ const GroupItem = memo<SessionGroupItem>(({ id, name }) => {
                 centered: true,
                 okButtonProps: {
                   danger: true,
-                  type: 'primary',
+                  type: 'primary'
                 },
                 onOk: async () => {
                   await removeSessionGroup(id);
                 },
-                title: t('sessionGroup.confirmRemoveGroupAlert'),
+                title: t('sessionGroup.confirmRemoveGroupAlert')
               });
             }}
             size={'small'}
@@ -76,7 +80,7 @@ const GroupItem = memo<SessionGroupItem>(({ id, name }) => {
           showEditIcon={false}
           size={'small'}
           style={{
-            height: 28,
+            height: 28
           }}
           type={'pure'}
           value={name}

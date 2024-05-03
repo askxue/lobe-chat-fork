@@ -14,7 +14,7 @@ export const LobeMetaDataSchema = z.object({
   /**
    * 名称
    */
-  title: z.string().optional(),
+  title: z.string().optional()
 });
 
 export type MetaData = z.infer<typeof LobeMetaDataSchema>;

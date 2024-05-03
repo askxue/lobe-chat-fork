@@ -3,9 +3,17 @@
 import Error from 'next/error';
 import { useLayoutEffect } from 'react';
 
-import { type ErrorType, sentryCaptureException } from '@/components/Error/sentryCaptureException';
+import {
+  type ErrorType,
+  sentryCaptureException
+} from '@/components/Error/sentryCaptureException';
 
-export default function GlobalError({ error }: { error: ErrorType; reset: () => void }) {
+export default function GlobalError({
+  error
+}: {
+  error: ErrorType;
+  reset: () => void;
+}) {
   useLayoutEffect(() => {
     sentryCaptureException(error);
   }, [error]);

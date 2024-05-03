@@ -6,7 +6,7 @@ import { POST, runtime } from './route';
 
 // 模拟 '../[provider]/route'
 vi.mock('../[provider]/route', () => ({
-  POST: vi.fn().mockResolvedValue('mocked response'),
+  POST: vi.fn().mockResolvedValue('mocked response')
 }));
 
 describe('Configuration tests', () => {
@@ -19,6 +19,8 @@ describe('Minimax POST function tests', () => {
   it('should call UniverseRoute with correct parameters', async () => {
     const mockRequest = new Request('https://example.com', { method: 'POST' });
     await POST(mockRequest);
-    expect(UniverseRoute).toHaveBeenCalledWith(mockRequest, { params: { provider: 'minimax' } });
+    expect(UniverseRoute).toHaveBeenCalledWith(mockRequest, {
+      params: { provider: 'minimax' }
+    });
   });
 });

@@ -21,7 +21,11 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
   const direction = isRtlLang(lang?.value || DEFAULT_LANG) ? 'rtl' : 'ltr';
 
   return (
-    <html dir={direction} lang={lang?.value || DEFAULT_LANG} suppressHydrationWarning>
+    <html
+      dir={direction}
+      lang={lang?.value || DEFAULT_LANG}
+      suppressHydrationWarning
+    >
       <body>
         <GlobalProvider>
           <AuthProvider>{children}</AuthProvider>
@@ -48,9 +52,9 @@ export const generateViewport = async (): ResolvingViewport => {
     minimumScale: 1,
     themeColor: [
       { color: '#f8f8f8', media: '(prefers-color-scheme: light)' },
-      { color: '#000', media: '(prefers-color-scheme: dark)' },
+      { color: '#000', media: '(prefers-color-scheme: dark)' }
     ],
     viewportFit: 'cover',
-    width: 'device-width',
+    width: 'device-width'
   };
 };

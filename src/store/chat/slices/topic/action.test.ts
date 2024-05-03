@@ -23,14 +23,14 @@ vi.mock('@/services/topic', () => ({
     updateTopic: vi.fn(),
     batchRemoveTopics: vi.fn(),
     getTopics: vi.fn(),
-    searchTopics: vi.fn(),
-  },
+    searchTopics: vi.fn()
+  }
 }));
 
 vi.mock('@/services/message', () => ({
   messageService: {
-    removeMessages: vi.fn(),
-  },
+    removeMessages: vi.fn()
+  }
 }));
 
 beforeEach(() => {
@@ -39,10 +39,10 @@ beforeEach(() => {
   useChatStore.setState(
     {
       activeId: undefined,
-      activeTopicId: undefined,
+      activeTopicId: undefined
       // ... initial state
     },
-    false,
+    false
   );
 });
 
@@ -100,7 +100,10 @@ describe('topic action', () => {
 
     it('should create a topic and bind messages to it', async () => {
       const { result } = renderHook(() => useChatStore());
-      const messages = [{ id: 'message1' }, { id: 'message2' }] as ChatMessage[];
+      const messages = [
+        { id: 'message1' },
+        { id: 'message2' }
+      ] as ChatMessage[];
       act(() => {
         useChatStore.setState({ messages, activeId: 'session-id' });
       });
@@ -114,8 +117,8 @@ describe('topic action', () => {
       expect(createTopicSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           sessionId: 'session-id',
-          messages: messages.map((m) => m.id),
-        }),
+          messages: messages.map((m) => m.id)
+        })
       );
       expect(topicId).toEqual('new-topic-id');
     });
@@ -126,7 +129,7 @@ describe('topic action', () => {
         const actual = await vi.importActual('swr');
         return {
           ...(actual as any),
-          mutate: vi.fn(),
+          mutate: vi.fn()
         };
       });
     });
@@ -166,7 +169,9 @@ describe('topic action', () => {
       });
 
       await act(async () => {
-        await expect(result.current.refreshTopic()).rejects.toThrow('Mutate error');
+        await expect(result.current.refreshTopic()).rejects.toThrow(
+          'Mutate error'
+        );
       });
 
       // 确保恢复 mutate 的模拟，以免影响其他测试
@@ -191,7 +196,9 @@ describe('topic action', () => {
         await result.current.favoriteTopic(topicId, favState);
       });
 
-      expect(updateFavoriteSpy).toHaveBeenCalledWith(topicId, { favorite: favState });
+      expect(updateFavoriteSpy).toHaveBeenCalledWith(topicId, {
+        favorite: favState
+      });
       expect(refreshTopicSpy).toHaveBeenCalled();
     });
   });
@@ -204,7 +211,9 @@ describe('topic action', () => {
       (topicService.getTopics as Mock).mockResolvedValue(topics);
 
       // Use the hook with the session id
-      const { result } = renderHook(() => useChatStore().useFetchTopics(sessionId));
+      const { result } = renderHook(() =>
+        useChatStore().useFetchTopics(sessionId)
+      );
 
       // Wait for the hook to resolve and update the state
       await waitFor(() => {
@@ -217,13 +226,17 @@ describe('topic action', () => {
   describe('useSearchTopics', () => {
     it('should search topics with the given keywords', async () => {
       const keywords = 'search-term';
-      const searchResults = [{ id: 'searched-topic-id', title: 'Searched Topic' }];
+      const searchResults = [
+        { id: 'searched-topic-id', title: 'Searched Topic' }
+      ];
 
       // Mock the topicService.searchTopics to resolve with search results
       (topicService.searchTopics as Mock).mockResolvedValue(searchResults);
 
       // Use the hook with the keywords
-      const { result } = renderHook(() => useChatStore().useSearchTopics(keywords));
+      const { result } = renderHook(() =>
+        useChatStore().useSearchTopics(keywords)
+      );
 
       // Wait for the hook to resolve and update the state
       await waitFor(() => {
@@ -249,7 +262,7 @@ describe('topic action', () => {
 
       // Verify that the topicService.updateTitle was called with correct parameters
       expect(topicService.updateTopic).toHaveBeenCalledWith(topicId, {
-        title: 'Updated Topic Title',
+        title: 'Updated Topic Title'
       });
 
       // Verify that the refreshTopic was called to update the state
@@ -324,7 +337,10 @@ describe('topic action', () => {
         await result.current.removeTopic(topicId);
       });
 
-      expect(messageService.removeMessages).toHaveBeenCalledWith(activeId, topicId);
+      expect(messageService.removeMessages).toHaveBeenCalledWith(
+        activeId,
+        topicId
+      );
       expect(topicService.removeTopic).toHaveBeenCalledWith(topicId);
       expect(refreshTopicSpy).toHaveBeenCalled();
       expect(switchTopicSpy).toHaveBeenCalled();
@@ -345,7 +361,10 @@ describe('topic action', () => {
         await result.current.removeTopic(topicId);
       });
 
-      expect(messageService.removeMessages).toHaveBeenCalledWith(activeId, topicId);
+      expect(messageService.removeMessages).toHaveBeenCalledWith(
+        activeId,
+        topicId
+      );
       expect(topicService.removeTopic).toHaveBeenCalledWith(topicId);
       expect(refreshTopicSpy).toHaveBeenCalled();
       expect(switchTopicSpy).not.toHaveBeenCalled();
@@ -360,8 +379,8 @@ describe('topic action', () => {
           topics: [
             { id: 'topic-1', favorite: false },
             { id: 'topic-2', favorite: true },
-            { id: 'topic-3', favorite: false },
-          ] as ChatTopic[],
+            { id: 'topic-3', favorite: false }
+          ] as ChatTopic[]
         });
       });
       const refreshTopicSpy = vi.spyOn(result.current, 'refreshTopic');
@@ -371,7 +390,10 @@ describe('topic action', () => {
         await result.current.removeUnstarredTopic();
       });
 
-      expect(topicService.batchRemoveTopics).toHaveBeenCalledWith(['topic-1', 'topic-3']);
+      expect(topicService.batchRemoveTopics).toHaveBeenCalledWith([
+        'topic-1',
+        'topic-3'
+      ]);
       expect(refreshTopicSpy).toHaveBeenCalled();
       expect(switchTopicSpy).toHaveBeenCalled();
     });
@@ -404,23 +426,31 @@ describe('topic action', () => {
       });
 
       // Mock the `updateTopicTitleInSummary` and `refreshTopic` for spying
-      const updateTopicTitleInSummarySpy = vi.spyOn(result.current, 'updateTopicTitleInSummary');
+      const updateTopicTitleInSummarySpy = vi.spyOn(
+        result.current,
+        'updateTopicTitleInSummary'
+      );
       const refreshTopicSpy = vi.spyOn(result.current, 'refreshTopic');
 
       // Mock the `chatService.fetchPresetTaskResult` to simulate the AI response
-      vi.spyOn(chatService, 'fetchPresetTaskResult').mockImplementation((params) => {
-        if (params) {
-          params.onFinish?.('Summarized Title', { type: 'done' });
+      vi.spyOn(chatService, 'fetchPresetTaskResult').mockImplementation(
+        (params) => {
+          if (params) {
+            params.onFinish?.('Summarized Title', { type: 'done' });
+          }
+          return Promise.resolve(undefined);
         }
-        return Promise.resolve(undefined);
-      });
+      );
 
       await act(async () => {
         await result.current.summaryTopicTitle(topicId, messages);
       });
 
       // Verify that the title was updated and the topic was refreshed
-      expect(updateTopicTitleInSummarySpy).toHaveBeenCalledWith(topicId, LOADING_FLAT);
+      expect(updateTopicTitleInSummarySpy).toHaveBeenCalledWith(
+        topicId,
+        LOADING_FLAT
+      );
       expect(refreshTopicSpy).toHaveBeenCalled();
 
       // TODO: need to test with fetchPresetTaskResult

@@ -16,7 +16,7 @@ const marks: SliderSingleProps['marks'] = {
   [exponent(64)]: '64k',
   [exponent(128)]: '128k',
   [exponent(200)]: '200k',
-  [exponent(1000)]: '1M',
+  [exponent(1000)]: '1M'
 };
 
 interface MaxTokenSliderProps {
@@ -25,64 +25,68 @@ interface MaxTokenSliderProps {
   value?: number;
 }
 
-const MaxTokenSlider = memo<MaxTokenSliderProps>(({ value, onChange, defaultValue }) => {
-  const [token, setTokens] = useMergeState(0, {
-    defaultValue,
-    onChange,
-    value: value,
-  });
+const MaxTokenSlider = memo<MaxTokenSliderProps>(
+  ({ value, onChange, defaultValue }) => {
+    const [token, setTokens] = useMergeState(0, {
+      defaultValue,
+      onChange,
+      value: value
+    });
 
-  const [powValue, setPowValue] = useMergeState(0, {
-    defaultValue: exponent(typeof defaultValue === 'undefined' ? 0 : defaultValue / 1000),
-    value: exponent(typeof value === 'undefined' ? 0 : value / 1000),
-  });
+    const [powValue, setPowValue] = useMergeState(0, {
+      defaultValue: exponent(
+        typeof defaultValue === 'undefined' ? 0 : defaultValue / 1000
+      ),
+      value: exponent(typeof value === 'undefined' ? 0 : value / 1000)
+    });
 
-  const updateWithPowValue = (value: number) => {
-    setPowValue(value);
+    const updateWithPowValue = (value: number) => {
+      setPowValue(value);
 
-    setTokens(getRealValue(value) * 1024);
-  };
-  const updateWithRealValue = (value: number) => {
-    setTokens(value);
+      setTokens(getRealValue(value) * 1024);
+    };
+    const updateWithRealValue = (value: number) => {
+      setTokens(value);
 
-    setPowValue(exponent(value / 1024));
-  };
+      setPowValue(exponent(value / 1024));
+    };
 
-  return (
-    <Flexbox align={'center'} gap={12} horizontal>
-      <Flexbox flex={1}>
-        <Slider
-          marks={marks}
-          max={exponent(1000)}
-          min={0}
-          onChange={updateWithPowValue}
-          step={1}
-          tooltip={{
-            formatter: (x) => {
-              if (typeof x === 'undefined') return;
+    return (
+      <Flexbox align={'center'} gap={12} horizontal>
+        <Flexbox flex={1}>
+          <Slider
+            marks={marks}
+            max={exponent(1000)}
+            min={0}
+            onChange={updateWithPowValue}
+            step={1}
+            tooltip={{
+              formatter: (x) => {
+                if (typeof x === 'undefined') return;
 
-              const value = getRealValue(x);
+                const value = getRealValue(x);
 
-              if (value < 1000) return value.toFixed(0) + 'K';
+                if (value < 1000) return value.toFixed(0) + 'K';
 
-              return (value / 1000).toFixed(0) + 'M';
-            },
-          }}
-          value={powValue}
-        />
+                return (value / 1000).toFixed(0) + 'M';
+              }
+            }}
+            value={powValue}
+          />
+        </Flexbox>
+        <div>
+          <InputNumber
+            onChange={(e) => {
+              if (!e) return;
+
+              updateWithRealValue(e);
+            }}
+            step={1024}
+            value={token}
+          />
+        </div>
       </Flexbox>
-      <div>
-        <InputNumber
-          onChange={(e) => {
-            if (!e) return;
-
-            updateWithRealValue(e);
-          }}
-          step={1024}
-          value={token}
-        />
-      </div>
-    </Flexbox>
-  );
-});
+    );
+  }
+);
 export default MaxTokenSlider;

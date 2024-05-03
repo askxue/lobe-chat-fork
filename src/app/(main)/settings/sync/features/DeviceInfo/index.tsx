@@ -14,38 +14,40 @@ import Card from './Card';
 import DeviceName from './DeviceName';
 import SystemIcon from './SystemIcon';
 
-const useStyles = createStyles(({ css, cx, responsive, isDarkMode, token, stylish }) => ({
-  container: css`
-    position: relative;
-    width: 100%;
-    border-radius: ${token.borderRadiusLG}px;
-  `,
-  content: css`
-    z-index: 2;
-    padding: 8px;
-    background: ${rgba(token.colorBgContainer, isDarkMode ? 0.7 : 1)};
-    border-radius: ${token.borderRadiusLG - 1}px;
-  `,
-  glow: cx(
-    stylish.gradientAnimation,
-    css`
-      pointer-events: none;
-      opacity: 0.5;
-      background-image: linear-gradient(
-        -45deg,
-        ${isDarkMode ? token.geekblue4 : token.geekblue},
-        ${isDarkMode ? token.cyan4 : token.cyan}
-      );
-      animation-duration: 10s;
+const useStyles = createStyles(
+  ({ css, cx, responsive, isDarkMode, token, stylish }) => ({
+    container: css`
+      position: relative;
+      width: 100%;
+      border-radius: ${token.borderRadiusLG}px;
     `,
-  ),
-  wrapper: css`
-    ${responsive.mobile} {
-      padding-block: 8px;
-      padding-inline: 4px;
-    }
-  `,
-}));
+    content: css`
+      z-index: 2;
+      padding: 8px;
+      background: ${rgba(token.colorBgContainer, isDarkMode ? 0.7 : 1)};
+      border-radius: ${token.borderRadiusLG - 1}px;
+    `,
+    glow: cx(
+      stylish.gradientAnimation,
+      css`
+        pointer-events: none;
+        opacity: 0.5;
+        background-image: linear-gradient(
+          -45deg,
+          ${isDarkMode ? token.geekblue4 : token.geekblue},
+          ${isDarkMode ? token.cyan4 : token.cyan}
+        );
+        animation-duration: 10s;
+      `
+    ),
+    wrapper: css`
+      ${responsive.mobile} {
+        padding-block: 8px;
+        padding-inline: 4px;
+      }
+    `
+  })
+);
 
 interface DeviceCardProps {
   browser?: string;
@@ -82,7 +84,10 @@ const DeviceCard = memo<DeviceCardProps>(({ browser, os }) => {
         >
           <DeviceName />
           <Flexbox flex={1} gap={12} horizontal>
-            <Card icon={<SystemIcon title={os} />} title={os || t('sync.device.unknownOS')} />
+            <Card
+              icon={<SystemIcon title={os} />}
+              title={os || t('sync.device.unknownOS')}
+            />
             <Card
               icon={browser && <BrowserIcon browser={browser} size={24} />}
               title={browser || t('sync.device.unknownBrowser')}

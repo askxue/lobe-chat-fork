@@ -22,4 +22,6 @@ export type HyperStorageOptionsObj = {
 
 export type HyperStorageOptionsFn = () => HyperStorageOptionsObj;
 
-export type HyperStorageOptions = HyperStorageOptionsObj | HyperStorageOptionsFn;
+export type HyperStorageOptions =
+  | HyperStorageOptionsObj
+  | HyperStorageOptionsFn;

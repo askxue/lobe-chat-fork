@@ -20,7 +20,9 @@ const getMeta = (message: ChatMessage) => {
   switch (message.role) {
     case 'user': {
       return {
-        avatar: userProfileSelectors.userAvatar(useUserStore.getState()) || DEFAULT_USER_AVATAR,
+        avatar:
+          userProfileSelectors.userAvatar(useUserStore.getState()) ||
+          DEFAULT_USER_AVATAR
       };
     }
 
@@ -36,7 +38,7 @@ const getMeta = (message: ChatMessage) => {
       // TODO: 后续改成将 plugin metadata 写入 message metadata 的方案
       return {
         avatar: '🧩',
-        title: 'plugin-unknown',
+        title: 'plugin-unknown'
       };
     }
   }
@@ -77,29 +79,35 @@ const currentChatsWithGuideMessage =
     const agentSystemRoleMsg = t('agentDefaultMessageWithSystemRole', {
       name: meta.title || t('defaultAgent'),
       ns: 'chat',
-      systemRole: meta.description,
+      systemRole: meta.description
     });
     const agentMsg = t('agentDefaultMessage', {
       id: activeId,
       name: meta.title || t('defaultAgent'),
-      ns: 'chat',
+      ns: 'chat'
     });
 
     const emptyInboxGuideMessage = {
-      content: isInbox ? inboxMsg : !!meta.description ? agentSystemRoleMsg : agentMsg,
+      content: isInbox
+        ? inboxMsg
+        : !!meta.description
+          ? agentSystemRoleMsg
+          : agentMsg,
       createdAt: initTime,
       extra: {},
       id: 'default',
       meta: merge({ avatar: DEFAULT_INBOX_AVATAR }, meta),
       role: 'assistant',
-      updatedAt: initTime,
+      updatedAt: initTime
     } as ChatMessage;
 
     return [emptyInboxGuideMessage];
   };
 
 const currentChatIDsWithGuideMessage = (s: ChatStore) => {
-  const meta = sessionMetaSelectors.currentAgentMeta(useSessionStore.getState());
+  const meta = sessionMetaSelectors.currentAgentMeta(
+    useSessionStore.getState()
+  );
 
   return currentChatsWithGuideMessage(meta)(s).map((s) => s.id);
 };
@@ -124,11 +132,13 @@ const getFunctionMessageProps =
     content,
     id: plugin?.identifier,
     loading: id === s.chatLoadingId,
-    type: plugin?.type as LobePluginType,
+    type: plugin?.type as LobePluginType
   });
 
-const getMessageById = (id: string) => (s: ChatStore) => chatHelpers.getMessageById(s.messages, id);
-const getTraceIdByMessageId = (id: string) => (s: ChatStore) => getMessageById(id)(s)?.traceId;
+const getMessageById = (id: string) => (s: ChatStore) =>
+  chatHelpers.getMessageById(s.messages, id);
+const getTraceIdByMessageId = (id: string) => (s: ChatStore) =>
+  getMessageById(id)(s)?.traceId;
 
 const latestMessage = (s: ChatStore) => currentChats(s).at(-1);
 
@@ -146,5 +156,5 @@ export const chatSelectors = {
   getMessageById,
   getTraceIdByMessageId,
   latestMessage,
-  showInboxWelcome,
+  showInboxWelcome
 };

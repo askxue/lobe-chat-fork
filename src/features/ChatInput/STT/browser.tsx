@@ -1,4 +1,7 @@
-import { SpeechRecognitionOptions, useSpeechRecognition } from '@lobehub/tts/react';
+import {
+  SpeechRecognitionOptions,
+  useSpeechRecognition
+} from '@lobehub/tts/react';
 import isEqual from 'fast-deep-equal';
 import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +23,10 @@ interface STTConfig extends SWRConfiguration {
 
 const useBrowserSTT = (config: STTConfig) => {
   const ttsSettings = useUserStore(settingsSelectors.currentTTS, isEqual);
-  const ttsAgentSettings = useAgentStore(agentSelectors.currentAgentTTS, isEqual);
+  const ttsAgentSettings = useAgentStore(
+    agentSelectors.currentAgentTTS,
+    isEqual
+  );
   const locale = useUserStore(settingsSelectors.currentLanguage);
 
   const autoStop = ttsSettings.sttAutoStop;
@@ -31,7 +37,7 @@ const useBrowserSTT = (config: STTConfig) => {
 
   return useSpeechRecognition(sttLocale, {
     ...config,
-    autoStop,
+    autoStop
   } as SpeechRecognitionOptions);
 };
 
@@ -41,41 +47,46 @@ const BrowserSTT = memo<{ mobile?: boolean }>(({ mobile }) => {
 
   const [loading, updateInputMessage] = useChatStore((s) => [
     !!s.chatLoadingId,
-    s.updateInputMessage,
+    s.updateInputMessage
   ]);
 
   const setDefaultError = useCallback(
     (err?: any) => {
-      setError({ body: err, message: t('stt.responseError', { ns: 'error' }), type: 500 });
+      setError({
+        body: err,
+        message: t('stt.responseError', { ns: 'error' }),
+        type: 500
+      });
     },
-    [t],
+    [t]
   );
 
-  const { start, isLoading, stop, formattedTime, time, response, isRecording } = useBrowserSTT({
-    onError: (err) => {
-      stop();
-      setDefaultError(err);
-    },
-    onErrorRetry: (err) => {
-      stop();
-      setDefaultError(err);
-    },
-    onSuccess: async () => {
-      if (!response) return;
-      if (response.status === 200) return;
-      const message = await getMessageError(response);
-      if (message) {
-        setError(message);
-      } else {
-        setDefaultError();
+  const { start, isLoading, stop, formattedTime, time, response, isRecording } =
+    useBrowserSTT({
+      onError: (err) => {
+        stop();
+        setDefaultError(err);
+      },
+      onErrorRetry: (err) => {
+        stop();
+        setDefaultError(err);
+      },
+      onSuccess: async () => {
+        if (!response) return;
+        if (response.status === 200) return;
+        const message = await getMessageError(response);
+        if (message) {
+          setError(message);
+        } else {
+          setDefaultError();
+        }
+        stop();
+      },
+      onTextChange: (text) => {
+        if (loading) stop();
+        if (text) updateInputMessage(text);
       }
-      stop();
-    },
-    onTextChange: (text) => {
-      if (loading) stop();
-      if (text) updateInputMessage(text);
-    },
-  });
+    });
 
   const desc = t('stt.action');
 

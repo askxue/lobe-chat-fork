@@ -21,7 +21,7 @@ const useStyles = createStyles(
       border-color: ${token.colorPrimary};
       outline: none;
     }
-  `,
+  `
 );
 
 /**
@@ -31,7 +31,10 @@ const useStyles = createStyles(
  *
  * [How to extend HTML Elements](https://reacthustle.com/blog/how-to-extend-html-elements-in-react-typescript)
  */
-type PartialInputProps = Pick<React.ComponentPropsWithoutRef<'input'>, 'className' | 'style'>;
+type PartialInputProps = Pick<
+  React.ComponentPropsWithoutRef<'input'>,
+  'className' | 'style'
+>;
 
 interface OtpInputProps extends PartialInputProps {
   onChange?: (value: string) => void;
@@ -78,13 +81,19 @@ const OtpInput = memo<OtpInputProps>((props) => {
     className,
     ...restProps
   } = props;
-  const [value, setValue] = useControllableValue({ onChange, value: outerValue });
+  const [value, setValue] = useControllableValue({
+    onChange,
+    value: outerValue
+  });
 
   const { styles, cx } = useStyles();
   // Create an array based on the size.
   const arr = Array.from({ length: size }).fill('-');
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const elem = e.target;
     const val = e.target.value;
 

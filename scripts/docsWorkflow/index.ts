@@ -3,19 +3,27 @@ import { relative, resolve } from 'node:path';
 import pMap from 'p-map';
 import urlJoin from 'url-join';
 
-import { DOCS_DIR, HOME_PATH, SIDEBAR_PATH, WIKI_URL, docsFiles } from './const';
+import {
+  DOCS_DIR,
+  HOME_PATH,
+  SIDEBAR_PATH,
+  WIKI_URL,
+  docsFiles
+} from './const';
 import toc from './toc';
 import { genMdLink, getTitle, updateDocs } from './utils';
 
 const run = async () => {
   consola.info(`Find ${docsFiles.length} entry doc files`);
   const docs: any = await pMap(toc, async (item) => {
-    const childrenFiles = docsFiles.filter((file) => file.includes(resolve(DOCS_DIR, item.dir)));
+    const childrenFiles = docsFiles.filter((file) =>
+      file.includes(resolve(DOCS_DIR, item.dir))
+    );
 
     const children: any = await pMap(childrenFiles, async (path) => {
       const paths = {
         cn: path.replace('.md', '.zh-CN.md'),
-        en: path,
+        en: path
       };
       const links = {
         cn: urlJoin(
@@ -23,26 +31,29 @@ const run = async () => {
           relative(DOCS_DIR, paths.cn)
             .replaceAll('\\', '/')
             .split('/')[1]
-            .replace('.zh-CN.md', '.zh-CN'),
+            .replace('.zh-CN.md', '.zh-CN')
         ),
         en: urlJoin(
           WIKI_URL,
-          relative(DOCS_DIR, paths.en).replaceAll('\\', '/').split('/')[1].replace('.md', ''),
-        ),
+          relative(DOCS_DIR, paths.en)
+            .replaceAll('\\', '/')
+            .split('/')[1]
+            .replace('.md', '')
+        )
       };
       const titles = {
         cn: await getTitle(paths.cn),
-        en: await getTitle(paths.en),
+        en: await getTitle(paths.en)
       };
       return {
         links,
         paths,
-        titles,
+        titles
       };
     });
     return {
       children: children,
-      ...item,
+      ...item
     };
   });
 
@@ -62,11 +73,11 @@ const run = async () => {
       .forEach((child: any) => {
         homeContent += `  - ${genMdLink(child.titles.en, child.links.en)} | ${genMdLink(
           child.titles.cn,
-          child.links.cn,
+          child.links.cn
         )}\n`;
         sidebarContent += `- ${genMdLink(child.titles.en, child.links.en)} | ${genMdLink(
           child.titles.cn,
-          child.links.cn,
+          child.links.cn
         )}\n`;
       });
     homeContent += `\n\n<br/>\n\n`;

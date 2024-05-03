@@ -50,22 +50,26 @@ const useStyles = createStyles(({ css, token, isDarkMode }) => ({
         ${token.colorBgContainer} ${isDarkMode ? '80' : '140'}px
       ),
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3E%3Cg fill='${token.colorFillTertiary}' %3E %3Cpolygon fill-rule='evenodd' points='8 4 12 6 8 8 6 12 4 8 0 6 4 4 6 0 8 4'/%3E%3C/g%3E%3C/svg%3E");
-  `,
+  `
 }));
 
 const TelemetryNotification = memo<{ mobile?: boolean }>(({ mobile }) => {
   const { styles, theme, cx } = useStyles();
 
   const { t } = useTranslation('common');
-  const shouldCheck = useServerConfigStore(serverConfigSelectors.enabledTelemetryChat);
+  const shouldCheck = useServerConfigStore(
+    serverConfigSelectors.enabledTelemetryChat
+  );
   const isPreferenceInit = useUserStore(preferenceSelectors.isPreferenceInit);
 
   const [useCheckTrace, updatePreference] = useUserStore((s) => [
     s.useCheckTrace,
-    s.updatePreference,
+    s.updatePreference
   ]);
 
-  const { data: showModal, mutate } = useCheckTrace(shouldCheck && isPreferenceInit);
+  const { data: showModal, mutate } = useCheckTrace(
+    shouldCheck && isPreferenceInit
+  );
 
   const updateTelemetry = (telemetry: boolean) => {
     updatePreference({ telemetry });
@@ -74,7 +78,9 @@ const TelemetryNotification = memo<{ mobile?: boolean }>(({ mobile }) => {
 
   return (
     showModal && (
-      <Flexbox className={cx(styles.container, mobile && styles.mobileContainer)}>
+      <Flexbox
+        className={cx(styles.container, mobile && styles.mobileContainer)}
+      >
         <Flexbox className={styles.wrapper} gap={16} horizontal>
           <Flexbox>
             <Avatar
@@ -91,7 +97,10 @@ const TelemetryNotification = memo<{ mobile?: boolean }>(({ mobile }) => {
                 <span>
                   <Link href={PRIVACY_URL} target={'_blank'}>
                     {t('telemetry.learnMore')}
-                    <Icon icon={LucideArrowUpRightFromSquare} style={{ marginInlineStart: 4 }} />
+                    <Icon
+                      icon={LucideArrowUpRightFromSquare}
+                      style={{ marginInlineStart: 4 }}
+                    />
                   </Link>
                 </span>
               </div>

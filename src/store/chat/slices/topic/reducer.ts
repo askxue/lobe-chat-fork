@@ -19,9 +19,15 @@ interface DeleteChatTopicAction {
   type: 'deleteTopic';
 }
 
-export type ChatTopicDispatch = AddChatTopicAction | UpdateChatTopicAction | DeleteChatTopicAction;
+export type ChatTopicDispatch =
+  | AddChatTopicAction
+  | UpdateChatTopicAction
+  | DeleteChatTopicAction;
 
-export const topicReducer = (state: ChatTopic[] = [], payload: ChatTopicDispatch): ChatTopic[] => {
+export const topicReducer = (
+  state: ChatTopic[] = [],
+  payload: ChatTopicDispatch
+): ChatTopic[] => {
   switch (payload.type) {
     case 'addTopic': {
       return produce(state, (draftState) => {
@@ -30,11 +36,15 @@ export const topicReducer = (state: ChatTopic[] = [], payload: ChatTopicDispatch
           createdAt: Date.now(),
           favorite: false,
           id: payload.value.id ?? Date.now().toString(),
-          sessionId: payload.value.sessionId ? payload.value.sessionId : undefined,
-          updatedAt: Date.now(),
+          sessionId: payload.value.sessionId
+            ? payload.value.sessionId
+            : undefined,
+          updatedAt: Date.now()
         });
 
-        return draftState.sort((a, b) => Number(b.favorite) - Number(a.favorite));
+        return draftState.sort(
+          (a, b) => Number(b.favorite) - Number(a.favorite)
+        );
       });
     }
 
@@ -46,14 +56,20 @@ export const topicReducer = (state: ChatTopic[] = [], payload: ChatTopicDispatch
         if (topicIndex !== -1) {
           // TODO: updatedAt 类型后续需要修改为 Date
           // @ts-ignore
-          draftState[topicIndex] = { ...draftState[topicIndex], ...value, updatedAt: new Date() };
+          draftState[topicIndex] = {
+            ...draftState[topicIndex],
+            ...value,
+            updatedAt: new Date()
+          };
         }
       });
     }
 
     case 'deleteTopic': {
       return produce(state, (draftState) => {
-        const topicIndex = draftState.findIndex((topic) => topic.id === payload.id);
+        const topicIndex = draftState.findIndex(
+          (topic) => topic.id === payload.id
+        );
         if (topicIndex !== -1) {
           draftState.splice(topicIndex, 1);
         }

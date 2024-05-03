@@ -16,7 +16,10 @@ const Inbox = memo(() => {
   const activeId = useSessionStore((s) => s.activeId);
 
   return (
-    <Link aria-label={t('inbox.title')} href={SESSION_CHAT_URL(INBOX_SESSION_ID, mobile)}>
+    <Link
+      aria-label={t('inbox.title')}
+      href={SESSION_CHAT_URL(INBOX_SESSION_ID, mobile)}
+    >
       <ListItem
         active={activeId === INBOX_SESSION_ID}
         avatar={DEFAULT_INBOX_AVATAR}

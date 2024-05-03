@@ -43,7 +43,7 @@ const useStyles = createStyles(
         transform: translateX(0%);
       }
     }
-  `,
+  `
 );
 const Loading = memo(() => {
   const { t } = useTranslation('plugin');

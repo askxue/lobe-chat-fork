@@ -15,22 +15,32 @@ interface SelectWithTTSPreviewProps extends SelectProps {
   server: TTSServer;
 }
 
-const SelectWithTTSPreview = forwardRef<RefSelectProps, SelectWithTTSPreviewProps>(
-  ({ value, options, server, onSelect, ...rest }, ref) => {
-    const [error, setError] = useState<ChatMessageError>();
-    const [voice, setVoice] = useState<string>(value);
-    const { t } = useTranslation('welcome');
-    const theme = useTheme();
-    const PREVIEW_TEXT = ['Lobe Chat', t('slogan.title'), t('slogan.desc1')].join('. ');
+const SelectWithTTSPreview = forwardRef<
+  RefSelectProps,
+  SelectWithTTSPreviewProps
+>(({ value, options, server, onSelect, ...rest }, ref) => {
+  const [error, setError] = useState<ChatMessageError>();
+  const [voice, setVoice] = useState<string>(value);
+  const { t } = useTranslation('welcome');
+  const theme = useTheme();
+  const PREVIEW_TEXT = ['Lobe Chat', t('slogan.title'), t('slogan.desc1')].join(
+    '. '
+  );
 
-    const setDefaultError = useCallback(
-      (err?: any) => {
-        setError({ body: err, message: t('tts.responseError', { ns: 'error' }), type: 500 });
-      },
-      [t],
-    );
+  const setDefaultError = useCallback(
+    (err?: any) => {
+      setError({
+        body: err,
+        message: t('tts.responseError', { ns: 'error' }),
+        type: 500
+      });
+    },
+    [t]
+  );
 
-    const { isGlobalLoading, audio, stop, start, response, setText } = useTTS(PREVIEW_TEXT, {
+  const { isGlobalLoading, audio, stop, start, response, setText } = useTTS(
+    PREVIEW_TEXT,
+    {
       onError: (err) => {
         stop();
         setDefaultError(err);
@@ -51,70 +61,80 @@ const SelectWithTTSPreview = forwardRef<RefSelectProps, SelectWithTTSPreviewProp
         stop();
       },
       server,
-      voice,
-    });
+      voice
+    }
+  );
 
-    const handleCloseError = useCallback(() => {
-      setError(undefined);
-      stop();
-    }, [stop]);
+  const handleCloseError = useCallback(() => {
+    setError(undefined);
+    stop();
+  }, [stop]);
 
-    const handleRetry = useCallback(() => {
-      setError(undefined);
-      stop();
-      start();
-    }, [stop, start]);
+  const handleRetry = useCallback(() => {
+    setError(undefined);
+    stop();
+    start();
+  }, [stop, start]);
 
-    const handleSelect: SelectProps['onSelect'] = (value, option) => {
-      stop();
-      setVoice(value as string);
-      setText([PREVIEW_TEXT, option?.label].join(' - '));
-      onSelect?.(value, option);
-    };
-    return (
-      <Flexbox gap={8}>
-        <Flexbox align={'center'} gap={8} horizontal style={{ width: '100%' }}>
-          <Select onSelect={handleSelect} options={options} ref={ref} value={value} {...rest} />
-          <AudioPlayer
-            allowPause={false}
-            audio={audio}
-            buttonActive
-            buttonSize={{ blockSize: 36, fontSize: 16 }}
-            buttonStyle={{ border: `1px solid ${theme.colorBorder}` }}
-            isLoading={isGlobalLoading}
-            onInitPlay={start}
-            onLoadingStop={stop}
-            showDonload={false}
-            showSlider={false}
-            showTime={false}
-            style={{ flex: 'none', padding: 0, width: 'unset' }}
-            title={t('settingTTS.voice.preview', { ns: 'setting' })}
-          />
-        </Flexbox>
-        {error && (
-          <Alert
-            action={
-              <Button onClick={handleRetry} size={'small'} type={'primary'}>
-                {t('retry', { ns: 'common' })}
-              </Button>
-            }
-            closable
-            extra={
-              error.body && (
-                <Highlighter copyButtonSize={'small'} language={'json'} type={'pure'}>
-                  {JSON.stringify(error.body, null, 2)}
-                </Highlighter>
-              )
-            }
-            message={error.message}
-            onClose={handleCloseError}
-            style={{ alignItems: 'center', width: '100%' }}
-            type="error"
-          />
-        )}
+  const handleSelect: SelectProps['onSelect'] = (value, option) => {
+    stop();
+    setVoice(value as string);
+    setText([PREVIEW_TEXT, option?.label].join(' - '));
+    onSelect?.(value, option);
+  };
+  return (
+    <Flexbox gap={8}>
+      <Flexbox align={'center'} gap={8} horizontal style={{ width: '100%' }}>
+        <Select
+          onSelect={handleSelect}
+          options={options}
+          ref={ref}
+          value={value}
+          {...rest}
+        />
+        <AudioPlayer
+          allowPause={false}
+          audio={audio}
+          buttonActive
+          buttonSize={{ blockSize: 36, fontSize: 16 }}
+          buttonStyle={{ border: `1px solid ${theme.colorBorder}` }}
+          isLoading={isGlobalLoading}
+          onInitPlay={start}
+          onLoadingStop={stop}
+          showDonload={false}
+          showSlider={false}
+          showTime={false}
+          style={{ flex: 'none', padding: 0, width: 'unset' }}
+          title={t('settingTTS.voice.preview', { ns: 'setting' })}
+        />
       </Flexbox>
-    );
-  },
-);
+      {error && (
+        <Alert
+          action={
+            <Button onClick={handleRetry} size={'small'} type={'primary'}>
+              {t('retry', { ns: 'common' })}
+            </Button>
+          }
+          closable
+          extra={
+            error.body && (
+              <Highlighter
+                copyButtonSize={'small'}
+                language={'json'}
+                type={'pure'}
+              >
+                {JSON.stringify(error.body, null, 2)}
+              </Highlighter>
+            )
+          }
+          message={error.message}
+          onClose={handleCloseError}
+          style={{ alignItems: 'center', width: '100%' }}
+          type="error"
+        />
+      )}
+    </Flexbox>
+  );
+});
 
 export default SelectWithTTSPreview;

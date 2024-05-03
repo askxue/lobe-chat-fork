@@ -17,15 +17,27 @@ const Layout = ({ children, detail }: LayoutProps) => {
       width={'100%'}
     >
       <Header />
-      <Flexbox height={'100%'} horizontal style={{ position: 'relative' }} width={'100%'}>
+      <Flexbox
+        height={'100%'}
+        horizontal
+        style={{ position: 'relative' }}
+        width={'100%'}
+      >
         <Flexbox
           align={'center'}
           flex={1}
           padding={16}
-          style={{ overflowX: 'hidden', overflowY: 'scroll', position: 'relative' }}
+          style={{
+            overflowX: 'hidden',
+            overflowY: 'scroll',
+            position: 'relative'
+          }}
         >
           <SafeSpacing />
-          <Flexbox gap={16} style={{ maxWidth: MAX_WIDTH, position: 'relative', width: '100%' }}>
+          <Flexbox
+            gap={16}
+            style={{ maxWidth: MAX_WIDTH, position: 'relative', width: '100%' }}
+          >
             <Hero />
             {children}
           </Flexbox>

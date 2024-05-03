@@ -33,7 +33,7 @@ export const DB_FileSchema = z.object({
   /**
    * file url if saveMode is url
    */
-  url: z.string().url().optional(),
+  url: z.string().url().optional()
 });
 
 export type DB_File = z.infer<typeof DB_FileSchema>;

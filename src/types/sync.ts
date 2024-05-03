@@ -12,7 +12,7 @@ export enum PeerSyncStatus {
   Ready = 'ready',
   Synced = 'synced',
   Syncing = 'syncing',
-  Unconnected = 'unconnected',
+  Unconnected = 'unconnected'
 }
 
 export interface StartDataSyncParams {

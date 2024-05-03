@@ -23,7 +23,7 @@ const useStyles = createStyles(({ css, responsive }) => ({
     font-weight: 800;
     line-height: 1.2;
     text-align: center;
-  `,
+  `
 }));
 
 const Hero = memo(() => {
@@ -31,7 +31,12 @@ const Hero = memo(() => {
   return (
     <Center>
       <h1 className={styles.title}>Find & Use The Best Agents</h1>
-      <GridBackground animation className={styles.background} colorFront={theme.colorText} random />
+      <GridBackground
+        animation
+        className={styles.background}
+        colorFront={theme.colorText}
+        random
+      />
     </Center>
   );
 });

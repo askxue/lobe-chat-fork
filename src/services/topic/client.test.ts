@@ -20,8 +20,8 @@ vi.mock('@/database/client/models/topic', () => {
       batchCreate: vi.fn(),
       update: vi.fn(),
       queryAll: vi.fn(),
-      queryByKeyword: vi.fn(),
-    },
+      queryByKeyword: vi.fn()
+    }
   };
 });
 
@@ -32,7 +32,7 @@ describe('TopicService', () => {
     createdAt: 100,
     updatedAt: 100,
     id: mockTopicId,
-    title: 'Mock Topic',
+    title: 'Mock Topic'
   };
   const mockTopics = [mockTopic];
 
@@ -46,7 +46,7 @@ describe('TopicService', () => {
       // Setup
       const createParams: CreateTopicParams = {
         title: 'New Topic',
-        sessionId: '1',
+        sessionId: '1'
       };
       (TopicModel.create as Mock).mockResolvedValue(mockTopic);
 
@@ -61,13 +61,15 @@ describe('TopicService', () => {
       // Setup
       const createParams: CreateTopicParams = {
         title: 'New Topic',
-        sessionId: '1',
+        sessionId: '1'
       };
 
       (TopicModel.create as Mock).mockResolvedValue(null);
 
       // Execute & Assert
-      await expect(topicService.createTopic(createParams)).rejects.toThrow('topic create Error');
+      await expect(topicService.createTopic(createParams)).rejects.toThrow(
+        'topic create Error'
+      );
     });
   });
 
@@ -97,19 +99,28 @@ describe('TopicService', () => {
       await topicService.updateTopic(mockTopicId, { favorite: newState });
 
       // Assert
-      expect(TopicModel.update).toHaveBeenCalledWith(mockTopicId, { favorite: 1 });
+      expect(TopicModel.update).toHaveBeenCalledWith(mockTopicId, {
+        favorite: 1
+      });
     });
 
     it('should update the title of a topic', async () => {
       // Setup
       const newTitle = 'Updated Topic Title';
-      (TopicModel.update as Mock).mockResolvedValue({ ...mockTopic, title: newTitle });
+      (TopicModel.update as Mock).mockResolvedValue({
+        ...mockTopic,
+        title: newTitle
+      });
 
       // Execute
-      const result = await topicService.updateTopic(mockTopicId, { title: newTitle });
+      const result = await topicService.updateTopic(mockTopicId, {
+        title: newTitle
+      });
 
       // Assert
-      expect(TopicModel.update).toHaveBeenCalledWith(mockTopicId, { title: newTitle });
+      expect(TopicModel.update).toHaveBeenCalledWith(mockTopicId, {
+        title: newTitle
+      });
       expect(result).toEqual({ ...mockTopic, title: newTitle });
     });
   });
@@ -210,7 +221,10 @@ describe('TopicService', () => {
       const result = await topicService.searchTopics(keyword, undefined);
 
       // Assert
-      expect(TopicModel.queryByKeyword).toHaveBeenCalledWith(keyword, undefined);
+      expect(TopicModel.queryByKeyword).toHaveBeenCalledWith(
+        keyword,
+        undefined
+      );
       expect(result).toBe(mockTopics);
     });
   });

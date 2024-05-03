@@ -12,9 +12,9 @@ describe('modelConfigSelectors', () => {
       const s = merge(initialSettingsState, {
         settings: {
           languageModel: {
-            ollama: { enabled: true },
-          },
-        },
+            ollama: { enabled: true }
+          }
+        }
       } as UserSettingsState) as unknown as UserStore;
 
       expect(modelConfigSelectors.isProviderEnabled('ollama')(s)).toBe(true);
@@ -24,12 +24,14 @@ describe('modelConfigSelectors', () => {
       const s = merge(initialSettingsState, {
         settings: {
           languageModel: {
-            perplexity: { enabled: false },
-          },
-        },
+            perplexity: { enabled: false }
+          }
+        }
       } as UserSettingsState) as unknown as UserStore;
 
-      expect(modelConfigSelectors.isProviderEnabled('perplexity')(s)).toBe(false);
+      expect(modelConfigSelectors.isProviderEnabled('perplexity')(s)).toBe(
+        false
+      );
     });
   });
 
@@ -41,19 +43,22 @@ describe('modelConfigSelectors', () => {
             perplexity: {
               customModelCards: [
                 { id: 'custom-model-1', displayName: 'Custom Model 1' },
-                { id: 'custom-model-2', displayName: 'Custom Model 2' },
-              ],
-            },
-          },
-        },
+                { id: 'custom-model-2', displayName: 'Custom Model 2' }
+              ]
+            }
+          }
+        }
       } as UserSettingsState) as unknown as UserStore;
 
       const customModelCard = modelConfigSelectors.getCustomModelCard({
         id: 'custom-model-2',
-        provider: 'perplexity',
+        provider: 'perplexity'
       })(s);
 
-      expect(customModelCard).toEqual({ id: 'custom-model-2', displayName: 'Custom Model 2' });
+      expect(customModelCard).toEqual({
+        id: 'custom-model-2',
+        displayName: 'Custom Model 2'
+      });
     });
 
     it('should return undefined if no custom model card is found with the given id and provider', () => {
@@ -61,15 +66,17 @@ describe('modelConfigSelectors', () => {
         settings: {
           languageModel: {
             perplexity: {
-              customModelCards: [{ id: 'custom-model-1', displayName: 'Custom Model 1' }],
-            },
-          },
-        },
+              customModelCards: [
+                { id: 'custom-model-1', displayName: 'Custom Model 1' }
+              ]
+            }
+          }
+        }
       } as UserSettingsState) as unknown as UserStore;
 
       const customModelCard = modelConfigSelectors.getCustomModelCard({
         id: 'nonexistent-model',
-        provider: 'perplexity',
+        provider: 'perplexity'
       })(s);
 
       expect(customModelCard).toBeUndefined();
@@ -84,22 +91,23 @@ describe('modelConfigSelectors', () => {
             perplexity: {
               customModelCards: [
                 { id: 'custom-model-1', displayName: 'Custom Model 1' },
-                { id: 'custom-model-2', displayName: 'Custom Model 2' },
-              ],
-            },
-          },
+                { id: 'custom-model-2', displayName: 'Custom Model 2' }
+              ]
+            }
+          }
         },
         editingCustomCardModel: {
           id: 'custom-model-2',
-          provider: 'perplexity',
-        },
+          provider: 'perplexity'
+        }
       } as UserSettingsState) as unknown as UserStore;
 
-      const currentEditingModelCard = modelConfigSelectors.currentEditingCustomModelCard(s);
+      const currentEditingModelCard =
+        modelConfigSelectors.currentEditingCustomModelCard(s);
 
       expect(currentEditingModelCard).toEqual({
         id: 'custom-model-2',
-        displayName: 'Custom Model 2',
+        displayName: 'Custom Model 2'
       });
     });
 
@@ -108,13 +116,16 @@ describe('modelConfigSelectors', () => {
         settings: {
           languageModel: {
             perplexity: {
-              customModelCards: [{ id: 'custom-model-1', displayName: 'Custom Model 1' }],
-            },
-          },
-        },
+              customModelCards: [
+                { id: 'custom-model-1', displayName: 'Custom Model 1' }
+              ]
+            }
+          }
+        }
       } as UserSettingsState) as unknown as UserStore;
 
-      const currentEditingModelCard = modelConfigSelectors.currentEditingCustomModelCard(s);
+      const currentEditingModelCard =
+        modelConfigSelectors.currentEditingCustomModelCard(s);
 
       expect(currentEditingModelCard).toBeUndefined();
     });

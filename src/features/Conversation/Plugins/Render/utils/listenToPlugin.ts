@@ -1,7 +1,10 @@
 import { PluginChannel } from '@lobehub/chat-plugin-sdk/client';
 import { useEffect } from 'react';
 
-export const useOnPluginFetchMessage = (onRequest: (data: any) => void, deps: any[] = []) => {
+export const useOnPluginFetchMessage = (
+  onRequest: (data: any) => void,
+  deps: any[] = []
+) => {
   useEffect(() => {
     const fn = (e: MessageEvent) => {
       if (e.data.type === PluginChannel.fetchPluginMessage) {
@@ -16,7 +19,9 @@ export const useOnPluginFetchMessage = (onRequest: (data: any) => void, deps: an
   }, deps);
 };
 
-export const useOnPluginFetchPluginState = (onRequest: (key: string) => void) => {
+export const useOnPluginFetchPluginState = (
+  onRequest: (key: string) => void
+) => {
   useEffect(() => {
     const fn = (e: MessageEvent) => {
       if (e.data.type === PluginChannel.fetchPluginState) {
@@ -32,7 +37,7 @@ export const useOnPluginFetchPluginState = (onRequest: (key: string) => void) =>
 };
 
 export const useOnPluginFillContent = (
-  callback: (content: string, triggerAiMessage?: boolean) => void,
+  callback: (content: string, triggerAiMessage?: boolean) => void
 ) => {
   useEffect(() => {
     const fn = (e: MessageEvent) => {
@@ -82,7 +87,9 @@ export const useOnPluginTriggerAIMessage = (callback: (id: string) => void) => {
   }, []);
 };
 
-export const useOnPluginCreateAssistantMessage = (callback: (content: string) => void) => {
+export const useOnPluginCreateAssistantMessage = (
+  callback: (content: string) => void
+) => {
   useEffect(() => {
     const fn = (e: MessageEvent) => {
       if (e.data.type === PluginChannel.createAssistantMessage) {

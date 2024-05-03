@@ -17,26 +17,32 @@ interface OptionRenderProps {
   isAzure?: boolean;
   provider: GlobalLLMProviderKey;
 }
-const OptionRender = memo<OptionRenderProps>(({ displayName, id, provider, isAzure }) => {
-  const model = useUserStore((s) => modelProviderSelectors.getModelCardById(id)(s), isEqual);
+const OptionRender = memo<OptionRenderProps>(
+  ({ displayName, id, provider, isAzure }) => {
+    const model = useUserStore(
+      (s) => modelProviderSelectors.getModelCardById(id)(s),
+      isEqual
+    );
 
-  // if there is isCustom, it means it is a user defined custom model
-  if (model?.isCustom || isAzure) return <CustomModelOption id={id} provider={provider} />;
+    // if there is isCustom, it means it is a user defined custom model
+    if (model?.isCustom || isAzure)
+      return <CustomModelOption id={id} provider={provider} />;
 
-  return (
-    <Flexbox align={'center'} gap={8} horizontal>
-      <ModelIcon model={id} size={32} />
-      <Flexbox>
-        <Flexbox align={'center'} gap={8} horizontal>
-          {displayName}
-          <ModelInfoTags directionReverse placement={'top'} {...model!} />
+    return (
+      <Flexbox align={'center'} gap={8} horizontal>
+        <ModelIcon model={id} size={32} />
+        <Flexbox>
+          <Flexbox align={'center'} gap={8} horizontal>
+            {displayName}
+            <ModelInfoTags directionReverse placement={'top'} {...model!} />
+          </Flexbox>
+          <Typography.Text style={{ fontSize: 12 }} type={'secondary'}>
+            {id}
+          </Typography.Text>
         </Flexbox>
-        <Typography.Text style={{ fontSize: 12 }} type={'secondary'}>
-          {id}
-        </Typography.Text>
       </Flexbox>
-    </Flexbox>
-  );
-});
+    );
+  }
+);
 
 export default OptionRender;

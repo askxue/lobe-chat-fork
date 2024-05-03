@@ -15,7 +15,7 @@ const PlausibleAnalytics = memo(
         defer
         src={`${PLAUSIBLE_SCRIPT_BASE_URL}/js/script.js`}
       />
-    ),
+    )
 );
 
 export default PlausibleAnalytics;

@@ -31,7 +31,7 @@ describe('LocalDB', () => {
       fileType: 'plain/text',
       size: 3,
       createdAt: Date.now(),
-      updatedAt: Date.now(),
+      updatedAt: Date.now()
     };
 
     await db.files.add(file);
@@ -48,7 +48,7 @@ describe('LocalDB', () => {
       fileType: 'plain/text',
       size: 3,
       createdAt: Date.now(),
-      updatedAt: Date.now(),
+      updatedAt: Date.now()
     };
     await db.files.add(file);
 
@@ -68,7 +68,7 @@ describe('LocalDB', () => {
       fileType: 'plain/text',
       size: 3,
       updatedAt: Date.now(),
-      createdAt: Date.now(),
+      createdAt: Date.now()
     };
     await db.files.add(file);
 

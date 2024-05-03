@@ -38,5 +38,5 @@ export enum ModelProvider {
   TogetherAI = 'togetherai',
   Tongyi = 'tongyi',
   ZeroOne = 'zeroone',
-  ZhiPu = 'zhipu',
+  ZhiPu = 'zhipu'
 }

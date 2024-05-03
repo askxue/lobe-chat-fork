@@ -25,7 +25,7 @@ export type CustomModelCardDispatch =
 
 export const customModelCardsReducer = (
   state: ChatModelCard[] | undefined,
-  payload: CustomModelCardDispatch,
+  payload: CustomModelCardDispatch
 ): ChatModelCard[] => {
   switch (payload.type) {
     case 'add': {

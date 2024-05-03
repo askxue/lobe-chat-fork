@@ -10,7 +10,7 @@ import { SHARE_GPT_URL, shareService } from '../share';
 
 // Mock dependencies
 vi.mock('@/utils/parseMarkdown', () => ({
-  parseMarkdown: vi.fn(),
+  parseMarkdown: vi.fn()
 }));
 
 global.fetch = vi.fn();
@@ -26,12 +26,12 @@ describe('ShareGPTService', () => {
     const conversation: ShareGPTConversation = {
       items: [
         { from: 'human', value: 'Hello' },
-        { from: 'gpt', value: 'Hi there!' },
-      ],
+        { from: 'gpt', value: 'Hi there!' }
+      ]
     };
     (parseMarkdown as Mock).mockResolvedValue('Parsed markdown');
     (fetch as Mock).mockResolvedValue({
-      json: () => Promise.resolve({ id: mockId }),
+      json: () => Promise.resolve({ id: mockId })
     });
 
     // Act
@@ -46,12 +46,14 @@ describe('ShareGPTService', () => {
   it('should throw an error when the fetch call fails', async () => {
     // Arrange
     const conversation: ShareGPTConversation = {
-      items: [{ from: 'human', value: 'Hello' }],
+      items: [{ from: 'human', value: 'Hello' }]
     };
     (fetch as Mock).mockRejectedValue(new Error('Network error'));
 
     // Act & Assert
-    await expect(shareService.createShareGPTUrl(conversation)).rejects.toThrow('Network error');
+    await expect(shareService.createShareGPTUrl(conversation)).rejects.toThrow(
+      'Network error'
+    );
   });
 
   it('should not parse markdown for items not from gpt', async () => {
@@ -60,11 +62,11 @@ describe('ShareGPTService', () => {
     const conversation: ShareGPTConversation = {
       items: [
         { from: 'human', value: 'Hello' },
-        { from: 'human', value: 'How are you?' },
-      ],
+        { from: 'human', value: 'How are you?' }
+      ]
     };
     (fetch as Mock).mockResolvedValue({
-      json: () => Promise.resolve({ id: mockId }),
+      json: () => Promise.resolve({ id: mockId })
     });
 
     // Act
@@ -77,14 +79,16 @@ describe('ShareGPTService', () => {
   it('should throw an error if the response does not contain an id', async () => {
     // Arrange
     const conversation: ShareGPTConversation = {
-      items: [{ from: 'human', value: 'Hello' }],
+      items: [{ from: 'human', value: 'Hello' }]
     };
     (fetch as Mock).mockResolvedValue({
-      json: () => Promise.resolve({}),
+      json: () => Promise.resolve({})
     });
 
     // Act & Assert
-    await expect(shareService.createShareGPTUrl(conversation)).rejects.toThrow();
+    await expect(
+      shareService.createShareGPTUrl(conversation)
+    ).rejects.toThrow();
   });
 });
 
@@ -94,13 +98,13 @@ describe('ShareViaUrl', () => {
       const settings: DeepPartial<GlobalSettings> = {
         languageModel: {
           openai: {
-            apiKey: 'user-key',
-          },
-        },
+            apiKey: 'user-key'
+          }
+        }
       };
       const url = shareService.createShareSettingsUrl(settings);
       expect(url).toBe(
-        `/?${LOBE_URL_IMPORT_NAME}=%7B%22languageModel%22:%7B%22openai%22:%7B%22apiKey%22:%22user-key%22%7D%7D%7D`,
+        `/?${LOBE_URL_IMPORT_NAME}=%7B%22languageModel%22:%7B%22openai%22:%7B%22apiKey%22:%22user-key%22%7D%7D%7D`
       );
     });
   });
@@ -113,10 +117,10 @@ describe('ShareViaUrl', () => {
         data: {
           languageModel: {
             openai: {
-              apiKey: 'user-key',
-            },
-          },
-        },
+              apiKey: 'user-key'
+            }
+          }
+        }
       });
     });
 
@@ -124,7 +128,7 @@ describe('ShareViaUrl', () => {
       const settings = '%7B%22theme%22%3A%22dark%22%2C%22fontSize%22%3A16%';
       const decodedSettings = shareService.decodeShareSettings(settings);
       expect(decodedSettings).toEqual({
-        message: expect.any(String),
+        message: expect.any(String)
       });
     });
   });

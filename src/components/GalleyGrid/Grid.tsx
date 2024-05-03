@@ -21,16 +21,21 @@ const Grid = memo<GridProps>(
     min = MIN_IMAGE_SIZE,
     children,
     className,
-    style,
+    style
   }) => {
     const { styles, cx } = useStyles({ col, gap, max, min });
 
     return (
-      <Flexbox className={cx(styles.container, className)} gap={gap} horizontal style={style}>
+      <Flexbox
+        className={cx(styles.container, className)}
+        gap={gap}
+        horizontal
+        style={style}
+      >
         {children}
       </Flexbox>
     );
-  },
+  }
 );
 
 export default Grid;

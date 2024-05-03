@@ -12,7 +12,7 @@ export const generateMetadata = async () => {
   const { t } = await translation('common');
   return {
     alternates: { canonical: getCanonicalUrl('/market') },
-    title: t('tab.market'),
+    title: t('tab.market')
   };
 };
 

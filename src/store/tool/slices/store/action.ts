@@ -20,7 +20,10 @@ const n = setNamespace('pluginStore');
 const INSTALLED_PLUGINS = 'loadInstalledPlugins';
 
 export interface PluginStoreAction {
-  installPlugin: (identifier: string, type?: 'plugin' | 'customPlugin') => Promise<void>;
+  installPlugin: (
+    identifier: string,
+    type?: 'plugin' | 'customPlugin'
+  ) => Promise<void>;
   installPlugins: (plugins: string[]) => Promise<void>;
   loadPluginStore: () => Promise<LobeChatPluginsMarketIndex>;
   refreshPlugins: () => Promise<void>;
@@ -48,7 +51,11 @@ export const createPluginStoreSlice: StateCreator<
       updateInstallLoadingState(name, undefined);
 
       // 4. 存储 manifest 信息
-      await pluginService.installPlugin({ identifier: plugin.identifier, manifest: data, type });
+      await pluginService.installPlugin({
+        identifier: plugin.identifier,
+        manifest: data,
+        type
+      });
       await refreshPlugins();
     } catch (error) {
       console.error(error);
@@ -57,7 +64,10 @@ export const createPluginStoreSlice: StateCreator<
       const err = error as PluginInstallError;
       notification.error({
         description: t(`error.${err.message}`, { ns: 'plugin' }),
-        message: t('error.installError', { name: plugin.meta.title, ns: 'plugin' }),
+        message: t('error.installError', {
+          name: plugin.meta.title,
+          ns: 'plugin'
+        })
       });
     }
   },
@@ -69,7 +79,11 @@ export const createPluginStoreSlice: StateCreator<
   loadPluginStore: async () => {
     const pluginMarketIndex = await toolService.getPluginList();
 
-    set({ pluginStoreList: pluginMarketIndex.plugins }, false, n('loadPluginList'));
+    set(
+      { pluginStoreList: pluginMarketIndex.plugins },
+      false,
+      n('loadPluginList')
+    );
 
     return pluginMarketIndex;
   },
@@ -86,7 +100,7 @@ export const createPluginStoreSlice: StateCreator<
         draft.pluginInstallLoading[key] = value;
       }),
       false,
-      n('updateInstallLoadingState'),
+      n('updateInstallLoadingState')
     );
   },
   useFetchInstalledPlugins: () =>
@@ -95,11 +109,11 @@ export const createPluginStoreSlice: StateCreator<
         set(
           { installedPlugins: data, loadingInstallPlugins: false },
           false,
-          n('useFetchInstalledPlugins'),
+          n('useFetchInstalledPlugins')
         );
       },
-      revalidateOnFocus: false,
+      revalidateOnFocus: false
     }),
   useFetchPluginStore: () =>
-    useSWR<LobeChatPluginsMarketIndex>('loadPluginStore', get().loadPluginStore),
+    useSWR<LobeChatPluginsMarketIndex>('loadPluginStore', get().loadPluginStore)
 });

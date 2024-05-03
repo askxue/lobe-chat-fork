@@ -16,14 +16,17 @@ import {
   PerplexityProviderCard,
   TogetherAIProviderCard,
   ZeroOneProviderCard,
-  ZhiPuProviderCard,
+  ZhiPuProviderCard
 } from '@/config/modelProviders';
 import { UserStore } from '@/store/user';
 import { ChatModelCard } from '@/types/llm';
 import { GlobalLLMConfig, GlobalLLMProviderKey } from '@/types/settings';
 import { setNamespace } from '@/utils/storeDebug';
 
-import { CustomModelCardDispatch, customModelCardsReducer } from '../reducers/customModelCard';
+import {
+  CustomModelCardDispatch,
+  customModelCardsReducer
+} from '../reducers/customModelCard';
 import { modelProviderSelectors } from '../selectors/modelProvider';
 import { settingsSelectors } from '../selectors/settings';
 
@@ -35,25 +38,34 @@ const n = setNamespace('settings');
 export interface LLMSettingsAction {
   dispatchCustomModelCards: (
     provider: GlobalLLMProviderKey,
-    payload: CustomModelCardDispatch,
+    payload: CustomModelCardDispatch
   ) => Promise<void>;
   /**
    * make sure the default model provider list is sync to latest state
    */
   refreshDefaultModelProviderList: (params?: { trigger?: string }) => void;
   refreshModelProviderList: (params?: { trigger?: string }) => void;
-  removeEnabledModels: (provider: GlobalLLMProviderKey, model: string) => Promise<void>;
+  removeEnabledModels: (
+    provider: GlobalLLMProviderKey,
+    model: string
+  ) => Promise<void>;
   setModelProviderConfig: <T extends GlobalLLMProviderKey>(
     provider: T,
-    config: Partial<GlobalLLMConfig[T]>,
+    config: Partial<GlobalLLMConfig[T]>
   ) => Promise<void>;
-  toggleEditingCustomModelCard: (params?: { id: string; provider: GlobalLLMProviderKey }) => void;
+  toggleEditingCustomModelCard: (params?: {
+    id: string;
+    provider: GlobalLLMProviderKey;
+  }) => void;
 
-  toggleProviderEnabled: (provider: GlobalLLMProviderKey, enabled: boolean) => Promise<void>;
+  toggleProviderEnabled: (
+    provider: GlobalLLMProviderKey,
+    enabled: boolean
+  ) => Promise<void>;
 
   useFetchProviderModelList: (
     provider: GlobalLLMProviderKey,
-    enabledAutoFetch: boolean,
+    enabledAutoFetch: boolean
   ) => SWRResponse;
 }
 
@@ -68,9 +80,14 @@ export const llmSettingsSlice: StateCreator<
 
     if (!prevState) return;
 
-    const nextState = customModelCardsReducer(prevState.customModelCards, payload);
+    const nextState = customModelCardsReducer(
+      prevState.customModelCards,
+      payload
+    );
 
-    await get().setModelProviderConfig(provider, { customModelCards: nextState });
+    await get().setModelProviderConfig(provider, {
+      customModelCards: nextState
+    });
   },
 
   refreshDefaultModelProviderList: (params) => {
@@ -83,10 +100,15 @@ export const llmSettingsSlice: StateCreator<
      */
 
     // eslint-disable-next-line unicorn/consistent-function-scoping
-    const mergeModels = (provider: GlobalLLMProviderKey, defaultChatModels: ChatModelCard[]) => {
+    const mergeModels = (
+      provider: GlobalLLMProviderKey,
+      defaultChatModels: ChatModelCard[]
+    ) => {
       // if the chat model is config in the server side, use the server side model cards
-      const serverChatModels = modelProviderSelectors.serverProviderModelCards(provider)(get());
-      const remoteChatModels = modelProviderSelectors.remoteProviderModelCards(provider)(get());
+      const serverChatModels =
+        modelProviderSelectors.serverProviderModelCards(provider)(get());
+      const remoteChatModels =
+        modelProviderSelectors.remoteProviderModelCards(provider)(get());
 
       return serverChatModels ?? remoteChatModels ?? defaultChatModels;
     };
@@ -94,19 +116,22 @@ export const llmSettingsSlice: StateCreator<
     const defaultModelProviderList = [
       {
         ...OpenAIProviderCard,
-        chatModels: mergeModels('openai', OpenAIProviderCard.chatModels),
+        chatModels: mergeModels('openai', OpenAIProviderCard.chatModels)
       },
       { ...AzureProviderCard, chatModels: mergeModels('azure', []) },
-      { ...OllamaProviderCard, chatModels: mergeModels('ollama', OllamaProviderCard.chatModels) },
+      {
+        ...OllamaProviderCard,
+        chatModels: mergeModels('ollama', OllamaProviderCard.chatModels)
+      },
       AnthropicProviderCard,
       GoogleProviderCard,
       {
         ...OpenRouterProviderCard,
-        chatModels: mergeModels('openrouter', OpenRouterProviderCard.chatModels),
+        chatModels: mergeModels('openrouter', OpenRouterProviderCard.chatModels)
       },
       {
         ...TogetherAIProviderCard,
-        chatModels: mergeModels('togetherai', TogetherAIProviderCard.chatModels),
+        chatModels: mergeModels('togetherai', TogetherAIProviderCard.chatModels)
       },
       BedrockProviderCard,
       PerplexityProviderCard,
@@ -115,10 +140,14 @@ export const llmSettingsSlice: StateCreator<
       GroqProviderCard,
       MoonshotProviderCard,
       ZeroOneProviderCard,
-      ZhiPuProviderCard,
+      ZhiPuProviderCard
     ];
 
-    set({ defaultModelProviderList }, false, n(`refreshDefaultModelList - ${params?.trigger}`));
+    set(
+      { defaultModelProviderList },
+      false,
+      n(`refreshDefaultModelList - ${params?.trigger}`)
+    );
 
     get().refreshModelProviderList({ trigger: 'refreshDefaultModelList' });
   },
@@ -129,26 +158,34 @@ export const llmSettingsSlice: StateCreator<
       chatModels: modelProviderSelectors
         .getModelCardsById(list.id)(get())
         ?.map((model) => {
-          const models = modelProviderSelectors.getEnableModelsById(list.id)(get());
+          const models = modelProviderSelectors.getEnableModelsById(list.id)(
+            get()
+          );
 
           if (!models) return model;
 
           return {
             ...model,
-            enabled: models?.some((m) => m === model.id),
+            enabled: models?.some((m) => m === model.id)
           };
         }),
-      enabled: modelProviderSelectors.isProviderEnabled(list.id as any)(get()),
+      enabled: modelProviderSelectors.isProviderEnabled(list.id as any)(get())
     }));
 
-    set({ modelProviderList }, false, n(`refreshModelList - ${params?.trigger}`));
+    set(
+      { modelProviderList },
+      false,
+      n(`refreshModelList - ${params?.trigger}`)
+    );
   },
 
   removeEnabledModels: async (provider, model) => {
     const config = settingsSelectors.providerConfig(provider)(get());
 
     await get().setModelProviderConfig(provider, {
-      enabledModels: config?.enabledModels?.filter((s) => s !== model).filter(Boolean),
+      enabledModels: config?.enabledModels
+        ?.filter((s) => s !== model)
+        .filter(Boolean)
     });
   },
 
@@ -156,7 +193,11 @@ export const llmSettingsSlice: StateCreator<
     await get().setSettings({ languageModel: { [provider]: config } });
   },
   toggleEditingCustomModelCard: (params) => {
-    set({ editingCustomCardModel: params }, false, 'toggleEditingCustomModelCard');
+    set(
+      { editingCustomCardModel: params },
+      false,
+      'toggleEditingCustomModelCard'
+    );
   },
 
   toggleProviderEnabled: async (provider, enabled) => {
@@ -176,14 +217,14 @@ export const llmSettingsSlice: StateCreator<
           if (data) {
             await get().setModelProviderConfig(provider, {
               latestFetchTime: Date.now(),
-              remoteModelCards: data,
+              remoteModelCards: data
             });
 
             get().refreshDefaultModelProviderList();
           }
         },
         revalidateOnFocus: false,
-        revalidateOnMount: enabledAutoFetch,
-      },
-    ),
+        revalidateOnMount: enabledAutoFetch
+      }
+    )
 });

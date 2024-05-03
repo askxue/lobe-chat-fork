@@ -1,5 +1,5 @@
 export const parseDataUri = (
-  dataUri: string,
+  dataUri: string
 ): { base64: string | null; mimeType: string | null } => {
   // 正则表达式匹配整个 Data URI 结构
   const dataUriMatch = dataUri.match(/^data:([^;]+);base64,(.+)$/);
@@ -8,7 +8,7 @@ export const parseDataUri = (
   if (dataUriMatch) {
     return {
       base64: dataUriMatch[2],
-      mimeType: dataUriMatch[1],
+      mimeType: dataUriMatch[1]
     };
   }
 

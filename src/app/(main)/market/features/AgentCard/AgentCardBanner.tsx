@@ -17,7 +17,7 @@ export const useStyles = createStyles(({ css, token }) => ({
   bannerImg: css`
     position: absolute;
     filter: blur(40px) saturate(1.5);
-  `,
+  `
 }));
 
 interface AgentCardBannerProps extends DivProps {
@@ -48,7 +48,7 @@ const AgentCardBanner = memo<AgentCardBannerProps>(
         {children}
       </Flexbox>
     );
-  },
+  }
 );
 
 export default AgentCardBanner;

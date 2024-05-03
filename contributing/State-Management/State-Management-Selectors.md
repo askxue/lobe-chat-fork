@@ -25,7 +25,10 @@ Selectors are highly modular and maintainable. By encapsulating complex state se
 Taking the `displayPluginList` method as an example, its code is as follows:
 
 ```ts
-const pluginList = (s: PluginStoreState) => [...s.pluginList, ...s.customPluginList];
+const pluginList = (s: PluginStoreState) => [
+  ...s.pluginList,
+  ...s.customPluginList
+];
 
 const displayPluginList = (s: PluginStoreState) =>
   pluginList(s).map((p) => ({
@@ -35,7 +38,7 @@ const displayPluginList = (s: PluginStoreState) =>
     desc: pluginHelpers.getPluginDesc(p.meta),
     homepage: p.homepage,
     identifier: p.identifier,
-    title: pluginHelpers.getPluginTitle(p.meta),
+    title: pluginHelpers.getPluginTitle(p.meta)
   }));
 ```
 

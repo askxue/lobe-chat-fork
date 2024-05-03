@@ -3,7 +3,7 @@ import {
   Swatches,
   findCustomThemeName,
   primaryColors,
-  primaryColorsSwatches,
+  primaryColorsSwatches
 } from '@lobehub/ui';
 import { memo } from 'react';
 
@@ -13,7 +13,7 @@ import { settingsSelectors } from '@/store/user/selectors';
 const ThemeSwatchesPrimary = memo(() => {
   const [primaryColor, setSettings] = useUserStore((s) => [
     settingsSelectors.currentSettings(s).primaryColor,
-    s.setSettings,
+    s.setSettings
   ]);
 
   const handleSelect = (v: any) => {

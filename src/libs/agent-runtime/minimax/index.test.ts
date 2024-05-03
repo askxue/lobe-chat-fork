@@ -44,22 +44,24 @@ describe('LobeMinimaxAI', () => {
   describe('chat', () => {
     it('should return a StreamingTextResponse on successful API call', async () => {
       const mockResponseData = {
-        choices: [{ delta: { content: 'Hello, world!' } }],
+        choices: [{ delta: { content: 'Hello, world!' } }]
       };
       const mockResponse = new Response(
         new ReadableStream({
           start(controller) {
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify(mockResponseData)}`));
+            controller.enqueue(
+              encoder.encode(`data: ${JSON.stringify(mockResponseData)}`)
+            );
             controller.close();
-          },
-        }),
+          }
+        })
       );
       vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(mockResponse);
 
       const result = await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'text-davinci-003',
-        temperature: 0,
+        temperature: 0
       });
 
       expect(result).toBeInstanceOf(StreamingTextResponse);
@@ -67,22 +69,24 @@ describe('LobeMinimaxAI', () => {
 
     it('should handle text messages correctly', async () => {
       const mockResponseData = {
-        choices: [{ delta: { content: 'Hello, world!' } }],
+        choices: [{ delta: { content: 'Hello, world!' } }]
       };
       const mockResponse = new Response(
         new ReadableStream({
           start(controller) {
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify(mockResponseData)}`));
+            controller.enqueue(
+              encoder.encode(`data: ${JSON.stringify(mockResponseData)}`)
+            );
             controller.close();
-          },
-        }),
+          }
+        })
       );
       vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(mockResponse);
 
       const result = await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'text-davinci-003',
-        temperature: 0,
+        temperature: 0
       });
 
       expect(result).toBeInstanceOf(StreamingTextResponse);
@@ -95,19 +99,23 @@ describe('LobeMinimaxAI', () => {
         new Response(
           new ReadableStream({
             start(controller) {
-              controller.enqueue(encoder.encode(JSON.stringify('Hello, world!')));
+              controller.enqueue(
+                encoder.encode(JSON.stringify('Hello, world!'))
+              );
               controller.close();
-            },
-          }),
-        ),
+            }
+          })
+        )
       );
 
-      vi.spyOn(debugStreamModule, 'debugStream').mockImplementation(() => Promise.resolve());
+      vi.spyOn(debugStreamModule, 'debugStream').mockImplementation(() =>
+        Promise.resolve()
+      );
 
       await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'text-davinci-003',
-        temperature: 0,
+        temperature: 0
       });
 
       // Assert
@@ -121,34 +129,36 @@ describe('LobeMinimaxAI', () => {
         const mockErrorResponse = {
           base_resp: {
             status_code: 1004,
-            status_msg: 'API key not valid',
-          },
+            status_msg: 'API key not valid'
+          }
         };
         vi.spyOn(globalThis, 'fetch').mockResolvedValue(
           new Response(
             new ReadableStream({
               start(controller) {
-                controller.enqueue(encoder.encode(JSON.stringify(mockErrorResponse)));
+                controller.enqueue(
+                  encoder.encode(JSON.stringify(mockErrorResponse))
+                );
                 controller.close();
-              },
-            }),
-          ),
+              }
+            })
+          )
         );
 
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0,
+            temperature: 0
           });
         } catch (e) {
           expect(e).toEqual({
             errorType: invalidErrorType,
             error: {
               code: 1004,
-              message: 'API key not valid',
+              message: 'API key not valid'
             },
-            provider,
+            provider
           });
         }
       });
@@ -157,34 +167,36 @@ describe('LobeMinimaxAI', () => {
         const mockErrorResponse = {
           base_resp: {
             status_code: 1001,
-            status_msg: 'Some error occurred',
-          },
+            status_msg: 'Some error occurred'
+          }
         };
         vi.spyOn(globalThis, 'fetch').mockResolvedValue(
           new Response(
             new ReadableStream({
               start(controller) {
-                controller.enqueue(encoder.encode(JSON.stringify(mockErrorResponse)));
+                controller.enqueue(
+                  encoder.encode(JSON.stringify(mockErrorResponse))
+                );
                 controller.close();
-              },
-            }),
-          ),
+              }
+            })
+          )
         );
 
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0,
+            temperature: 0
           });
         } catch (e) {
           expect(e).toEqual({
             errorType: bizErrorType,
             error: {
               code: 1001,
-              message: 'Some error occurred',
+              message: 'Some error occurred'
             },
-            provider,
+            provider
           });
         }
       });
@@ -197,7 +209,7 @@ describe('LobeMinimaxAI', () => {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0,
+            temperature: 0
           });
         } catch (e) {
           expect(e).toEqual({
@@ -206,9 +218,9 @@ describe('LobeMinimaxAI', () => {
               cause: undefined,
               message: 'Something went wrong',
               name: 'Error',
-              stack: mockError.stack,
+              stack: mockError.stack
             },
-            provider,
+            provider
           });
         }
       });
@@ -222,7 +234,7 @@ describe('LobeMinimaxAI', () => {
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'text-davinci-003',
           temperature: 0.5,
-          top_p: 0.8,
+          top_p: 0.8
         };
 
         const result = instance['buildCompletionsParams'](payload);
@@ -232,7 +244,7 @@ describe('LobeMinimaxAI', () => {
           model: 'text-davinci-003',
           stream: true,
           temperature: 0.5,
-          top_p: 0.8,
+          top_p: 0.8
         });
       });
 
@@ -241,7 +253,7 @@ describe('LobeMinimaxAI', () => {
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'text-davinci-003',
           temperature: 0,
-          top_p: 0,
+          top_p: 0
         };
 
         const result = instance['buildCompletionsParams'](payload);
@@ -249,7 +261,7 @@ describe('LobeMinimaxAI', () => {
         expect(result).toEqual({
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'text-davinci-003',
-          stream: true,
+          stream: true
         });
       });
 
@@ -258,7 +270,7 @@ describe('LobeMinimaxAI', () => {
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'abab6.5-chat',
           temperature: 0,
-          top_p: 0,
+          top_p: 0
         };
 
         const result = instance['buildCompletionsParams'](payload);
@@ -267,7 +279,7 @@ describe('LobeMinimaxAI', () => {
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'abab6.5-chat',
           stream: true,
-          max_tokens: 2048,
+          max_tokens: 2048
         });
       });
     });

@@ -15,14 +15,14 @@ vi.mock('@/services/plugin', () => ({
     updatePlugin: vi.fn(),
     createCustomPlugin: vi.fn(),
     uninstallPlugin: vi.fn(),
-    updatePluginManifest: vi.fn(),
-  },
+    updatePluginManifest: vi.fn()
+  }
 }));
 
 vi.mock('@/services/tool', () => ({
   toolService: {
-    getPluginManifest: vi.fn(),
-  },
+    getPluginManifest: vi.fn()
+  }
 }));
 
 describe('useToolStore:customPlugin', () => {
@@ -33,7 +33,9 @@ describe('useToolStore:customPlugin', () => {
       act(() => {
         useToolStore.setState({
           // ...其他状态
-          installedPlugins: [{ identifier: 'test-plugin' } as LobeToolCustomPlugin],
+          installedPlugins: [
+            { identifier: 'test-plugin' } as LobeToolCustomPlugin
+          ]
         });
       });
 
@@ -54,13 +56,13 @@ describe('useToolStore:customPlugin', () => {
         type: 'customPlugin',
         manifest: {
           identifier: 'plugin2',
-          meta: { title: 'New Plugin' },
-        },
+          meta: { title: 'New Plugin' }
+        }
       } as LobeToolCustomPlugin;
       act(() => {
         useToolStore.setState({
           installedPlugins: [],
-          newCustomPlugin: newPlugin,
+          newCustomPlugin: newPlugin
         });
       });
 
@@ -82,13 +84,13 @@ describe('useToolStore:customPlugin', () => {
         identifier: pluginId,
         manifest: {
           identifier: pluginId,
-          meta: { title: 'Old Plugin', avatar: '🍎' },
-        },
+          meta: { title: 'Old Plugin', avatar: '🍎' }
+        }
       } as LobeToolCustomPlugin;
 
       act(() => {
         useToolStore.setState({
-          installedPlugins: [old],
+          installedPlugins: [old]
         });
       });
 
@@ -98,16 +100,19 @@ describe('useToolStore:customPlugin', () => {
         type: 'customPlugin',
         manifest: {
           identifier: pluginId,
-          meta: { title: 'Updated Plugin', avatar: '🥒' },
+          meta: { title: 'Updated Plugin', avatar: '🥒' }
         },
-        identifier: pluginId,
+        identifier: pluginId
       } as LobeToolCustomPlugin;
 
       await act(async () => {
         await result.current.updateCustomPlugin(pluginId, updatedPlugin);
       });
 
-      expect(pluginService.updatePlugin).toHaveBeenCalledWith(pluginId, updatedPlugin);
+      expect(pluginService.updatePlugin).toHaveBeenCalledWith(
+        pluginId,
+        updatedPlugin
+      );
     });
   });
 
@@ -117,15 +122,17 @@ describe('useToolStore:customPlugin', () => {
         type: 'customPlugin',
         manifest: {
           identifier: 'plugin3',
-          meta: { title: 'Initial Plugin' },
-        },
+          meta: { title: 'Initial Plugin' }
+        }
       } as LobeToolCustomPlugin;
-      const updates = { meta: { title: 'Updated Name' } } as Partial<LobeToolCustomPlugin>;
+      const updates = {
+        meta: { title: 'Updated Name' }
+      } as Partial<LobeToolCustomPlugin>;
       const expectedNewCustomPlugin = { ...initialNewCustomPlugin, ...updates };
 
       act(() => {
         useToolStore.setState({
-          newCustomPlugin: initialNewCustomPlugin,
+          newCustomPlugin: initialNewCustomPlugin
         });
       });
 
@@ -135,7 +142,9 @@ describe('useToolStore:customPlugin', () => {
         result.current.updateNewCustomPlugin(updates);
       });
 
-      expect(useToolStore.getState().newCustomPlugin).toEqual(expectedNewCustomPlugin);
+      expect(useToolStore.getState().newCustomPlugin).toEqual(
+        expectedNewCustomPlugin
+      );
     });
   });
 });

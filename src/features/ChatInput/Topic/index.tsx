@@ -1,6 +1,9 @@
 import { ActionIcon, Icon, Tooltip } from '@lobehub/ui';
 import { Button } from 'antd';
-import { LucideGalleryVerticalEnd, LucideMessageSquarePlus } from 'lucide-react';
+import {
+  LucideGalleryVerticalEnd,
+  LucideMessageSquarePlus
+} from 'lucide-react';
 import { memo } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useTranslation } from 'react-i18next';
@@ -14,10 +17,13 @@ const SaveTopic = memo<{ mobile?: boolean }>(({ mobile }) => {
   const { t } = useTranslation('chat');
   const [hasTopic, openNewTopicOrSaveTopic] = useChatStore((s) => [
     !!s.activeTopicId,
-    s.openNewTopicOrSaveTopic,
+    s.openNewTopicOrSaveTopic
   ]);
 
-  const { mutate, isValidating } = useActionSWR('openNewTopicOrSaveTopic', openNewTopicOrSaveTopic);
+  const { mutate, isValidating } = useActionSWR(
+    'openNewTopicOrSaveTopic',
+    openNewTopicOrSaveTopic
+  );
 
   const icon = hasTopic ? LucideMessageSquarePlus : LucideGalleryVerticalEnd;
   const Render = mobile ? ActionIcon : Button;
@@ -28,12 +34,17 @@ const SaveTopic = memo<{ mobile?: boolean }>(({ mobile }) => {
 
   useHotkeys(hotkeys, () => mutate(), {
     enableOnFormTags: true,
-    preventDefault: true,
+    preventDefault: true
   });
 
   return (
     <Tooltip title={<HotKeys desc={desc} inverseTheme keys={hotkeys} />}>
-      <Render aria-label={desc} icon={iconRender} loading={isValidating} onClick={() => mutate()} />
+      <Render
+        aria-label={desc}
+        icon={iconRender}
+        loading={isValidating}
+        onClick={() => mutate()}
+      />
     </Tooltip>
   );
 });

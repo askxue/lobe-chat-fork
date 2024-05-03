@@ -2,11 +2,14 @@ import {
   OllamaProviderCard,
   OpenAIProviderCard,
   OpenRouterProviderCard,
-  TogetherAIProviderCard,
+  TogetherAIProviderCard
 } from '@/config/modelProviders';
 import { getServerConfig } from '@/config/server';
 import { GlobalServerConfig } from '@/types/serverConfig';
-import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseModels';
+import {
+  extractEnabledModels,
+  transformToChatModelCards
+} from '@/utils/parseModels';
 
 import { parseAgentConfig } from './parseDefaultAgent';
 
@@ -40,18 +43,18 @@ export const getServerGlobalConfig = () => {
 
     ENABLED_ZEROONE,
     ENABLED_TOGETHERAI,
-    TOGETHERAI_MODEL_LIST,
+    TOGETHERAI_MODEL_LIST
   } = getServerConfig();
 
   const config: GlobalServerConfig = {
     defaultAgent: {
-      config: parseAgentConfig(DEFAULT_AGENT_CONFIG),
+      config: parseAgentConfig(DEFAULT_AGENT_CONFIG)
     },
 
     enabledOAuthSSO: ENABLE_OAUTH_SSO,
     languageModel: {
       anthropic: {
-        enabled: ENABLED_ANTHROPIC,
+        enabled: ENABLED_ANTHROPIC
       },
       azure: {
         enabled: ENABLED_AZURE_OPENAI,
@@ -59,8 +62,8 @@ export const getServerGlobalConfig = () => {
         serverModelCards: transformToChatModelCards({
           defaultChatModels: [],
           modelString: AZURE_MODEL_LIST,
-          withDeploymentName: true,
-        }),
+          withDeploymentName: true
+        })
       },
       bedrock: { enabled: ENABLED_AWS_BEDROCK },
       google: { enabled: ENABLED_GOOGLE },
@@ -73,15 +76,15 @@ export const getServerGlobalConfig = () => {
         fetchOnClient: !OLLAMA_PROXY_URL,
         serverModelCards: transformToChatModelCards({
           defaultChatModels: OllamaProviderCard.chatModels,
-          modelString: OLLAMA_MODEL_LIST,
-        }),
+          modelString: OLLAMA_MODEL_LIST
+        })
       },
       openai: {
         enabledModels: extractEnabledModels(OPENAI_MODEL_LIST),
         serverModelCards: transformToChatModelCards({
           defaultChatModels: OpenAIProviderCard.chatModels,
-          modelString: OPENAI_MODEL_LIST,
-        }),
+          modelString: OPENAI_MODEL_LIST
+        })
       },
 
       openrouter: {
@@ -89,8 +92,8 @@ export const getServerGlobalConfig = () => {
         enabledModels: extractEnabledModels(OPENROUTER_MODEL_LIST),
         serverModelCards: transformToChatModelCards({
           defaultChatModels: OpenRouterProviderCard.chatModels,
-          modelString: OPENROUTER_MODEL_LIST,
-        }),
+          modelString: OPENROUTER_MODEL_LIST
+        })
       },
       perplexity: { enabled: ENABLED_PERPLEXITY },
 
@@ -99,16 +102,16 @@ export const getServerGlobalConfig = () => {
         enabledModels: extractEnabledModels(TOGETHERAI_MODEL_LIST),
         serverModelCards: transformToChatModelCards({
           defaultChatModels: TogetherAIProviderCard.chatModels,
-          modelString: TOGETHERAI_MODEL_LIST,
-        }),
+          modelString: TOGETHERAI_MODEL_LIST
+        })
       },
 
       zeroone: { enabled: ENABLED_ZEROONE },
-      zhipu: { enabled: ENABLED_ZHIPU },
+      zhipu: { enabled: ENABLED_ZHIPU }
     },
     telemetry: {
-      langfuse: ENABLE_LANGFUSE,
-    },
+      langfuse: ENABLE_LANGFUSE
+    }
   };
 
   return config;

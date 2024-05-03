@@ -52,7 +52,7 @@ describe('parseAgentConfig', () => {
       const envStr = 'enableAutoCreateTopic=true;enableCompressThreshold=false';
       const expected = {
         enableAutoCreateTopic: true,
-        enableCompressThreshold: false,
+        enableCompressThreshold: false
       };
       expect(parseAgentConfig(envStr)).toEqual(expected);
     });
@@ -63,8 +63,8 @@ describe('parseAgentConfig', () => {
       const expected = {
         fewShots: [
           { content: 'Hello', role: 'user' },
-          { content: 'Hi', role: 'system' },
-        ],
+          { content: 'Hi', role: 'system' }
+        ]
       };
 
       // Assuming parseAgentConfig function has been implemented to understand and correctly parse the cascading keys format for fewShots
@@ -72,9 +72,10 @@ describe('parseAgentConfig', () => {
     });
 
     it('parses tts voice configuration correctly', () => {
-      const envStr = 'tts.voice.openai=english-voice;tts.voice.microsoft=spanish-voice';
+      const envStr =
+        'tts.voice.openai=english-voice;tts.voice.microsoft=spanish-voice';
       const expected = {
-        tts: { voice: { openai: 'english-voice', microsoft: 'spanish-voice' } },
+        tts: { voice: { openai: 'english-voice', microsoft: 'spanish-voice' } }
       };
       expect(parseAgentConfig(envStr)).toEqual(expected);
     });
@@ -93,7 +94,7 @@ describe('parseAgentConfig', () => {
       const expected = {
         model: 'gpt-4-1106-preview',
         params: { max_tokens: 300 },
-        plugins: ['search-engine', 'lobe-image-designer'],
+        plugins: ['search-engine', 'lobe-image-designer']
       };
       expect(parseAgentConfig(envStr)).toEqual(expected);
     });
@@ -106,7 +107,7 @@ describe('parseAgentConfig', () => {
         model: 'gpt-4-1106-preview',
         params: { max_tokens: 300, temperature: 0.7 },
         plugins: ['search-engine', 'lobe-image-designer'],
-        tts: { voice: { openai: 'english-voice' } },
+        tts: { voice: { openai: 'english-voice' } }
       };
       expect(parseAgentConfig(envStr)).toEqual(expected);
     });
@@ -119,7 +120,7 @@ describe('parseAgentConfig', () => {
         enableAutoCreateTopic: true,
         model: 'gemini-pro',
         plugins: ['lobe-image-designer'],
-        provider: 'google',
+        provider: 'google'
       };
 
       expect(parseAgentConfig(envStr)).toEqual(expected);

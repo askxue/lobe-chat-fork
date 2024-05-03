@@ -43,7 +43,7 @@ const useStyles = createStyles(({ css, token, isDarkMode, responsive }) => ({
   title: css`
     font-size: ${token.fontSizeLG}px;
     font-weight: bold;
-  `,
+  `
 }));
 
 const MigrationStart = memo<UpgradeButtonProps>((props) => {
@@ -54,24 +54,28 @@ const MigrationStart = memo<UpgradeButtonProps>((props) => {
     {
       avatar: Database,
       desc: t('dbV1.features.capability.desc'),
-      title: t('dbV1.features.capability.title'),
+      title: t('dbV1.features.capability.title')
     },
     {
       avatar: Zap,
       desc: t('dbV1.features.performance.desc'),
-      title: t('dbV1.features.performance.title'),
+      title: t('dbV1.features.performance.title')
     },
     {
       avatar: SearchCheck,
       desc: t('dbV1.features.use.desc'),
-      title: t('dbV1.features.use.title'),
-    },
+      title: t('dbV1.features.use.title')
+    }
   ];
 
   return (
     <>
       <Flexbox>
-        <Flexbox className={styles.intro} style={{ textAlign: 'center' }} width={460}>
+        <Flexbox
+          className={styles.intro}
+          style={{ textAlign: 'center' }}
+          width={460}
+        >
           {t('dbV1.description')}
         </Flexbox>
       </Flexbox>
@@ -80,7 +84,11 @@ const MigrationStart = memo<UpgradeButtonProps>((props) => {
           return (
             <Flexbox align={'flex-start'} gap={24} horizontal key={item.title}>
               <Center className={styles.iconCtn}>
-                <Icon className={styles.icon} icon={item.avatar} size={{ fontSize: 36 }} />
+                <Icon
+                  className={styles.icon}
+                  icon={item.avatar}
+                  size={{ fontSize: 36 }}
+                />
               </Center>
               <Flexbox gap={8}>
                 <p className={styles.title}>{item.title}</p>
@@ -91,7 +99,12 @@ const MigrationStart = memo<UpgradeButtonProps>((props) => {
         })}
       </Flexbox>
       <Flexbox align={'center'} gap={16} style={{ paddingBottom: 16 }}>
-        <Flexbox gap={16} horizontal justify={'center'} style={{ flexWrap: 'wrap' }}>
+        <Flexbox
+          gap={16}
+          horizontal
+          justify={'center'}
+          style={{ flexWrap: 'wrap' }}
+        >
           <ExportConfigButton state={props.state} />
           <UpgradeButton {...props} />
         </Flexbox>

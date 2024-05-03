@@ -22,4 +22,5 @@ beforeEach(() => {
   });
 });
 
-export const createWithEqualityFn = (f: any) => (f === undefined ? createImpl : createImpl(f));
+export const createWithEqualityFn = (f: any) =>
+  f === undefined ? createImpl : createImpl(f);

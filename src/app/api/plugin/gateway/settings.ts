@@ -1,5 +1,5 @@
 export const parserPluginSettings = (
-  settingsStr?: string,
+  settingsStr?: string
 ): Record<string, Record<string, string>> => {
   if (!settingsStr) return {};
 
@@ -21,7 +21,10 @@ export const parserPluginSettings = (
       const cleanKey = key.trim();
       const cleanValue = value.trim();
 
-      settings.set(cleanId, { ...settings.get(cleanId), [cleanKey]: cleanValue });
+      settings.set(cleanId, {
+        ...settings.get(cleanId),
+        [cleanKey]: cleanValue
+      });
     }
   }
 

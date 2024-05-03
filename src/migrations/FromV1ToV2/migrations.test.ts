@@ -1,5 +1,12 @@
-import { V1Config, V1ConfigState, V1Session } from '@/migrations/FromV1ToV2/types/v1';
-import { MigrationData, VersionController } from '@/migrations/VersionController';
+import {
+  V1Config,
+  V1ConfigState,
+  V1Session
+} from '@/migrations/FromV1ToV2/types/v1';
+import {
+  MigrationData,
+  VersionController
+} from '@/migrations/VersionController';
 
 import inputV1Data from './fixtures/input-v1-session.json';
 import outputV2Data from './fixtures/output-v2.json';
@@ -34,26 +41,26 @@ describe('MigrationV1ToV2', () => {
             config: {
               model: 'gpt-3.5-turbo',
               params: {
-                temperature: 0.6,
+                temperature: 0.6
               },
               systemRole:
                 '你是一名前端专家。现在我们正在实现一个 zustand store。该store包含 agents、chats、sessionTree 三个关键的数据。它们的类型定义如下：\n\n```ts\n\n\nexport interface ChatSessionState {\n  sessionTree: SessionTree[];\n  chats: ChatContextMap;\n  agents: ChatAgentMap;\n}\n\ninterface SessionTree {\n  agentId: string;\n  chats: string[];\n}\n\nexport type ChatContextMap = Record<string, ChatContext>;\nexport type ChatAgentMap = Record<string, ChatAgent>;\n\n```',
               displayMode: 'chat',
-              plugins: [],
+              plugins: []
             } as unknown as V1Config,
             createAt: 1690016491289,
             id: 'f8a620ef-c44f-403e-892c-e97fb745255e',
             meta: {
               title: '前端 zustand store 专家',
               description: '你需要实现一个 zustand store 的功能',
-              avatar: '输出: 🧪',
+              avatar: '输出: 🧪'
             },
             type: 'agent',
-            updateAt: 1690016491289,
-          },
-        },
+            updateAt: 1690016491289
+          }
+        }
       },
-      version: 1,
+      version: 1
     };
 
     const migratedData = versionController.migrate(data);
@@ -64,23 +71,23 @@ describe('MigrationV1ToV2', () => {
         config: {
           model: 'gpt-3.5-turbo',
           params: {
-            temperature: 0.6,
+            temperature: 0.6
           },
           systemRole:
             '你是一名前端专家。现在我们正在实现一个 zustand store。该store包含 agents、chats、sessionTree 三个关键的数据。它们的类型定义如下：\n\n```ts\n\n\nexport interface ChatSessionState {\n  sessionTree: SessionTree[];\n  chats: ChatContextMap;\n  agents: ChatAgentMap;\n}\n\ninterface SessionTree {\n  agentId: string;\n  chats: string[];\n}\n\nexport type ChatContextMap = Record<string, ChatContext>;\nexport type ChatAgentMap = Record<string, ChatAgent>;\n\n```',
           displayMode: 'chat',
-          plugins: [],
+          plugins: []
         },
         createdAt: 1690016491289,
         id: 'f8a620ef-c44f-403e-892c-e97fb745255e',
         meta: {
           title: '前端 zustand store 专家',
           description: '你需要实现一个 zustand store 的功能',
-          avatar: '输出: 🧪',
+          avatar: '输出: 🧪'
         },
         type: 'agent',
-        updatedAt: 1690016491289,
-      },
+        updatedAt: 1690016491289
+      }
     ]);
   });
 
@@ -102,7 +109,7 @@ describe('MigrationV1ToV2', () => {
               meta: {},
               role: 'user',
               updateAt: 1693114820406,
-              topicId: 'jvfmUEwF',
+              topicId: 'jvfmUEwF'
             },
             K4AVcvGB: {
               content: '2',
@@ -113,7 +120,7 @@ describe('MigrationV1ToV2', () => {
               role: 'assistant',
               updateAt: 1693114820418,
               extra: { fromModel: 'gpt-3.5-turbo' },
-              topicId: 'jvfmUEwF',
+              topicId: 'jvfmUEwF'
             },
             QaAUgIGC: {
               content: '3',
@@ -122,7 +129,7 @@ describe('MigrationV1ToV2', () => {
               meta: {},
               role: 'user',
               updateAt: 1693114820428,
-              topicId: 'jvfmUEwF',
+              topicId: 'jvfmUEwF'
             },
             jF4p75eF: {
               content: '4',
@@ -133,26 +140,26 @@ describe('MigrationV1ToV2', () => {
               role: 'assistant',
               updateAt: 1693114820439,
               extra: { fromModel: 'gpt-3.5-turbo' },
-              topicId: 'jvfmUEwF',
-            },
+              topicId: 'jvfmUEwF'
+            }
           },
           topics: {
             jvfmUEwF: {
               createAt: 1693114820394,
               id: 'jvfmUEwF',
               title: 'JSX错误：children属性类型错误',
-              updateAt: 1693114821388,
+              updateAt: 1693114821388
             },
             IVfDVB5g: {
               createAt: 1693228301335,
               id: 'IVfDVB5g',
               title: '上游服务端错误状态码\n下游服务器错误状态码',
-              updateAt: 1693228303288,
-            },
-          },
-        },
+              updateAt: 1693228303288
+            }
+          }
+        }
       },
-      version: 1,
+      version: 1
     };
 
     const migratedData = versionController.migrate(data);
@@ -167,7 +174,7 @@ describe('MigrationV1ToV2', () => {
         meta: {},
         role: 'user',
         updatedAt: 1693114820406,
-        topicId: 'jvfmUEwF',
+        topicId: 'jvfmUEwF'
       },
       {
         content: '2',
@@ -179,7 +186,7 @@ describe('MigrationV1ToV2', () => {
         role: 'assistant',
         updatedAt: 1693114820418,
         fromModel: 'gpt-3.5-turbo',
-        topicId: 'jvfmUEwF',
+        topicId: 'jvfmUEwF'
       },
       {
         content: '3',
@@ -189,7 +196,7 @@ describe('MigrationV1ToV2', () => {
         meta: {},
         role: 'user',
         updatedAt: 1693114820428,
-        topicId: 'jvfmUEwF',
+        topicId: 'jvfmUEwF'
       },
       {
         content: '4',
@@ -201,8 +208,8 @@ describe('MigrationV1ToV2', () => {
         role: 'assistant',
         updatedAt: 1693114820439,
         fromModel: 'gpt-3.5-turbo',
-        topicId: 'jvfmUEwF',
-      },
+        topicId: 'jvfmUEwF'
+      }
     ]);
     expect(migratedData.state.topics).toEqual([
       {
@@ -210,15 +217,15 @@ describe('MigrationV1ToV2', () => {
         id: 'jvfmUEwF',
         title: 'JSX错误：children属性类型错误',
         sessionId: 'inbox',
-        updatedAt: 1693114821388,
+        updatedAt: 1693114821388
       },
       {
         createdAt: 1693228301335,
         id: 'IVfDVB5g',
         title: '上游服务端错误状态码\n下游服务器错误状态码',
         sessionId: 'inbox',
-        updatedAt: 1693228303288,
-      },
+        updatedAt: 1693228303288
+      }
     ]);
   });
 });

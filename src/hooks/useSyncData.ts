@@ -6,7 +6,10 @@ import { useUserStore } from '@/store/user';
 import { syncSettingsSelectors } from '@/store/user/selectors';
 
 export const useSyncEvent = () => {
-  const [refreshMessages, refreshTopic] = useChatStore((s) => [s.refreshMessages, s.refreshTopic]);
+  const [refreshMessages, refreshTopic] = useChatStore((s) => [
+    s.refreshMessages,
+    s.refreshTopic
+  ]);
   const [refreshSessions] = useSessionStore((s) => [s.refreshSessions]);
 
   return useCallback((tableKey: string) => {
@@ -39,7 +42,7 @@ export const useEnabledDataSync = () => {
   const [userId, userEnableSync, useEnabledSync] = useUserStore((s) => [
     s.userId,
     syncSettingsSelectors.enableWebRTC(s),
-    s.useEnabledSync,
+    s.useEnabledSync
   ]);
 
   const syncEvent = useSyncEvent();

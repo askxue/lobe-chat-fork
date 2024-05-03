@@ -1,7 +1,7 @@
 import {
   LobeChatPluginManifest,
   LobeChatPluginsMarketIndex,
-  pluginManifestSchema,
+  pluginManifestSchema
 } from '@lobehub/chat-plugin-sdk';
 
 import { globalHelpers } from '@/store/user/helpers';
@@ -10,11 +10,16 @@ import { OpenAIPluginManifest } from '@/types/openai/plugin';
 import { API_ENDPOINTS } from './_url';
 
 class ToolService {
-  private _fetchJSON = async <T = any>(url: string, proxy = false): Promise<T> => {
+  private _fetchJSON = async <T = any>(
+    url: string,
+    proxy = false
+  ): Promise<T> => {
     // 2. 发送请求
     let res: Response;
     try {
-      res = await (proxy ? fetch(API_ENDPOINTS.proxy, { body: url, method: 'POST' }) : fetch(url));
+      res = await (proxy
+        ? fetch(API_ENDPOINTS.proxy, { body: url, method: 'POST' })
+        : fetch(url));
     } catch {
       throw new TypeError('fetchError');
     }
@@ -54,7 +59,7 @@ class ToolService {
 
   getPluginManifest = async (
     url?: string,
-    useProxy: boolean = false,
+    useProxy: boolean = false
   ): Promise<LobeChatPluginManifest> => {
     // 1. valid plugin
     if (!url) {
@@ -84,13 +89,17 @@ class ToolService {
       const openapiJson = await this._fetchJSON(parser.data.openapi, useProxy);
 
       try {
-        const { OpenAPIConvertor } = await import('@lobehub/chat-plugin-sdk/openapi');
+        const { OpenAPIConvertor } = await import(
+          '@lobehub/chat-plugin-sdk/openapi'
+        );
 
         const convertor = new OpenAPIConvertor(openapiJson);
         const openAPIs = await convertor.convertOpenAPIToPluginSchema();
         data.api = [...data.api, ...openAPIs];
 
-        data.settings = await convertor.convertAuthToSettingsSchema(data.settings);
+        data.settings = await convertor.convertAuthToSettingsSchema(
+          data.settings
+        );
       } catch (error) {
         throw new TypeError('openAPIInvalid', { cause: error });
       }
@@ -100,7 +109,7 @@ class ToolService {
   };
 
   private convertOpenAIManifestToLobeManifest = (
-    data: OpenAIPluginManifest,
+    data: OpenAIPluginManifest
   ): LobeChatPluginManifest => {
     const manifest: LobeChatPluginManifest = {
       api: [],
@@ -109,12 +118,12 @@ class ToolService {
       meta: {
         avatar: data.logo_url,
         description: data.description_for_human,
-        title: data.name_for_human,
+        title: data.name_for_human
       },
       openapi: data.api.url,
       systemRole: data.description_for_model,
       type: 'default',
-      version: '1',
+      version: '1'
     };
     switch (data.auth.type) {
       case 'none': {
@@ -128,10 +137,10 @@ class ToolService {
               description: 'API Key',
               format: 'password',
               title: 'API Key',
-              type: 'string',
-            },
+              type: 'string'
+            }
           },
-          type: 'object',
+          type: 'object'
         };
         break;
       }

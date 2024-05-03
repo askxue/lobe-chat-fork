@@ -17,7 +17,7 @@ describe('_FileModel', () => {
       fileType: 'image/png',
       name: 'test.png',
       saveMode: 'local',
-      size: 10,
+      size: 10
       // url is optional, only needed if saveMode is 'url'
     };
   });
@@ -36,7 +36,7 @@ describe('_FileModel', () => {
       fileType: 'image/png',
       name: 'test.png',
       saveMode: 'local',
-      size: 10,
+      size: 10
     };
 
     const result = await FileModel.create(fileData);

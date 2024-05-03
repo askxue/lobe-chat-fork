@@ -4,7 +4,7 @@ import {
   SiBlackberry,
   SiGooglechrome,
   SiLinux,
-  SiWindows11,
+  SiWindows11
 } from '@icons-pack/react-simple-icons';
 import { memo } from 'react';
 

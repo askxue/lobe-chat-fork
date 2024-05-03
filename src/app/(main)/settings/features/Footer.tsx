@@ -9,7 +9,7 @@ const useStyles = createStyles(
   ({ css, token }) => css`
     font-size: 12px;
     color: ${token.colorTextQuaternary};
-  `,
+  `
 );
 
 const Footer = memo<PropsWithChildren>(({ children }) => {

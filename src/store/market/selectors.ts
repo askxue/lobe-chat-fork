@@ -7,7 +7,12 @@ const getAgentList = (s: Store) => {
   const { searchKeywords, agentList } = s;
   if (!searchKeywords) return agentList;
   return agentList.filter(({ meta }) => {
-    const checkMeta: string = [meta.tags, meta.title, meta.description, meta.avatar]
+    const checkMeta: string = [
+      meta.tags,
+      meta.title,
+      meta.description,
+      meta.avatar
+    ]
       .filter(Boolean)
       .join('');
     return checkMeta.toLowerCase().includes(searchKeywords.toLowerCase());
@@ -34,5 +39,5 @@ export const agentMarketSelectors = {
   getAgentItemById,
   getAgentList,
   getAgentTagList,
-  showSideBar,
+  showSideBar
 };

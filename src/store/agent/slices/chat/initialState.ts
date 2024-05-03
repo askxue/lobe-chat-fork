@@ -16,5 +16,5 @@ export const initialAgentChatState: AgentState = {
   agentConfig: {},
   defaultAgentConfig: DEFAULT_AGENT_CONFIG,
   isAgentConfigInit: false,
-  isDefaultAgentConfigInit: false,
+  isDefaultAgentConfigInit: false
 };

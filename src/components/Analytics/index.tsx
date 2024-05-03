@@ -10,7 +10,8 @@ const Plausible = dynamic(() => import('./Plausible'), { ssr: false });
 const Posthog = dynamic(() => import('./Posthog'), { ssr: false });
 const Umami = dynamic(() => import('./Umami'), { ssr: false });
 
-const { ANALYTICS_POSTHOG, ANALYTICS_PLAUSIBLE, ANALYTICS_UMAMI } = getClientConfig();
+const { ANALYTICS_POSTHOG, ANALYTICS_PLAUSIBLE, ANALYTICS_UMAMI } =
+  getClientConfig();
 
 const { ENABLE_VERCEL_ANALYTICS, ENABLE_GOOGLE_ANALYTICS } = getServerConfig();
 

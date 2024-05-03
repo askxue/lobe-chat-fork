@@ -18,7 +18,9 @@ const StyleRegistry = ({ children }: PropsWithChildren) => {
     return extractStaticStyle().map((item) => item.style);
   });
 
-  return <StyleProvider cache={extractStaticStyle.cache}>{children}</StyleProvider>;
+  return (
+    <StyleProvider cache={extractStaticStyle.cache}>{children}</StyleProvider>
+  );
 };
 
 export default StyleRegistry;

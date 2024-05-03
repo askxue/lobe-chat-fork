@@ -15,7 +15,7 @@ const useStyles = createStyles(({ css, prefixCls }) => ({
     .${prefixCls}-select-dropdown .${prefixCls}-select-item-option-grouped {
       padding-inline-start: 12px;
     }
-  `,
+  `
 }));
 interface ModelOption {
   label: any;
@@ -24,8 +24,14 @@ interface ModelOption {
 }
 
 const ModelSelect = memo(() => {
-  const [model, updateConfig] = useStore((s) => [s.config.model, s.setAgentConfig]);
-  const enabledList = useUserStore(modelProviderSelectors.modelProviderListForModelSelect, isEqual);
+  const [model, updateConfig] = useStore((s) => [
+    s.config.model,
+    s.setAgentConfig
+  ]);
+  const enabledList = useUserStore(
+    modelProviderSelectors.modelProviderListForModelSelect,
+    isEqual
+  );
 
   const { styles } = useStyles();
 
@@ -34,7 +40,7 @@ const ModelSelect = memo(() => {
       provider.chatModels.map((model) => ({
         label: <ModelItemRender {...model} />,
         provider: provider.id,
-        value: model.id,
+        value: model.id
       }));
 
     if (enabledList.length === 1) {
@@ -45,7 +51,7 @@ const ModelSelect = memo(() => {
 
     return enabledList.map((provider) => ({
       label: <ProviderItemRender provider={provider.id} />,
-      options: getChatModels(provider),
+      options: getChatModels(provider)
     }));
   }, [enabledList]);
 
@@ -55,7 +61,7 @@ const ModelSelect = memo(() => {
       onChange={(model, option) => {
         updateConfig({
           model,
-          provider: (option as unknown as ModelOption).provider,
+          provider: (option as unknown as ModelOption).provider
         });
       }}
       options={options}

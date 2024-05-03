@@ -8,11 +8,11 @@ export const pathString = (
   path: string,
   {
     hash = '',
-    search = '',
+    search = ''
   }: {
     hash?: string;
     search?: string;
-  } = {},
+  } = {}
 ) => {
   const tempBase = 'https://a.com';
   const url = new URL(path, tempBase);

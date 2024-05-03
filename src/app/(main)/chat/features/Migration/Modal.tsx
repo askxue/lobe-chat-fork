@@ -17,64 +17,68 @@ interface MigrationModalProps {
   state: any;
 }
 
-const MigrationModal = memo<MigrationModalProps>(({ setOpen, open, state: dbState }) => {
-  const { t } = useTranslation('migration');
-  const [upgradeStatus, setUpgradeStatus] = useState<UpgradeStatus>(UpgradeStatus.START);
+const MigrationModal = memo<MigrationModalProps>(
+  ({ setOpen, open, state: dbState }) => {
+    const { t } = useTranslation('migration');
+    const [upgradeStatus, setUpgradeStatus] = useState<UpgradeStatus>(
+      UpgradeStatus.START
+    );
 
-  const [error, setError] = useState<MigrationError>();
+    const [error, setError] = useState<MigrationError>();
 
-  const close = () => {
-    setOpen(false);
-  };
+    const close = () => {
+      setOpen(false);
+    };
 
-  const renderContent = () => {
-    switch (upgradeStatus) {
-      case UpgradeStatus.START:
-      case UpgradeStatus.UPGRADING: {
-        return (
-          <MigrationStart
-            setError={setError}
-            setUpgradeStatus={setUpgradeStatus}
-            state={dbState}
-            upgradeStatus={upgradeStatus}
-          />
-        );
+    const renderContent = () => {
+      switch (upgradeStatus) {
+        case UpgradeStatus.START:
+        case UpgradeStatus.UPGRADING: {
+          return (
+            <MigrationStart
+              setError={setError}
+              setUpgradeStatus={setUpgradeStatus}
+              state={dbState}
+              upgradeStatus={upgradeStatus}
+            />
+          );
+        }
+        case UpgradeStatus.UPGRADED: {
+          return (
+            <Result
+              extra={
+                <Button onClick={close} size={'large'} type={'primary'}>
+                  {t('dbV1.action.start')}
+                </Button>
+              }
+              icon={<Icon icon={CheckCircle} />}
+              status={'success'}
+              style={{ paddingBlock: 24 }}
+              subTitle={t('dbV1.upgrade.success.subTitle')}
+              title={t('dbV1.upgrade.success.title')}
+            />
+          );
+        }
+        case UpgradeStatus.UPGRADE_FAILED: {
+          return (
+            <Failed
+              error={error}
+              setError={setError}
+              setUpgradeStatus={setUpgradeStatus}
+              state={dbState}
+              upgradeStatus={upgradeStatus}
+            />
+          );
+        }
       }
-      case UpgradeStatus.UPGRADED: {
-        return (
-          <Result
-            extra={
-              <Button onClick={close} size={'large'} type={'primary'}>
-                {t('dbV1.action.start')}
-              </Button>
-            }
-            icon={<Icon icon={CheckCircle} />}
-            status={'success'}
-            style={{ paddingBlock: 24 }}
-            subTitle={t('dbV1.upgrade.success.subTitle')}
-            title={t('dbV1.upgrade.success.title')}
-          />
-        );
-      }
-      case UpgradeStatus.UPGRADE_FAILED: {
-        return (
-          <Failed
-            error={error}
-            setError={setError}
-            setUpgradeStatus={setUpgradeStatus}
-            state={dbState}
-            upgradeStatus={upgradeStatus}
-          />
-        );
-      }
-    }
-  };
+    };
 
-  return (
-    <DataStyleModal icon={CpuIcon} open={open} title={t('dbV1.title')}>
-      <Center gap={48}>{renderContent()}</Center>
-    </DataStyleModal>
-  );
-});
+    return (
+      <DataStyleModal icon={CpuIcon} open={open} title={t('dbV1.title')}>
+        <Center gap={48}>{renderContent()}</Center>
+      </DataStyleModal>
+    );
+  }
+);
 
 export default MigrationModal;

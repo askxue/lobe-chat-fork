@@ -7,7 +7,10 @@ import { useAgentStore } from '@/store/agent';
 import { useChatStore } from '@/store/chat';
 import { useSessionStore } from '@/store/session';
 import { sessionHelpers } from '@/store/session/helpers';
-import { sessionMetaSelectors, sessionSelectors } from '@/store/session/selectors';
+import {
+  sessionMetaSelectors,
+  sessionSelectors
+} from '@/store/session/selectors';
 
 import ListItem from '../../ListItem';
 import CreateGroupModal from '../../Modals/CreateGroupModal';
@@ -23,24 +26,34 @@ const SessionItem = memo<SessionItemProps>(({ id }) => {
   const [defaultModel] = useAgentStore((s) => [s.defaultAgentConfig.model]);
 
   const [active] = useSessionStore((s) => [s.activeId === id]);
-  const [loading] = useChatStore((s) => [!!s.chatLoadingId && id === s.activeId]);
+  const [loading] = useChatStore((s) => [
+    !!s.chatLoadingId && id === s.activeId
+  ]);
 
-  const [pin, title, description, avatar, avatarBackground, updateAt, model, group] =
-    useSessionStore((s) => {
-      const session = sessionSelectors.getSessionById(id)(s);
-      const meta = session.meta;
+  const [
+    pin,
+    title,
+    description,
+    avatar,
+    avatarBackground,
+    updateAt,
+    model,
+    group
+  ] = useSessionStore((s) => {
+    const session = sessionSelectors.getSessionById(id)(s);
+    const meta = session.meta;
 
-      return [
-        sessionHelpers.getSessionPinned(session),
-        sessionMetaSelectors.getTitle(meta),
-        sessionMetaSelectors.getDescription(meta),
-        sessionMetaSelectors.getAvatar(meta),
-        meta.backgroundColor,
-        session?.updatedAt,
-        session.model,
-        session?.group,
-      ];
-    });
+    return [
+      sessionHelpers.getSessionPinned(session),
+      sessionMetaSelectors.getTitle(meta),
+      sessionMetaSelectors.getDescription(meta),
+      sessionMetaSelectors.getAvatar(meta),
+      meta.backgroundColor,
+      session?.updatedAt,
+      session.model,
+      session?.group
+    ];
+  });
 
   const showModel = model !== defaultModel;
 
@@ -53,7 +66,7 @@ const SessionItem = memo<SessionItemProps>(({ id }) => {
         setOpen={setOpen}
       />
     ),
-    [group, id],
+    [group, id]
   );
 
   const addon = useMemo(
@@ -63,7 +76,7 @@ const SessionItem = memo<SessionItemProps>(({ id }) => {
           <ModelTag model={model} />
         </Flexbox>
       ),
-    [showModel, model],
+    [showModel, model]
   );
 
   return (

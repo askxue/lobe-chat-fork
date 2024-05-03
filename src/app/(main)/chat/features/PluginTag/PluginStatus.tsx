@@ -21,7 +21,7 @@ const PluginStatus = memo<PluginStatusProps>(({ title, id, deprecated }) => {
   const [status, isCustom, reinstallCustomPlugin] = useToolStore((s) => [
     toolSelectors.getManifestLoadingStatus(id)(s),
     customPluginSelectors.isCustomPlugin(id)(s),
-    s.reinstallCustomPlugin,
+    s.reinstallCustomPlugin
   ]);
 
   const manifest = useToolStore(toolSelectors.getManifestById(id), isEqual);

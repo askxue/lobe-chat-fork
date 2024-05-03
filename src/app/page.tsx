@@ -19,5 +19,5 @@ Page.displayName = 'Loading';
 export default Page;
 
 export const metadata: Metadata = {
-  alternates: { canonical: getCanonicalUrl('/') },
+  alternates: { canonical: getCanonicalUrl('/') }
 };

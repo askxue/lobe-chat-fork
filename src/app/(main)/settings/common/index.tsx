@@ -9,7 +9,10 @@ const Page = () => {
   return (
     <>
       <Theme />
-      <Common showAccessCodeConfig={SHOW_ACCESS_CODE_CONFIG} showOAuthLogin={ENABLE_OAUTH_SSO} />
+      <Common
+        showAccessCodeConfig={SHOW_ACCESS_CODE_CONFIG}
+        showOAuthLogin={ENABLE_OAUTH_SSO}
+      />
     </>
   );
 };

@@ -22,7 +22,10 @@ const Header = memo<{ mobile?: boolean }>(({ mobile }) => {
   const { t } = useTranslation('market');
   const { styles, theme } = useStyles();
   const createSession = useSessionStore((s) => s.createSession);
-  const agentItem = useMarketStore(agentMarketSelectors.currentAgentItem, isEqual);
+  const agentItem = useMarketStore(
+    agentMarketSelectors.currentAgentItem,
+    isEqual
+  );
 
   const { message } = App.useApp();
 
@@ -52,10 +55,12 @@ const Header = memo<{ mobile?: boolean }>(({ mobile }) => {
         height={120}
         style={{
           backgroundColor:
-            backgroundColor || mobile ? theme.colorBgElevated : theme.colorBgContainer,
+            backgroundColor || mobile
+              ? theme.colorBgElevated
+              : theme.colorBgContainer,
           borderRadius: '50%',
           overflow: 'hidden',
-          zIndex: 2,
+          zIndex: 2
         }}
         width={120}
       >
@@ -64,7 +69,11 @@ const Header = memo<{ mobile?: boolean }>(({ mobile }) => {
       <h2 className={styles.title}>{title}</h2>
       <Center gap={6} horizontal style={{ flexWrap: 'wrap' }}>
         {(tags as string[]).map((tag: string, index) => (
-          <Tag key={index} onClick={() => setSearchKeywords(tag)} style={{ margin: 0 }}>
+          <Tag
+            key={index}
+            onClick={() => setSearchKeywords(tag)}
+            style={{ margin: 0 }}
+          >
             {startCase(tag).trim()}
           </Tag>
         ))}
@@ -77,10 +86,18 @@ const Header = memo<{ mobile?: boolean }>(({ mobile }) => {
         {t('addAgent')}
       </Button>
       <Flexbox align={'center'} gap={12} horizontal>
-        <Link aria-label={author} className={styles.author} href={homepage} target={'_blank'}>
+        <Link
+          aria-label={author}
+          className={styles.author}
+          href={homepage}
+          target={'_blank'}
+        >
           @{author}
         </Link>
-        <time className={styles.time} dateTime={new Date(createAt).toISOString()}>
+        <time
+          className={styles.time}
+          dateTime={new Date(createAt).toISOString()}
+        >
           {createAt}
         </time>
       </Flexbox>

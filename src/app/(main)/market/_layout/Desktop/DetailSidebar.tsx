@@ -1,6 +1,10 @@
 'use client';
 
-import { DraggablePanel, DraggablePanelBody, DraggablePanelContainer } from '@lobehub/ui';
+import {
+  DraggablePanel,
+  DraggablePanelBody,
+  DraggablePanelContainer
+} from '@lobehub/ui';
 import { createStyles, useResponsive } from 'antd-style';
 import { PropsWithChildren, memo, useCallback, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
@@ -21,18 +25,20 @@ const useStyles = createStyles(({ css, token, stylish }) => ({
   header: css`
     border-bottom: 1px solid ${token.colorBorder};
   `,
-  noScrollbar: stylish.noScrollbar,
+  noScrollbar: stylish.noScrollbar
 }));
 
 const DetailSidebar = memo<PropsWithChildren>(({ children }) => {
   const { styles } = useStyles();
   const { md = true } = useResponsive();
   const [tempId, setTempId] = useState<string>('');
-  const [showAgentSidebar, deactivateAgent, activateAgent] = useMarketStore((s) => [
-    agentMarketSelectors.showSideBar(s),
-    s.deactivateAgent,
-    s.activateAgent,
-  ]);
+  const [showAgentSidebar, deactivateAgent, activateAgent] = useMarketStore(
+    (s) => [
+      agentMarketSelectors.showSideBar(s),
+      s.deactivateAgent,
+      s.activateAgent
+    ]
+  );
 
   const handleExpandChange = useCallback(
     (show: boolean) => {
@@ -43,7 +49,7 @@ const DetailSidebar = memo<PropsWithChildren>(({ children }) => {
         activateAgent(tempId);
       }
     },
-    [deactivateAgent, activateAgent, tempId],
+    [deactivateAgent, activateAgent, tempId]
   );
 
   const minWidth = md ? MARKET_SIDEBAR_WIDTH : 350;
@@ -52,7 +58,7 @@ const DetailSidebar = memo<PropsWithChildren>(({ children }) => {
     <DraggablePanel
       className={styles.drawer}
       classNames={{
-        content: styles.content,
+        content: styles.content
       }}
       expand={showAgentSidebar}
       maxWidth={'80vw' as any}
@@ -66,7 +72,7 @@ const DetailSidebar = memo<PropsWithChildren>(({ children }) => {
         style={{
           flex: 'none',
           height: '100%',
-          minWidth: minWidth,
+          minWidth: minWidth
         }}
       >
         {md && <SafeSpacing />}

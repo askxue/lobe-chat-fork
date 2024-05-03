@@ -13,7 +13,7 @@ describe('SessionGroupModel', () => {
     // 设置正确结构的会话组数据
     sessionGroupData = {
       name: 'test-group',
-      sort: 1,
+      sort: 1
     };
   });
 
@@ -26,7 +26,7 @@ describe('SessionGroupModel', () => {
     it('should create a session group record', async () => {
       const createdGroup = await SessionGroupModel.create(
         sessionGroupData.name,
-        sessionGroupData.sort,
+        sessionGroupData.sort
       );
       const item = await SessionGroupModel.findById(createdGroup.id);
       expect(item.name).toEqual(sessionGroupData.name);
@@ -38,7 +38,7 @@ describe('SessionGroupModel', () => {
     it('should batch create session group records', async () => {
       const groups = [
         sessionGroupData,
-        { ...sessionGroupData, name: 'another-group' },
+        { ...sessionGroupData, name: 'another-group' }
       ] as SessionGroups;
       await SessionGroupModel.batchCreate(groups);
       const fetchedGroups = await SessionGroupModel.query();
@@ -50,9 +50,12 @@ describe('SessionGroupModel', () => {
     it('should update a session group', async () => {
       const createdGroup = await SessionGroupModel.create(
         sessionGroupData.name,
-        sessionGroupData.sort,
+        sessionGroupData.sort
       );
-      const updatedGroupData: DB_SessionGroup = { ...sessionGroupData, name: 'updated-group' };
+      const updatedGroupData: DB_SessionGroup = {
+        ...sessionGroupData,
+        name: 'updated-group'
+      };
       await SessionGroupModel.update(createdGroup.id, updatedGroupData);
       const fetchedGroups = await SessionGroupModel.query();
       expect(fetchedGroups[0].name).toEqual(updatedGroupData.name);
@@ -63,7 +66,7 @@ describe('SessionGroupModel', () => {
     it('should delete a session group', async () => {
       const createdGroup = await SessionGroupModel.create(
         sessionGroupData.name,
-        sessionGroupData.sort,
+        sessionGroupData.sort
       );
       await SessionGroupModel.delete(createdGroup.id);
       const fetchedGroups = await SessionGroupModel.query();
@@ -73,7 +76,7 @@ describe('SessionGroupModel', () => {
       // Create a new session group
       const createdGroup = await SessionGroupModel.create(
         sessionGroupData.name,
-        sessionGroupData.sort,
+        sessionGroupData.sort
       );
 
       // Delete the created session group
@@ -92,7 +95,7 @@ describe('SessionGroupModel', () => {
     it('should update associated sessions to default group when a session group is deleted', async () => {
       const createdGroup = await SessionGroupModel.create(
         sessionGroupData.name,
-        sessionGroupData.sort,
+        sessionGroupData.sort
       );
       const sessionId = await SessionModel.create('agent', {}, createdGroup.id);
       await SessionGroupModel.delete(createdGroup.id);
@@ -103,7 +106,10 @@ describe('SessionGroupModel', () => {
 
   describe('query', () => {
     it('should fetch and return the session group list', async () => {
-      await SessionGroupModel.create(sessionGroupData.name, sessionGroupData.sort);
+      await SessionGroupModel.create(
+        sessionGroupData.name,
+        sessionGroupData.sort
+      );
       const fetchedGroups = await SessionGroupModel.query();
       expect(fetchedGroups).toHaveLength(1);
       expect(fetchedGroups[0].name).toEqual(sessionGroupData.name);
@@ -175,11 +181,14 @@ describe('SessionGroupModel', () => {
 
   describe('updateOrder', () => {
     it('should update the order of session groups', async () => {
-      const group1 = await SessionGroupModel.create(sessionGroupData.name, sessionGroupData.sort);
+      const group1 = await SessionGroupModel.create(
+        sessionGroupData.name,
+        sessionGroupData.sort
+      );
       const group2 = await SessionGroupModel.create('another-group', 2);
       await SessionGroupModel.updateOrder([
         { id: group1.id, sort: 2 },
-        { id: group2.id, sort: 1 },
+        { id: group2.id, sort: 1 }
       ]);
       const fetchedGroups = await SessionGroupModel.query();
       expect(fetchedGroups[0].id).toEqual(group2.id);
@@ -191,16 +200,22 @@ describe('SessionGroupModel', () => {
     it('should find a session group by id', async () => {
       const createdGroup = await SessionGroupModel.create(
         sessionGroupData.name,
-        sessionGroupData.sort,
+        sessionGroupData.sort
       );
       const fetchedGroup = await SessionGroupModel.findById(createdGroup.id);
-      expect(fetchedGroup).toMatchObject({ ...createdGroup, ...sessionGroupData });
+      expect(fetchedGroup).toMatchObject({
+        ...createdGroup,
+        ...sessionGroupData
+      });
     });
   });
 
   describe('clear', () => {
     it('should clear all session groups', async () => {
-      await SessionGroupModel.create(sessionGroupData.name, sessionGroupData.sort);
+      await SessionGroupModel.create(
+        sessionGroupData.name,
+        sessionGroupData.sort
+      );
       const first = await SessionGroupModel.query();
       expect(first).toHaveLength(1);
 

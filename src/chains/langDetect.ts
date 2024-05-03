@@ -1,31 +1,33 @@
 import { ChatStreamPayload } from '@/types/openai/chat';
 
-export const chainLangDetect = (content: string): Partial<ChatStreamPayload> => ({
+export const chainLangDetect = (
+  content: string
+): Partial<ChatStreamPayload> => ({
   messages: [
     {
       content:
         '你是一名精通全世界语言的语言专家，你需要识别用户输入的内容，以国际标准 locale 进行输出',
-      role: 'system',
+      role: 'system'
     },
     {
       content: '{你好}',
-      role: 'user',
+      role: 'user'
     },
     {
       content: 'zh-CN',
-      role: 'assistant',
+      role: 'assistant'
     },
     {
       content: '{hello}',
-      role: 'user',
+      role: 'user'
     },
     {
       content: 'en-US',
-      role: 'assistant',
+      role: 'assistant'
     },
     {
       content: `{${content}}`,
-      role: 'user',
-    },
-  ],
+      role: 'user'
+    }
+  ]
 });

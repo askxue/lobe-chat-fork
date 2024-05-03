@@ -4,14 +4,16 @@ import { z } from 'zod';
 const TranslateSchema = z.object({
   from: z.string().optional(),
   to: z.string(),
-  content: z.string().optional(),
+  content: z.string().optional()
 });
 
 const PluginSchema = z.object({
   identifier: z.string(),
   arguments: z.string(),
   apiName: z.string(),
-  type: z.enum(['default', 'markdown', 'standalone', 'builtin']).default('default'),
+  type: z
+    .enum(['default', 'markdown', 'standalone', 'builtin'])
+    .default('default')
 });
 
 export const DB_MessageSchema = z.object({
@@ -35,7 +37,7 @@ export const DB_MessageSchema = z.object({
   parentId: z.string().optional(),
   quotaId: z.string().optional(),
   sessionId: z.string(),
-  topicId: z.string().nullable().optional(),
+  topicId: z.string().nullable().optional()
 });
 
 export type DB_Message = z.infer<typeof DB_MessageSchema>;

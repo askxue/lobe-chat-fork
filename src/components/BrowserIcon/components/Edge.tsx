@@ -4,7 +4,12 @@ import { SVGComponent } from '../types';
 
 export default ({ ...props }: SVGComponent) => {
   return (
-    <svg aria-label="Edge" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      aria-label="Edge"
+      viewBox="0 0 512 512"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
       <rect fill="#fff" height={512} rx="15%" width={512} />
       <radialGradient cx={0.6} cy={0.5} id="prefix__a">
         <stop offset={0.8} stopColor="#148" />

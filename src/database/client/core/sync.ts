@@ -8,7 +8,7 @@ import {
   OnSyncEvent,
   OnSyncStatusChange,
   PeerSyncStatus,
-  StartDataSyncParams,
+  StartDataSyncParams
 } from '@/types/sync';
 
 import { LobeDBSchemaMap, browserDB } from './db';
@@ -54,7 +54,7 @@ class DataSync {
       onSyncStatusChange,
       user,
       onAwarenessChange,
-      signaling = 'wss://y-webrtc-signaling.lobehub.com',
+      signaling = 'wss://y-webrtc-signaling.lobehub.com'
     } = params;
     // ====== 1. init yjs doc ====== //
 
@@ -70,7 +70,7 @@ class DataSync {
     // clients connected to the same room-name share document updates
     this.provider = new WebrtcProvider(channel.name, this._ydoc!, {
       password: channel.password,
-      signaling: [signaling],
+      signaling: [signaling]
     });
 
     // when fast refresh in dev, the provider will be cached in window
@@ -97,7 +97,8 @@ class DataSync {
     let connectionCheckCount = 0;
 
     this.waitForConnecting = setInterval(() => {
-      const signalingConnection: IWebsocketClient = this.provider!.signalingConns[0];
+      const signalingConnection: IWebsocketClient =
+        this.provider!.signalingConns[0];
 
       if (signalingConnection.connected) {
         onSyncStatusChange?.(PeerSyncStatus.Ready);
@@ -183,23 +184,33 @@ class DataSync {
 
   private initSync = async () => {
     await Promise.all(
-      ['sessions', 'sessionGroups', 'topics', 'messages', 'plugins'].map(async (tableKey) =>
-        this.loadDataFromDBtoYjs(tableKey as keyof LobeDBSchemaMap),
-      ),
+      ['sessions', 'sessionGroups', 'topics', 'messages', 'plugins'].map(
+        async (tableKey) =>
+          this.loadDataFromDBtoYjs(tableKey as keyof LobeDBSchemaMap)
+      )
     );
   };
 
-  private initYjsObserve = (onEvent: OnSyncEvent, onSyncStatusChange: OnSyncStatusChange) => {
-    ['sessions', 'sessionGroups', 'topics', 'messages', 'plugins'].forEach((tableKey) => {
-      // listen yjs change
-      this.observeYMapChange(tableKey as keyof LobeDBSchemaMap, onEvent, onSyncStatusChange);
-    });
+  private initYjsObserve = (
+    onEvent: OnSyncEvent,
+    onSyncStatusChange: OnSyncStatusChange
+  ) => {
+    ['sessions', 'sessionGroups', 'topics', 'messages', 'plugins'].forEach(
+      (tableKey) => {
+        // listen yjs change
+        this.observeYMapChange(
+          tableKey as keyof LobeDBSchemaMap,
+          onEvent,
+          onSyncStatusChange
+        );
+      }
+    );
   };
 
   private observeYMapChange = (
     tableKey: keyof LobeDBSchemaMap,
     onEvent: OnSyncEvent,
-    onSyncStatusChange: OnSyncStatusChange,
+    onSyncStatusChange: OnSyncStatusChange
   ) => {
     const table = browserDB[tableKey];
     const yItemMap = this.getYMap(tableKey);
@@ -278,13 +289,17 @@ class DataSync {
     this.logger('[DB]:', tableKey, yItemMap?.size);
   };
 
-  private initAwareness = ({ user }: Pick<StartDataSyncParams, 'user' | 'onAwarenessChange'>) => {
+  private initAwareness = ({
+    user
+  }: Pick<StartDataSyncParams, 'user' | 'onAwarenessChange'>) => {
     if (!this.provider) return;
 
     const awareness = this.provider.awareness;
 
     awareness.setLocalState({ clientID: awareness.clientID, user });
-    this.onAwarenessChange?.([{ ...user, clientID: awareness.clientID, current: true }]);
+    this.onAwarenessChange?.([
+      { ...user, clientID: awareness.clientID, current: true }
+    ]);
 
     awareness.on('change', () => this.syncAwarenessToUI());
   };
@@ -297,7 +312,7 @@ class DataSync {
     const state = Array.from(awareness.getStates().values()).map((s) => ({
       ...s.user,
       clientID: s.clientID,
-      current: s.clientID === awareness.clientID,
+      current: s.clientID === awareness.clientID
     }));
 
     this.onAwarenessChange?.(uniqBy(state, 'id'));

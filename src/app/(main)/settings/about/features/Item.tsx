@@ -17,7 +17,7 @@ const useStyles = createStyles(({ css, token, responsive }) => ({
   `,
   noHover: css`
     pointer-events: none;
-  `,
+  `
 }));
 
 export interface ItemProps {
@@ -37,14 +37,18 @@ const SettingItem = memo<ItemProps>(
       <Item
         active={active}
         avatar={<Icon icon={icon} size={{ fontSize: 20 }} />}
-        className={cx(styles.container, !hoverable && styles.noHover, className)}
+        className={cx(
+          styles.container,
+          !hoverable && styles.noHover,
+          className
+        )}
         style={style}
         title={label as string}
       >
         {mobile && <Icon icon={ChevronRight} size={{ fontSize: 16 }} />}
       </Item>
     );
-  },
+  }
 );
 
 export default SettingItem;

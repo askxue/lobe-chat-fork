@@ -1,6 +1,15 @@
 import { act, renderHook } from '@testing-library/react';
 import useSWR from 'swr';
-import { Mock, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import {
+  Mock,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi
+} from 'vitest';
 
 import { fileService } from '@/services/file';
 
@@ -13,13 +22,13 @@ vi.mock('@/services/file', () => ({
   fileService: {
     removeFile: vi.fn(),
     uploadFile: vi.fn(),
-    getFile: vi.fn(),
-  },
+    getFile: vi.fn()
+  }
 }));
 
 // Mock for useSWR
 vi.mock('swr', () => ({
-  default: vi.fn(),
+  default: vi.fn()
 }));
 
 //  mock the arrayBuffer
@@ -34,7 +43,7 @@ beforeAll(() => {
         };
         reader.readAsArrayBuffer(this);
       });
-    },
+    }
   });
 });
 
@@ -71,7 +80,9 @@ describe('useFileStore:images', () => {
 
     // Populate the list to remove an item later
     act(() => {
-      useStore.setState(({ inputFilesList }) => ({ inputFilesList: [...inputFilesList, fileId] }));
+      useStore.setState(({ inputFilesList }) => ({
+        inputFilesList: [...inputFilesList, fileId]
+      }));
       //   // result.current.inputFilesList.push(fileId);
     });
 
@@ -92,7 +103,7 @@ describe('useFileStore:images', () => {
       url: 'blob:test',
       fileType: 'image/png',
       base64Url: '',
-      saveMode: 'local',
+      saveMode: 'local'
     };
 
     // Mock the fileService.getFile to resolve with fileData
@@ -124,10 +135,14 @@ describe('useFileStore:images', () => {
 
       // 模拟 fileService.uploadFile 抛出错误
       const errorMessage = 'Upload failed';
-      (fileService.uploadFile as Mock).mockRejectedValue(new Error(errorMessage));
+      (fileService.uploadFile as Mock).mockRejectedValue(
+        new Error(errorMessage)
+      );
 
       // Mock console.error for testing
-      const consoleErrorMock = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleErrorMock = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
 
       await act(async () => {
         await result.current.uploadFile(testFile);
@@ -139,12 +154,15 @@ describe('useFileStore:images', () => {
         fileType: testFile.type,
         name: testFile.name,
         saveMode: 'local',
-        size: testFile.size,
+        size: testFile.size
       });
       // 由于上传失败，inputFilesList 应该没有变化
       expect(result.current.inputFilesList).toEqual([]);
       // 确保错误被正确记录
-      expect(consoleErrorMock).toHaveBeenCalledWith('upload error:', expect.any(Error));
+      expect(consoleErrorMock).toHaveBeenCalledWith(
+        'upload error:',
+        expect.any(Error)
+      );
 
       // Cleanup mock
       consoleErrorMock.mockRestore();
@@ -162,7 +180,7 @@ describe('useFileStore:images', () => {
         fileType: testFile.type,
         name: testFile.name,
         saveMode: 'local',
-        size: testFile.size,
+        size: testFile.size
       };
 
       // Mock the fileService.uploadFile to resolve with uploadedFileData
@@ -178,7 +196,7 @@ describe('useFileStore:images', () => {
         fileType: testFile.type,
         name: testFile.name,
         saveMode: 'local',
-        size: testFile.size,
+        size: testFile.size
       });
       expect(result.current.inputFilesList).toContain(uploadedFileData.id);
     });

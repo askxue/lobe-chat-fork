@@ -10,7 +10,7 @@ export interface AuthContext {
  * This is useful for testing when we don't want to mock Next.js' request/response
  */
 export const createContextInner = async (): Promise<AuthContext> => ({
-  userId: null,
+  userId: null
 });
 
 export type Context = Awaited<ReturnType<typeof createContextInner>>;

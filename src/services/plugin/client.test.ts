@@ -18,8 +18,8 @@ vi.mock('@/database/client/models/plugin', () => ({
     create: vi.fn(),
     delete: vi.fn(),
     update: vi.fn(),
-    clear: vi.fn(),
-  },
+    clear: vi.fn()
+  }
 }));
 
 beforeEach(() => {
@@ -32,8 +32,11 @@ describe('PluginService', () => {
       // Arrange
       const fakePlugin = {
         identifier: 'test-plugin',
-        manifest: { name: 'TestPlugin', version: '1.0.0' } as unknown as LobeChatPluginManifest,
-        type: 'plugin',
+        manifest: {
+          name: 'TestPlugin',
+          version: '1.0.0'
+        } as unknown as LobeChatPluginManifest,
+        type: 'plugin'
       } as InstallPluginParams;
       vi.mocked(PluginModel.create).mockResolvedValue(fakePlugin);
 
@@ -49,8 +52,12 @@ describe('PluginService', () => {
   describe('getInstalledPlugins', () => {
     it('should return a list of installed plugins', async () => {
       // Arrange
-      const fakePlugins = [{ identifier: 'test-plugin', type: 'plugin' }] as LobeTool[];
-      vi.mocked(PluginModel.getList).mockResolvedValue(fakePlugins as DB_Plugin[]);
+      const fakePlugins = [
+        { identifier: 'test-plugin', type: 'plugin' }
+      ] as LobeTool[];
+      vi.mocked(PluginModel.getList).mockResolvedValue(
+        fakePlugins as DB_Plugin[]
+      );
 
       // Act
       const installedPlugins = await pluginService.getInstalledPlugins();
@@ -82,7 +89,7 @@ describe('PluginService', () => {
       const customPlugin = {
         identifier: 'custom-plugin',
         manifest: {},
-        type: 'customPlugin',
+        type: 'customPlugin'
       } as LobeToolCustomPlugin;
       vi.mocked(PluginModel.create).mockResolvedValue(customPlugin);
 
@@ -92,7 +99,7 @@ describe('PluginService', () => {
       // Assert
       expect(PluginModel.create).toHaveBeenCalledWith({
         ...customPlugin,
-        type: 'customPlugin',
+        type: 'customPlugin'
       });
       expect(result).toEqual(customPlugin);
     });
@@ -102,7 +109,9 @@ describe('PluginService', () => {
     it('should update a plugin', async () => {
       // Arrange
       const id = 'plugin-id';
-      const value = { settings: { ab: '1' } } as unknown as LobeToolCustomPlugin;
+      const value = {
+        settings: { ab: '1' }
+      } as unknown as LobeToolCustomPlugin;
       vi.mocked(PluginModel.update).mockResolvedValue(1);
 
       // Act
@@ -118,7 +127,9 @@ describe('PluginService', () => {
     it('should update a plugin manifest', async () => {
       // Arrange
       const id = 'plugin-id';
-      const manifest = { name: 'NewPluginManifest' } as unknown as LobeChatPluginManifest;
+      const manifest = {
+        name: 'NewPluginManifest'
+      } as unknown as LobeChatPluginManifest;
       vi.mocked(PluginModel.update).mockResolvedValue(1);
 
       // Act

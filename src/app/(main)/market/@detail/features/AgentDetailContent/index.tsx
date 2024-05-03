@@ -16,13 +16,13 @@ import { useStyles } from './style';
 
 enum InfoTabs {
   comment = 'comment',
-  prompt = 'prompt',
+  prompt = 'prompt'
 }
 
 const AgentModalInner = memo<{ mobile?: boolean }>(({ mobile }) => {
   const [useFetchAgent, currentIdentifier] = useMarketStore((s) => [
     s.useFetchAgent,
-    s.currentIdentifier,
+    s.currentIdentifier
   ]);
   const { t } = useTranslation('market');
   const [tab, setTab] = useState<string>(InfoTabs.prompt);
@@ -53,12 +53,12 @@ const AgentModalInner = memo<{ mobile?: boolean }>(({ mobile }) => {
                 <Flexbox align={'center'} gap={8} horizontal>
                   {t('sidebar.prompt')} <TokenTag systemRole={systemRole} />
                 </Flexbox>
-              ),
+              )
             },
             {
               key: InfoTabs.comment,
-              label: t('sidebar.comment'),
-            },
+              label: t('sidebar.comment')
+            }
           ]}
           onChange={setTab}
           variant={'compact'}

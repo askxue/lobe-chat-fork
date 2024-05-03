@@ -4,5 +4,5 @@ export {
   modelConfigSelectors,
   modelProviderSelectors,
   settingsSelectors,
-  syncSettingsSelectors,
+  syncSettingsSelectors
 } from './slices/settings/selectors';

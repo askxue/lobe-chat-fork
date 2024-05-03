@@ -10,16 +10,16 @@ export const LobeOpenRouterAI = LobeOpenAICompatibleFactory({
   constructorOptions: {
     defaultHeaders: {
       'HTTP-Referer': 'https://chat-preview.lobehub.com',
-      'X-Title': 'Lobe Chat',
-    },
+      'X-Title': 'Lobe Chat'
+    }
   },
   debug: {
-    chatCompletion: () => process.env.DEBUG_OPENROUTER_CHAT_COMPLETION === '1',
+    chatCompletion: () => process.env.DEBUG_OPENROUTER_CHAT_COMPLETION === '1'
   },
 
   errorType: {
     bizError: AgentRuntimeErrorType.OpenRouterBizError,
-    invalidAPIKey: AgentRuntimeErrorType.InvalidOpenRouterAPIKey,
+    invalidAPIKey: AgentRuntimeErrorType.InvalidOpenRouterAPIKey
   },
   models: {
     transformModel: (m) => {
@@ -28,7 +28,9 @@ export const LobeOpenRouterAI = LobeOpenAICompatibleFactory({
       return {
         description: model.description,
         displayName: model.name,
-        enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
+        enabled:
+          LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))
+            ?.enabled || false,
         functionCall: model.description.includes('function calling'),
         id: model.id,
         maxTokens:
@@ -36,9 +38,10 @@ export const LobeOpenRouterAI = LobeOpenAICompatibleFactory({
             ? model.top_provider.max_completion_tokens
             : undefined,
         tokens: model.context_length,
-        vision: model.description.includes('vision') || model.id.includes('vision'),
+        vision:
+          model.description.includes('vision') || model.id.includes('vision')
       };
-    },
+    }
   },
-  provider: ModelProvider.OpenRouter,
+  provider: ModelProvider.OpenRouter
 });

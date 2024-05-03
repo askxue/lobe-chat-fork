@@ -9,7 +9,9 @@ const ollamaService = new OllamaService({ fetch });
 describe('OllamaService', () => {
   describe('list models', async () => {
     it('should make a GET request with the correct payload', async () => {
-      (fetch as Mock).mockResolvedValueOnce(new Response(JSON.stringify({ models: [] })));
+      (fetch as Mock).mockResolvedValueOnce(
+        new Response(JSON.stringify({ models: [] }))
+      );
 
       expect(await ollamaService.getModels()).toEqual({ models: [] });
 

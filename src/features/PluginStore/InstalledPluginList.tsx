@@ -15,7 +15,10 @@ export const InstalledPluginList = memo(() => {
   const { t } = useTranslation('plugin');
   const [keywords, setKeywords] = useState<string>();
   const { mobile } = useResponsive();
-  const installedPlugins = useToolStore(pluginSelectors.installedPluginMetaList, isEqual);
+  const installedPlugins = useToolStore(
+    pluginSelectors.installedPluginMetaList,
+    isEqual
+  );
 
   return (
     <>
@@ -37,11 +40,16 @@ export const InstalledPluginList = memo(() => {
       <Flexbox gap={24}>
         {installedPlugins
           .filter((item) =>
-            [item.meta?.title, item.meta?.description, item.author, ...(item.meta?.tags || [])]
+            [
+              item.meta?.title,
+              item.meta?.description,
+              item.author,
+              ...(item.meta?.tags || [])
+            ]
               .filter(Boolean)
               .join('')
               .toLowerCase()
-              .includes((keywords || '')?.toLowerCase()),
+              .includes((keywords || '')?.toLowerCase())
           )
           .map((i) => (
             <PluginItem {...i} key={i.identifier} />

@@ -8,5 +8,7 @@ export const LOBE_LOCALE_COOKIE = 'LOBE_LOCALE';
  * @param locale
  */
 export const isLocaleNotSupport = (locale: string) => {
-  return normalizeLocale(locale) === DEFAULT_LANG || !supportLocales.includes(locale);
+  return (
+    normalizeLocale(locale) === DEFAULT_LANG || !supportLocales.includes(locale)
+  );
 };

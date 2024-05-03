@@ -23,5 +23,12 @@ export const getOpenAIAuthFromRequest = (req: Request) => {
   const oauthAuthorized = !!oauthAuthorizedStr;
   const useAzure = !!useAzureStr;
 
-  return { accessCode, apiKey, apiVersion, endpoint, oauthAuthorized, useAzure };
+  return {
+    accessCode,
+    apiKey,
+    apiVersion,
+    endpoint,
+    oauthAuthorized,
+    useAzure
+  };
 };

@@ -1,6 +1,10 @@
 import { t } from 'i18next';
 
-import { DEFAULT_AVATAR, DEFAULT_BACKGROUND_COLOR, DEFAULT_INBOX_AVATAR } from '@/const/meta';
+import {
+  DEFAULT_AVATAR,
+  DEFAULT_BACKGROUND_COLOR,
+  DEFAULT_INBOX_AVATAR
+} from '@/const/meta';
 import { SessionStore } from '@/store/session';
 import { MetaData } from '@/types/meta';
 import { merge } from '@/utils/merge';
@@ -15,7 +19,7 @@ const currentAgentMeta = (s: SessionStore): MetaData => {
     avatar: isInbox ? DEFAULT_INBOX_AVATAR : DEFAULT_AVATAR,
     backgroundColor: DEFAULT_BACKGROUND_COLOR,
     description: isInbox ? t('inbox.desc', { ns: 'chat' }) : t('noDescription'),
-    title: isInbox ? t('inbox.title', { ns: 'chat' }) : t('defaultSession'),
+    title: isInbox ? t('inbox.title', { ns: 'chat' }) : t('defaultSession')
   };
 
   const session = sessionSelectors.currentSession(s);
@@ -24,12 +28,15 @@ const currentAgentMeta = (s: SessionStore): MetaData => {
 };
 
 const currentAgentTitle = (s: SessionStore) => currentAgentMeta(s).title;
-const currentAgentDescription = (s: SessionStore) => currentAgentMeta(s).description;
+const currentAgentDescription = (s: SessionStore) =>
+  currentAgentMeta(s).description;
 const currentAgentAvatar = (s: SessionStore) => currentAgentMeta(s).avatar;
-const currentAgentBackgroundColor = (s: SessionStore) => currentAgentMeta(s).backgroundColor;
+const currentAgentBackgroundColor = (s: SessionStore) =>
+  currentAgentMeta(s).backgroundColor;
 
 const getAvatar = (s: MetaData) => s.avatar || DEFAULT_AVATAR;
-const getTitle = (s: MetaData) => s.title || t('defaultSession', { ns: 'common' });
+const getTitle = (s: MetaData) =>
+  s.title || t('defaultSession', { ns: 'common' });
 export const getDescription = (s: MetaData) =>
   s.description || t('noDescription', { ns: 'common' });
 
@@ -41,5 +48,5 @@ export const sessionMetaSelectors = {
   currentAgentTitle,
   getAvatar,
   getDescription,
-  getTitle,
+  getTitle
 };

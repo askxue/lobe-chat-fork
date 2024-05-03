@@ -1,6 +1,15 @@
 import { act, renderHook } from '@testing-library/react';
 import useSWR from 'swr';
-import { Mock, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import {
+  Mock,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi
+} from 'vitest';
 
 import { fileService } from '@/services/file';
 
@@ -13,13 +22,13 @@ vi.mock('@/services/file', () => ({
   fileService: {
     removeFile: vi.fn(),
     uploadFile: vi.fn(),
-    getFile: vi.fn(),
-  },
+    getFile: vi.fn()
+  }
 }));
 
 // Mock for useSWR
 vi.mock('swr', () => ({
-  default: vi.fn(),
+  default: vi.fn()
 }));
 
 //  mock the arrayBuffer
@@ -34,7 +43,7 @@ beforeAll(() => {
         };
         reader.readAsArrayBuffer(this);
       });
-    },
+    }
   });
 });
 
@@ -68,7 +77,7 @@ describe('TTSFileAction', () => {
       fileType: testFile.type,
       name: testFile.name,
       saveMode: 'local',
-      size: testFile.size,
+      size: testFile.size
     };
 
     // Mock the fileService.uploadFile to resolve with uploadedFileData
@@ -85,7 +94,7 @@ describe('TTSFileAction', () => {
       fileType: testFile.type,
       name: testFile.name,
       saveMode: 'local',
-      size: testFile.size,
+      size: testFile.size
     });
     expect(fileId).toBe(uploadedFileData.id);
   });
@@ -104,7 +113,9 @@ describe('TTSFileAction', () => {
 
     let fileId;
     await act(async () => {
-      fileId = await useStore.getState().uploadTTSByArrayBuffers(messageId, arrayBuffers);
+      fileId = await useStore
+        .getState()
+        .uploadTTSByArrayBuffers(messageId, arrayBuffers);
     });
 
     expect(uploadTTSFileSpy).toHaveBeenCalled();
@@ -123,7 +134,7 @@ describe('TTSFileAction', () => {
       url: 'blob:test',
       fileType: 'audio/mp3',
       base64Url: '',
-      saveMode: 'local',
+      saveMode: 'local'
     };
 
     // Mock the fileService.getFile to resolve with fileData
@@ -136,7 +147,9 @@ describe('TTSFileAction', () => {
       return { data, error: undefined, isValidating: false, mutate: vi.fn() };
     }) as any);
 
-    const { result } = renderHook(() => useStore.getState().useFetchTTSFile(fileId));
+    const { result } = renderHook(() =>
+      useStore.getState().useFetchTTSFile(fileId)
+    );
 
     await act(async () => {
       await result.current.data;

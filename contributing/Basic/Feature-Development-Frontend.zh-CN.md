@@ -59,7 +59,8 @@ type ChatState = {
 
 export const useChatStore = create<ChatState>((set) => ({
   messages: [],
-  addMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
+  addMessage: (message) =>
+    set((state) => ({ messages: [...state.messages, message] }))
 }));
 ```
 
@@ -102,7 +103,12 @@ const ChatPage = () => {
   const addMessage = useChatStore((state) => state.addMessage);
 
   const handleSend = () => {
-    addMessage({ id: '1', content: 'Hello, world!', timestamp: Date.now(), sender: 'user' });
+    addMessage({
+      id: '1',
+      content: 'Hello, world!',
+      timestamp: Date.now(),
+      sender: 'user'
+    });
   };
 
   return (

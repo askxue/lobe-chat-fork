@@ -21,18 +21,20 @@ const Token = memo(() => {
 
   const [input, messageString] = useChatStore((s) => [
     s.inputMessage,
-    chatSelectors.chatsMessageString(s),
+    chatSelectors.chatsMessageString(s)
   ]);
 
   const [systemRole, model] = useAgentStore((s) => [
     agentSelectors.currentAgentSystemRole(s),
-    agentSelectors.currentAgentModel(s) as string,
+    agentSelectors.currentAgentModel(s) as string
   ]);
 
   const maxTokens = useUserStore(modelProviderSelectors.modelMaxToken(model));
 
   // Tool usage token
-  const canUseTool = useUserStore(modelProviderSelectors.isModelEnabledFunctionCall(model));
+  const canUseTool = useUserStore(
+    modelProviderSelectors.isModelEnabledFunctionCall(model)
+  );
   const plugins = useAgentStore(agentSelectors.currentAgentPlugins);
   const toolsString = useToolStore((s) => {
     const pluginSystemRoles = toolSelectors.enabledSystemRoles(plugins)(s);
@@ -76,7 +78,11 @@ const Token = memo(() => {
             <span>{t('tokenDetails.used')}</span>
             <span>{format(totalToken)}</span>
           </Flexbox>
-          <Flexbox horizontal justify={'space-between'} style={{ marginTop: 8 }}>
+          <Flexbox
+            horizontal
+            justify={'space-between'}
+            style={{ marginTop: 8 }}
+          >
             <span>{t('tokenDetails.total')}</span>
             <span>{format(maxTokens)}</span>
           </Flexbox>
@@ -94,7 +100,7 @@ const Token = memo(() => {
         text={{
           overload: t('tokenTag.overload'),
           remained: t('tokenTag.remained'),
-          used: t('tokenTag.used'),
+          used: t('tokenTag.used')
         }}
         value={totalToken}
       />

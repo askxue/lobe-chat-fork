@@ -12,7 +12,9 @@ describe('parseFeatureFlag', () => {
   });
 
   it('should disable a feature when prefixed with -', () => {
-    expect(parseFeatureFlag('-openai_api_key')).toEqual({ openai_api_key: false });
+    expect(parseFeatureFlag('-openai_api_key')).toEqual({
+      openai_api_key: false
+    });
   });
 
   it('should handle multiple flags separated by commas', () => {
@@ -20,7 +22,7 @@ describe('parseFeatureFlag', () => {
 
     expect(parseFeatureFlag(input)).toEqual({
       webrtc_sync: true,
-      openai_api_key: false,
+      openai_api_key: false
     });
   });
 
@@ -49,7 +51,7 @@ describe('parseFeatureFlag', () => {
 
     expect(parseFeatureFlag(input)).toEqual({
       webrtc_sync: true,
-      openai_api_key: false,
+      openai_api_key: false
     });
   });
 
@@ -58,7 +60,7 @@ describe('parseFeatureFlag', () => {
 
     expect(parseFeatureFlag(input)).toEqual({
       webrtc_sync: true,
-      openai_api_key: false,
+      openai_api_key: false
     });
   });
 

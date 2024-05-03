@@ -7,7 +7,7 @@ export const trpcClient = createTRPCClient<AppRouter>({
   links: [
     httpBatchLink({
       transformer: superjson,
-      url: '/trpc',
-    }),
-  ],
+      url: '/trpc'
+    })
+  ]
 });

@@ -24,7 +24,7 @@ const PluginDetailModal = memo<PluginDetailModalProps>(
   ({ schema, onClose, id, onTabChange, open, tab }) => {
     const [tabKey, setTabKey] = useMergeState('info', {
       onChange: onTabChange,
-      value: tab,
+      value: tab
     });
     const { t } = useTranslation('plugin');
 
@@ -50,12 +50,12 @@ const PluginDetailModal = memo<PluginDetailModalProps>(
               [
                 {
                   key: 'info',
-                  label: t('detailModal.tabs.info'),
+                  label: t('detailModal.tabs.info')
                 },
                 hasSettings && {
                   key: 'settings',
-                  label: t('detailModal.tabs.settings'),
-                },
+                  label: t('detailModal.tabs.settings')
+                }
               ].filter(Boolean) as TabsProps['items']
             }
             onChange={setTabKey}
@@ -69,7 +69,7 @@ const PluginDetailModal = memo<PluginDetailModalProps>(
         </Center>
       </Modal>
     );
-  },
+  }
 );
 
 export default PluginDetailModal;

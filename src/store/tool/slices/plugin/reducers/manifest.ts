@@ -3,7 +3,11 @@ import { produce } from 'immer';
 
 import { PluginManifestMap } from '@/types/tool/plugin';
 
-type AddManifestDispatch = { id: string; plugin: LobeChatPluginManifest; type: 'addManifest' };
+type AddManifestDispatch = {
+  id: string;
+  plugin: LobeChatPluginManifest;
+  type: 'addManifest';
+};
 type DeleteManifestDispatch = { id: string; type: 'deleteManifest' };
 // type UpdateManifestDispatch = {
 //   id: string;
@@ -17,7 +21,7 @@ export type PluginDispatch = AddManifestDispatch | DeleteManifestDispatch;
 
 export const pluginManifestReducer = (
   state: PluginManifestMap,
-  payload: PluginDispatch,
+  payload: PluginDispatch
 ): PluginManifestMap => {
   switch (payload.type) {
     case 'addManifest': {

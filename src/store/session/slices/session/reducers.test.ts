@@ -10,13 +10,13 @@ describe('sessionsReducer', () => {
   const mockSession = {
     id: nanoid(),
     config: {
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-3.5-turbo'
     } as any,
     meta: {
       title: 'Test Agent',
       description: 'A test agent',
-      avatar: '',
-    },
+      avatar: ''
+    }
   } as any;
 
   const initialState: LobeSessions = [];
@@ -24,7 +24,7 @@ describe('sessionsReducer', () => {
   it('should add a new session', () => {
     const addAction: SessionDispatch = {
       session: mockSession,
-      type: 'addSession',
+      type: 'addSession'
     };
 
     const newState = sessionsReducer(initialState, addAction);
@@ -33,7 +33,7 @@ describe('sessionsReducer', () => {
     expect(newState[0]).toMatchObject({
       ...mockSession,
       createdAt: expect.any(Date),
-      updatedAt: expect.any(Date),
+      updatedAt: expect.any(Date)
     });
   });
 
@@ -41,7 +41,7 @@ describe('sessionsReducer', () => {
     const state: LobeSessions = [mockSession];
     const removeAction: SessionDispatch = {
       id: mockSession.id,
-      type: 'removeSession',
+      type: 'removeSession'
     };
 
     const newState = sessionsReducer(state, removeAction);
@@ -54,7 +54,7 @@ describe('sessionsReducer', () => {
     const updateAction: SessionDispatch = {
       id: mockSession.id,
       type: 'updateSession',
-      value: { group: 'abc' },
+      value: { group: 'abc' }
     };
 
     const newState = sessionsReducer(state, updateAction);
@@ -63,7 +63,7 @@ describe('sessionsReducer', () => {
     expect(newState[0]).toMatchObject({
       ...mockSession,
       group: 'abc',
-      updatedAt: expect.any(Date),
+      updatedAt: expect.any(Date)
     });
   });
 

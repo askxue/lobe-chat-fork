@@ -7,22 +7,22 @@ import { useQueryRoute } from './useQueryRoute';
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(() => ({
     push: vi.fn((href) => href),
-    replace: vi.fn((href) => href),
-  })),
+    replace: vi.fn((href) => href)
+  }))
 }));
 vi.mock('@/hooks/useQuery', () => ({
-  useQuery: vi.fn(() => ({ foo: 'bar' })),
+  useQuery: vi.fn(() => ({ foo: 'bar' }))
 }));
 vi.mock('@/utils/env', () => ({
-  isOnServerSide: false,
+  isOnServerSide: false
 }));
 
 describe('useQueryRoute', () => {
   it('should generate correct href without hash and replace', () => {
     const { result } = renderHook(() =>
       useQueryRoute().push('/example', {
-        query: { baz: 'qux' },
-      }),
+        query: { baz: 'qux' }
+      })
     );
 
     expect(result.current).toBe('/example?baz=qux&foo=bar');
@@ -32,8 +32,8 @@ describe('useQueryRoute', () => {
     const { result } = renderHook(() =>
       useQueryRoute().push('/example', {
         replace: true,
-        query: { baz: 'qux' },
-      }),
+        query: { baz: 'qux' }
+      })
     );
 
     expect(result.current).toBe('/example?baz=qux');
@@ -44,8 +44,8 @@ describe('useQueryRoute', () => {
       useQueryRoute().push('/example', {
         replace: true,
         query: { foo: 'bar' },
-        hash: 'section1',
-      }),
+        hash: 'section1'
+      })
     );
 
     expect(result.current).toBe('/example?foo=bar#section1');
@@ -55,8 +55,8 @@ describe('useQueryRoute', () => {
     const { result } = renderHook(() =>
       useQueryRoute().push('/example', {
         query: { foo: 'bar' },
-        hash: 'section1',
-      }),
+        hash: 'section1'
+      })
     );
 
     expect(result.current).toBe('/example?foo=bar#section1');
@@ -67,8 +67,8 @@ describe('useQueryRoute', () => {
       useQueryRoute().replace('/example', {
         replace: true,
         query: {},
-        hash: '',
-      }),
+        hash: ''
+      })
     );
 
     expect(result.current).toBe('/example');
@@ -77,8 +77,8 @@ describe('useQueryRoute', () => {
   it('should handle cases without hash when on server side', () => {
     const { result } = renderHook(() =>
       useQueryRoute().replace('/example', {
-        query: { foo: 'bar' },
-      }),
+        query: { foo: 'bar' }
+      })
     );
 
     expect(result.current).toBe('/example?foo=bar');

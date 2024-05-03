@@ -4,7 +4,10 @@ import { FilePreview } from '@/types/files';
 
 export interface IFileService {
   uploadFile(file: DB_File): Promise<any>;
-  uploadImageByUrl(url: string, file: Pick<DB_File, 'name' | 'metadata'>): Promise<any>;
+  uploadImageByUrl(
+    url: string,
+    file: Pick<DB_File, 'name' | 'metadata'>
+  ): Promise<any>;
   removeFile(id: string): Promise<any>;
   removeAllFiles(): Promise<any>;
   getFile(id: string): Promise<FilePreview>;

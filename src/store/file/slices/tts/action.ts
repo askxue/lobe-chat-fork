@@ -11,7 +11,7 @@ export interface TTSFileAction {
 
   uploadTTSByArrayBuffers: (
     messageId: string,
-    arrayBuffers: ArrayBuffer[],
+    arrayBuffers: ArrayBuffer[]
   ) => Promise<string | undefined>;
 
   uploadTTSFile: (file: File) => Promise<string | undefined>;
@@ -34,7 +34,7 @@ export const createTTSFileSlice: StateCreator<
     const fileName = `${messageId}.mp3`;
     const fileOptions = {
       lastModified: Date.now(),
-      type: fileType,
+      type: fileType
     };
     const file = new File([blob], fileName, fileOptions);
     return get().uploadTTSFile(file);
@@ -47,7 +47,7 @@ export const createTTSFileSlice: StateCreator<
         fileType: file.type,
         name: file.name,
         saveMode: 'local',
-        size: file.size,
+        size: file.size
       });
 
       return data.id;
@@ -56,5 +56,5 @@ export const createTTSFileSlice: StateCreator<
       console.error('upload error:', error);
     }
   },
-  useFetchTTSFile: (id) => useSWR(id, fileService.getFile),
+  useFetchTTSFile: (id) => useSWR(id, fileService.getFile)
 });

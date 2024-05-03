@@ -17,7 +17,7 @@ const GalleyGrid = memo<GalleyGridProps>(({ items, renderItem: Render }) => {
     if (items.length === 4) {
       return {
         firstRow: items.slice(0, 2),
-        lastRow: items.slice(2, 4),
+        lastRow: items.slice(2, 4)
       };
     }
 
@@ -25,16 +25,16 @@ const GalleyGrid = memo<GalleyGridProps>(({ items, renderItem: Render }) => {
 
     return {
       firstRow: items.slice(0, firstCol),
-      lastRow: items.slice(firstCol, items.length),
+      lastRow: items.slice(firstCol, items.length)
     };
   }, [items]);
 
   const { gap, max } = useMemo(
     () => ({
       gap: mobile ? 4 : 6,
-      max: mobile ? MAX_SIZE_MOBILE : MAX_SIZE_DESKTOP,
+      max: mobile ? MAX_SIZE_MOBILE : MAX_SIZE_DESKTOP
     }),
-    [mobile],
+    [mobile]
   );
 
   return (

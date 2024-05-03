@@ -12,16 +12,23 @@ interface ClientResponsiveLayoutProps {
   Mobile: Loader;
 }
 
-const ClientResponsiveLayout = ({ Desktop, Mobile }: ClientResponsiveLayoutProps) => {
+const ClientResponsiveLayout = ({
+  Desktop,
+  Mobile
+}: ClientResponsiveLayoutProps) => {
   const MobileComponent = dynamic(Mobile, {
     loading: MobileSwitchLoading,
-    ssr: false,
+    ssr: false
   }) as FC<PropsWithChildren>;
 
   const Layout = memo<PropsWithChildren>(({ children }) => {
     const mobile = useIsMobile();
 
-    return mobile ? <MobileComponent>{children}</MobileComponent> : <Desktop>{children}</Desktop>;
+    return mobile ? (
+      <MobileComponent>{children}</MobileComponent>
+    ) : (
+      <Desktop>{children}</Desktop>
+    );
   });
 
   Layout.displayName = 'ClientLayout';

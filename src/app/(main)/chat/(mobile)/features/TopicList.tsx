@@ -9,7 +9,7 @@ import TopicListContent from '../../features/TopicListContent';
 const Topics = memo(() => {
   const [showAgentSettings, toggleConfig] = useGlobalStore((s) => [
     s.preference.mobileShowTopic,
-    s.toggleMobileTopic,
+    s.toggleMobileTopic
   ]);
 
   const { t } = useTranslation('chat');

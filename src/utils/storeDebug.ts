@@ -4,7 +4,7 @@ export const setNamespace = (namespace: string) => {
     return payload
       ? {
           payload,
-          type: name,
+          type: name
         }
       : name;
   };

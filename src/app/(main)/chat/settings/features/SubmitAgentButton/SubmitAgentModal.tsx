@@ -25,10 +25,16 @@ const SubmitAgentModal = memo<ModalProps>(({ open, onCancel }) => {
   const systemRole = useAgentStore(agentSelectors.currentAgentSystemRole);
   const theme = useTheme();
   const meta = useSessionStore(sessionMetaSelectors.currentAgentMeta, isEqual);
-  const language = useUserStore((s) => settingsSelectors.currentSettings(s).language);
+  const language = useUserStore(
+    (s) => settingsSelectors.currentSettings(s).language
+  );
 
   const isMetaPass = Boolean(
-    meta && meta.title && meta.description && (meta.tags as string[])?.length > 0 && meta.avatar,
+    meta &&
+      meta.title &&
+      meta.description &&
+      (meta.tags as string[])?.length > 0 &&
+      meta.avatar
   );
 
   const handleSubmit = () => {
@@ -46,12 +52,12 @@ const SubmitAgentModal = memo<ModalProps>(({ open, onCancel }) => {
       '### tags',
       (meta.tags as string[]).join(', '),
       '### locale',
-      language === 'auto' ? navigator.language : language,
+      language === 'auto' ? navigator.language : language
     ].join('\n\n');
 
     const url = qs.stringifyUrl({
       query: { body, labels: '🤖 Agent PR', title: `[Agent] ${meta.title}` },
-      url: AGENTS_INDEX_GITHUB_ISSUE,
+      url: AGENTS_INDEX_GITHUB_ISSUE
     });
 
     window.open(url, '_blank');
@@ -77,7 +83,11 @@ const SubmitAgentModal = memo<ModalProps>(({ open, onCancel }) => {
     >
       <Flexbox gap={16}>
         {!isMetaPass && (
-          <Alert message={t('submitAgentModal.metaMiss')} showIcon type={'warning'} />
+          <Alert
+            message={t('submitAgentModal.metaMiss')}
+            showIcon
+            type={'warning'}
+          />
         )}
         <AgentInfo meta={meta} systemRole={systemRole} />
         <Divider style={{ margin: '8px 0' }} />

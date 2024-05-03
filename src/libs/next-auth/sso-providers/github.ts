@@ -10,8 +10,8 @@ const provider = {
     // Specify auth scope, at least include 'openid email'
     authorization: { params: { scope: 'read:user user:email' } },
     clientId: GITHUB_CLIENT_ID,
-    clientSecret: GITHUB_CLIENT_SECRET,
-  }),
+    clientSecret: GITHUB_CLIENT_SECRET
+  })
 };
 
 export default provider;
