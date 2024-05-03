@@ -80,7 +80,8 @@ const MigrationStart = memo<UpgradeButtonProps>((props) => {
         </Flexbox>
       </Flexbox>
       <Flexbox gap={32}>
-        {features.map((item) => (
+        {features.map((item) => {
+          return (
             <Flexbox align={'flex-start'} gap={24} horizontal key={item.title}>
               <Center className={styles.iconCtn}>
                 <Icon
@@ -94,7 +95,8 @@ const MigrationStart = memo<UpgradeButtonProps>((props) => {
                 <p className={styles.desc}>{item.desc}</p>
               </Flexbox>
             </Flexbox>
-          ))}
+          );
+        })}
       </Flexbox>
       <Flexbox align={'center'} gap={16} style={{ paddingBottom: 16 }}>
         <Flexbox

@@ -2,7 +2,8 @@ import React from 'react';
 
 import { SVGComponent } from '../types';
 
-export default ({ ...props }: SVGComponent) => (
+export default ({ ...props }: SVGComponent) => {
+  return (
     <svg
       aria-label="Safari"
       viewBox="0 0 512 512"
@@ -34,3 +35,4 @@ export default ({ ...props }: SVGComponent) => (
       <path d="M116 388l28-20-12 20 148-108 112-140-16 8 16-24" opacity={0.3} />
     </svg>
   );
+};

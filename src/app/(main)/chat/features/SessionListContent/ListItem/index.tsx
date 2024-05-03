@@ -5,7 +5,8 @@ import { memo, useMemo, useRef } from 'react';
 
 const { Item } = List;
 
-const useStyles = createStyles(({ css, token, responsive }) => ({
+const useStyles = createStyles(({ css, token, responsive }) => {
+  return {
     container: css`
       position: relative;
 
@@ -23,7 +24,8 @@ const useStyles = createStyles(({ css, token, responsive }) => ({
     title: css`
       line-height: 1.2;
     `
-  }));
+  };
+});
 
 const ListItem = memo<
   ListItemProps & { avatar: string; avatarBackground?: string }

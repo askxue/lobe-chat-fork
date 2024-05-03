@@ -39,10 +39,12 @@ export type Locales = keyof Resources;
 `;
 };
 
-export const genNamespaceList = (files: string[], locale: string) => files.map((file) => ({
+export const genNamespaceList = (files: string[], locale: string) => {
+  return files.map((file) => ({
     name: file.replace('.json', ''),
     path: resolve(i18nConfig.output, locale, file)
   }));
+};
 
 export const tagBlue = (text: string) =>
   colors.bgBlueBright(colors.black(` ${text} `));

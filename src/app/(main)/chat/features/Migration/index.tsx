@@ -23,10 +23,10 @@ const Migration = memo<PropsWithChildren>(({ children }) => {
     );
 
     // if db have migrated already, don't show modal
-    if (migrated) {return;}
+    if (migrated) return;
 
     // if db doesn't exist state key,it means a new user
-    if (!state) {return;}
+    if (!state) return;
 
     setDbState(state);
     setOpen(true);

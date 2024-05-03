@@ -45,7 +45,9 @@ const getReadmePath = (lang: string) => {
   );
 };
 
-export const readReadme = (lang: string): string => readFileSync(getReadmePath(lang), 'utf8');
+export const readReadme = (lang: string): string => {
+  return readFileSync(getReadmePath(lang), 'utf8');
+};
 
 export const writeReadme = (content: string, lang: string) => {
   writeFileSync(getReadmePath(lang), content, 'utf8');

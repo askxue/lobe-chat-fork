@@ -37,7 +37,8 @@ export const LobeTogetherAI = LobeOpenAICompatibleFactory({
 
     return models
       .filter((m) => m.display_type === 'chat')
-      .map((model) => ({
+      .map((model) => {
+        return {
           description: model.description,
           displayName: model.display_name,
           enabled:
@@ -50,7 +51,8 @@ export const LobeTogetherAI = LobeOpenAICompatibleFactory({
           vision:
             model.description?.includes('vision') ||
             model.name?.includes('vision')
-        }));
+        };
+      });
   },
   provider: ModelProvider.TogetherAI
 });

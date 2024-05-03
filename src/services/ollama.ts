@@ -19,9 +19,7 @@ interface OllamaServiceParams {
 
 export class OllamaService {
   private _host: string;
-
   private _client: OllamaBrowser;
-
   private _fetch?: typeof fetch;
 
   constructor(params: OllamaServiceParams = {}) {

@@ -49,13 +49,13 @@ export const checkAuthMethod = (
   const { ACCESS_CODES, ENABLE_OAUTH_SSO } = getServerConfig();
 
   // if OAuth 2 header is provided
-  if (ENABLE_OAUTH_SSO && oauthAuthorized) {return;}
+  if (ENABLE_OAUTH_SSO && oauthAuthorized) return;
 
   // if apiKey exist
-  if (apiKey) {return;}
+  if (apiKey) return;
 
   // if accessCode doesn't exist
-  if (!ACCESS_CODES.length) {return;}
+  if (!ACCESS_CODES.length) return;
 
   if (!accessCode || !ACCESS_CODES.includes(accessCode)) {
     console.warn(

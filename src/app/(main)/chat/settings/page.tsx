@@ -1,5 +1,7 @@
 import EditPage from './features/EditPage';
 
-const Page = () => <EditPage />;
+const Page = () => {
+  return <EditPage />;
+};
 
 export default Page;

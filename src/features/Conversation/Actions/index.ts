@@ -53,7 +53,7 @@ export const useActionsClick = (): OnActionsClick => {
       case 'regenerate': {
         regenerateMessage(id);
         // if this message is an error message, we need to delete it
-        if (error) {deleteMessage(id);}
+        if (error) deleteMessage(id);
         break;
       }
 

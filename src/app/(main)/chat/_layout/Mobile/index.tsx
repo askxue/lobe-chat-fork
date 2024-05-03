@@ -1,6 +1,8 @@
 import { LayoutProps } from '../type';
 
-const Layout = ({ children }: LayoutProps) => children;
+const Layout = ({ children }: LayoutProps) => {
+  return children;
+};
 
 Layout.displayName = 'MobileChatLayout';
 

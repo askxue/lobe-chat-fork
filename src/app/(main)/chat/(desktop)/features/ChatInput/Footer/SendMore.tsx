@@ -20,13 +20,15 @@ import { useUserStore } from '@/store/user';
 import { preferenceSelectors } from '@/store/user/selectors';
 import { isMacOS } from '@/utils/platform';
 
-const useStyles = createStyles(({ css, prefixCls }) => ({
+const useStyles = createStyles(({ css, prefixCls }) => {
+  return {
     arrow: css`
       &.${prefixCls}-btn.${prefixCls}-btn-icon-only {
         width: 28px;
       }
     `
-  }));
+  };
+});
 
 const isMac = isMacOS();
 

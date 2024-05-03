@@ -24,6 +24,8 @@ const chatStreamable = async function* (stream: AsyncIterable<ChatResponse>) {
 export const OllamaStream = (
   res: AsyncIterable<ChatResponse>,
   cb?: AIStreamCallbacksAndOptions
-): ReadableStream<string> => readableFromAsyncIterable(chatStreamable(res))
+): ReadableStream<string> => {
+  return readableFromAsyncIterable(chatStreamable(res))
     .pipeThrough(createCallbacksTransformer(cb) as any)
     .pipeThrough(createStreamDataTransformer(cb?.experimental_streamData));
+};

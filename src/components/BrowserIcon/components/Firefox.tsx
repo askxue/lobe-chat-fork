@@ -2,7 +2,8 @@ import React from 'react';
 
 import { SVGComponent } from '../types';
 
-export default ({ ...props }: SVGComponent) => (
+export default ({ ...props }: SVGComponent) => {
+  return (
     <svg
       aria-label="Firefox"
       viewBox="0 0 512 512"
@@ -39,3 +40,4 @@ export default ({ ...props }: SVGComponent) => (
       </g>
     </svg>
   );
+};

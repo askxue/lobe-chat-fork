@@ -9,7 +9,8 @@ import { ModelProvider } from '@/libs/agent-runtime';
 
 import ProviderConfig from '../components/ProviderConfig';
 
-const GoogleProvider = memo(() => (
+const GoogleProvider = memo(() => {
+  return (
     <ProviderConfig
       checkModel={'gemini-pro'}
       provider={ModelProvider.Google}
@@ -22,6 +23,7 @@ const GoogleProvider = memo(() => (
         </Flexbox>
       }
     />
-  ));
+  );
+});
 
 export default GoogleProvider;

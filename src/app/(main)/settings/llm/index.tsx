@@ -19,7 +19,8 @@ import ZeroOne from './ZeroOne';
 import Zhipu from './Zhipu';
 import Footer from './components/Footer';
 
-const Page = () => (
+const Page = () => {
+  return (
     <Flexbox gap={24}>
       <OpenAI />
       <Ollama />
@@ -39,6 +40,7 @@ const Page = () => (
       <Footer />
     </Flexbox>
   );
+};
 
 Page.displayName = 'LlmSetting';
 

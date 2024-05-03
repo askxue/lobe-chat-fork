@@ -75,7 +75,7 @@ export const createChatSlice: StateCreator<
   updateAgentConfig: async (config) => {
     const { activeId } = get();
 
-    if (!activeId) {return;}
+    if (!activeId) return;
 
     await get().internal_updateAgentConfig(activeId, config);
   },
@@ -86,7 +86,7 @@ export const createChatSlice: StateCreator<
       {
         onSuccess: (data) => {
           if (get().isAgentConfigInit && isEqual(get().agentConfig, data))
-            {return;}
+            return;
 
           set(
             { agentConfig: data, isAgentConfigInit: true },
@@ -133,7 +133,7 @@ export const createChatSlice: StateCreator<
 
     // refresh sessions to update the agent config if the model has changed
     if (prevModel !== data.model)
-      {await useSessionStore.getState().refreshSessions();}
+      await useSessionStore.getState().refreshSessions();
   },
 
   internal_refreshAgentConfig: async (id) => {

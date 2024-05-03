@@ -277,7 +277,7 @@ class ChatService {
       const deploymentName = chatModelCards.find(
         (i) => i.id === model
       )?.deploymentName;
-      if (deploymentName) {model = deploymentName;}
+      if (deploymentName) model = deploymentName;
     }
 
     const payload = merge(
@@ -432,13 +432,13 @@ class ChatService {
     // for the models with visual ability, add image url to content
     // refs: https://platform.openai.com/docs/guides/vision/quick-start
     const getContent = (m: ChatMessage) => {
-      if (!m.files) {return m.content;}
+      if (!m.files) return m.content;
 
       const imageList = filesSelectors.getImageUrlOrBase64ByList(m.files)(
         useFileStore.getState()
       );
 
-      if (imageList.length === 0) {return m.content;}
+      if (imageList.length === 0) return m.content;
 
       const canUploadFile = modelProviderSelectors.isModelEnabledUpload(model)(
         useUserStore.getState()
@@ -499,7 +499,7 @@ class ChatService {
         .filter(Boolean)
         .join('\n\n');
 
-      if (!injectSystemRoles) {return;}
+      if (!injectSystemRoles) return;
 
       const systemMessage = draft.find((i) => i.role === 'system');
 
@@ -523,7 +523,7 @@ class ChatService {
 
     const enabled = preferenceSelectors.userAllowTrace(useUserStore.getState());
 
-    if (!enabled) {return { ...trace, enabled: false };}
+    if (!enabled) return { ...trace, enabled: false };
 
     return {
       ...trace,

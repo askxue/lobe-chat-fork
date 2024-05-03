@@ -5,7 +5,8 @@ import Theme from './features/Theme';
 
 const { SHOW_ACCESS_CODE_CONFIG, ENABLE_OAUTH_SSO } = getServerConfig();
 
-const Page = () => (
+const Page = () => {
+  return (
     <>
       <Theme />
       <Common
@@ -14,6 +15,7 @@ const Page = () => (
       />
     </>
   );
+};
 
 Page.displayName = 'CommonSetting';
 

@@ -20,13 +20,13 @@ const checkAuth = (
   const { ACCESS_CODES, PLUGIN_SETTINGS, ENABLE_OAUTH_SSO } = getServerConfig();
 
   // if there is no plugin settings, just skip the auth
-  if (!PLUGIN_SETTINGS) {return { auth: true };}
+  if (!PLUGIN_SETTINGS) return { auth: true };
 
   // If authorized by oauth
-  if (oauthAuthorized && ENABLE_OAUTH_SSO) {return { auth: true };}
+  if (oauthAuthorized && ENABLE_OAUTH_SSO) return { auth: true };
 
   // if accessCode doesn't exist
-  if (!ACCESS_CODES.length) {return { auth: true };}
+  if (!ACCESS_CODES.length) return { auth: true };
 
   if (!accessCode || !ACCESS_CODES.includes(accessCode)) {
     return { auth: false, error: ChatErrorType.InvalidAccessCode };
@@ -49,7 +49,7 @@ export const POST = async (req: Request) => {
   // get Authorization from header
   const authorization = req.headers.get(LOBE_CHAT_AUTH_HEADER);
   if (!authorization)
-    {throw AgentRuntimeError.createError(ChatErrorType.Unauthorized);}
+    throw AgentRuntimeError.createError(ChatErrorType.Unauthorized);
 
   const oauthAuthorized = !!req.headers.get(OAUTH_AUTHORIZED);
   const payload = await getJWTPayload(authorization);

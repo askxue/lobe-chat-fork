@@ -35,7 +35,7 @@ const Header = memo<{ mobile?: boolean }>(({ mobile }) => {
   const isMobile = useIsMobile();
 
   const handleAddAgentAndConverse = async () => {
-    if (!agentItem) {return;}
+    if (!agentItem) return;
 
     const session = await createSession({ config, meta });
     message.success(t('addAgentSuccess'));
@@ -43,7 +43,7 @@ const Header = memo<{ mobile?: boolean }>(({ mobile }) => {
   };
 
   const handleAddAgent = () => {
-    if (!agentItem) {return;}
+    if (!agentItem) return;
     createSession({ config, meta }, false);
     message.success(t('addAgentSuccess'));
   };

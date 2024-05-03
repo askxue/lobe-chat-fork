@@ -3,7 +3,8 @@ import { transform } from 'lodash-es';
 
 import { withBasePath } from '@/utils/basePath';
 
-const mapWithBasePath = <T extends object>(apis: T): T => transform(apis, (result, value, key) => {
+const mapWithBasePath = <T extends object>(apis: T): T => {
+  return transform(apis, (result, value, key) => {
     if (typeof value === 'string') {
       // @ts-ignore
       result[key] = withBasePath(value);
@@ -11,6 +12,7 @@ const mapWithBasePath = <T extends object>(apis: T): T => transform(apis, (resul
       result[key] = value;
     }
   });
+};
 
 export const API_ENDPOINTS = mapWithBasePath({
   proxy: '/api/proxy',

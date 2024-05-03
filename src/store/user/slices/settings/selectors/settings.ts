@@ -52,7 +52,7 @@ const currentLanguage = (s: UserStore) => {
   const locale = currentSettings(s).language;
 
   if (locale === 'auto') {
-    if (isOnServerSide) {return DEFAULT_LANG;}
+    if (isOnServerSide) return DEFAULT_LANG;
 
     return navigator.language as Locales;
   }

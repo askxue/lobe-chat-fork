@@ -67,9 +67,9 @@ const GroupItem = memo<SessionGroupItem>(({ id, name }) => {
           editing={editing}
           onChangeEnd={async (input) => {
             if (name !== input) {
-              if (!input) {return;}
+              if (!input) return;
               if (input.length === 0 || input.length > 20)
-                {return message.warning(t('sessionGroup.tooLong'));}
+                return message.warning(t('sessionGroup.tooLong'));
 
               await updateSessionGroupName(id, input);
               message.success(t('sessionGroup.renameSuccess'));

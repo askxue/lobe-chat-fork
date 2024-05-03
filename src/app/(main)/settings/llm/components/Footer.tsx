@@ -7,7 +7,8 @@ import { Trans } from 'react-i18next';
 
 import { MORE_MODEL_PROVIDER_REQUEST_URL } from '@/const/url';
 
-const Footer = memo(() => (
+const Footer = memo(() => {
+  return (
     <Divider>
       <p style={{ fontSize: 14 }}>
         <Trans i18nKey="llm.waitingForMore" ns={'setting'}>
@@ -23,6 +24,7 @@ const Footer = memo(() => (
         </Trans>
       </p>
     </Divider>
-  ));
+  );
+});
 
 export default Footer;

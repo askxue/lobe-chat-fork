@@ -66,7 +66,7 @@ const SessionDefaultMode = memo(() => {
               id={id}
               isCustomGroup
               onOpenChange={(isOpen) => {
-                if (isOpen) {setActiveGroupId(id);}
+                if (isOpen) setActiveGroupId(id);
               }}
               openConfigModal={() => setConfigGroupModalOpen(true)}
               openRenameModal={() => setRenameGroupModalOpen(true)}

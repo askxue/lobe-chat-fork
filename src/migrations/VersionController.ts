@@ -33,12 +33,13 @@ export interface MigrationData<T = any> {
 }
 export class VersionController<T> {
   private migrations: Migration[];
-
   targetVersion: number;
 
   constructor(migrations: any[], targetVersion: number = migrations.length) {
     this.migrations = migrations
-      .map((cls) => new cls() as Migration)
+      .map((cls) => {
+        return new cls() as Migration;
+      })
       .sort((a, b) => a.version - b.version);
 
     this.targetVersion = targetVersion;
@@ -48,13 +49,13 @@ export class VersionController<T> {
     let nextData = data;
     const targetVersion = this.targetVersion || this.migrations.length;
     if (data.version === undefined)
-      {throw new Error(t('migrateError.missVersion', { ns: 'migration' }));}
+      throw new Error(t('migrateError.missVersion', { ns: 'migration' }));
     const currentVersion = data.version;
 
     for (let i = currentVersion || 0; i < targetVersion; i++) {
       const migration = this.migrations.find((m) => m.version === i);
       if (!migration)
-        {throw new Error(t('migrateError.noMigration', { ns: 'migration' }));}
+        throw new Error(t('migrateError.noMigration', { ns: 'migration' }));
 
       nextData = migration.migrate(nextData);
 

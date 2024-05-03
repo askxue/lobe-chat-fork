@@ -17,7 +17,7 @@ export const UserMessageExtra: RenderMessageExtra = memo<ChatMessage>(
 
     const showExtra = showTranslate || showTTS;
 
-    if (!showExtra) {return;}
+    if (!showExtra) return;
 
     return (
       <div style={{ marginTop: 8 }}>
