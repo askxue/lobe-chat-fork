@@ -23,7 +23,7 @@ const useStyles = createStyles(({ css, token }) => ({
     right: 0;
     bottom: 0;
     left: 0;
-  `
+  `,
 }));
 
 const Nav = memo(() => {
@@ -35,49 +35,35 @@ const Nav = memo(() => {
     () => [
       {
         icon: (active) => (
-          <Icon
-            className={active ? styles.active : undefined}
-            icon={MessageSquare}
-          />
+          <Icon className={active ? styles.active : undefined} icon={MessageSquare} />
         ),
         key: SidebarTabKey.Chat,
         onClick: () => {
           router.push('/chat');
         },
-        title: t('tab.chat')
+        title: t('tab.chat'),
       },
       {
-        icon: (active) => (
-          <Icon className={active ? styles.active : undefined} icon={Bot} />
-        ),
+        icon: (active) => <Icon className={active ? styles.active : undefined} icon={Bot} />,
         key: SidebarTabKey.Market,
         onClick: () => {
           router.push('/market');
         },
-        title: t('tab.market')
+        title: t('tab.market'),
       },
       {
-        icon: (active) => (
-          <Icon className={active ? styles.active : undefined} icon={User} />
-        ),
+        icon: (active) => <Icon className={active ? styles.active : undefined} icon={User} />,
         key: SidebarTabKey.Me,
         onClick: () => {
           router.push('/me');
         },
-        title: t('tab.me')
-      }
+        title: t('tab.me'),
+      },
     ],
-    [t]
+    [t],
   );
 
-  return (
-    <MobileTabBar
-      activeKey={activeKey}
-      className={styles.container}
-      items={items}
-      safeArea
-    />
-  );
+  return <MobileTabBar activeKey={activeKey} className={styles.container} items={items} safeArea />;
 });
 
 Nav.displayName = 'MobileNav';

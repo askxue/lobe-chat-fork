@@ -4,12 +4,11 @@ import { testFunctionMessageAtEnd } from './message';
 
 describe('testFunctionMessageAtEnd', () => {
   it('should extract tool_calls JSON when present', () => {
-    const content =
-      'Some content before {"tool_calls": [{"tool": "example", "args": ["arg1"]}]}';
+    const content = 'Some content before {"tool_calls": [{"tool": "example", "args": ["arg1"]}]}';
     const result = testFunctionMessageAtEnd(content);
     expect(result).toEqual({
       content: '{"tool_calls": [{"tool": "example", "args": ["arg1"]}]}',
-      valid: true
+      valid: true,
     });
   });
 
@@ -19,7 +18,7 @@ describe('testFunctionMessageAtEnd', () => {
     const result = testFunctionMessageAtEnd(content);
     expect(result).toEqual({
       content: '{"tool_calls": [{"tool": "example", "args": ["arg1"]}]}',
-      valid: true
+      valid: true,
     });
   });
 
@@ -48,9 +47,7 @@ describe('testFunctionMessageAtEnd', () => {
     const undefinedContent = undefined;
 
     const resultWithNull = testFunctionMessageAtEnd(nullContent as any);
-    const resultWithUndefined = testFunctionMessageAtEnd(
-      undefinedContent as any
-    );
+    const resultWithUndefined = testFunctionMessageAtEnd(undefinedContent as any);
 
     expect(resultWithNull).toEqual({ content: '', valid: false });
     expect(resultWithUndefined).toEqual({ content: '', valid: false });

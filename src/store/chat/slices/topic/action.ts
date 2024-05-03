@@ -40,18 +40,12 @@ export interface ChatTopicAction {
   saveToTopic: () => Promise<string | undefined>;
   autoRenameTopicTitle: (id: string) => Promise<void>;
   duplicateTopic: (id: string) => Promise<void>;
-  summaryTopicTitle: (
-    topicId: string,
-    messages: ChatMessage[]
-  ) => Promise<void>;
+  summaryTopicTitle: (topicId: string, messages: ChatMessage[]) => Promise<void>;
   switchTopic: (id?: string) => Promise<void>;
   updateTopicTitleInSummary: (id: string, title: string) => void;
   updateTopicTitle: (id: string, title: string) => Promise<void>;
   useFetchTopics: (sessionId: string) => SWRResponse<ChatTopic[]>;
-  useSearchTopics: (
-    keywords?: string,
-    sessionId?: string
-  ) => SWRResponse<ChatTopic[]>;
+  useSearchTopics: (keywords?: string, sessionId?: string) => SWRResponse<ChatTopic[]>;
 
   internal_updateTopicLoading: (id: string, loading: boolean) => void;
   internal_createTopic: (params: CreateTopicParams) => Promise<string>;
@@ -88,7 +82,7 @@ export const chatTopic: StateCreator<
     const topicId = await internal_createTopic({
       sessionId: activeId,
       title: t('topic.defaultTitle', { ns: 'chat' }),
-      messages: messages.map((m) => m.id)
+      messages: messages.map((m) => m.id),
     });
 
     get().internal_updateTopicLoading(topicId, true);
@@ -109,7 +103,7 @@ export const chatTopic: StateCreator<
     message.loading({
       content: t('topic.duplicateLoading', { ns: 'chat' }),
       key: 'duplicateTopic',
-      duration: 0
+      duration: 0,
     });
 
     const newTopicId = await topicService.cloneTopic(id, newTitle);
@@ -145,10 +139,7 @@ export const chatTopic: StateCreator<
         updateTopicTitleInSummary(topicId, output);
       },
       params: await chainSummaryTitle(messages),
-      trace: get().getCurrentTracePayload({
-        traceName: TraceNameMap.SummaryTopicTitle,
-        topicId
-      })
+      trace: get().getCurrentTracePayload({ traceName: TraceNameMap.SummaryTopicTitle, topicId }),
     });
   },
   favoriteTopic: async (id, favorite) => {
@@ -160,11 +151,7 @@ export const chatTopic: StateCreator<
   },
 
   autoRenameTopicTitle: async (id) => {
-    const {
-      activeId: sessionId,
-      summaryTopicTitle,
-      internal_updateTopicLoading
-    } = get();
+    const { activeId: sessionId, summaryTopicTitle, internal_updateTopicLoading } = get();
 
     internal_updateTopicLoading(id, true);
     const messages = await messageService.getMessages(sessionId, id);
@@ -177,17 +164,12 @@ export const chatTopic: StateCreator<
   useFetchTopics: (sessionId) =>
     useClientDataSWR<ChatTopic[]>(
       [SWR_USE_FETCH_TOPIC, sessionId],
-      async ([, sessionId]: [string, string]) =>
-        topicService.getTopics({ sessionId }),
+      async ([, sessionId]: [string, string]) => topicService.getTopics({ sessionId }),
       {
         onSuccess: (topics) => {
-          set(
-            { topics, topicsInit: true },
-            false,
-            n('useFetchTopics(success)', { sessionId })
-          );
-        }
-      }
+          set({ topics, topicsInit: true }, false, n('useFetchTopics(success)', { sessionId }));
+        },
+      },
     ),
   useSearchTopics: (keywords, sessionId) =>
     useSWR<ChatTopic[]>(
@@ -196,13 +178,9 @@ export const chatTopic: StateCreator<
         topicService.searchTopics(keywords, sessionId),
       {
         onSuccess: (data) => {
-          set(
-            { searchTopics: data },
-            false,
-            n('useSearchTopics(success)', { keywords })
-          );
-        }
-      }
+          set({ searchTopics: data }, false, n('useSearchTopics(success)', { keywords }));
+        },
+      },
     ),
   switchTopic: async (id) => {
     set({ activeTopicId: id }, false, n('toggleTopic'));
@@ -270,12 +248,10 @@ export const chatTopic: StateCreator<
       (state) => {
         if (loading) return { topicLoadingIds: [...state.topicLoadingIds, id] };
 
-        return {
-          topicLoadingIds: state.topicLoadingIds.filter((i) => i !== id)
-        };
+        return { topicLoadingIds: state.topicLoadingIds.filter((i) => i !== id) };
       },
       false,
-      n('updateTopicLoading')
+      n('updateTopicLoading'),
     );
   },
 
@@ -289,10 +265,7 @@ export const chatTopic: StateCreator<
   },
   internal_createTopic: async (params) => {
     const tmpId = Date.now().toString();
-    get().internal_dispatchTopic({
-      type: 'addTopic',
-      value: { ...params, id: tmpId }
-    });
+    get().internal_dispatchTopic({ type: 'addTopic', value: { ...params, id: tmpId } });
 
     get().internal_updateTopicLoading(tmpId, true);
     const topicId = await topicService.createTopic(params);
@@ -309,5 +282,5 @@ export const chatTopic: StateCreator<
     const nextTopics = topicReducer(get().topics, payload);
 
     set({ topics: nextTopics }, false, action);
-  }
+  },
 });

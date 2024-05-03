@@ -12,13 +12,10 @@ interface ClientResponsiveContentProps {
   Mobile: Loader;
 }
 
-const ClientResponsiveContent = ({
-  Mobile,
-  Desktop
-}: ClientResponsiveContentProps) => {
+const ClientResponsiveContent = ({ Mobile, Desktop }: ClientResponsiveContentProps) => {
   const MobileComponent = dynamic(Mobile, {
     loading: MobileSwitchLoading,
-    ssr: false
+    ssr: false,
   });
 
   const Content = memo(() => {

@@ -5,7 +5,7 @@ import { getServerConfig } from '../server';
 // Stub the global process object to safely mock environment variables
 vi.stubGlobal('process', {
   ...process, // Preserve the original process object
-  env: { ...process.env } // Clone the environment variables object for modification
+  env: { ...process.env }, // Clone the environment variables object for modification
 });
 
 describe('getServerConfig', () => {
@@ -21,7 +21,7 @@ describe('getServerConfig', () => {
     global.process = undefined;
 
     expect(() => getServerConfig()).toThrow(
-      '[Server Config] you are importing a server-only module outside of server'
+      '[Server Config] you are importing a server-only module outside of server',
     );
 
     global.process = originalProcess; // Restore the original process object

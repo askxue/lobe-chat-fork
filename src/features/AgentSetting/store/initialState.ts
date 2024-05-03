@@ -21,8 +21,8 @@ export const initialState: State = {
     backgroundColor: false,
     description: false,
     tags: false,
-    title: false
+    title: false,
   },
   config: DEFAULT_AGENT_CONFIG,
-  meta: DEFAULT_AGENT_META
+  meta: DEFAULT_AGENT_META,
 };

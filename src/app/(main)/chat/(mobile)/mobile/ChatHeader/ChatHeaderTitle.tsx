@@ -9,21 +9,18 @@ import { useChatStore } from '@/store/chat';
 import { topicSelectors } from '@/store/chat/selectors';
 import { useGlobalStore } from '@/store/global';
 import { useSessionStore } from '@/store/session';
-import {
-  sessionMetaSelectors,
-  sessionSelectors
-} from '@/store/session/selectors';
+import { sessionMetaSelectors, sessionSelectors } from '@/store/session/selectors';
 
 const ChatHeaderTitle = memo(() => {
   const { t } = useTranslation('chat');
   const toggleConfig = useGlobalStore((s) => s.toggleMobileTopic);
   const [topicLength, topic] = useChatStore((s) => [
     topicSelectors.currentTopicLength(s),
-    topicSelectors.currentActiveTopic(s)
+    topicSelectors.currentActiveTopic(s),
   ]);
   const [isInbox, title] = useSessionStore((s) => [
     sessionSelectors.isInboxSession(s),
-    sessionMetaSelectors.currentAgentTitle(s)
+    sessionMetaSelectors.currentAgentTitle(s),
   ]);
   const theme = useTheme();
 
@@ -32,19 +29,14 @@ const ChatHeaderTitle = memo(() => {
   return (
     <MobileNavBarTitle
       desc={
-        <Flexbox
-          align={'center'}
-          gap={4}
-          horizontal
-          onClick={() => toggleConfig()}
-        >
+        <Flexbox align={'center'} gap={4} horizontal onClick={() => toggleConfig()}>
           <ActionIcon
             active
             icon={ChevronDown}
             size={{ blockSize: 14, borderRadius: '50%', fontSize: 12 }}
             style={{
               background: theme.colorFillSecondary,
-              color: theme.colorTextDescription
+              color: theme.colorTextDescription,
             }}
           />
           <span>{topic?.title || t('topic.title')}</span>

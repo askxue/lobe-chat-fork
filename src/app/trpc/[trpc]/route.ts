@@ -22,7 +22,7 @@ const handler = (req: NextRequest) =>
     },
 
     req,
-    router: appRouter
+    router: appRouter,
   });
 
 export { handler as GET, handler as POST };

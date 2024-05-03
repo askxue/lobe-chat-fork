@@ -10,5 +10,5 @@ export const BuiltinToolsRenders: Record<string, BuiltinRender> = {
    * TODO: 后续数据库版本迁移时记得迁移 dalle3 对应的 identifier
    * @deprecated
    */
-  dalle3: DalleRender as BuiltinRender
+  dalle3: DalleRender as BuiltinRender,
 };

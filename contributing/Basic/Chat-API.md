@@ -38,25 +38,22 @@ In the file `src/app/api/openai/chat/createChatCompletion.ts`, we define the `cr
 ```ts
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 
-export const createChatCompletion = async ({
-  payload,
-  openai
-}: CreateChatCompletionOptions) => {
+export const createChatCompletion = async ({ payload, openai }: CreateChatCompletionOptions) => {
   const { messages, ...params } = payload;
 
   const formatMessages = messages.map((m) => ({
     content: m.content,
     name: m.name,
-    role: m.role
+    role: m.role,
   }));
 
   const response = await openai.chat.completions.create(
     {
       messages: formatMessages,
       ...params,
-      stream: true
+      stream: true,
     },
-    { headers: { Accept: '*/*' } }
+    { headers: { Accept: '*/*' } },
   );
   const stream = OpenAIStream(response);
   return new StreamingTextResponse(stream);
@@ -72,19 +69,20 @@ In the `src/services/chatModel.ts` file, we define the `fetchChatModel` method, 
 ```ts
 export const fetchChatModel = (
   { plugins: enabledPlugins, ...params }: Partial<OpenAIStreamPayload>,
-  options?: FetchChatModelOptions
+  options?: FetchChatModelOptions,
 ) => {
   const payload = merge(
     {
       model: initialLobeAgentConfig.model,
       stream: true,
-      ...initialLobeAgentConfig.params
+      ...initialLobeAgentConfig.params,
     },
-    params
+    params,
   );
 
-  const filterFunctions: ChatCompletionFunctions[] =
-    pluginSelectors.enabledSchema(enabledPlugins)(usePluginStore.getState());
+  const filterFunctions: ChatCompletionFunctions[] = pluginSelectors.enabledSchema(enabledPlugins)(
+    usePluginStore.getState(),
+  );
 
   const functions = filterFunctions.length === 0 ? undefined : filterFunctions;
 
@@ -92,7 +90,7 @@ export const fetchChatModel = (
     body: JSON.stringify({ ...payload, functions }),
     headers: createHeaderWithOpenAI({ 'Content-Type': 'application/json' }),
     method: 'POST',
-    signal: options?.signal
+    signal: options?.signal,
   });
 };
 ```
@@ -102,10 +100,7 @@ export const fetchChatModel = (
 In the `src/utils/fetch.ts` file, we define the `fetchSSE` method, which uses a streaming approach to retrieve data. When a new data chunk is read, it calls the `onMessageHandle` callback function to process the data chunk, achieving a typewriter-like output effect.
 
 ```ts
-export const fetchSSE = async (
-  fetchFn: () => Promise<Response>,
-  options: FetchSSEOptions = {}
-) => {
+export const fetchSSE = async (fetchFn: () => Promise<Response>, options: FetchSSEOptions = {}) => {
   const response = await fetchFn();
 
   if (!response.ok) {

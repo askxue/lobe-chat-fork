@@ -22,7 +22,7 @@ const useStyles = createStyles(({ css, prefixCls }) => ({
     > li {
       height: 24px !important;
     }
-  `
+  `,
 }));
 
 export const Placeholder = memo(() => {
@@ -37,7 +37,7 @@ export const Placeholder = memo(() => {
         className: styles.paragraph,
         rows: 1,
         style: { marginBottom: 0 },
-        width: '100%'
+        width: '100%',
       }}
       title={false}
     />

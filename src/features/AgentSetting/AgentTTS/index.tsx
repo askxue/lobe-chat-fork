@@ -36,8 +36,7 @@ const AgentTTS = memo(() => {
 
   const showAllLocaleVoice = config.tts.showAllLocaleVoice;
 
-  const { edgeVoiceOptions, microsoftVoiceOptions } =
-    voiceList(showAllLocaleVoice);
+  const { edgeVoiceOptions, microsoftVoiceOptions } = voiceList(showAllLocaleVoice);
 
   const tts: ItemGroup = {
     children: [
@@ -45,7 +44,7 @@ const AgentTTS = memo(() => {
         children: <Select options={ttsOptions} />,
         desc: t('settingTTS.ttsService.desc'),
         label: t('settingTTS.ttsService.title'),
-        name: [TTS_SETTING_KEY, 'ttsService']
+        name: [TTS_SETTING_KEY, 'ttsService'],
       },
       {
         children: <Switch />,
@@ -54,59 +53,47 @@ const AgentTTS = memo(() => {
         label: t('settingTTS.showAllLocaleVoice.title'),
         minWidth: undefined,
         name: [TTS_SETTING_KEY, 'showAllLocaleVoice'],
-        valuePropName: 'checked'
+        valuePropName: 'checked',
       },
       {
-        children: (
-          <SelectWithTTSPreview
-            options={openaiVoiceOptions}
-            server={'openai'}
-          />
-        ),
+        children: <SelectWithTTSPreview options={openaiVoiceOptions} server={'openai'} />,
         desc: t('settingTTS.voice.desc'),
         hidden: config.tts.ttsService !== 'openai',
         label: t('settingTTS.voice.title'),
-        name: [TTS_SETTING_KEY, 'voice', 'openai']
+        name: [TTS_SETTING_KEY, 'voice', 'openai'],
       },
       {
-        children: (
-          <SelectWithTTSPreview options={edgeVoiceOptions} server={'edge'} />
-        ),
+        children: <SelectWithTTSPreview options={edgeVoiceOptions} server={'edge'} />,
         desc: t('settingTTS.voice.desc'),
         divider: false,
         hidden: config.tts.ttsService !== 'edge',
         label: t('settingTTS.voice.title'),
-        name: [TTS_SETTING_KEY, 'voice', 'edge']
+        name: [TTS_SETTING_KEY, 'voice', 'edge'],
       },
       {
-        children: (
-          <SelectWithTTSPreview
-            options={microsoftVoiceOptions}
-            server={'microsoft'}
-          />
-        ),
+        children: <SelectWithTTSPreview options={microsoftVoiceOptions} server={'microsoft'} />,
         desc: t('settingTTS.voice.desc'),
         divider: false,
         hidden: config.tts.ttsService !== 'microsoft',
         label: t('settingTTS.voice.title'),
-        name: [TTS_SETTING_KEY, 'voice', 'microsoft']
+        name: [TTS_SETTING_KEY, 'voice', 'microsoft'],
       },
       {
         children: (
           <Select
             options={[
               { label: t('settingTheme.lang.autoMode'), value: 'auto' },
-              ...(localeOptions || [])
+              ...(localeOptions || []),
             ]}
           />
         ),
         desc: t('settingTTS.sttLocale.desc'),
         label: t('settingTTS.sttLocale.title'),
-        name: [TTS_SETTING_KEY, 'sttLocale']
-      }
+        name: [TTS_SETTING_KEY, 'sttLocale'],
+      },
     ],
     icon: Mic,
-    title: t('settingTTS.title')
+    title: t('settingTTS.title'),
   };
 
   return (
@@ -117,9 +104,9 @@ const AgentTTS = memo(() => {
           voice: {
             edge: edgeVoiceOptions?.[0].value,
             microsoft: microsoftVoiceOptions?.[0].value,
-            openai: openaiVoiceOptions?.[0].value
-          }
-        }
+            openai: openaiVoiceOptions?.[0].value,
+          },
+        },
       }}
       items={[tts]}
       itemsType={'group'}

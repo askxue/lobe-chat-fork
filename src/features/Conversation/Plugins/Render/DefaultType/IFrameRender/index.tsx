@@ -12,52 +12,50 @@ interface IFrameRenderProps extends PluginRenderProps {
   width?: number;
 }
 
-const IFrameRender = memo<IFrameRenderProps>(
-  ({ url, width = 800, height = 300, ...props }) => {
-    const iframeRef = useRef<HTMLIFrameElement>(null);
-    const [loading, setLoading] = useState(true);
+const IFrameRender = memo<IFrameRenderProps>(({ url, width = 800, height = 300, ...props }) => {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [loading, setLoading] = useState(true);
 
-    // 当 props 发生变化时，主动向 iframe 发送数据
-    useOnPluginReadyForInteraction(() => {
-      const iframeWin = iframeRef.current?.contentWindow;
+  // 当 props 发生变化时，主动向 iframe 发送数据
+  useOnPluginReadyForInteraction(() => {
+    const iframeWin = iframeRef.current?.contentWindow;
 
-      if (iframeWin) {
-        sendMessageContentToPlugin(iframeWin, props);
-      }
-    }, [props]);
+    if (iframeWin) {
+      sendMessageContentToPlugin(iframeWin, props);
+    }
+  }, [props]);
 
-    // when get iframe fetch message ，send message content
-    useOnPluginFetchMessage(() => {
-      const iframeWin = iframeRef.current?.contentWindow;
-      if (iframeWin) {
-        sendMessageContentToPlugin(iframeWin, props);
-      }
-    }, [props]);
+  // when get iframe fetch message ，send message content
+  useOnPluginFetchMessage(() => {
+    const iframeWin = iframeRef.current?.contentWindow;
+    if (iframeWin) {
+      sendMessageContentToPlugin(iframeWin, props);
+    }
+  }, [props]);
 
-    return (
-      <>
-        {loading && <Skeleton active style={{ maxWidth: '100%', width }} />}
-        <iframe
-          // @ts-ignore
-          allowtransparency="true"
-          height={height}
-          hidden={loading}
-          onLoad={() => {
-            setLoading(false);
-          }}
-          ref={iframeRef}
-          src={url}
-          style={{
-            border: 0,
-            // iframe 在 color-scheme:dark 模式下无法透明
-            // refs: https://www.jianshu.com/p/bc5a37bb6a7b
-            colorScheme: 'light',
-            maxWidth: '100%'
-          }}
-          width={width}
-        />
-      </>
-    );
-  }
-);
+  return (
+    <>
+      {loading && <Skeleton active style={{ maxWidth: '100%', width }} />}
+      <iframe
+        // @ts-ignore
+        allowtransparency="true"
+        height={height}
+        hidden={loading}
+        onLoad={() => {
+          setLoading(false);
+        }}
+        ref={iframeRef}
+        src={url}
+        style={{
+          border: 0,
+          // iframe 在 color-scheme:dark 模式下无法透明
+          // refs: https://www.jianshu.com/p/bc5a37bb6a7b
+          colorScheme: 'light',
+          maxWidth: '100%',
+        }}
+        width={width}
+      />
+    </>
+  );
+});
 export default IFrameRender;

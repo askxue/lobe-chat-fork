@@ -54,8 +54,7 @@
     "workflow:docs": "tsx scripts/docsWorkflow/index.ts",
     "workflow:i18n": "tsx scripts/i18nWorkflow/index.ts",
     "workflow:mdx": "tsx scripts/mdxWorkflow/index.ts",
-    "workflow:readme": "tsx scripts/readmeWorkflow/index.ts",
-    "format": "prettier --write ."
+    "workflow:readme": "tsx scripts/readmeWorkflow/index.ts"
   },
   "lint-staged": {
     "*.md": [

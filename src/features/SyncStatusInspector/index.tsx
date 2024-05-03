@@ -21,7 +21,7 @@ const SyncStatusTag = memo<SyncStatusTagProps>(
     ) : (
       <DisableSync noPopover={hiddenEnableGuide} placement={placement} />
     );
-  }
+  },
 );
 
 export default SyncStatusTag;

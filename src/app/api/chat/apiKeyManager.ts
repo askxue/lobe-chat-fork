@@ -37,8 +37,7 @@ export class ApiKeyManager {
     let index = 0;
 
     if (this._mode === 'turn') index = store.index++ % store.keyLen;
-    if (this._mode === 'random')
-      index = Math.floor(Math.random() * store.keyLen);
+    if (this._mode === 'random') index = Math.floor(Math.random() * store.keyLen);
 
     return store.keys[index];
   }

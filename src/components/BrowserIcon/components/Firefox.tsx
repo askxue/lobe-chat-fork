@@ -4,12 +4,7 @@ import { SVGComponent } from '../types';
 
 export default ({ ...props }: SVGComponent) => {
   return (
-    <svg
-      aria-label="Firefox"
-      viewBox="0 0 512 512"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg aria-label="Firefox" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" {...props}>
       <linearGradient id="prefix__a" x1={0.7} x2={0.3} y2={0.8}>
         <stop offset={0.3} stopColor="#fd5" />
         <stop offset={0.6} stopColor="#f85" />

@@ -26,10 +26,7 @@ export const POST = async (req: Request) => {
   const isInternalHost = isPrivate(address);
 
   if (isInternalHost)
-    return NextResponse.json(
-      { error: 'Not support internal host proxy' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Not support internal host proxy' }, { status: 400 });
 
   const res = await fetch(url.toString());
 

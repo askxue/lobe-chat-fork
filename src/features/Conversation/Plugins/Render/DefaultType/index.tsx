@@ -9,9 +9,7 @@ import Loading from '../Loading';
 import { useParseContent } from '../useParseContent';
 import IFrameRender from './IFrameRender';
 
-const SystemJsRender = dynamic(() => import('./SystemJsRender'), {
-  ssr: false
-});
+const SystemJsRender = dynamic(() => import('./SystemJsRender'), { ssr: false });
 
 export interface PluginDefaultTypeProps {
   content: string;
@@ -19,45 +17,37 @@ export interface PluginDefaultTypeProps {
   name?: string;
 }
 
-const PluginDefaultType = memo<PluginDefaultTypeProps>(
-  ({ content, name, loading }) => {
-    const manifest = useToolStore(
-      pluginSelectors.getPluginManifestById(name || '')
-    );
+const PluginDefaultType = memo<PluginDefaultTypeProps>(({ content, name, loading }) => {
+  const manifest = useToolStore(pluginSelectors.getPluginManifestById(name || ''));
 
-    const { isJSON, data } = useParseContent(content);
+  const { isJSON, data } = useParseContent(content);
 
-    if (!isJSON) {
-      return loading && <Loading />;
-    }
-
-    if (!manifest?.ui) return;
-
-    const ui = manifest.ui;
-
-    if (!ui.url) return;
-
-    if (ui.mode === 'module')
-      return (
-        <Suspense fallback={<Skeleton active style={{ width: 400 }} />}>
-          <SystemJsRender
-            content={data}
-            name={name || 'unknown'}
-            url={ui.url}
-          />
-        </Suspense>
-      );
-
-    return (
-      <IFrameRender
-        content={data}
-        height={ui.height}
-        name={name || 'unknown'}
-        url={ui.url}
-        width={ui.width}
-      />
-    );
+  if (!isJSON) {
+    return loading && <Loading />;
   }
-);
+
+  if (!manifest?.ui) return;
+
+  const ui = manifest.ui;
+
+  if (!ui.url) return;
+
+  if (ui.mode === 'module')
+    return (
+      <Suspense fallback={<Skeleton active style={{ width: 400 }} />}>
+        <SystemJsRender content={data} name={name || 'unknown'} url={ui.url} />
+      </Suspense>
+    );
+
+  return (
+    <IFrameRender
+      content={data}
+      height={ui.height}
+      name={name || 'unknown'}
+      url={ui.url}
+      width={ui.width}
+    />
+  );
+});
 
 export default PluginDefaultType;

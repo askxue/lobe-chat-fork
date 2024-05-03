@@ -3,14 +3,7 @@ import { markdownTable } from 'markdown-table';
 import qs from 'query-string';
 
 import { AGENT_REPO, AGENT_SPLIT, DataItem, MARKET_URL } from './const';
-import {
-  fetchAgentIndex,
-  genLink,
-  genTags,
-  readReadme,
-  updateReadme,
-  writeReadme
-} from './utlis';
+import { fetchAgentIndex, genLink, genTags, readReadme, updateReadme, writeReadme } from './utlis';
 
 const genAgentTable = (data: DataItem[], lang: string) => {
   const isCN = lang === 'zh-CN';
@@ -20,18 +13,16 @@ const genAgentTable = (data: DataItem[], lang: string) => {
         item.meta.title.replaceAll('|', ','),
         qs.stringifyUrl({
           query: { agent: item.identifier },
-          url: MARKET_URL
-        })
+          url: MARKET_URL,
+        }),
       ),
-      `<sup>By **${genLink(item.author, item.homepage)}** on **${(item as any).createAt}**</sup>`
+      `<sup>By **${genLink(item.author, item.homepage)}** on **${(item as any).createAt}**</sup>`,
     ].join('<br/>'),
-    [item.meta.description.replaceAll('|', ','), genTags(item.meta.tags)].join(
-      '<br/>'
-    )
+    [item.meta.description.replaceAll('|', ','), genTags(item.meta.tags)].join('<br/>'),
   ]);
   return markdownTable([
     isCN ? ['最近新增', '助手说明'] : ['Recent Submits', 'Description'],
-    ...content
+    ...content,
   ]);
 };
 
@@ -42,10 +33,9 @@ const runAgentTable = async (lang: string) => {
   const newMd = updateReadme(
     AGENT_SPLIT,
     md,
-    [
-      mdTable,
-      `> 📊 Total agents: ${genLink(`<kbd>**${data.length}**</kbd> `, AGENT_REPO)}`
-    ].join('\n\n')
+    [mdTable, `> 📊 Total agents: ${genLink(`<kbd>**${data.length}**</kbd> `, AGENT_REPO)}`].join(
+      '\n\n',
+    ),
   );
   writeReadme(newMd, lang);
   consola.success('Sync agent index success!');

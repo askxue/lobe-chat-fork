@@ -1,10 +1,6 @@
 import { MessageModel } from '@/database/client/models/message';
 import { DB_Message } from '@/database/client/schemas/message';
-import {
-  ChatMessage,
-  ChatMessageError,
-  ChatPluginPayload
-} from '@/types/message';
+import { ChatMessage, ChatMessageError, ChatPluginPayload } from '@/types/message';
 
 import { CreateMessageParams, IMessageService } from './type';
 
@@ -19,10 +15,7 @@ export class ClientService implements IMessageService {
     return MessageModel.batchCreate(messages);
   }
 
-  async getMessages(
-    sessionId: string,
-    topicId?: string
-  ): Promise<ChatMessage[]> {
+  async getMessages(sessionId: string, topicId?: string): Promise<ChatMessage[]> {
     return MessageModel.query({ sessionId, topicId });
   }
 

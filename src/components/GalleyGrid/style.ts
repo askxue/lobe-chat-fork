@@ -4,15 +4,7 @@ export const MIN_IMAGE_SIZE = 64;
 export const MAX_SIZE_DESKTOP = 640;
 export const MAX_SIZE_MOBILE = 280;
 export const useStyles = createStyles(
-  (
-    { css },
-    {
-      col,
-      gap,
-      max,
-      min
-    }: { col: number; gap: number; max: number; min: number }
-  ) => ({
+  ({ css }, { col, gap, max, min }: { col: number; gap: number; max: number; min: number }) => ({
     container: css`
       display: grid;
       grid-gap: ${gap}px;
@@ -27,6 +19,6 @@ export const useStyles = createStyles(
         min-height: ${min}px;
         max-height: ${(max - gap * (col - 1)) / col}px;
       }
-    `
-  })
+    `,
+  }),
 );

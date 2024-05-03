@@ -17,9 +17,7 @@ export interface PluginAction {
   removeAllPlugins: () => Promise<void>;
   updatePluginSettings: <T>(id: string, settings: Partial<T>) => Promise<void>;
   useCheckPluginsIsInstalled: (plugins: string[]) => SWRResponse;
-  validatePluginSettings: (
-    identifier: string
-  ) => Promise<ValidationResult | undefined>;
+  validatePluginSettings: (identifier: string) => Promise<ValidationResult | undefined>;
 }
 
 export const createPluginSlice: StateCreator<
@@ -54,8 +52,7 @@ export const createPluginSlice: StateCreator<
 
     await get().refreshPlugins();
   },
-  useCheckPluginsIsInstalled: (plugins) =>
-    useSWR(plugins, get().checkPluginsIsInstalled),
+  useCheckPluginsIsInstalled: (plugins) => useSWR(plugins, get().checkPluginsIsInstalled),
   validatePluginSettings: async (identifier) => {
     const manifest = pluginSelectors.getPluginManifestById(identifier)(get());
     if (!manifest || !manifest.settings) return;
@@ -69,5 +66,5 @@ export const createPluginSlice: StateCreator<
     if (!result.valid) return { errors: result.errors, valid: false };
 
     return { errors: [], valid: true };
-  }
+  },
 });

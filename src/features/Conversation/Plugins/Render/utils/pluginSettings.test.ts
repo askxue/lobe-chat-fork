@@ -17,7 +17,7 @@ describe('useOnPluginSettingsUpdate', () => {
 
     const testSettings = { theme: 'dark', notifications: true };
     const event = new MessageEvent('message', {
-      data: { type: PluginChannel.updatePluginSettings, value: testSettings }
+      data: { type: PluginChannel.updatePluginSettings, value: testSettings },
     });
 
     window.dispatchEvent(event);
@@ -29,7 +29,7 @@ describe('useOnPluginSettingsUpdate', () => {
     renderHook(() => useOnPluginSettingsUpdate(mockCallback));
 
     const event = new MessageEvent('message', {
-      data: { type: 'nonPluginSettingsUpdate', value: { irrelevant: true } }
+      data: { type: 'nonPluginSettingsUpdate', value: { irrelevant: true } },
     });
 
     window.dispatchEvent(event);
@@ -38,14 +38,12 @@ describe('useOnPluginSettingsUpdate', () => {
   });
 
   it('cleans up message event listener on unmount', () => {
-    const { unmount } = renderHook(() =>
-      useOnPluginSettingsUpdate(mockCallback)
-    );
+    const { unmount } = renderHook(() => useOnPluginSettingsUpdate(mockCallback));
 
     unmount();
 
     const event = new MessageEvent('message', {
-      data: { type: PluginChannel.updatePluginSettings, value: {} }
+      data: { type: PluginChannel.updatePluginSettings, value: {} },
     });
 
     window.dispatchEvent(event);

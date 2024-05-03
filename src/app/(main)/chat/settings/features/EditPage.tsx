@@ -20,7 +20,7 @@ const EditPage = memo(() => {
 
   const [updateAgentMeta, title] = useSessionStore((s) => [
     s.updateSessionMeta,
-    sessionMetaSelectors.currentAgentTitle(s)
+    sessionMetaSelectors.currentAgentTitle(s),
   ]);
 
   return (

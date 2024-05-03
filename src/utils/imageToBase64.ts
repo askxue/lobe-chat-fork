@@ -1,7 +1,7 @@
 export const imageToBase64 = ({
   size,
   img,
-  type = 'image/webp'
+  type = 'image/webp',
 }: {
   img: HTMLImageElement;
   size: number;
@@ -30,7 +30,7 @@ export const imageToBase64 = ({
     0,
     0,
     size,
-    size
+    size,
   );
 
   return canvas.toDataURL(type);

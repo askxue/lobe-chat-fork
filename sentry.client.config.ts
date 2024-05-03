@@ -14,8 +14,8 @@ if (!!process.env.NEXT_PUBLIC_SENTRY_DSN) {
       Sentry.replayIntegration({
         blockAllMedia: true,
         // Additional Replay configuration goes in here, for example:
-        maskAllText: true
-      })
+        maskAllText: true,
+      }),
     ],
 
     replaysOnErrorSampleRate: 1,
@@ -25,6 +25,6 @@ if (!!process.env.NEXT_PUBLIC_SENTRY_DSN) {
     replaysSessionSampleRate: 0.1,
 
     // Adjust this value in production, or use tracesSampler for greater control
-    tracesSampleRate: 1
+    tracesSampleRate: 1,
   });
 }

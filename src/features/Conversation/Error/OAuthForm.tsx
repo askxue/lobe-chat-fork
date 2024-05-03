@@ -16,10 +16,7 @@ const OAuthForm = memo<{ id: string }>(({ id }) => {
 
   const { user, isOAuthLoggedIn } = useOAuthSession();
 
-  const [resend, deleteMessage] = useChatStore((s) => [
-    s.internalResendMessage,
-    s.deleteMessage
-  ]);
+  const [resend, deleteMessage] = useChatStore((s) => [s.internalResendMessage, s.deleteMessage]);
 
   const { message, modal } = App.useApp();
 
@@ -29,11 +26,9 @@ const OAuthForm = memo<{ id: string }>(({ id }) => {
       okButtonProps: { danger: true },
       onOk: () => {
         signOut();
-        message.success(
-          t('settingSystem.oauth.signout.success', { ns: 'setting' })
-        );
+        message.success(t('settingSystem.oauth.signout.success', { ns: 'setting' }));
       },
-      title: t('settingSystem.oauth.signout.confirm', { ns: 'setting' })
+      title: t('settingSystem.oauth.signout.confirm', { ns: 'setting' }),
     });
   }, []);
 
@@ -46,9 +41,7 @@ const OAuthForm = memo<{ id: string }>(({ id }) => {
             ? `${t('unlock.oauth.welcome')} ${user?.name}`
             : t('unlock.oauth.description')
         }
-        title={
-          isOAuthLoggedIn ? t('unlock.oauth.success') : t('unlock.oauth.title')
-        }
+        title={isOAuthLoggedIn ? t('unlock.oauth.success') : t('unlock.oauth.title')}
       >
         {isOAuthLoggedIn ? (
           <Button

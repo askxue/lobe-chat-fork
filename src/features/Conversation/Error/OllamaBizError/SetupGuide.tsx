@@ -23,7 +23,7 @@ const useStyles = createStyles(({ css, prefixCls, token }) => ({
     .${prefixCls}-steps-icon {
       color: ${readableColor(token.colorPrimary)} !important;
     }
-  `
+  `,
 }));
 
 const SetupGuide = memo(() => {
@@ -40,16 +40,13 @@ const SetupGuide = memo(() => {
               items={[
                 {
                   description: (
-                    <Trans
-                      i18nKey={'ollama.setup.install.description'}
-                      ns={'modelProvider'}
-                    >
+                    <Trans i18nKey={'ollama.setup.install.description'} ns={'modelProvider'}>
                       请确认你已经开启 Ollama ，如果没有安装 Ollama ，请前往官网
                       <Link href={'https://ollama.com/download'}>下载</Link>
                     </Trans>
                   ),
                   status: 'process',
-                  title: t('ollama.setup.install.title')
+                  title: t('ollama.setup.install.title'),
                 },
                 {
                   description: (
@@ -67,14 +64,14 @@ const SetupGuide = memo(() => {
                     </Flexbox>
                   ),
                   status: 'process',
-                  title: t('ollama.setup.cors.title')
-                }
+                  title: t('ollama.setup.cors.title'),
+                },
               ]}
               size={'small'}
             />
           ),
           key: 'macos',
-          label: 'macOS'
+          label: 'macOS',
         },
         {
           children: (
@@ -84,16 +81,13 @@ const SetupGuide = memo(() => {
               items={[
                 {
                   description: (
-                    <Trans
-                      i18nKey={'ollama.setup.install.description'}
-                      ns={'modelProvider'}
-                    >
+                    <Trans i18nKey={'ollama.setup.install.description'} ns={'modelProvider'}>
                       请确认你已经开启 Ollama ，如果没有安装 Ollama ，请前往官网
                       <Link href={'https://ollama.com/download'}>下载</Link>
                     </Trans>
                   ),
                   status: 'process',
-                  title: t('ollama.setup.install.title')
+                  title: t('ollama.setup.install.title'),
                 },
                 {
                   description: (
@@ -104,14 +98,14 @@ const SetupGuide = memo(() => {
                     </Flexbox>
                   ),
                   status: 'process',
-                  title: t('ollama.setup.cors.title')
-                }
+                  title: t('ollama.setup.cors.title'),
+                },
               ]}
               size={'small'}
             />
           ),
           key: 'windows',
-          label: t('ollama.setup.install.windowsTab')
+          label: t('ollama.setup.install.windowsTab'),
         },
         {
           children: (
@@ -127,16 +121,9 @@ const SetupGuide = memo(() => {
                         curl -fsSL https://ollama.com/install.sh | sh
                       </Snippet>
                       <div>
-                        <Trans
-                          i18nKey={'ollama.setup.install.linux.manual'}
-                          ns={'modelProvider'}
-                        >
+                        <Trans i18nKey={'ollama.setup.install.linux.manual'} ns={'modelProvider'}>
                           或者，你也可以参考
-                          <Link
-                            href={
-                              'https://github.com/ollama/ollama/blob/main/docs/linux.md'
-                            }
-                          >
+                          <Link href={'https://github.com/ollama/ollama/blob/main/docs/linux.md'}>
                             Linux 手动安装指南
                           </Link>
                           。
@@ -145,7 +132,7 @@ const SetupGuide = memo(() => {
                     </Flexbox>
                   ),
                   status: 'process',
-                  title: t('ollama.setup.install.title')
+                  title: t('ollama.setup.install.title'),
                 },
                 {
                   description: (
@@ -154,10 +141,7 @@ const SetupGuide = memo(() => {
 
                       <div>{t('ollama.setup.cors.linux.systemd')}</div>
                       {/* eslint-disable-next-line react/no-unescaped-entities */}
-                      <Snippet language={'bash'}>
-                        {' '}
-                        sudo systemctl edit ollama.service
-                      </Snippet>
+                      <Snippet language={'bash'}> sudo systemctl edit ollama.service</Snippet>
                       {t('ollama.setup.cors.linux.env')}
                       <Highlighter
                         // eslint-disable-next-line react/no-children-prop
@@ -173,14 +157,14 @@ Environment="OLLAMA_ORIGINS=*"`}
                     </Flexbox>
                   ),
                   status: 'process',
-                  title: t('ollama.setup.cors.title')
-                }
+                  title: t('ollama.setup.cors.title'),
+                },
               ]}
               size={'small'}
             />
           ),
           key: 'linux',
-          label: 'Linux'
+          label: 'Linux',
         },
         {
           children: (
@@ -193,13 +177,11 @@ Environment="OLLAMA_ORIGINS=*"`}
                     <Flexbox gap={8}>
                       {t('ollama.setup.install.description')}
                       <div>{t('ollama.setup.install.docker')}</div>
-                      <Snippet language={'bash'}>
-                        docker pull ollama/ollama
-                      </Snippet>
+                      <Snippet language={'bash'}>docker pull ollama/ollama</Snippet>
                     </Flexbox>
                   ),
                   status: 'process',
-                  title: t('ollama.setup.install.title')
+                  title: t('ollama.setup.install.title'),
                 },
                 {
                   description: (
@@ -212,22 +194,21 @@ Environment="OLLAMA_ORIGINS=*"`}
                         showLanguage
                       >
                         {/* eslint-disable-next-line react/no-unescaped-entities */}
-                        docker run -d --gpus=all -v ollama:/root/.ollama -e
-                        OLLAMA_ORIGINS="*" -p 11434:11434 --name ollama
-                        ollama/ollama
+                        docker run -d --gpus=all -v ollama:/root/.ollama -e OLLAMA_ORIGINS="*" -p
+                        11434:11434 --name ollama ollama/ollama
                       </Highlighter>
                     </Flexbox>
                   ),
                   status: 'process',
-                  title: t('ollama.setup.cors.title')
-                }
+                  title: t('ollama.setup.cors.title'),
+                },
               ]}
               size={'small'}
             />
           ),
           key: 'docker',
-          label: 'Docker'
-        }
+          label: 'Docker',
+        },
       ]}
     />
   );

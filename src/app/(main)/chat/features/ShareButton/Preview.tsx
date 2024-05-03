@@ -9,10 +9,7 @@ import ChatList from '@/features/Conversation/components/ChatList';
 import { useAgentStore } from '@/store/agent';
 import { agentSelectors } from '@/store/agent/selectors';
 import { useSessionStore } from '@/store/session';
-import {
-  sessionMetaSelectors,
-  sessionSelectors
-} from '@/store/session/selectors';
+import { sessionMetaSelectors, sessionSelectors } from '@/store/session/selectors';
 
 import PluginTag from '../PluginTag';
 import { useStyles } from './style';
@@ -23,16 +20,14 @@ const Preview = memo<FieldType & { title?: string }>(
     const [model, plugins, systemRole] = useAgentStore((s) => [
       agentSelectors.currentAgentModel(s),
       agentSelectors.currentAgentPlugins(s),
-      agentSelectors.currentAgentSystemRole(s)
+      agentSelectors.currentAgentSystemRole(s),
     ]);
-    const [isInbox, description, avatar, backgroundColor] = useSessionStore(
-      (s) => [
-        sessionSelectors.isInboxSession(s),
-        sessionMetaSelectors.currentAgentDescription(s),
-        sessionMetaSelectors.currentAgentAvatar(s),
-        sessionMetaSelectors.currentAgentBackgroundColor(s)
-      ]
-    );
+    const [isInbox, description, avatar, backgroundColor] = useSessionStore((s) => [
+      sessionSelectors.isInboxSession(s),
+      sessionMetaSelectors.currentAgentDescription(s),
+      sessionMetaSelectors.currentAgentAvatar(s),
+      sessionMetaSelectors.currentAgentBackgroundColor(s),
+    ]);
 
     const { t } = useTranslation('chat');
     const { styles } = useStyles(withBackground);
@@ -42,19 +37,11 @@ const Preview = memo<FieldType & { title?: string }>(
 
     return (
       <div className={styles.preview}>
-        <div
-          className={withBackground ? styles.background : undefined}
-          id={'preview'}
-        >
+        <div className={withBackground ? styles.background : undefined} id={'preview'}>
           <Flexbox className={styles.container} gap={16}>
             <div className={styles.header}>
               <Flexbox align={'flex-start'} gap={12} horizontal>
-                <Avatar
-                  avatar={avatar}
-                  background={backgroundColor}
-                  size={40}
-                  title={title}
-                />
+                <Avatar avatar={avatar} background={backgroundColor} size={40} title={title} />
                 <ChatHeaderTitle
                   desc={displayDesc}
                   tag={
@@ -85,7 +72,7 @@ const Preview = memo<FieldType & { title?: string }>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default Preview;

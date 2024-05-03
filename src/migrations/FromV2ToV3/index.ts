@@ -15,8 +15,8 @@ export class MigrationV2ToV3 implements Migration {
       state: {
         ...data.state,
         sessionGroups: [],
-        sessions: sessions.map((s) => this.migrateSession(s))
-      }
+        sessions: sessions.map((s) => this.migrateSession(s)),
+      },
     };
   }
 
@@ -24,7 +24,7 @@ export class MigrationV2ToV3 implements Migration {
     return {
       ...session,
       group: 'default',
-      pinned: session.group === 'pinned'
+      pinned: session.group === 'pinned',
     };
   };
 }

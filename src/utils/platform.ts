@@ -18,7 +18,7 @@ export const getBrowser = () => {
 export const browserInfo = {
   browser: getBrowser(),
   isMobile: getParser().getDevice().type === 'mobile',
-  os: getParser().getOS().name
+  os: getParser().getOS().name,
 };
 
 export const isMacOS = () => getPlatform() === 'Mac OS';

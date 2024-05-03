@@ -8,14 +8,8 @@ import { isDev } from '@/utils/env';
 import { type UserState, initialState } from './initialState';
 import { type UserAuthAction, createAuthSlice } from './slices/auth/action';
 import { type CommonAction, createCommonSlice } from './slices/common/action';
-import {
-  type PreferenceAction,
-  createPreferenceSlice
-} from './slices/preference/action';
-import {
-  type SettingsAction,
-  createSettingsSlice
-} from './slices/settings/actions';
+import { type PreferenceAction, createPreferenceSlice } from './slices/preference/action';
+import { type SettingsAction, createSettingsSlice } from './slices/settings/actions';
 import { type SyncAction, createSyncSlice } from './slices/sync/action';
 
 //  ===============  聚合 createStoreFn ============ //
@@ -27,15 +21,13 @@ export type UserStore = SyncAction &
   UserAuthAction &
   CommonAction;
 
-const createStore: StateCreator<UserStore, [['zustand/devtools', never]]> = (
-  ...parameters
-) => ({
+const createStore: StateCreator<UserStore, [['zustand/devtools', never]]> = (...parameters) => ({
   ...initialState,
   ...createSyncSlice(...parameters),
   ...createSettingsSlice(...parameters),
   ...createPreferenceSlice(...parameters),
   ...createAuthSlice(...parameters),
-  ...createCommonSlice(...parameters)
+  ...createCommonSlice(...parameters),
 });
 
 //  ===============  实装 useStore ============ //
@@ -43,8 +35,8 @@ const createStore: StateCreator<UserStore, [['zustand/devtools', never]]> = (
 export const useUserStore = createWithEqualityFn<UserStore>()(
   subscribeWithSelector(
     devtools(createStore, {
-      name: 'LobeChat_User' + (isDev ? '_DEV' : '')
-    })
+      name: 'LobeChat_User' + (isDev ? '_DEV' : ''),
+    }),
   ),
-  shallow
+  shallow,
 );

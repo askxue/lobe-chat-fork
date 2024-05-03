@@ -60,5 +60,5 @@ export const generalSettingsSlice: StateCreator<
   },
   updateDefaultAgent: async (defaultAgent) => {
     await get().setSettings({ defaultAgent });
-  }
+  },
 });

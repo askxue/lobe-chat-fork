@@ -13,7 +13,7 @@ export const POST = async (req: Request) => {
   const optionsString = formData.get('options') as string;
   const payload = {
     options: JSON.parse(optionsString),
-    speech: speechBlob
+    speech: speechBlob,
   } as OpenAISTTPayload;
 
   const openaiOrErrResponse = createBizOpenAI(req);
@@ -21,14 +21,11 @@ export const POST = async (req: Request) => {
   // if resOrOpenAI is a Response, it means there is an error,just return it
   if (openaiOrErrResponse instanceof Response) return openaiOrErrResponse;
 
-  const res = await createOpenaiAudioTranscriptions({
-    openai: openaiOrErrResponse,
-    payload
-  });
+  const res = await createOpenaiAudioTranscriptions({ openai: openaiOrErrResponse, payload });
 
   return new Response(JSON.stringify(res), {
     headers: {
-      'content-type': 'application/json;charset=UTF-8'
-    }
+      'content-type': 'application/json;charset=UTF-8',
+    },
   });
 };

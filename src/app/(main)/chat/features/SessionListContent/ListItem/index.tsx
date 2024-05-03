@@ -23,22 +23,12 @@ const useStyles = createStyles(({ css, token, responsive }) => {
     `,
     title: css`
       line-height: 1.2;
-    `
+    `,
   };
 });
 
-const ListItem = memo<
-  ListItemProps & { avatar: string; avatarBackground?: string }
->(
-  ({
-    avatar,
-    avatarBackground,
-    active,
-    showAction,
-    actions,
-    title,
-    ...props
-  }) => {
+const ListItem = memo<ListItemProps & { avatar: string; avatarBackground?: string }>(
+  ({ avatar, avatarBackground, active, showAction, actions, title, ...props }) => {
     const ref = useRef(null);
     const isHovering = useHover(ref);
     const { mobile } = useResponsive();
@@ -54,7 +44,7 @@ const ListItem = memo<
           size={46}
         />
       ),
-      [isHovering, avatar, avatarBackground]
+      [isHovering, avatar, avatarBackground],
     );
 
     return (
@@ -69,7 +59,7 @@ const ListItem = memo<
         {...(props as any)}
       />
     );
-  }
+  },
 );
 
 export default ListItem;

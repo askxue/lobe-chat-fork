@@ -23,9 +23,9 @@ const getPluginMetaById = (id: string) => (s: ToolStoreState) => {
 };
 
 const getCustomPluginById = (id: string) => (s: ToolStoreState) =>
-  installedPlugins(s).find(
-    (i) => i.identifier === id && i.type === 'customPlugin'
-  ) as LobeToolCustomPlugin | undefined;
+  installedPlugins(s).find((i) => i.identifier === id && i.type === 'customPlugin') as
+    | LobeToolCustomPlugin
+    | undefined;
 
 const getPluginManifestById = (id: string) => (s: ToolStoreState) =>
   getInstalledPluginById(id)(s)?.manifest;
@@ -37,8 +37,8 @@ const storeAndInstallPluginsIdList = (s: ToolStoreState) =>
   uniq(
     [
       s.installedPlugins.map((i) => i.identifier),
-      s.pluginStoreList.map((i) => i.identifier)
-    ].flat()
+      s.pluginStoreList.map((i) => i.identifier),
+    ].flat(),
   );
 
 const installedPluginManifestList = (s: ToolStoreState) =>
@@ -53,7 +53,7 @@ const installedPluginMetaList = (s: ToolStoreState) =>
     homepage: p.manifest?.homepage,
     identifier: p.identifier,
     meta: getPluginMetaById(p.identifier)(s),
-    type: p.type
+    type: p.type,
   }));
 const installedCustomPluginMetaList = (s: ToolStoreState) =>
   installedPluginMetaList(s).filter((p) => p.type === 'customPlugin');
@@ -76,5 +76,5 @@ export const pluginSelectors = {
   installedPlugins,
   isPluginHasUI,
   isPluginInstalled,
-  storeAndInstallPluginsIdList
+  storeAndInstallPluginsIdList,
 };

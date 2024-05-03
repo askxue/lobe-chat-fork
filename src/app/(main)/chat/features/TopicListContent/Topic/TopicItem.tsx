@@ -10,9 +10,7 @@ import TopicContent from './TopicContent';
 
 const useStyles = createStyles(({ css, token, isDarkMode }) => ({
   active: css`
-    background: ${isDarkMode
-      ? token.colorFillSecondary
-      : token.colorFillTertiary};
+    background: ${isDarkMode ? token.colorFillSecondary : token.colorFillTertiary};
     transition: background 200ms ${token.motionEaseOut};
 
     &:hover {
@@ -30,7 +28,7 @@ const useStyles = createStyles(({ css, token, isDarkMode }) => ({
   `,
   split: css`
     border-bottom: 1px solid ${token.colorSplit};
-  `
+  `,
 }));
 
 export interface ConfigCellProps {

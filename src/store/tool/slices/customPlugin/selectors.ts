@@ -5,5 +5,5 @@ const isCustomPlugin = (id: string) => (s: ToolStoreState) =>
   pluginHelpers.isCustomPlugin(id, s.installedPlugins);
 
 export const customPluginSelectors = {
-  isCustomPlugin
+  isCustomPlugin,
 };

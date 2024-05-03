@@ -1,8 +1,4 @@
-import {
-  CustomSessionGroup,
-  LobeAgentSession,
-  LobeSessionGroups
-} from '@/types/session';
+import { CustomSessionGroup, LobeAgentSession, LobeSessionGroups } from '@/types/session';
 
 export interface SessionState {
   /**
@@ -35,5 +31,5 @@ export const initialSessionState: SessionState = {
   pinnedSessions: [],
   searchKeywords: '',
   sessionGroups: [],
-  sessions: []
+  sessions: [],
 };

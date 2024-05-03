@@ -1,7 +1,4 @@
-import {
-  PluginRender,
-  PluginRenderProps
-} from '@lobehub/chat-plugin-sdk/client';
+import { PluginRender, PluginRenderProps } from '@lobehub/chat-plugin-sdk/client';
 import { Skeleton } from 'antd';
 import { memo, useEffect, useState } from 'react';
 
@@ -16,9 +13,7 @@ const RenderCache: {
 } = {};
 
 const SystemJsRender = memo<SystemJsRenderProps>(({ url, ...props }) => {
-  const [component, setComp] = useState<PluginRender | undefined>(
-    RenderCache[url]
-  );
+  const [component, setComp] = useState<PluginRender | undefined>(RenderCache[url]);
 
   useEffect(() => {
     system

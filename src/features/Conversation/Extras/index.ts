@@ -4,5 +4,5 @@ import { UserMessageExtra } from './User';
 
 export const renderMessagesExtra: Record<string, RenderMessageExtra> = {
   assistant: AssistantMessageExtra,
-  user: UserMessageExtra
+  user: UserMessageExtra,
 };

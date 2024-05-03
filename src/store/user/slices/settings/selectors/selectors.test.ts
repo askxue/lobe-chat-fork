@@ -23,31 +23,31 @@ describe('settingsSelectors', () => {
                 sttLocale: 'auto',
                 ttsService: 'openai',
                 voice: {
-                  openai: 'alloy'
-                }
-              }
+                  openai: 'alloy',
+                },
+              },
             },
             meta: {
               avatar: 'Default Agent',
-              description: 'Default agent for testing'
-            }
+              description: 'Default agent for testing',
+            },
           },
           tts: {
             openAI: {
               sttModel: 'whisper-1',
-              ttsModel: 'tts-1'
+              ttsModel: 'tts-1',
             },
             sttAutoStop: true,
-            sttServer: 'openai'
+            sttServer: 'openai',
           },
           languageModel: {
             openAI: {
               OPENAI_API_KEY: 'openai-api-key',
               endpoint: 'https://openai-endpoint.com',
-              models: ['gpt-3.5-turbo']
-            }
-          }
-        }
+              models: ['gpt-3.5-turbo'],
+            },
+          },
+        },
       } as unknown as UserStore;
 
       const result = settingsSelectors.currentSettings(s);
@@ -63,14 +63,14 @@ describe('settingsSelectors', () => {
           defaultAgent: {
             config: {
               systemRole: 'user',
-              model: 'gpt-3.5-turbo'
+              model: 'gpt-3.5-turbo',
             },
             meta: {
               avatar: 'agent-avatar.jpg',
-              description: 'Test agent'
-            }
-          }
-        }
+              description: 'Test agent',
+            },
+          },
+        },
       } as unknown as UserStore;
 
       const result = settingsSelectors.defaultAgent(s);
@@ -86,10 +86,10 @@ describe('settingsSelectors', () => {
           defaultAgent: {
             meta: {
               avatar: 'agent-avatar.jpg',
-              description: 'Test agent'
-            }
-          }
-        }
+              description: 'Test agent',
+            },
+          },
+        },
       } as unknown as UserStore;
 
       const result = settingsSelectors.defaultAgentMeta(s);
@@ -105,10 +105,10 @@ describe('settingsSelectors', () => {
           tts: {
             sttAutoStop: false,
             openAI: {
-              sttModel: 'whisper-2'
-            }
-          }
-        }
+              sttModel: 'whisper-2',
+            },
+          },
+        },
       } as unknown as UserStore;
 
       const result = settingsSelectors.currentTTS(s);
@@ -121,8 +121,8 @@ describe('settingsSelectors', () => {
     it('should return the correct language setting', () => {
       const s = {
         settings: {
-          language: 'fr'
-        }
+          language: 'fr',
+        },
       } as unknown as UserStore;
 
       const result = settingsSelectors.currentLanguage(s);
@@ -138,10 +138,10 @@ describe('settingsSelectors', () => {
           tool: {
             dalle: {
               apiKey: 'dalle-api-key',
-              autoGenerate: true
-            }
-          }
-        }
+              autoGenerate: true,
+            },
+          },
+        },
       } as unknown as UserStore;
 
       const result = settingsSelectors.dalleConfig(s);
@@ -156,10 +156,10 @@ describe('settingsSelectors', () => {
         settings: {
           tool: {
             dalle: {
-              autoGenerate: true
-            }
-          }
-        }
+              autoGenerate: true,
+            },
+          },
+        },
       } as unknown as UserStore;
 
       const result = settingsSelectors.isDalleAutoGenerating(s);

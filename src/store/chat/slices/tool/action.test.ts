@@ -15,47 +15,37 @@ describe('chatToolSlice', () => {
       const { result } = renderHook(() => useChatStore());
 
       const initialMessageContent = JSON.stringify([
-        { prompt: 'test prompt', previewUrl: 'old-url', imageId: 'old-id' }
+        { prompt: 'test prompt', previewUrl: 'old-url', imageId: 'old-id' },
       ]);
 
       vi.spyOn(chatSelectors, 'getMessageById').mockImplementationOnce(
         (id) => () =>
           ({
             id,
-            content: initialMessageContent
-          }) as ChatMessage
+            content: initialMessageContent,
+          }) as ChatMessage,
       );
 
       const messageId = 'message-id';
       const prompts = [
         { prompt: 'test prompt 1' },
-        { prompt: 'test prompt 2' }
+        { prompt: 'test prompt 2' },
       ] as DallEImageItem[];
       const mockUrl = 'https://example.com/image.png';
       const mockId = 'image-id';
 
-      vi.spyOn(imageGenerationService, 'generateImage').mockResolvedValue(
-        mockUrl
-      );
-      vi.spyOn(fileService, 'uploadImageByUrl').mockResolvedValue({
-        id: mockId
-      });
+      vi.spyOn(imageGenerationService, 'generateImage').mockResolvedValue(mockUrl);
+      vi.spyOn(fileService, 'uploadImageByUrl').mockResolvedValue({ id: mockId });
       vi.spyOn(result.current, 'toggleDallEImageLoading');
 
       await act(async () => {
         await result.current.generateImageFromPrompts(prompts, messageId);
       });
       // For each prompt, loading is toggled on and then off
-      expect(imageGenerationService.generateImage).toHaveBeenCalledTimes(
-        prompts.length
-      );
-      expect(fileService.uploadImageByUrl).toHaveBeenCalledTimes(
-        prompts.length
-      );
+      expect(imageGenerationService.generateImage).toHaveBeenCalledTimes(prompts.length);
+      expect(fileService.uploadImageByUrl).toHaveBeenCalledTimes(prompts.length);
 
-      expect(result.current.toggleDallEImageLoading).toHaveBeenCalledTimes(
-        prompts.length * 2
-      );
+      expect(result.current.toggleDallEImageLoading).toHaveBeenCalledTimes(prompts.length * 2);
     });
   });
 
@@ -64,7 +54,7 @@ describe('chatToolSlice', () => {
       const { result } = renderHook(() => useChatStore());
       const messageId = 'message-id';
       const initialMessageContent = JSON.stringify([
-        { prompt: 'test prompt', previewUrl: 'old-url', imageId: 'old-id' }
+        { prompt: 'test prompt', previewUrl: 'old-url', imageId: 'old-id' },
       ]);
       const updateFunction = (draft: any) => {
         draft[0].previewUrl = 'new-url';
@@ -77,8 +67,8 @@ describe('chatToolSlice', () => {
         (id) => () =>
           ({
             id,
-            content: initialMessageContent
-          }) as ChatMessage
+            content: initialMessageContent,
+          }) as ChatMessage,
       );
 
       await act(async () => {
@@ -88,9 +78,7 @@ describe('chatToolSlice', () => {
       // 验证 internalUpdateMessageContent 是否被正确调用以更新内容
       expect(result.current.internalUpdateMessageContent).toHaveBeenCalledWith(
         messageId,
-        JSON.stringify([
-          { prompt: 'test prompt', previewUrl: 'new-url', imageId: 'new-id' }
-        ])
+        JSON.stringify([{ prompt: 'test prompt', previewUrl: 'new-url', imageId: 'new-id' }]),
       );
     });
   });
@@ -99,16 +87,10 @@ describe('chatToolSlice', () => {
     it('should call generateImageFromPrompts with provided data', async () => {
       const { result } = renderHook(() => useChatStore());
       const id = 'message-id';
-      const data = [
-        { prompt: 'prompt 1' },
-        { prompt: 'prompt 2' }
-      ] as DallEImageItem[];
+      const data = [{ prompt: 'prompt 1' }, { prompt: 'prompt 2' }] as DallEImageItem[];
 
       // Mock generateImageFromPrompts
-      const generateImageFromPromptsMock = vi.spyOn(
-        result.current,
-        'generateImageFromPrompts'
-      );
+      const generateImageFromPromptsMock = vi.spyOn(result.current, 'generateImageFromPrompts');
 
       await act(async () => {
         await result.current.text2image(id, data);

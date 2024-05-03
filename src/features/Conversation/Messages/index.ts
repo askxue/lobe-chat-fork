@@ -16,13 +16,11 @@ export const renderMessages: Record<string, RenderMessage> = {
   assistant: AssistantMessage,
   default: DefaultMessage,
   function: FunctionMessage,
-  user: UserMessage
+  user: UserMessage,
 };
 
 export const useAvatarsClick = (): OnAvatarsClick => {
-  const [isInbox] = useSessionStore((s) => [
-    sessionSelectors.isInboxSession(s)
-  ]);
+  const [isInbox] = useSessionStore((s) => [sessionSelectors.isInboxSession(s)]);
   const [toggleSystemRole] = useGlobalStore((s) => [s.toggleSystemRole]);
   const { mobile } = useResponsive();
   const router = useRouter();
@@ -34,9 +32,7 @@ export const useAvatarsClick = (): OnAvatarsClick => {
           isInbox
             ? router.push('/settings/agent')
             : mobile
-              ? router.push(
-                  pathString('/chat/settings', { search: location.search })
-                )
+              ? router.push(pathString('/chat/settings', { search: location.search }))
               : toggleSystemRole(true);
       }
     }

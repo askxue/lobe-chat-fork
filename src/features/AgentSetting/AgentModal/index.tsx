@@ -18,7 +18,7 @@ const AgentModal = memo(() => {
 
   const [enableMaxTokens, updateConfig] = useStore((s) => [
     s.config.enableMaxTokens,
-    s.setAgentConfig
+    s.setAgentConfig,
   ]);
 
   useSyncSettings(form);
@@ -30,42 +30,42 @@ const AgentModal = memo(() => {
         desc: t('settingModel.model.desc'),
         label: t('settingModel.model.title'),
         name: 'model',
-        tag: 'model'
+        tag: 'model',
       },
       {
         children: <SliderWithInput max={1} min={0} step={0.1} />,
         desc: t('settingModel.temperature.desc'),
         label: t('settingModel.temperature.title'),
         name: ['params', 'temperature'],
-        tag: 'temperature'
+        tag: 'temperature',
       },
       {
         children: <SliderWithInput max={1} min={0} step={0.1} />,
         desc: t('settingModel.topP.desc'),
         label: t('settingModel.topP.title'),
         name: ['params', 'top_p'],
-        tag: 'top_p'
+        tag: 'top_p',
       },
       {
         children: <SliderWithInput max={2} min={-2} step={0.1} />,
         desc: t('settingModel.presencePenalty.desc'),
         label: t('settingModel.presencePenalty.title'),
         name: ['params', 'presence_penalty'],
-        tag: 'presence_penalty'
+        tag: 'presence_penalty',
       },
       {
         children: <SliderWithInput max={2} min={-2} step={0.1} />,
         desc: t('settingModel.frequencyPenalty.desc'),
         label: t('settingModel.frequencyPenalty.title'),
         name: ['params', 'frequency_penalty'],
-        tag: 'frequency_penalty'
+        tag: 'frequency_penalty',
       },
       {
         children: <Switch />,
         label: t('settingModel.enableMaxTokens.title'),
         minWidth: undefined,
         name: 'enableMaxTokens',
-        valuePropName: 'checked'
+        valuePropName: 'checked',
       },
       {
         children: <SliderWithInput max={32_000} min={0} step={100} />,
@@ -74,10 +74,10 @@ const AgentModal = memo(() => {
         hidden: !enableMaxTokens,
         label: t('settingModel.maxTokens.title'),
         name: ['params', 'max_tokens'],
-        tag: 'max_tokens'
-      }
+        tag: 'max_tokens',
+      },
     ],
-    title: t('settingModel.title')
+    title: t('settingModel.title'),
   };
 
   return (

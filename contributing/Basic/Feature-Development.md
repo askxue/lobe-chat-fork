@@ -26,7 +26,7 @@ import { z } from 'zod';
 
 export const DB_SessionGroupSchema = z.object({
   name: z.string(),
-  sort: z.number().optional()
+  sort: z.number().optional(),
 });
 
 export type DB_SessionGroup = z.infer<typeof DB_SessionGroupSchema>;
@@ -129,10 +129,7 @@ In `src/database/model/sessionGroup.ts`, the `SessionGroupModel` is defined as f
 
 ```typescript
 import { BaseModel } from '@/database/client/core';
-import {
-  DB_SessionGroup,
-  DB_SessionGroupSchema
-} from '@/database/client/schemas/sessionGroup';
+import { DB_SessionGroup, DB_SessionGroupSchema } from '@/database/client/schemas/sessionGroup';
 import { nanoid } from '@/utils/uuid';
 
 class _SessionGroupModel extends BaseModel {
@@ -221,7 +218,7 @@ export const createSessionGroupSlice: StateCreator<
     await get().refreshSessions();
     // Return the ID of the newly created session group
     return id;
-  }
+  },
   // ... Other action implementations
 });
 ```
@@ -250,25 +247,21 @@ export const createSessionSlice: StateCreator<
 > = (set, get) => ({
   // ... other methods
   useFetchSessions: () =>
-    useSWR<ChatSessionList>(
-      FETCH_SESSIONS_KEY,
-      sessionService.getGroupedSessions,
-      {
-        onSuccess: (data) => {
-          set(
-            {
-              customSessionGroups: data.customGroup,
-              defaultSessions: data.default,
-              isSessionsFirstFetchFinished: true,
-              pinnedSessions: data.pinned,
-              sessions: data.all
-            },
-            false,
-            n('useFetchSessions/onSuccess', data)
-          );
-        }
-      }
-    )
+    useSWR<ChatSessionList>(FETCH_SESSIONS_KEY, sessionService.getGroupedSessions, {
+      onSuccess: (data) => {
+        set(
+          {
+            customSessionGroups: data.customGroup,
+            defaultSessions: data.default,
+            isSessionsFirstFetchFinished: true,
+            pinnedSessions: data.pinned,
+            sessions: data.all,
+          },
+          false,
+          n('useFetchSessions/onSuccess', data),
+        );
+      },
+    }),
 });
 ```
 
@@ -304,13 +297,9 @@ class _SessionModel extends BaseModel {
     // Query session group data
     const groups = await SessionGroupModel.query();
     // Query custom session groups based on session group IDs
-    const customGroups = await this.queryByGroupIds(
-      groups.map((item) => item.id)
-    );
+    const customGroups = await this.queryByGroupIds(groups.map((item) => item.id));
     // Query default session list
-    const defaultItems = await this.querySessionsByGroupId(
-      SessionDefaultGroup.Default
-    );
+    const defaultItems = await this.querySessionsByGroupId(SessionDefaultGroup.Default);
     // Query pinned sessions
     const pinnedItems = await this.getPinnedSessions();
 
@@ -319,12 +308,9 @@ class _SessionModel extends BaseModel {
     // Combine and return all sessions and their group information
     return {
       all, // Array containing all sessions
-      customGroup: groups.map((group) => ({
-        ...group,
-        children: customGroups[group.id]
-      })), // Custom groups
+      customGroup: groups.map((group) => ({ ...group, children: customGroups[group.id] })), // Custom groups
       default: defaultItems, // Default session list
-      pinned: pinnedItems // Pinned session list
+      pinned: pinnedItems, // Pinned session list
     };
   }
 }
@@ -356,8 +342,7 @@ Revised:
 ```ts
 const defaultSessions = (s: SessionStore): LobeSessions => s.defaultSessions;
 const pinnedSessions = (s: SessionStore): LobeSessions => s.pinnedSessions;
-const customSessionGroups = (s: SessionStore): CustomSessionGroup[] =>
-  s.customSessionGroups;
+const customSessionGroups = (s: SessionStore): CustomSessionGroup[] => s.customSessionGroups;
 ```
 
 Since all data retrieval in the UI is implemented using syntax like `useSessionStore(sessionSelectors.defaultSessions)`, we only need to modify the selector implementation of `defaultSessions` to complete the data structure change. The data retrieval code in the UI layer does not need to be changed at all, which can greatly reduce the cost and risk of refactoring.
@@ -376,7 +361,7 @@ const CreateGroupModal = () => {
 
   const [updateSessionGroup, addCustomGroup] = useSessionStore((s) => [
     s.updateSessionGroupId,
-    s.addSessionGroup
+    s.addSessionGroup,
   ]);
 
   return (
@@ -462,8 +447,8 @@ export class MigrationV2ToV3 implements Migration {
       ...data,
       state: {
         ...data.state,
-        sessions: sessions.map((s) => this.migrateSession(s))
-      }
+        sessions: sessions.map((s) => this.migrateSession(s)),
+      },
     };
   }
 
@@ -471,7 +456,7 @@ export class MigrationV2ToV3 implements Migration {
     return {
       ...session,
       group: 'default',
-      pinned: session.group === 'pinned'
+      pinned: session.group === 'pinned',
     };
   };
 }
@@ -480,10 +465,7 @@ export class MigrationV2ToV3 implements Migration {
 It can be seen that the migration implementation is very simple. However, it is important to ensure the correctness of the migration, so corresponding test cases need to be written in `src/migrations/FromV2ToV3/migrations.test.ts`:
 
 ```ts
-import {
-  MigrationData,
-  VersionController
-} from '@/migrations/VersionController';
+import { MigrationData, VersionController } from '@/migrations/VersionController';
 
 import { MigrationV1ToV2 } from '../FromV1ToV2';
 import inputV1Data from '../FromV1ToV2/fixtures/input-v1-session.json';
@@ -515,21 +497,14 @@ describe('MigrationV2ToV3', () => {
   it('should work correct from v1 to v3', () => {
     const data: MigrationData = inputV1Data;
 
-    versionController = new VersionController(
-      [MigrationV2ToV3, MigrationV1ToV2],
-      3
-    );
+    versionController = new VersionController([MigrationV2ToV3, MigrationV1ToV2], 3);
 
     const migratedData = versionController.migrate(data);
 
     expect(migratedData.version).toEqual(outputV3DataFromV1.version);
-    expect(migratedData.state.sessions).toEqual(
-      outputV3DataFromV1.state.sessions
-    );
+    expect(migratedData.state.sessions).toEqual(outputV3DataFromV1.state.sessions);
     expect(migratedData.state.topics).toEqual(outputV3DataFromV1.state.topics);
-    expect(migratedData.state.messages).toEqual(
-      outputV3DataFromV1.state.messages
-    );
+    expect(migratedData.state.messages).toEqual(outputV3DataFromV1.state.messages);
   });
 });
 ```

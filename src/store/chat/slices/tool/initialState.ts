@@ -3,5 +3,5 @@ export interface ChatToolState {
 }
 
 export const initialToolState: ChatToolState = {
-  dalleImageLoading: {}
+  dalleImageLoading: {},
 };

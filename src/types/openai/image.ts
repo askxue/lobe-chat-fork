@@ -1,8 +1,4 @@
-import {
-  DallEImageQuality,
-  DallEImageSize,
-  DallEImageStyle
-} from '@/types/tool/dalle';
+import { DallEImageQuality, DallEImageSize, DallEImageStyle } from '@/types/tool/dalle';
 
 export interface OpenAIImagePayload {
   model: 'dall-e-2' | 'dall-e-3';

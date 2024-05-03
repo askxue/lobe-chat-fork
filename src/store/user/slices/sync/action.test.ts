@@ -13,7 +13,7 @@ vi.mock('swr', async (importOriginal) => {
   const modules = await importOriginal();
   return {
     ...(modules as any),
-    mutate: vi.fn()
+    mutate: vi.fn(),
   };
 });
 
@@ -27,13 +27,8 @@ describe('createSyncSlice', () => {
       const { result } = renderHook(() => useUserStore());
       const onEvent = vi.fn();
 
-      vi.spyOn(userProfileSelectors, 'userId').mockReturnValueOnce(
-        undefined as any
-      );
-      const triggerEnableSyncSpy = vi.spyOn(
-        result.current,
-        'triggerEnableSync'
-      );
+      vi.spyOn(userProfileSelectors, 'userId').mockReturnValueOnce(undefined as any);
+      const triggerEnableSyncSpy = vi.spyOn(result.current, 'triggerEnableSync');
 
       await act(async () => {
         await result.current.refreshConnection(onEvent);
@@ -48,10 +43,7 @@ describe('createSyncSlice', () => {
       const userId = 'user-id';
 
       vi.spyOn(userProfileSelectors, 'userId').mockReturnValueOnce(userId);
-      const triggerEnableSyncSpy = vi.spyOn(
-        result.current,
-        'triggerEnableSync'
-      );
+      const triggerEnableSyncSpy = vi.spyOn(result.current, 'triggerEnableSync');
 
       await act(async () => {
         await result.current.refreshConnection(onEvent);
@@ -69,7 +61,7 @@ describe('createSyncSlice', () => {
 
       vi.spyOn(syncSettingsSelectors, 'webrtcConfig').mockReturnValueOnce({
         channelName: '',
-        enabled: true
+        enabled: true,
       });
 
       const data = await act(async () => {
@@ -91,14 +83,10 @@ describe('createSyncSlice', () => {
         channelName,
         channelPassword,
         signaling,
-        enabled: true
+        enabled: true,
       });
-      vi.spyOn(syncSettingsSelectors, 'deviceName').mockReturnValueOnce(
-        deviceName
-      );
-      const enabledSyncSpy = vi
-        .spyOn(globalService, 'enabledSync')
-        .mockResolvedValueOnce(true);
+      vi.spyOn(syncSettingsSelectors, 'deviceName').mockReturnValueOnce(deviceName);
+      const enabledSyncSpy = vi.spyOn(globalService, 'enabledSync').mockResolvedValueOnce(true);
       const { result } = renderHook(() => useUserStore());
 
       const data = await act(async () => {
@@ -111,7 +99,7 @@ describe('createSyncSlice', () => {
         onSyncEvent: onEvent,
         onSyncStatusChange: expect.any(Function),
         signaling,
-        user: expect.objectContaining({ id: userId, name: deviceName })
+        user: expect.objectContaining({ id: userId, name: deviceName }),
       });
       expect(data).toBe(true);
     });
@@ -119,24 +107,19 @@ describe('createSyncSlice', () => {
 
   describe('useEnabledSync', () => {
     it('should return false when userId is empty', async () => {
-      const { result } = renderHook(
-        () => useUserStore().useEnabledSync(true, undefined, vi.fn()),
-        {
-          wrapper: withSWR
-        }
-      );
+      const { result } = renderHook(() => useUserStore().useEnabledSync(true, undefined, vi.fn()), {
+        wrapper: withSWR,
+      });
 
       await waitFor(() => expect(result.current.data).toBe(false));
     });
 
     it('should call globalService.disableSync when userEnableSync is false', async () => {
-      const disableSyncSpy = vi
-        .spyOn(globalService, 'disableSync')
-        .mockResolvedValueOnce(false);
+      const disableSyncSpy = vi.spyOn(globalService, 'disableSync').mockResolvedValueOnce(false);
 
       const { result } = renderHook(
         () => useUserStore().useEnabledSync(false, 'user-id', vi.fn()),
-        { wrapper: withSWR }
+        { wrapper: withSWR },
       );
 
       await waitFor(() => expect(result.current.data).toBeUndefined());
@@ -156,8 +139,8 @@ describe('createSyncSlice', () => {
       const { result: swrResult } = renderHook(
         () => result.current.useEnabledSync(true, userId, onEvent),
         {
-          wrapper: withSWR
-        }
+          wrapper: withSWR,
+        },
       );
 
       await waitFor(() => expect(swrResult.current.data).toBe(true));

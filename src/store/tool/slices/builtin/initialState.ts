@@ -8,5 +8,5 @@ export interface BuiltinToolState {
 
 export const initialBuiltinToolState: BuiltinToolState = {
   builtinToolLoading: {},
-  builtinTools
+  builtinTools,
 };

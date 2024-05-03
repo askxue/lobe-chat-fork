@@ -24,7 +24,7 @@ if (typeof window === 'undefined') {
 
   Object.defineProperty(global, 'crypto', {
     value: new Crypto(),
-    writable: true
+    writable: true,
   });
 }
 

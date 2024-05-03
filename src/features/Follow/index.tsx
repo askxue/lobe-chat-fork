@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  SiDiscord,
-  SiGithub,
-  SiMedium,
-  SiX
-} from '@icons-pack/react-simple-icons';
+import { SiDiscord, SiGithub, SiMedium, SiX } from '@icons-pack/react-simple-icons';
 import { ActionIcon } from '@lobehub/ui';
 import { createStyles } from 'antd-style';
 import Link from 'next/link';
@@ -27,7 +22,7 @@ const useStyles = createStyles(({ css, token }) => {
           fill: ${token.colorText};
         }
       }
-    `
+    `,
   };
 });
 
@@ -44,11 +39,7 @@ const Follow = memo(() => {
         />
       </Link>
       <Link href={X} rel="noreferrer" target={'_blank'}>
-        <ActionIcon
-          className={styles.icon}
-          icon={SiX as any}
-          title={t('follow', { name: 'X' })}
-        />
+        <ActionIcon className={styles.icon} icon={SiX as any} title={t('follow', { name: 'X' })} />
       </Link>
       <Link href={DISCORD} rel="noreferrer" target={'_blank'}>
         <ActionIcon

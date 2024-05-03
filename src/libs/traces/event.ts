@@ -7,7 +7,7 @@ import {
   TraceEventCopyMessage,
   TraceEventDeleteAndRegenerateMessage,
   TraceEventModifyMessage,
-  TraceEventRegenerateMessage
+  TraceEventRegenerateMessage,
 } from '@/types/trace';
 
 /**
@@ -17,7 +17,7 @@ export enum EventScore {
   DeleteAndRegenerate = -1,
   Regenerate = -0.6,
   Modify = -0.3,
-  Copy = 0.6
+  Copy = 0.6,
 }
 
 type EventParams<T> = T & TraceEventBasePayload;
@@ -42,17 +42,13 @@ export class TraceEventClient {
     }
   }
 
-  copyMessage({
-    traceId,
-    observationId,
-    content
-  }: EventParams<TraceEventCopyMessage>) {
+  copyMessage({ traceId, observationId, content }: EventParams<TraceEventCopyMessage>) {
     const score = EventScore.Copy;
     // create update event
     this._trace?.event({
       input: content,
       metadata: { score },
-      name: TraceEventType.CopyMessage
+      name: TraceEventType.CopyMessage,
     });
 
     // score the observation if there is an id
@@ -60,21 +56,21 @@ export class TraceEventClient {
       name: 'copy message',
       observationId,
       traceId,
-      value: score
+      value: score,
     });
   }
 
   async deleteAndRegenerateMessage({
     traceId,
     observationId,
-    content
+    content,
   }: EventParams<TraceEventDeleteAndRegenerateMessage>) {
     const score = EventScore.DeleteAndRegenerate;
     // create update event
     this._trace?.event({
       input: content,
       metadata: { score },
-      name: TraceEventType.DeleteAndRegenerateMessage
+      name: TraceEventType.DeleteAndRegenerateMessage,
     });
 
     // score the observation if there is an id
@@ -82,37 +78,32 @@ export class TraceEventClient {
       name: 'delete and regenerate message',
       observationId,
       traceId,
-      value: score
+      value: score,
     });
   }
 
   async regenerateMessage({
     traceId,
     observationId,
-    content
+    content,
   }: EventParams<TraceEventRegenerateMessage>) {
     const score = EventScore.Regenerate;
     // create update event
     this._trace?.event({
       input: content,
       metadata: { score },
-      name: TraceEventType.RegenerateMessage
+      name: TraceEventType.RegenerateMessage,
     });
 
     // score the observation if there is an id
-    this.scoreObservation({
-      name: 'regenerate message',
-      observationId,
-      traceId,
-      value: score
-    });
+    this.scoreObservation({ name: 'regenerate message', observationId, traceId, value: score });
   }
 
   async modifyMessage({
     content: prev,
     nextContent: next,
     observationId,
-    traceId
+    traceId,
   }: EventParams<TraceEventModifyMessage>) {
     const score = EventScore.Modify;
 
@@ -122,11 +113,11 @@ export class TraceEventClient {
       input: prev,
       metadata: { diffs, score },
       name: TraceEventType.ModifyMessage,
-      output: next
+      output: next,
     });
 
     this._trace.update({
-      output: next
+      output: next,
       // TODO: add tag when supported
       // tags: [TraceNameMap.UserEvents]
     });
@@ -136,7 +127,7 @@ export class TraceEventClient {
       name: 'modify message',
       observationId,
       traceId,
-      value: score
+      value: score,
     });
   }
 }

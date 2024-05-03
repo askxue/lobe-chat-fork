@@ -12,17 +12,15 @@ import { modelProviderSelectors, settingsSelectors } from '../selectors';
 vi.mock('@/services/user', () => ({
   userService: {
     updateUserSettings: vi.fn(),
-    resetUserSettings: vi.fn()
-  }
+    resetUserSettings: vi.fn(),
+  },
 }));
 
 describe('LLMSettingsSliceAction', () => {
   describe('setModelProviderConfig', () => {
     it('should set OpenAI configuration', async () => {
       const { result } = renderHook(() => useUserStore());
-      const openAIConfig: Partial<GeneralModelProviderConfig> = {
-        apiKey: 'test-key'
-      };
+      const openAIConfig: Partial<GeneralModelProviderConfig> = { apiKey: 'test-key' };
 
       // Perform the action
       await act(async () => {
@@ -32,8 +30,8 @@ describe('LLMSettingsSliceAction', () => {
       // Assert that updateUserSettings was called with the correct OpenAI configuration
       expect(userService.updateUserSettings).toHaveBeenCalledWith({
         languageModel: {
-          openai: openAIConfig
-        }
+          openai: openAIConfig,
+        },
       });
     });
   });
@@ -42,15 +40,10 @@ describe('LLMSettingsSliceAction', () => {
     it('should return early when prevState does not exist', async () => {
       const { result } = renderHook(() => useUserStore());
       const provider = 'openai';
-      const payload: CustomModelCardDispatch = {
-        type: 'add',
-        modelCard: { id: 'test-id' }
-      };
+      const payload: CustomModelCardDispatch = { type: 'add', modelCard: { id: 'test-id' } };
 
       // Mock the selector to return undefined
-      vi.spyOn(settingsSelectors, 'providerConfig').mockReturnValue(
-        () => undefined
-      );
+      vi.spyOn(settingsSelectors, 'providerConfig').mockReturnValue(() => undefined);
       vi.spyOn(result.current, 'setModelProviderConfig');
 
       await act(async () => {
@@ -70,12 +63,10 @@ describe('LLMSettingsSliceAction', () => {
         useUserStore.setState({
           serverConfig: {
             languageModel: {
-              azure: {
-                serverModelCards: [{ id: 'abc', deploymentName: 'abc' }]
-              }
+              azure: { serverModelCards: [{ id: 'abc', deploymentName: 'abc' }] },
             },
-            telemetry: {}
-          }
+            telemetry: {},
+          },
         });
       });
 
@@ -84,9 +75,7 @@ describe('LLMSettingsSliceAction', () => {
       });
 
       // Assert that setModelProviderConfig was not called
-      const azure = result.current.defaultModelProviderList.find(
-        (m) => m.id === 'azure'
-      );
+      const azure = result.current.defaultModelProviderList.find((m) => m.id === 'azure');
       expect(azure?.chatModels).toEqual([{ id: 'abc', deploymentName: 'abc' }]);
     });
   });
@@ -98,9 +87,9 @@ describe('LLMSettingsSliceAction', () => {
         useUserStore.setState({
           settings: {
             languageModel: {
-              ollama: { enabledModels: ['llava'] }
-            }
-          }
+              ollama: { enabledModels: ['llava'] },
+            },
+          },
         });
       });
 
@@ -108,16 +97,14 @@ describe('LLMSettingsSliceAction', () => {
         result.current.refreshModelProviderList();
       });
 
-      const ollamaList = result.current.modelProviderList.find(
-        (r) => r.id === 'ollama'
-      );
+      const ollamaList = result.current.modelProviderList.find((r) => r.id === 'ollama');
       // Assert that setModelProviderConfig was not called
       expect(ollamaList?.chatModels.find((c) => c.id === 'llava')).toEqual({
         displayName: 'LLaVA 7B',
         enabled: true,
         id: 'llava',
         tokens: 4096,
-        vision: true
+        vision: true,
       });
     });
 
@@ -129,9 +116,9 @@ describe('LLMSettingsSliceAction', () => {
           settings: {
             languageModel: {
               perplexity: { enabled: true },
-              azure: { enabled: false }
-            }
-          }
+              azure: { enabled: false },
+            },
+          },
         });
       });
 
@@ -139,8 +126,9 @@ describe('LLMSettingsSliceAction', () => {
         result.current.refreshModelProviderList();
       });
 
-      const enabledProviders =
-        modelProviderSelectors.modelProviderListForModelSelect(result.current);
+      const enabledProviders = modelProviderSelectors.modelProviderListForModelSelect(
+        result.current,
+      );
       expect(enabledProviders).toHaveLength(3);
       expect(enabledProviders.at(-1)!.id).toBe('perplexity');
     });

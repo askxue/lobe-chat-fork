@@ -3,17 +3,12 @@
 import { OpenAI } from '@lobehub/icons';
 import { memo } from 'react';
 
-import {
-  featureFlagsSelectors,
-  useServerConfigStore
-} from '@/store/serverConfig';
+import { featureFlagsSelectors, useServerConfigStore } from '@/store/serverConfig';
 
 import ProviderConfig from '../components/ProviderConfig';
 
 const OpenAIProvider = memo(() => {
-  const { showOpenAIProxyUrl, showOpenAIApiKey } = useServerConfigStore(
-    featureFlagsSelectors
-  );
+  const { showOpenAIProxyUrl, showOpenAIApiKey } = useServerConfigStore(featureFlagsSelectors);
 
   return (
     <ProviderConfig

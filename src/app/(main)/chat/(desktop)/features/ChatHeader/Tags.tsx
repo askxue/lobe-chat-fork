@@ -13,12 +13,10 @@ import PluginTag from '../../../features/PluginTag';
 const TitleTags = memo(() => {
   const [model, plugins] = useAgentStore((s) => [
     agentSelectors.currentAgentModel(s),
-    agentSelectors.currentAgentPlugins(s)
+    agentSelectors.currentAgentPlugins(s),
   ]);
 
-  const showPlugin = useUserStore(
-    modelProviderSelectors.isModelEnabledFunctionCall(model)
-  );
+  const showPlugin = useUserStore(modelProviderSelectors.isModelEnabledFunctionCall(model));
 
   return (
     <Flexbox gap={8} horizontal>

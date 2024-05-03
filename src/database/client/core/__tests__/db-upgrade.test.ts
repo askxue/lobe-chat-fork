@@ -23,7 +23,7 @@ describe('LocalDB migration', () => {
     await dbV3.open();
     await dbV3.table('sessions').bulkAdd([
       { id: 's1', group: 'pinned' },
-      { id: 's2', group: 'default' }
+      { id: 's2', group: 'default' },
     ]);
     dbV3.close();
 

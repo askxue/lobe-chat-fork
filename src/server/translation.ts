@@ -12,10 +12,7 @@ export const translation = async (ns: NS) => {
   const cookieStore = cookies();
   const defaultLang = cookieStore.get(LOBE_LOCALE_COOKIE);
   const lng = defaultLang?.value || DEFAULT_LANG;
-  const filepath = join(
-    process.cwd(),
-    `locales/${normalizeLocale(lng)}/${ns}.json`
-  );
+  const filepath = join(process.cwd(), `locales/${normalizeLocale(lng)}/${ns}.json`);
   const file = readFileSync(filepath, 'utf8');
   const i18ns = JSON.parse(file);
 

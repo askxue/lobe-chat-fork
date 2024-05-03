@@ -4,7 +4,7 @@
 // - Initial database schema with `files` table
 
 export const dbSchemaV1 = {
-  files: '&id, name, fileType, saveMode'
+  files: '&id, name, fileType, saveMode',
 };
 
 // ************************************** //
@@ -13,14 +13,12 @@ export const dbSchemaV1 = {
 // - Added `sessions` 、`messages` 、`topics` tables
 // - Added `createdAt` and `updatedAt` fields to all
 export const dbSchemaV2 = {
-  files:
-    '&id, name, fileType, saveMode, createdAt, updatedAt, messageId, sessionId',
+  files: '&id, name, fileType, saveMode, createdAt, updatedAt, messageId, sessionId',
 
   messages:
     '&id, role, content, fromModel, favorite, plugin.identifier, plugin.apiName, translate.content, createdAt, updatedAt, sessionId, topicId, quotaId, parentId, [sessionId+topicId]',
-  sessions:
-    '&id, type, group, meta.title, meta.description, meta.tags, createdAt, updatedAt',
-  topics: '&id, title, favorite, createdAt, updatedAt, sessionId'
+  sessions: '&id, type, group, meta.title, meta.description, meta.tags, createdAt, updatedAt',
+  topics: '&id, title, favorite, createdAt, updatedAt, sessionId',
 };
 
 // ************************************** //
@@ -31,7 +29,7 @@ export const dbSchemaV2 = {
 export const dbSchemaV3 = {
   ...dbSchemaV2,
   plugins:
-    '&identifier, type, manifest.type, manifest.meta.title, manifest.meta.description, manifest.meta.author, createdAt, updatedAt'
+    '&identifier, type, manifest.type, manifest.meta.title, manifest.meta.description, manifest.meta.author, createdAt, updatedAt',
 };
 
 // ************************************** //
@@ -44,7 +42,7 @@ export const dbSchemaV4 = {
   ...dbSchemaV3,
   sessionGroups: '&id, name, sort, createdAt, updatedAt',
   sessions:
-    '&id, type, group, pinned, meta.title, meta.description, meta.tags, createdAt, updatedAt'
+    '&id, type, group, pinned, meta.title, meta.description, meta.tags, createdAt, updatedAt',
 };
 
 // ************************************** //
@@ -54,7 +52,7 @@ export const dbSchemaV4 = {
 
 export const dbSchemaV5 = {
   ...dbSchemaV4,
-  users: '++id'
+  users: '++id',
 };
 
 // ************************************** //
@@ -66,7 +64,7 @@ export const dbSchemaV6 = {
   ...dbSchemaV5,
   messages:
     '&id, role, content, fromModel, favorite, plugin.identifier, plugin.apiName, translate.content, createdAt, updatedAt, sessionId, topicId, quotaId, parentId, [sessionId+topicId], traceId',
-  users: '++id, uuid'
+  users: '++id, uuid',
 };
 
 // ************************************** //
@@ -76,5 +74,5 @@ export const dbSchemaV6 = {
 export const dbSchemaV7 = {
   ...dbSchemaV6,
   plugins:
-    '&identifier, id, type, manifest.type, manifest.meta.title, manifest.meta.description, manifest.meta.author, createdAt, updatedAt'
+    '&identifier, id, type, manifest.type, manifest.meta.title, manifest.meta.description, manifest.meta.author, createdAt, updatedAt',
 };

@@ -25,14 +25,7 @@ const PluginRender = memo<PluginRenderProps>(
       }
 
       case 'builtin': {
-        return (
-          <BuiltinType
-            content={content}
-            id={id}
-            identifier={identifier}
-            loading={loading}
-          />
-        );
+        return <BuiltinType content={content} id={id} identifier={identifier} loading={loading} />;
       }
 
       case 'markdown': {
@@ -40,12 +33,10 @@ const PluginRender = memo<PluginRenderProps>(
       }
 
       default: {
-        return (
-          <DefaultType content={content} loading={loading} name={identifier} />
-        );
+        return <DefaultType content={content} loading={loading} name={identifier} />;
       }
     }
-  }
+  },
 );
 
 export default PluginRender;

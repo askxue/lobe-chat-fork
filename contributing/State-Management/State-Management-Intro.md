@@ -154,12 +154,7 @@ In LobeChat, the SessionStore is designed as the core module for managing sessio
 #### store.ts
 
 ```ts
-import {
-  PersistOptions,
-  devtools,
-  persist,
-  subscribeWithSelector
-} from 'zustand/middleware';
+import { PersistOptions, devtools, persist, subscribeWithSelector } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
 import { devtools } from 'zustand/middleware';
 import { createWithEqualityFn } from 'zustand/traditional';
@@ -171,13 +166,13 @@ import { SessionAction, createSessionSlice } from './slices/session/action';
 //  ===============  Aggregate createStoreFn ============ //
 
 export type SessionStore = SessionAction & AgentAction & SessionStoreState;
-const createStore: StateCreator<SessionStore, [['zustand/devtools', never]]> = (
-  ...parameters
-) => ({
+const createStore: StateCreator<SessionStore, [['zustand/devtools', never]]> = (...parameters) => ({
   ...initialState,
   ...createAgentSlice(...parameters),
-  ...createSessionSlice(...parameters)
+  ...createSessionSlice(...parameters),
 });
+
+
 
 //  ===============  Implement useStore ============ //
 
@@ -185,13 +180,14 @@ export const useSessionStore = createWithEqualityFn<SessionStore>()(
   persist(
     subscribeWithSelector(
       devtools(createStore, {
-        name: 'LobeChat_Session' + (isDev ? '_DEV' : '')
-      })
+        name: 'LobeChat_Session' + (isDev ? '_DEV' : ''),
+      }),
     ),
-    persistOptions
+    persistOptions,
   ),
-  shallow
+  shallow,
 );
+
 ```
 
 In this `store.ts` file, we create a `useSessionStore` hook that uses the `zustand` library to create a global state manager. We merge the initialState and the state and actions of each Slice to create a complete SessionStore.
@@ -218,7 +214,7 @@ export const createSessionSlice: StateCreator<
 > = (set, get) => ({
   useFetchSessions: () => {
     // ...logic for initializing sessions
-  }
+  },
   // ...implementation of other actions
 });
 ```

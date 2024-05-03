@@ -2,8 +2,7 @@ import Authentik from 'next-auth/providers/authentik';
 
 import { getServerConfig } from '@/config/server';
 
-const { AUTHENTIK_CLIENT_ID, AUTHENTIK_CLIENT_SECRET, AUTHENTIK_ISSUER } =
-  getServerConfig();
+const { AUTHENTIK_CLIENT_ID, AUTHENTIK_CLIENT_SECRET, AUTHENTIK_ISSUER } = getServerConfig();
 
 const provider = {
   id: 'authentik',
@@ -13,8 +12,8 @@ const provider = {
     authorization: { params: { scope: 'openid email profile' } },
     clientId: AUTHENTIK_CLIENT_ID,
     clientSecret: AUTHENTIK_CLIENT_SECRET,
-    issuer: AUTHENTIK_ISSUER
-  })
+    issuer: AUTHENTIK_ISSUER,
+  }),
 };
 
 export default provider;

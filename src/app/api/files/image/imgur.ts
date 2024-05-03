@@ -54,9 +54,9 @@ export class Imgur {
     const res = await fetch(`${this.api}/upload`, {
       body: formData,
       headers: {
-        Authorization: `Client-ID ${this.clientId}`
+        Authorization: `Client-ID ${this.clientId}`,
       },
-      method: 'POST'
+      method: 'POST',
     });
 
     if (!res.ok) {

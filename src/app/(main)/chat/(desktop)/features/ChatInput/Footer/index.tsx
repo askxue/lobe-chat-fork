@@ -14,10 +14,7 @@ import { useAgentStore } from '@/store/agent';
 import { agentSelectors } from '@/store/agent/slices/chat';
 import { useChatStore } from '@/store/chat';
 import { useUserStore } from '@/store/user';
-import {
-  modelProviderSelectors,
-  preferenceSelectors
-} from '@/store/user/selectors';
+import { modelProviderSelectors, preferenceSelectors } from '@/store/user/selectors';
 import { isMacOS } from '@/utils/platform';
 
 import DragUpload from './DragUpload';
@@ -47,7 +44,7 @@ const useStyles = createStyles(({ css, prefixCls, token }) => {
           background-color: ${rgba(token.colorBgLayout, 0.1)} !important;
         }
       }
-    `
+    `,
   };
 });
 
@@ -64,14 +61,14 @@ const Footer = memo<FooterProps>(({ setExpand }) => {
 
   const [loading, stopGenerateMessage] = useChatStore((s) => [
     !!s.chatLoadingId,
-    s.stopGenerateMessage
+    s.stopGenerateMessage,
   ]);
 
   const model = useAgentStore(agentSelectors.currentAgentModel);
 
   const [useCmdEnterToSend, canUpload] = useUserStore((s) => [
     preferenceSelectors.useCmdEnterToSend(s),
-    modelProviderSelectors.isModelEnabledUpload(model)(s)
+    modelProviderSelectors.isModelEnabledUpload(model)(s),
   ]);
 
   const sendMessage = useSendMessage();
@@ -115,11 +112,7 @@ const Footer = memo<FooterProps>(({ setExpand }) => {
         <Flexbox
           gap={4}
           horizontal
-          style={{
-            color: theme.colorTextDescription,
-            fontSize: 12,
-            marginRight: 12
-          }}
+          style={{ color: theme.colorTextDescription, fontSize: 12, marginRight: 12 }}
         >
           {sendShortcut}
           <span>{t('input.send')}</span>

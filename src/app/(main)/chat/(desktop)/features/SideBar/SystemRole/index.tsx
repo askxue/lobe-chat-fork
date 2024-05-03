@@ -12,10 +12,7 @@ import { useAgentStore } from '@/store/agent';
 import { agentSelectors } from '@/store/agent/selectors';
 import { useGlobalStore } from '@/store/global';
 import { useSessionStore } from '@/store/session';
-import {
-  sessionMetaSelectors,
-  sessionSelectors
-} from '@/store/session/selectors';
+import { sessionMetaSelectors, sessionSelectors } from '@/store/session/selectors';
 import { pathString } from '@/utils/url';
 
 import SidebarHeader from '../../../../components/SidebarHeader';
@@ -28,23 +25,23 @@ const SystemRole = memo(() => {
 
   const [init, meta] = useSessionStore((s) => [
     sessionSelectors.isSomeSessionActive(s),
-    sessionMetaSelectors.currentAgentMeta(s)
+    sessionMetaSelectors.currentAgentMeta(s),
   ]);
 
   const [systemRole, updateAgentConfig] = useAgentStore((s) => [
     agentSelectors.currentAgentSystemRole(s),
-    s.updateAgentConfig
+    s.updateAgentConfig,
   ]);
 
   const [showSystemRole, toggleSystemRole] = useGlobalStore((s) => [
     s.preference.showSystemRole,
-    s.toggleSystemRole
+    s.toggleSystemRole,
   ]);
 
   const [open, setOpen] = useMergeState(false, {
     defaultValue: showSystemRole,
     onChange: toggleSystemRole,
-    value: showSystemRole
+    value: showSystemRole,
   });
 
   const { t } = useTranslation('common');
@@ -65,12 +62,7 @@ const SystemRole = memo(() => {
     <Flexbox height={'fit-content'}>
       <SidebarHeader
         actions={
-          <ActionIcon
-            icon={Edit}
-            onClick={handleOpenWithEdit}
-            size={'small'}
-            title={t('edit')}
-          />
+          <ActionIcon icon={Edit} onClick={handleOpenWithEdit} size={'small'} title={t('edit')} />
         }
         title={t('settingAgent.prompt.title', { ns: 'setting' })}
       />
@@ -101,15 +93,11 @@ const SystemRole = memo(() => {
                     onAvatarClick={() => {
                       setOpen(false);
                       setEditing(false);
-                      router.push(
-                        pathString('/chat/settings', {
-                          search: location.search
-                        })
-                      );
+                      router.push(pathString('/chat/settings', { search: location.search }));
                     }}
                     style={{ marginBottom: 16 }}
                   />
-                )
+                ),
               }}
               onChange={(e) => {
                 updateAgentConfig({ systemRole: e });
@@ -123,7 +111,7 @@ const SystemRole = memo(() => {
                 cancel: t('cancel'),
                 confirm: t('ok'),
                 edit: t('edit'),
-                title: t('settingAgent.prompt.title', { ns: 'setting' })
+                title: t('settingAgent.prompt.title', { ns: 'setting' }),
               }}
               value={systemRole}
             />

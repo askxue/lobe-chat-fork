@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  Form,
-  type FormItemProps,
-  Icon,
-  type ItemGroup,
-  Tooltip
-} from '@lobehub/ui';
+import { Form, type FormItemProps, Icon, type ItemGroup, Tooltip } from '@lobehub/ui';
 import { Button } from 'antd';
 import isEqual from 'fast-deep-equal';
 import { isString } from 'lodash-es';
@@ -25,20 +19,17 @@ import AutoGenerateInput from './AutoGenerateInput';
 import AutoGenerateSelect from './AutoGenerateSelect';
 import BackgroundSwatches from './BackgroundSwatches';
 
-const EmojiPicker = dynamic(() => import('@lobehub/ui/es/EmojiPicker'), {
-  ssr: false
-});
+const EmojiPicker = dynamic(() => import('@lobehub/ui/es/EmojiPicker'), { ssr: false });
 
 const AgentMeta = memo(() => {
   const { t } = useTranslation('setting');
 
-  const [hasSystemRole, updateMeta, autocompleteMeta, autocompleteAllMeta] =
-    useStore((s) => [
-      !!s.config.systemRole,
-      s.setAgentMeta,
-      s.autocompleteMeta,
-      s.autocompleteAllMeta
-    ]);
+  const [hasSystemRole, updateMeta, autocompleteMeta, autocompleteAllMeta] = useStore((s) => [
+    !!s.config.systemRole,
+    s.setAgentMeta,
+    s.autocompleteMeta,
+    s.autocompleteAllMeta,
+  ]);
   const locale = useUserStore(settingsSelectors.currentLanguage);
   const loading = useStore((s) => s.autocompleteLoading);
   const meta = useStore((s) => s.meta, isEqual);
@@ -49,23 +40,22 @@ const AgentMeta = memo(() => {
       key: 'title',
       label: t('settingAgent.name.title'),
       onChange: (e: any) => updateMeta({ title: e.target.value }),
-      placeholder: t('settingAgent.name.placeholder')
+      placeholder: t('settingAgent.name.placeholder'),
     },
     {
       Render: AutoGenerateInput,
       key: 'description',
       label: t('settingAgent.description.title'),
       onChange: (e: any) => updateMeta({ description: e.target.value }),
-      placeholder: t('settingAgent.description.placeholder')
+      placeholder: t('settingAgent.description.placeholder'),
     },
     {
       Render: AutoGenerateSelect,
       key: 'tags',
       label: t('settingAgent.tag.title'),
-      onChange: (e: any) =>
-        updateMeta({ tags: isString(e) ? e.split(',') : e }),
-      placeholder: t('settingAgent.tag.placeholder')
-    }
+      onChange: (e: any) => updateMeta({ tags: isString(e) ? e.split(',') : e }),
+      placeholder: t('settingAgent.tag.placeholder'),
+    },
   ];
 
   const autocompleteItems: FormItemProps[] = basic.map((item) => {
@@ -82,7 +72,7 @@ const AgentMeta = memo(() => {
           value={meta[item.key as keyof typeof meta]}
         />
       ),
-      label: item.label
+      label: item.label,
     };
   });
 
@@ -99,7 +89,7 @@ const AgentMeta = memo(() => {
             />
           ),
           label: t('settingAgent.avatar.title'),
-          minWidth: undefined
+          minWidth: undefined,
         },
         {
           children: (
@@ -109,9 +99,9 @@ const AgentMeta = memo(() => {
             />
           ),
           label: t('settingAgent.backgroundColor.title'),
-          minWidth: undefined
+          minWidth: undefined,
         },
-        ...autocompleteItems
+        ...autocompleteItems,
       ],
       extra: (
         <Tooltip title={t('autoGenerateTooltip', { ns: 'common' })}>
@@ -130,19 +120,12 @@ const AgentMeta = memo(() => {
           </Button>
         </Tooltip>
       ),
-      title: t('settingAgent.title')
+      title: t('settingAgent.title'),
     }),
-    [autocompleteItems, meta]
+    [autocompleteItems, meta],
   );
 
-  return (
-    <Form
-      items={[metaData]}
-      itemsType={'group'}
-      variant={'pure'}
-      {...FORM_STYLE}
-    />
-  );
+  return <Form items={[metaData]} itemsType={'group'} variant={'pure'} {...FORM_STYLE} />;
 });
 
 export default AgentMeta;

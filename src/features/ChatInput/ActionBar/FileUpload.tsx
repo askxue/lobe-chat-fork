@@ -21,7 +21,7 @@ const FileUpload = memo(() => {
   const model = useAgentStore(agentSelectors.currentAgentModel);
   const [canUpload, enabledFiles] = useUserStore((s) => [
     modelProviderSelectors.isModelEnabledUpload(model)(s),
-    modelProviderSelectors.isModelEnabledFiles(model)(s)
+    modelProviderSelectors.isModelEnabledFiles(model)(s),
   ]);
 
   return (
@@ -58,7 +58,7 @@ const FileUpload = memo(() => {
               ? enabledFiles
                 ? 'upload.actionFiletip'
                 : 'upload.actionTooltip'
-              : 'upload.disabled'
+              : 'upload.disabled',
           )}
         />
       )}

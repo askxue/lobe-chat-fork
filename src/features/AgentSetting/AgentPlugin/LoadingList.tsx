@@ -15,7 +15,7 @@ const useStyles = createStyles(({ css, prefixCls }) => ({
     li + li {
       margin-block-start: 12px !important;
     }
-  `
+  `,
 }));
 
 const LoadingList = () => {
@@ -39,7 +39,7 @@ const LoadingList = () => {
         style={{ width: 300 }}
         title={false}
       />
-    )
+    ),
   };
 
   return [loadingItem, loadingItem, loadingItem];

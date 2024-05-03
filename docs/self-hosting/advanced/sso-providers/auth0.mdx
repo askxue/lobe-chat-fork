@@ -56,8 +56,8 @@ http(s)://your-domain/api/auth/callback/auth0
 />
 
 <Callout type={'important'}>
-  You can fill in or modify Allowed Callback URLs after deployment, but make
-  sure the filled URL is consistent with the deployed URL.
+  You can fill in or modify Allowed Callback URLs after deployment, but make sure the filled URL is
+  consistent with the deployed URL.
 </Callout>
 
 ### Add Users
@@ -74,16 +74,16 @@ Click on the "Users Management" in the left navigation bar to enter the user man
 
 When deploying LobeChat, you need to configure the following environment variables:
 
-| Environment Variable  | Type     | Description                                                                                                                                                                                         |
-| --------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ENABLE_OAUTH_SSO`    | Required | Enable single sign-on (SSO) for LobeChat. Set to `1` to enable single sign-on.                                                                                                                      |
-| `NEXTAUTH_SECRET`     | Required | Key used to encrypt Auth.js session tokens. You can generate a key using the following command: `openssl rand -base64 32`                                                                           |
-| `SSO_PROVIDERS`       | Optional | Select the single sign-on provider for LoboChat. Use `auth0` for Auth0.                                                                                                                             |
-| `AUTH0_CLIENT_ID`     | Required | Client ID of the Auth0 application                                                                                                                                                                  |
-| `AUTH0_CLIENT_SECRET` | Required | Client Secret of the Auth0 application                                                                                                                                                              |
-| `AUTH0_ISSUER`        | Required | Domain of the Auth0 application, `https://example.auth0.com`                                                                                                                                        |
-| `ACCESS_CODE`         | Required | Add a password to access this service. You can set a sufficiently long random password to "disable" access code authorization.                                                                      |
-| `NEXTAUTH_URL`        | Optional | The URL is used to specify the callback address for the execution of OAuth authentication in Auth.js. It needs to be set only when the default address is incorrect. `https://example.com/api/auth` |
+| Environment Variable | Type | Description |
+| --- | --- | --- |
+| `ENABLE_OAUTH_SSO` | Required | Enable single sign-on (SSO) for LobeChat. Set to `1` to enable single sign-on. |
+| `NEXTAUTH_SECRET` | Required | Key used to encrypt Auth.js session tokens. You can generate a key using the following command: `openssl rand -base64 32` |
+| `SSO_PROVIDERS` | Optional | Select the single sign-on provider for LoboChat. Use `auth0` for Auth0. |
+| `AUTH0_CLIENT_ID` | Required | Client ID of the Auth0 application |
+| `AUTH0_CLIENT_SECRET` | Required | Client Secret of the Auth0 application |
+| `AUTH0_ISSUER` | Required | Domain of the Auth0 application, `https://example.auth0.com` |
+| `ACCESS_CODE` | Required | Add a password to access this service. You can set a sufficiently long random password to "disable" access code authorization. |
+| `NEXTAUTH_URL` | Optional | The URL is used to specify the callback address for the execution of OAuth authentication in Auth.js. It needs to be set only when the default address is incorrect. `https://example.com/api/auth` |
 
   <Callout type={'tip'}>
     You can refer to the related variable details at [📘Environment Variables](/docs/self-hosting/environment-variable#auth0).
@@ -92,8 +92,8 @@ When deploying LobeChat, you need to configure the following environment variabl
 </Steps>
 
 <Callout>
-  After successful deployment, users will be able to authenticate and use
-  LobeChat using the users configured in Auth0.
+  After successful deployment, users will be able to authenticate and use LobeChat using the users
+  configured in Auth0.
 </Callout>
 
 ## Advanced Configuration
@@ -119,15 +119,14 @@ If your enterprise or organization needs to support external user logins, you ca
 />
 
 <Callout type={'warning'}>
-  Configuring social login services by default allows anyone to authenticate,
-  which may lead to LobeChat being abused by external users.
+  Configuring social login services by default allows anyone to authenticate, which may lead to
+  LobeChat being abused by external users.
 </Callout>
 
 <Callout>
-  If you need to restrict login users, be sure to configure a **blocking
-  policy**: After enabling the social login option, refer to [this
-  article][auth0-login-actions-manual] to create an Action to set up a
-  blocking/allow list.
+  If you need to restrict login users, be sure to configure a **blocking policy**: After enabling
+  the social login option, refer to [this article][auth0-login-actions-manual] to create an Action
+  to set up a blocking/allow list.
 </Callout>
 
 [auth0-client-page]: https://manage.auth0.com/dashboard

@@ -8,15 +8,9 @@ import ErrorJsonViewer from '../ErrorJsonViewer';
 
 const loading = () => <Skeleton active style={{ width: 300 }} />;
 
-const SetupGuide = dynamic(() => import('./SetupGuide'), {
-  loading,
-  ssr: false
-});
+const SetupGuide = dynamic(() => import('./SetupGuide'), { loading, ssr: false });
 
-const InvalidModel = dynamic(() => import('./InvalidOllamaModel'), {
-  loading,
-  ssr: false
-});
+const InvalidModel = dynamic(() => import('./InvalidOllamaModel'), { loading, ssr: false });
 
 interface OllamaError {
   code: string | null;

@@ -12,7 +12,7 @@ export const FOLDER_WIDTH = 270;
 export const MAX_WIDTH = 1024;
 export const FORM_STYLE: FormProps = {
   itemMinWidth: 'max(30%,240px)',
-  style: { maxWidth: MAX_WIDTH, width: '100%' }
+  style: { maxWidth: MAX_WIDTH, width: '100%' },
 };
 export const MOBILE_HEADER_ICON_SIZE = { blockSize: 36, fontSize: 22 };
 export const DESKTOP_HEADER_ICON_SIZE = { fontSize: 24 };

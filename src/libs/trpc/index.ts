@@ -22,7 +22,7 @@ const t = initTRPC.context<Context>().create({
   /**
    * @link https://trpc.io/docs/v11/data-transformers
    */
-  transformer: superjson
+  transformer: superjson,
 });
 
 /**
@@ -48,8 +48,8 @@ export const authedProcedure = t.procedure.use(async (opts) => {
   return opts.next({
     ctx: {
       // ✅ user value is known to be non-null now
-      userId: ctx.userId
-    }
+      userId: ctx.userId,
+    },
   });
 });
 

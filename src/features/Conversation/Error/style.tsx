@@ -13,20 +13,18 @@ export const useStyles = createStyles(({ css, token }) => ({
   desc: css`
     color: ${token.colorTextTertiary};
     text-align: center;
-  `
+  `,
 }));
 
-export const ErrorActionContainer = memo<{ children: ReactNode }>(
-  ({ children }) => {
-    const { styles } = useStyles();
+export const ErrorActionContainer = memo<{ children: ReactNode }>(({ children }) => {
+  const { styles } = useStyles();
 
-    return (
-      <Center className={styles.container} gap={24} padding={24}>
-        {children}
-      </Center>
-    );
-  }
-);
+  return (
+    <Center className={styles.container} gap={24} padding={24}>
+      {children}
+    </Center>
+  );
+});
 
 export const FormAction = memo<{
   avatar: ReactNode;

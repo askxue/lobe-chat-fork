@@ -13,7 +13,7 @@ const PostHog: FC = memo(() => {
 
     posthog.init(POSTHOG_KEY, {
       api_host: POSTHOG_HOST ?? 'https://app.posthog.com',
-      debug: POSTHOG_DEBUG
+      debug: POSTHOG_DEBUG,
     });
   }, []);
 

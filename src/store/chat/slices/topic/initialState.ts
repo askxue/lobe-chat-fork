@@ -20,5 +20,5 @@ export const initialTopicState: ChatTopicState = {
   topicLoadingIds: [],
   topicSearchKeywords: '',
   topics: [],
-  topicsInit: false
+  topicsInit: false,
 };

@@ -34,8 +34,7 @@ export interface AzureOpenAIConfig extends GeneralModelProviderConfig {
   apiVersion?: string;
 }
 
-export interface AWSBedrockConfig
-  extends Omit<GeneralModelProviderConfig, 'apiKey' | 'endpoint'> {
+export interface AWSBedrockConfig extends Omit<GeneralModelProviderConfig, 'apiKey' | 'endpoint'> {
   accessKeyId?: string;
   region?: string;
   secretAccessKey?: string;

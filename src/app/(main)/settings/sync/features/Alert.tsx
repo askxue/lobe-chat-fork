@@ -16,7 +16,7 @@ const ExperimentAlert = memo<ExperimentAlertProps>(({ mobile }) => {
   const { t } = useTranslation('setting');
   const [hideSyncAlert, updatePreference] = useUserStore((s) => [
     preferenceSelectors.hideSyncAlert(s),
-    s.updatePreference
+    s.updatePreference,
   ]);
 
   return (

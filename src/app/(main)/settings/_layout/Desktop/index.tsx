@@ -35,7 +35,7 @@ const Layout = memo<LayoutProps>(({ children, category }) => {
           gap={64}
           style={{
             maxWidth: 1024,
-            padding: mobile ? undefined : '32px 24px'
+            padding: mobile ? undefined : '32px 24px',
           }}
           width={'100%'}
         >

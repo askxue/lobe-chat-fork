@@ -5,9 +5,7 @@ import type { UserStore } from '@/store/user';
 import { GeneralSettingsAction, generalSettingsSlice } from './general';
 import { LLMSettingsAction, llmSettingsSlice } from './llm';
 
-export interface SettingsAction
-  extends LLMSettingsAction,
-    GeneralSettingsAction {}
+export interface SettingsAction extends LLMSettingsAction, GeneralSettingsAction {}
 
 export const createSettingsSlice: StateCreator<
   UserStore,
@@ -16,5 +14,5 @@ export const createSettingsSlice: StateCreator<
   SettingsAction
 > = (...params) => ({
   ...llmSettingsSlice(...params),
-  ...generalSettingsSlice(...params)
+  ...generalSettingsSlice(...params),
 });

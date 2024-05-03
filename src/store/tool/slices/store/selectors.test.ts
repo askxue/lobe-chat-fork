@@ -11,16 +11,16 @@ const mockState = {
       author: 'Author 1',
       createdAt: '2021-01-01',
       meta: { avatar: 'avatar-url-1', title: 'Plugin 1' },
-      homepage: 'http://homepage-1.com'
+      homepage: 'http://homepage-1.com',
     },
     {
       identifier: 'plugin-2',
       author: 'Author 2',
       createdAt: '2022-02-02',
       meta: { avatar: 'avatar-url-2', title: 'Plugin 2' },
-      homepage: 'http://homepage-2.com'
-    }
-  ]
+      homepage: 'http://homepage-2.com',
+    },
+  ],
 } as ToolStoreState;
 
 describe('pluginStoreSelectors', () => {
@@ -34,7 +34,7 @@ describe('pluginStoreSelectors', () => {
           createdAt: '2021-01-01',
           meta: { avatar: 'avatar-url-1', title: 'Plugin 1' },
           homepage: 'http://homepage-1.com',
-          type: 'plugin'
+          type: 'plugin',
         },
         {
           identifier: 'plugin-2',
@@ -42,8 +42,8 @@ describe('pluginStoreSelectors', () => {
           createdAt: '2022-02-02',
           meta: { avatar: 'avatar-url-2', title: 'Plugin 2' },
           homepage: 'http://homepage-2.com',
-          type: 'plugin'
-        }
+          type: 'plugin',
+        },
       ]);
     });
   });

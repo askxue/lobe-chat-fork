@@ -14,7 +14,7 @@ export const useClientDataSWR: SWRHook = (key, fetch, config) =>
     refreshWhenOffline: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
-    ...config
+    ...config,
   });
 
 /**
@@ -30,7 +30,7 @@ export const useActionSWR: SWRHook = (key, fetch, config) =>
     revalidateOnFocus: false,
     revalidateOnMount: false,
     revalidateOnReconnect: false,
-    ...config
+    ...config,
   });
 
 export interface SWRRefreshParams<T, A = (...args: any[]) => any> {
@@ -39,5 +39,5 @@ export interface SWRRefreshParams<T, A = (...args: any[]) => any> {
 }
 
 export type SWRefreshMethod<T> = <A extends (...args: any[]) => Promise<any>>(
-  params?: SWRRefreshParams<T, A>
+  params?: SWRRefreshParams<T, A>,
 ) => ReturnType<A>;

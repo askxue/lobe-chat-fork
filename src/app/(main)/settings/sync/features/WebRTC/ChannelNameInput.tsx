@@ -33,7 +33,7 @@ const ChannelNameInput = memo<ChannelNameInputProps>(({ form, ...rest }) => {
           }}
           size={'small'}
           style={{
-            marginRight: -4
+            marginRight: -4,
           }}
           title={t('sync.webrtc.channelName.shuffle')}
         />

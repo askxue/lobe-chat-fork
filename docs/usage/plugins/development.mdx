@@ -207,8 +207,7 @@ The implementation of the clothes interface in the template is as follows:
 
 ```ts
 export default async (req: Request) => {
-  if (req.method !== 'POST')
-    return createErrorResponse(PluginErrorType.MethodNotAllowed);
+  if (req.method !== 'POST') return createErrorResponse(PluginErrorType.MethodNotAllowed);
 
   const { gender, mood } = (await req.json()) as RequestData;
 
@@ -217,7 +216,7 @@ export default async (req: Request) => {
   const result: ResponseData = {
     clothes: clothes[mood] || [],
     mood,
-    today: Date.now()
+    today: Date.now(),
   };
 
   return new Response(JSON.stringify(result));
@@ -236,7 +235,7 @@ For custom plugins, plugin requests need to be sent to the local service. Theref
 import { createLobeChatPluginGateway } from '@lobehub/chat-plugins-gateway';
 
 export const config = {
-  runtime: 'edge'
+  runtime: 'edge',
 };
 
 export default createLobeChatPluginGateway();

@@ -15,12 +15,12 @@ describe('LobeAzureOpenAI', () => {
     instance = new LobeAzureOpenAI(
       'https://test.openai.azure.com/',
       'test_key',
-      '2023-03-15-preview'
+      '2023-03-15-preview',
     );
 
     // 使用 vi.spyOn 来模拟 streamChatCompletions 方法
     vi.spyOn(instance['client'], 'streamChatCompletions').mockResolvedValue(
-      new ReadableStream() as any
+      new ReadableStream() as any,
     );
   });
 
@@ -55,15 +55,13 @@ describe('LobeAzureOpenAI', () => {
       const mockStream = new ReadableStream();
       const mockResponse = Promise.resolve(mockStream);
 
-      (instance['client'].streamChatCompletions as Mock).mockResolvedValue(
-        mockResponse
-      );
+      (instance['client'].streamChatCompletions as Mock).mockResolvedValue(mockResponse);
 
       // Act
       const result = await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'text-davinci-003',
-        temperature: 0
+        temperature: 0,
       });
 
       // Assert
@@ -75,19 +73,17 @@ describe('LobeAzureOpenAI', () => {
         // Arrange
         const error = {
           code: 'DeploymentNotFound',
-          message: 'Deployment not found'
+          message: 'Deployment not found',
         };
 
-        (instance['client'].streamChatCompletions as Mock).mockRejectedValue(
-          error
-        );
+        (instance['client'].streamChatCompletions as Mock).mockRejectedValue(error);
 
         // Act
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           // Assert
@@ -96,10 +92,10 @@ describe('LobeAzureOpenAI', () => {
             error: {
               code: 'DeploymentNotFound',
               message: 'Deployment not found',
-              deployId: 'text-davinci-003'
+              deployId: 'text-davinci-003',
             },
             errorType: 'AzureBizError',
-            provider: 'azure'
+            provider: 'azure',
           });
         }
       });
@@ -108,16 +104,14 @@ describe('LobeAzureOpenAI', () => {
         // Arrange
         const genericError = new Error('Generic Error');
 
-        (instance['client'].streamChatCompletions as Mock).mockRejectedValue(
-          genericError
-        );
+        (instance['client'].streamChatCompletions as Mock).mockRejectedValue(genericError);
 
         // Act
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           // Assert
@@ -128,8 +122,8 @@ describe('LobeAzureOpenAI', () => {
             error: {
               name: genericError.name,
               cause: genericError.cause,
-              message: genericError.message
-            }
+              message: genericError.message,
+            },
           });
         }
       });
@@ -143,27 +137,22 @@ describe('LobeAzureOpenAI', () => {
           start(controller) {
             controller.enqueue('Debug stream content');
             controller.close();
-          }
+          },
         }) as any;
         mockDebugStream.toReadableStream = () => mockDebugStream;
 
         (instance['client'].streamChatCompletions as Mock).mockResolvedValue({
-          tee: () => [
-            mockProdStream,
-            { toReadableStream: () => mockDebugStream }
-          ]
+          tee: () => [mockProdStream, { toReadableStream: () => mockDebugStream }],
         });
 
         process.env.DEBUG_AZURE_CHAT_COMPLETION = '1';
-        vi.spyOn(debugStreamModule, 'debugStream').mockImplementation(() =>
-          Promise.resolve()
-        );
+        vi.spyOn(debugStreamModule, 'debugStream').mockImplementation(() => Promise.resolve());
 
         // Act
         await instance.chat({
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'text-davinci-003',
-          temperature: 0
+          temperature: 0,
         });
 
         // Assert

@@ -8,7 +8,7 @@ import Page from './index';
 export const generateMetadata = async () => {
   const { t } = await translation('setting');
   return {
-    title: t('tab.llm')
+    title: t('tab.llm'),
   };
 };
 

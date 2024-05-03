@@ -11,8 +11,8 @@ import { useToolStore } from '../../store';
 vi.mock('@/services/plugin', () => ({
   pluginService: {
     updatePluginSettings: vi.fn(),
-    removeAllPlugins: vi.fn()
-  }
+    removeAllPlugins: vi.fn(),
+  },
 }));
 
 beforeEach(() => {
@@ -26,7 +26,7 @@ describe('useToolStore:plugin', () => {
       const installPluginsMock = vi.fn();
       useToolStore.setState({
         loadPluginStore: vi.fn(),
-        installPlugins: installPluginsMock
+        installPlugins: installPluginsMock,
       });
 
       const { result } = renderHook(() => useToolStore());
@@ -44,7 +44,7 @@ describe('useToolStore:plugin', () => {
       const installPluginsMock = vi.fn();
       useToolStore.setState({
         loadPluginStore: loadPluginStoreMock,
-        installPlugins: installPluginsMock
+        installPlugins: installPluginsMock,
       });
 
       const { result } = renderHook(() => useToolStore());
@@ -65,7 +65,7 @@ describe('useToolStore:plugin', () => {
         loadPluginStore: loadPluginStoreMock,
         installPlugins: installPluginsMock,
         installedPlugins: [{ identifier: 'abc' }] as LobeTool[],
-        pluginStoreList: [{ identifier: 'abc' }] as LobeChatPluginMeta[]
+        pluginStoreList: [{ identifier: 'abc' }] as LobeChatPluginMeta[],
       });
 
       const { result } = renderHook(() => useToolStore());
@@ -90,10 +90,7 @@ describe('useToolStore:plugin', () => {
         await result.current.updatePluginSettings(pluginId, newSettings);
       });
 
-      expect(pluginService.updatePluginSettings).toBeCalledWith(
-        pluginId,
-        newSettings
-      );
+      expect(pluginService.updatePluginSettings).toBeCalledWith(pluginId, newSettings);
     });
 
     it('should merge settings for a plugin with existing settings', async () => {
@@ -102,9 +99,7 @@ describe('useToolStore:plugin', () => {
       const newSettings = { setting1: 'new-value' };
       const mergedSettings = merge(existingSettings, newSettings);
       useToolStore.setState({
-        installedPlugins: [
-          { identifier: pluginId, settings: existingSettings }
-        ] as LobeTool[]
+        installedPlugins: [{ identifier: pluginId, settings: existingSettings }] as LobeTool[],
       });
 
       const { result } = renderHook(() => useToolStore());
@@ -113,10 +108,7 @@ describe('useToolStore:plugin', () => {
         await result.current.updatePluginSettings(pluginId, newSettings);
       });
 
-      expect(pluginService.updatePluginSettings).toBeCalledWith(
-        pluginId,
-        mergedSettings
-      );
+      expect(pluginService.updatePluginSettings).toBeCalledWith(pluginId, mergedSettings);
     });
   });
 
@@ -139,7 +131,7 @@ describe('useToolStore:plugin', () => {
     const testSchema = {
       properties: { abc: { type: 'string' } },
       required: ['abc'],
-      type: 'object'
+      type: 'object',
     };
 
     const testPluginSettings = { abc: 'valid-string' };
@@ -149,9 +141,9 @@ describe('useToolStore:plugin', () => {
       identifier: testPluginId,
       manifest: {
         identifier: testPluginId,
-        settings: testSchema
+        settings: testSchema,
       },
-      settings: testPluginSettings
+      settings: testPluginSettings,
     } as unknown as LobeTool;
 
     it('should validate settings against the schema and return valid result', async () => {
@@ -159,12 +151,11 @@ describe('useToolStore:plugin', () => {
 
       act(() => {
         useToolStore.setState({
-          installedPlugins: [testPlugin]
+          installedPlugins: [testPlugin],
         });
       });
 
-      const validationResult =
-        await result.current.validatePluginSettings(testPluginId);
+      const validationResult = await result.current.validatePluginSettings(testPluginId);
 
       expect(validationResult).toEqual({ valid: true, errors: [] });
     });
@@ -173,25 +164,23 @@ describe('useToolStore:plugin', () => {
       const { result } = renderHook(() => useToolStore());
       act(() => {
         useToolStore.setState({
-          installedPlugins: [{ ...testPlugin, settings: {} }] as any
+          installedPlugins: [{ ...testPlugin, settings: {} }] as any,
         });
       });
 
-      const validationResult =
-        await result.current.validatePluginSettings(testPluginId);
+      const validationResult = await result.current.validatePluginSettings(testPluginId);
 
       expect(validationResult).toMatchSnapshot();
     });
 
     it('should return undefined if manifest or settings are not found', async () => {
       useToolStore.setState({
-        installedPlugins: []
+        installedPlugins: [],
       });
 
       const { result } = renderHook(() => useToolStore());
 
-      const validationResult =
-        await result.current.validatePluginSettings(testPluginId);
+      const validationResult = await result.current.validatePluginSettings(testPluginId);
 
       expect(validationResult).toBeUndefined();
     });

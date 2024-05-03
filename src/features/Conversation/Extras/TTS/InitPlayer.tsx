@@ -21,20 +21,13 @@ const InitPlayer = memo<TTSProps>(({ id, content, contentMd5, file }) => {
   const uploadTTS = useFileStore((s) => s.uploadTTSByArrayBuffers);
   const { t } = useTranslation('chat');
 
-  const [ttsMessage, clearTTS] = useChatStore((s) => [
-    s.ttsMessage,
-    s.clearTTS
-  ]);
+  const [ttsMessage, clearTTS] = useChatStore((s) => [s.ttsMessage, s.clearTTS]);
 
   const setDefaultError = useCallback(
     (err?: any) => {
-      setError({
-        body: err,
-        message: t('tts.responseError', { ns: 'error' }),
-        type: 500
-      });
+      setError({ body: err, message: t('tts.responseError', { ns: 'error' }), type: 500 });
     },
-    [t]
+    [t],
   );
 
   const { isGlobalLoading, audio, start, stop, response } = useTTS(content, {
@@ -59,7 +52,7 @@ const InitPlayer = memo<TTSProps>(({ id, content, contentMd5, file }) => {
     onUpload: async (currentVoice, arrayBuffers) => {
       const fileID = await uploadTTS(id, arrayBuffers);
       ttsMessage(id, { contentMd5, file: fileID, voice: currentVoice });
-    }
+    },
   });
 
   const handleInitStart = useCallback(() => {

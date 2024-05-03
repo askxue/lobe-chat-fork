@@ -15,12 +15,12 @@ const AgentSearchBar = memo<AgentSearchBarProps>(({ mobile }) => {
   const { t } = useTranslation('market');
   const [searchKeywords, setSearchKeywords] = useMarketStore((s) => [
     s.searchKeywords,
-    s.setSearchKeywords
+    s.setSearchKeywords,
   ]);
 
   const [keyword, setKeyword] = useControlledState(searchKeywords, {
     onChange: setSearchKeywords,
-    value: searchKeywords
+    value: searchKeywords,
   });
 
   return (

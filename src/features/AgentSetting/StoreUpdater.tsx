@@ -21,7 +21,7 @@ const StoreUpdater = memo<StoreUpdaterProps>(
     useStoreUpdater('id', id);
 
     return null;
-  }
+  },
 );
 
 export default StoreUpdater;

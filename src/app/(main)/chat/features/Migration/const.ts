@@ -3,7 +3,7 @@ export enum UpgradeStatus {
   START,
   UPGRADING,
   UPGRADED,
-  UPGRADE_FAILED
+  UPGRADE_FAILED,
 }
 
 export const V1DB_NAME = 'LobeHub';

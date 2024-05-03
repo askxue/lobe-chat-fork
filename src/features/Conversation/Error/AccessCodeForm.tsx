@@ -17,12 +17,9 @@ const AccessCodeForm = memo<AccessCodeFormProps>(({ id }) => {
   const { t } = useTranslation('error');
   const [password, setSettings] = useUserStore((s) => [
     settingsSelectors.currentSettings(s).password,
-    s.setSettings
+    s.setSettings,
   ]);
-  const [resend, deleteMessage] = useChatStore((s) => [
-    s.internalResendMessage,
-    s.deleteMessage
-  ]);
+  const [resend, deleteMessage] = useChatStore((s) => [s.internalResendMessage, s.deleteMessage]);
 
   return (
     <>

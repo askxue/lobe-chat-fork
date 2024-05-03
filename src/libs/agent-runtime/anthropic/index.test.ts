@@ -15,9 +15,7 @@ beforeEach(() => {
   instance = new LobeAnthropicAI({ apiKey: 'test' });
 
   // 使用 vi.spyOn 来模拟 chat.completions.create 方法
-  vi.spyOn(instance['client'].messages, 'create').mockReturnValue(
-    new ReadableStream() as any
-  );
+  vi.spyOn(instance['client'].messages, 'create').mockReturnValue(new ReadableStream() as any);
 });
 
 afterEach(() => {
@@ -35,7 +33,7 @@ describe('LobeAnthropicAI', () => {
     it('should correctly initialize with a baseURL', async () => {
       const instance = new LobeAnthropicAI({
         apiKey: 'test_api_key',
-        baseURL: 'https://api.anthropic.proxy'
+        baseURL: 'https://api.anthropic.proxy',
       });
       expect(instance).toBeInstanceOf(LobeAnthropicAI);
       expect(instance.baseURL).toBe('https://api.anthropic.proxy');
@@ -47,7 +45,7 @@ describe('LobeAnthropicAI', () => {
       const result = await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'claude-3-haiku-20240307',
-        temperature: 0
+        temperature: 0,
       });
 
       // Assert
@@ -60,19 +58,17 @@ describe('LobeAnthropicAI', () => {
         start(controller) {
           controller.enqueue('Hello, world!');
           controller.close();
-        }
+        },
       });
       const mockResponse = Promise.resolve(mockStream);
-      (instance['client'].messages.create as Mock).mockResolvedValue(
-        mockResponse
-      );
+      (instance['client'].messages.create as Mock).mockResolvedValue(mockResponse);
 
       // Act
       const result = await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'claude-3-haiku-20240307',
         temperature: 0,
-        top_p: 1
+        top_p: 1,
       });
 
       // Assert
@@ -83,9 +79,9 @@ describe('LobeAnthropicAI', () => {
           model: 'claude-3-haiku-20240307',
           stream: true,
           temperature: 0,
-          top_p: 1
+          top_p: 1,
         },
-        {}
+        {},
       );
       expect(result).toBeInstanceOf(Response);
     });
@@ -96,21 +92,19 @@ describe('LobeAnthropicAI', () => {
         start(controller) {
           controller.enqueue('Hello, world!');
           controller.close();
-        }
+        },
       });
       const mockResponse = Promise.resolve(mockStream);
-      (instance['client'].messages.create as Mock).mockResolvedValue(
-        mockResponse
-      );
+      (instance['client'].messages.create as Mock).mockResolvedValue(mockResponse);
 
       // Act
       const result = await instance.chat({
         messages: [
           { content: 'You are an awesome greeter', role: 'system' },
-          { content: 'Hello', role: 'user' }
+          { content: 'Hello', role: 'user' },
         ],
         model: 'claude-3-haiku-20240307',
-        temperature: 0
+        temperature: 0,
       });
 
       // Assert
@@ -121,9 +115,9 @@ describe('LobeAnthropicAI', () => {
           model: 'claude-3-haiku-20240307',
           stream: true,
           system: 'You are an awesome greeter',
-          temperature: 0
+          temperature: 0,
         },
-        {}
+        {},
       );
       expect(result).toBeInstanceOf(Response);
     });
@@ -134,12 +128,10 @@ describe('LobeAnthropicAI', () => {
         start(controller) {
           controller.enqueue('Hello, world!');
           controller.close();
-        }
+        },
       });
       const mockResponse = Promise.resolve(mockStream);
-      (instance['client'].messages.create as Mock).mockResolvedValue(
-        mockResponse
-      );
+      (instance['client'].messages.create as Mock).mockResolvedValue(mockResponse);
 
       // Act
       const result = await instance.chat({
@@ -147,7 +139,7 @@ describe('LobeAnthropicAI', () => {
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'claude-3-haiku-20240307',
         temperature: 0.5,
-        top_p: 1
+        top_p: 1,
       });
 
       // Assert
@@ -158,9 +150,9 @@ describe('LobeAnthropicAI', () => {
           model: 'claude-3-haiku-20240307',
           stream: true,
           temperature: 0.5,
-          top_p: 1
+          top_p: 1,
         },
-        {}
+        {},
       );
       expect(result).toBeInstanceOf(Response);
     });
@@ -171,12 +163,10 @@ describe('LobeAnthropicAI', () => {
         start(controller) {
           controller.enqueue('Hello, world!');
           controller.close();
-        }
+        },
       });
       const mockResponse = Promise.resolve(mockStream);
-      (instance['client'].messages.create as Mock).mockResolvedValue(
-        mockResponse
-      );
+      (instance['client'].messages.create as Mock).mockResolvedValue(mockResponse);
 
       // Act
       const result = await instance.chat({
@@ -186,7 +176,7 @@ describe('LobeAnthropicAI', () => {
         model: 'claude-3-haiku-20240307',
         presence_penalty: 0.5,
         temperature: 0.5,
-        top_p: 1
+        top_p: 1,
       });
 
       // Assert
@@ -197,9 +187,9 @@ describe('LobeAnthropicAI', () => {
           model: 'claude-3-haiku-20240307',
           stream: true,
           temperature: 0.5,
-          top_p: 1
+          top_p: 1,
         },
-        {}
+        {},
       );
       expect(result).toBeInstanceOf(Response);
     });
@@ -210,32 +200,30 @@ describe('LobeAnthropicAI', () => {
         start(controller) {
           controller.enqueue('Hello, world!');
           controller.close();
-        }
+        },
       }) as any;
       const mockDebugStream = new ReadableStream({
         start(controller) {
           controller.enqueue('Debug stream content');
           controller.close();
-        }
+        },
       }) as any;
       mockDebugStream.toReadableStream = () => mockDebugStream;
 
       (instance['client'].messages.create as Mock).mockResolvedValue({
-        tee: () => [mockProdStream, { toReadableStream: () => mockDebugStream }]
+        tee: () => [mockProdStream, { toReadableStream: () => mockDebugStream }],
       });
 
       const originalDebugValue = process.env.DEBUG_ANTHROPIC_CHAT_COMPLETION;
 
       process.env.DEBUG_ANTHROPIC_CHAT_COMPLETION = '1';
-      vi.spyOn(debugStreamModule, 'debugStream').mockImplementation(() =>
-        Promise.resolve()
-      );
+      vi.spyOn(debugStreamModule, 'debugStream').mockImplementation(() => Promise.resolve());
 
       // Act
       await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'claude-3-haiku-20240307',
-        temperature: 0
+        temperature: 0,
       });
 
       // Assert
@@ -254,20 +242,18 @@ describe('LobeAnthropicAI', () => {
             type: 'error',
             error: {
               type: 'authentication_error',
-              message: 'invalid x-api-key'
-            }
-          }
+              message: 'invalid x-api-key',
+            },
+          },
         };
-        (instance['client'].messages.create as Mock).mockRejectedValue(
-          apiError
-        );
+        (instance['client'].messages.create as Mock).mockRejectedValue(apiError);
 
         try {
           // Act
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'claude-3-haiku-20240307',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           // Assert
@@ -275,7 +261,7 @@ describe('LobeAnthropicAI', () => {
             endpoint: 'https://api.anthropic.com',
             error: apiError,
             errorType: 'InvalidAnthropicAPIKey',
-            provider
+            provider,
           });
         }
       });
@@ -287,20 +273,18 @@ describe('LobeAnthropicAI', () => {
             type: 'error',
             error: {
               type: 'overloaded_error',
-              message: "Anthropic's API is temporarily overloaded"
-            }
-          }
+              message: "Anthropic's API is temporarily overloaded",
+            },
+          },
         };
-        (instance['client'].messages.create as Mock).mockRejectedValue(
-          apiError
-        );
+        (instance['client'].messages.create as Mock).mockRejectedValue(apiError);
 
         try {
           // Act
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'claude-3-haiku-20240307',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           // Assert
@@ -308,7 +292,7 @@ describe('LobeAnthropicAI', () => {
             endpoint: 'https://api.anthropic.com',
             error: apiError,
             errorType: 'AnthropicBizError',
-            provider
+            provider,
           });
         }
       });

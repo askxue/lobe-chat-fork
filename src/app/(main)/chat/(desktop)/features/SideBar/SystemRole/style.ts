@@ -28,5 +28,5 @@ export const useStyles = createStyles(({ css, token }) => ({
     height: 32px;
 
     background: linear-gradient(to bottom, transparent, ${token.colorBgLayout});
-  `
+  `,
 }));

@@ -56,7 +56,7 @@ const useStyles = createStyles(({ css, token, stylish }) => {
 
       background: ${token.colorBgMask};
       ${stylish.blur};
-    `
+    `,
   };
 });
 
@@ -77,9 +77,7 @@ const DragUpload = memo(() => {
 
   const model = useAgentStore(agentSelectors.currentAgentModel);
 
-  const enabledFiles = useUserStore(
-    modelProviderSelectors.isModelEnabledFiles(model)
-  );
+  const enabledFiles = useUserStore(modelProviderSelectors.isModelEnabledFiles(model));
 
   const uploadImages = async (fileList: FileList | undefined) => {
     if (!fileList || fileList.length === 0) return;
@@ -150,13 +148,7 @@ const DragUpload = memo(() => {
       window.removeEventListener('drop', handleDrop);
       window.removeEventListener('paste', handlePaste);
     };
-  }, [
-    handleDragEnter,
-    handleDragOver,
-    handleDragLeave,
-    handleDrop,
-    handlePaste
-  ]);
+  }, [handleDragEnter, handleDragOver, handleDragLeave, handleDrop, handlePaste]);
 
   return (
     isDragging && (

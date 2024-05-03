@@ -18,7 +18,7 @@ import {
   LobeSessionGroups,
   LobeSessionType,
   LobeSessions,
-  SessionGroupId
+  SessionGroupId,
 } from '@/types/session';
 import { merge } from '@/utils/merge';
 import { setNamespace } from '@/utils/storeDebug';
@@ -50,7 +50,7 @@ export interface SessionAction {
    */
   createSession: (
     session?: DeepPartial<LobeAgentSession>,
-    isSwitchSession?: boolean
+    isSwitchSession?: boolean,
   ) => Promise<string>;
   duplicateSession: (id: string) => Promise<void>;
   updateSessionGroupId: (sessionId: string, groupId: string) => Promise<void>;
@@ -78,12 +78,12 @@ export interface SessionAction {
   internal_dispatchSessions: (payload: SessionDispatch) => void;
   internal_updateSession: (
     id: string,
-    data: Partial<{ group?: SessionGroupId; meta?: any; pinned?: boolean }>
+    data: Partial<{ group?: SessionGroupId; meta?: any; pinned?: boolean }>,
   ) => Promise<void>;
   internal_processSessions: (
     sessions: LobeSessions,
     customGroups: LobeSessionGroups,
-    actions?: string
+    actions?: string,
   ) => void;
   /* eslint-enable */
 }
@@ -111,15 +111,12 @@ export const createSessionSlice: StateCreator<
     // merge the defaultAgent in settings
     const defaultAgent = merge(
       DEFAULT_AGENT_LOBE_SESSION,
-      settingsSelectors.defaultAgent(useUserStore.getState())
+      settingsSelectors.defaultAgent(useUserStore.getState()),
     );
 
     const newSession: LobeAgentSession = merge(defaultAgent, agent);
 
-    const id = await sessionService.createSession(
-      LobeSessionType.Agent,
-      newSession
-    );
+    const id = await sessionService.createSession(LobeSessionType.Agent, newSession);
     await refreshSessions();
 
     // Whether to goto  to the new session after creation, the default is to switch to
@@ -141,7 +138,7 @@ export const createSessionSlice: StateCreator<
     message.loading({
       content: t('duplicateSession.loading', { ns: 'chat' }),
       duration: 0,
-      key: messageLoadingKey
+      key: messageLoadingKey,
     });
 
     const newId = await sessionService.cloneSession(id, newTitle);
@@ -178,7 +175,7 @@ export const createSessionSlice: StateCreator<
     set(
       { isSearching: !!keywords, sessionSearchKeywords: keywords },
       false,
-      n('updateSearchKeywords')
+      n('updateSearchKeywords'),
     );
   },
   updateSessionGroupId: async (sessionId, group) => {
@@ -196,31 +193,23 @@ export const createSessionSlice: StateCreator<
   },
 
   useFetchSessions: () =>
-    useClientDataSWR<ChatSessionList>(
-      FETCH_SESSIONS_KEY,
-      sessionService.getGroupedSessions,
-      {
-        onSuccess: (data) => {
-          if (
-            get().isSessionsFirstFetchFinished &&
-            isEqual(get().sessions, data.sessions) &&
-            isEqual(get().sessionGroups, data.sessionGroups)
-          )
-            return;
+    useClientDataSWR<ChatSessionList>(FETCH_SESSIONS_KEY, sessionService.getGroupedSessions, {
+      onSuccess: (data) => {
+        if (
+          get().isSessionsFirstFetchFinished &&
+          isEqual(get().sessions, data.sessions) &&
+          isEqual(get().sessionGroups, data.sessionGroups)
+        )
+          return;
 
-          get().internal_processSessions(
-            data.sessions,
-            data.sessionGroups,
-            n('useFetchSessions/updateData') as any
-          );
-          set(
-            { isSessionsFirstFetchFinished: true },
-            false,
-            n('useFetchSessions/onSuccess', data)
-          );
-        }
-      }
-    ),
+        get().internal_processSessions(
+          data.sessions,
+          data.sessionGroups,
+          n('useFetchSessions/updateData') as any,
+        );
+        set({ isSessionsFirstFetchFinished: true }, false, n('useFetchSessions/onSuccess', data));
+      },
+    }),
   useSearchSessions: (keyword) =>
     useSWR<LobeSessions>(
       [SEARCH_SESSIONS_KEY, keyword],
@@ -229,7 +218,7 @@ export const createSessionSlice: StateCreator<
 
         return sessionService.searchSessions(keyword);
       },
-      { revalidateOnFocus: false, revalidateOnMount: false }
+      { revalidateOnFocus: false, revalidateOnMount: false },
     ),
 
   /* eslint-disable sort-keys-fix/sort-keys-fix */
@@ -246,11 +235,11 @@ export const createSessionSlice: StateCreator<
   internal_processSessions: (sessions, sessionGroups) => {
     const customGroups = sessionGroups.map((item) => ({
       ...item,
-      children: sessions.filter((i) => i.group === item.id && !i.pinned)
+      children: sessions.filter((i) => i.group === item.id && !i.pinned),
     }));
 
     const defaultGroup = sessions.filter(
-      (item) => (!item.group || item.group === 'default') && !item.pinned
+      (item) => (!item.group || item.group === 'default') && !item.pinned,
     );
     const pinnedGroup = sessions.filter((item) => item.pinned);
 
@@ -260,13 +249,13 @@ export const createSessionSlice: StateCreator<
         defaultSessions: defaultGroup,
         pinnedSessions: pinnedGroup,
         sessionGroups,
-        sessions
+        sessions,
       },
       false,
-      n('processSessions')
+      n('processSessions'),
     );
   },
   refreshSessions: async () => {
     await mutate(FETCH_SESSIONS_KEY);
-  }
+  },
 });

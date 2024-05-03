@@ -6,10 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Flexbox } from 'react-layout-kit';
 
 import { useSessionStore } from '@/store/session';
-import {
-  sessionMetaSelectors,
-  sessionSelectors
-} from '@/store/session/selectors';
+import { sessionMetaSelectors, sessionSelectors } from '@/store/session/selectors';
 import { pathString } from '@/utils/url';
 
 import Tags from './Tags';
@@ -19,15 +16,14 @@ const Main = memo(() => {
 
   const router = useRouter();
 
-  const [init, isInbox, title, description, avatar, backgroundColor] =
-    useSessionStore((s) => [
-      sessionSelectors.isSomeSessionActive(s),
-      sessionSelectors.isInboxSession(s),
-      sessionMetaSelectors.currentAgentTitle(s),
-      sessionMetaSelectors.currentAgentDescription(s),
-      sessionMetaSelectors.currentAgentAvatar(s),
-      sessionMetaSelectors.currentAgentBackgroundColor(s)
-    ]);
+  const [init, isInbox, title, description, avatar, backgroundColor] = useSessionStore((s) => [
+    sessionSelectors.isSomeSessionActive(s),
+    sessionSelectors.isInboxSession(s),
+    sessionMetaSelectors.currentAgentTitle(s),
+    sessionMetaSelectors.currentAgentDescription(s),
+    sessionMetaSelectors.currentAgentAvatar(s),
+    sessionMetaSelectors.currentAgentBackgroundColor(s),
+  ]);
 
   const displayTitle = isInbox ? t('inbox.title') : title;
   const displayDesc = isInbox ? t('inbox.desc') : description;
@@ -49,9 +45,7 @@ const Main = memo(() => {
         onClick={() =>
           isInbox
             ? router.push('/settings/agent')
-            : router.push(
-                pathString('/chat/settings', { search: location.search })
-              )
+            : router.push(pathString('/chat/settings', { search: location.search }))
         }
         size={40}
         title={title}

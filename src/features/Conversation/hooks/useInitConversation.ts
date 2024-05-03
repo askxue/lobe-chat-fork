@@ -10,27 +10,20 @@ export const useInitConversation = () => {
   const [sessionId] = useSessionStore((s) => [s.activeId]);
   const [useFetchAgentConfig] = useAgentStore((s) => [s.useFetchAgentConfig]);
   const plugins = useAgentStore((s) => agentSelectors.currentAgentPlugins(s));
-  const [activeTopicId, switchTopic, useFetchMessages, useFetchTopics] =
-    useChatStore((s) => [
-      s.activeTopicId,
-      s.switchTopic,
-      s.useFetchMessages,
-      s.useFetchTopics
-    ]);
+  const [activeTopicId, switchTopic, useFetchMessages, useFetchTopics] = useChatStore((s) => [
+    s.activeTopicId,
+    s.switchTopic,
+    s.useFetchMessages,
+    s.useFetchTopics,
+  ]);
 
   useFetchMessages(sessionId, activeTopicId);
   useFetchTopics(sessionId);
   useFetchAgentConfig(sessionId);
 
-  const [
-    useFetchPluginStore,
-    useFetchInstalledPlugins,
-    checkPluginsIsInstalled
-  ] = useToolStore((s) => [
-    s.useFetchPluginStore,
-    s.useFetchInstalledPlugins,
-    s.useCheckPluginsIsInstalled
-  ]);
+  const [useFetchPluginStore, useFetchInstalledPlugins, checkPluginsIsInstalled] = useToolStore(
+    (s) => [s.useFetchPluginStore, s.useFetchInstalledPlugins, s.useCheckPluginsIsInstalled],
+  );
 
   useFetchPluginStore();
   useFetchInstalledPlugins();
@@ -44,7 +37,7 @@ export const useInitConversation = () => {
         switchTopic();
 
         useAgentStore.setState({ activeId }, false, 'updateActiveId');
-      }
+      },
     );
 
     return () => {

@@ -13,7 +13,7 @@ const useStyles = createStyles(
 
     background: ${token.colorText};
     border-radius: 12px;
-  `
+  `,
 );
 
 const TokenTag = memo<{ systemRole: string }>(({ systemRole }) => {

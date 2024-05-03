@@ -7,11 +7,7 @@ interface AuthConfig {
   oauthAuthorized?: boolean;
 }
 
-export const checkAuth = ({
-  apiKey,
-  accessCode,
-  oauthAuthorized
-}: AuthConfig) => {
+export const checkAuth = ({ apiKey, accessCode, oauthAuthorized }: AuthConfig) => {
   // If authorized by oauth
   if (oauthAuthorized) {
     return { auth: true };

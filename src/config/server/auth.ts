@@ -36,9 +36,7 @@ declare global {
 
 export const getAuthConfig = () => {
   if (typeof process === 'undefined') {
-    throw new Error(
-      '[Server Config] you are importing a server-only module outside of server'
-    );
+    throw new Error('[Server Config] you are importing a server-only module outside of server');
   }
 
   return {
@@ -68,6 +66,6 @@ export const getAuthConfig = () => {
     ZITADEL_CLIENT_ID: process.env.ZITADEL_CLIENT_ID || '',
     ZITADEL_CLIENT_SECRET: process.env.ZITADEL_CLIENT_SECRET || '',
     ZITADEL_ISSUER: process.env.ZITADEL_ISSUER || '',
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET || ''
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET || '',
   };
 };

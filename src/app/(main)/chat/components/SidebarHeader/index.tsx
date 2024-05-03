@@ -6,7 +6,7 @@ const useStyles = createStyles(({ css, token }) => ({
   header: css`
     z-index: 10;
     box-shadow: 0 2px 6px ${token.colorBgLayout};
-  `
+  `,
 }));
 
 interface SidebarHeaderProps {

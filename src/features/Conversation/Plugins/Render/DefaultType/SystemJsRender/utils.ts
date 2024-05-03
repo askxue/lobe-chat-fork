@@ -11,11 +11,11 @@ import 'systemjs';
 
 System.addImportMap({
   imports: {
-    React: 'app:React',
-    ReactDOM: 'app:ReactDOM',
-    antd: 'app:antd',
-    'antd-style': 'app:antd-style'
-  }
+    'React': 'app:React',
+    'ReactDOM': 'app:ReactDOM',
+    'antd': 'app:antd',
+    'antd-style': 'app:antd-style',
+  },
 });
 
 System.set('app:React', { default: React, ...React });

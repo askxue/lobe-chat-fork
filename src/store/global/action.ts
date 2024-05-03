@@ -26,10 +26,7 @@ export interface GlobalStoreAction {
   toggleExpandSessionGroup: (id: string, expand: boolean) => void;
   toggleMobileTopic: (visible?: boolean) => void;
   toggleSystemRole: (visible?: boolean) => void;
-  updatePreference: (
-    preference: Partial<GlobalPreference>,
-    action?: any
-  ) => void;
+  updatePreference: (preference: Partial<GlobalPreference>, action?: any) => void;
   useCheckLatestVersion: () => SWRResponse<string>;
   useInitGlobalPreference: () => SWRResponse;
 }
@@ -41,58 +38,38 @@ export const globalActionSlice: StateCreator<
   GlobalStoreAction
 > = (set, get) => ({
   switchBackToChat: (sessionId) => {
-    get().router?.push(
-      SESSION_CHAT_URL(sessionId || INBOX_SESSION_ID, get().isMobile)
-    );
+    get().router?.push(SESSION_CHAT_URL(sessionId || INBOX_SESSION_ID, get().isMobile));
   },
   toggleChatSideBar: (newValue) => {
     const showChatSideBar =
-      typeof newValue === 'boolean'
-        ? newValue
-        : !get().preference.showChatSideBar;
+      typeof newValue === 'boolean' ? newValue : !get().preference.showChatSideBar;
 
-    get().updatePreference(
-      { showChatSideBar },
-      n('toggleAgentPanel', newValue)
-    );
+    get().updatePreference({ showChatSideBar }, n('toggleAgentPanel', newValue));
   },
   toggleExpandSessionGroup: (id, expand) => {
     const { preference } = get();
-    const nextExpandSessionGroup = produce(
-      preference.expandSessionGroupKeys,
-      (draft: string[]) => {
-        if (expand) {
-          if (draft.includes(id)) return;
-          draft.push(id);
-        } else {
-          const index = draft.indexOf(id);
-          if (index !== -1) draft.splice(index, 1);
-        }
+    const nextExpandSessionGroup = produce(preference.expandSessionGroupKeys, (draft: string[]) => {
+      if (expand) {
+        if (draft.includes(id)) return;
+        draft.push(id);
+      } else {
+        const index = draft.indexOf(id);
+        if (index !== -1) draft.splice(index, 1);
       }
-    );
+    });
     get().updatePreference({ expandSessionGroupKeys: nextExpandSessionGroup });
   },
   toggleMobileTopic: (newValue) => {
     const mobileShowTopic =
-      typeof newValue === 'boolean'
-        ? newValue
-        : !get().preference.mobileShowTopic;
+      typeof newValue === 'boolean' ? newValue : !get().preference.mobileShowTopic;
 
-    get().updatePreference(
-      { mobileShowTopic },
-      n('toggleMobileTopic', newValue)
-    );
+    get().updatePreference({ mobileShowTopic }, n('toggleMobileTopic', newValue));
   },
   toggleSystemRole: (newValue) => {
     const showSystemRole =
-      typeof newValue === 'boolean'
-        ? newValue
-        : !get().preference.mobileShowTopic;
+      typeof newValue === 'boolean' ? newValue : !get().preference.mobileShowTopic;
 
-    get().updatePreference(
-      { showSystemRole },
-      n('toggleMobileTopic', newValue)
-    );
+    get().updatePreference({ showSystemRole }, n('toggleMobileTopic', newValue));
   },
   updatePreference: (preference, action) => {
     const nextPreference = merge(get().preference, preference);
@@ -108,12 +85,8 @@ export const globalActionSlice: StateCreator<
       focusThrottleInterval: 1000 * 60 * 30,
       onSuccess: (data: string) => {
         if (gt(data, CURRENT_VERSION))
-          set(
-            { hasNewVersion: true, latestVersion: data },
-            false,
-            n('checkLatestVersion')
-          );
-      }
+          set({ hasNewVersion: true, latestVersion: data }, false, n('checkLatestVersion'));
+      },
     }),
 
   useInitGlobalPreference: () =>
@@ -127,7 +100,7 @@ export const globalActionSlice: StateCreator<
           if (isEqual(get().preference, nextPreference)) return;
 
           set({ preference: nextPreference }, false, n('initPreference'));
-        }
-      }
-    )
+        },
+      },
+    ),
 });

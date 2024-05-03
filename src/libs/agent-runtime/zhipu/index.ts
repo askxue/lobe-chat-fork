@@ -7,7 +7,7 @@ import {
   ChatCompetitionOptions,
   ChatStreamPayload,
   ModelProvider,
-  OpenAIChatMessage
+  OpenAIChatMessage,
 } from '../types';
 import { AgentRuntimeError } from '../utils/createError';
 import { debugStream } from '../utils/debugStream';
@@ -28,13 +28,9 @@ export class LobeZhipuAI implements LobeRuntimeAI {
     this.baseURL = this.client.baseURL;
   }
 
-  static async fromAPIKey({
-    apiKey,
-    baseURL = DEFAULT_BASE_URL,
-    ...res
-  }: ClientOptions) {
+  static async fromAPIKey({ apiKey, baseURL = DEFAULT_BASE_URL, ...res }: ClientOptions) {
     const invalidZhipuAPIKey = AgentRuntimeError.createError(
-      AgentRuntimeErrorType.InvalidZhipuAPIKey
+      AgentRuntimeErrorType.InvalidZhipuAPIKey,
     );
 
     if (!apiKey) throw invalidZhipuAPIKey;
@@ -58,7 +54,7 @@ export class LobeZhipuAI implements LobeRuntimeAI {
       const params = this.buildCompletionsParams(payload);
 
       const response = await this.client.chat.completions.create(
-        params as unknown as OpenAI.ChatCompletionCreateParamsStreaming
+        params as unknown as OpenAI.ChatCompletionCreateParamsStreaming,
       );
 
       const [prod, debug] = response.tee();
@@ -68,7 +64,7 @@ export class LobeZhipuAI implements LobeRuntimeAI {
       }
 
       return new StreamingTextResponse(OpenAIStream(prod, options?.callback), {
-        headers: options?.headers
+        headers: options?.headers,
       });
     } catch (error) {
       const { errorResult, RuntimeError } = handleOpenAIError(error);
@@ -83,7 +79,7 @@ export class LobeZhipuAI implements LobeRuntimeAI {
         endpoint: desensitizedEndpoint,
         error: errorResult,
         errorType,
-        provider: ModelProvider.ZhiPu
+        provider: ModelProvider.ZhiPu,
       });
     }
   }
@@ -99,14 +95,12 @@ export class LobeZhipuAI implements LobeRuntimeAI {
       // 当前的模型侧不支持 top_p=1 和 temperature 为 0
       // refs: https://zhipu-ai.feishu.cn/wiki/TUo0w2LT7iswnckmfSEcqTD0ncd
       temperature: temperature === 0 ? undefined : temperature,
-      top_p: top_p === 1 ? 0.99 : top_p
+      top_p: top_p === 1 ? 0.99 : top_p,
     };
   }
 
   // TODO: 临时处理，后续需要移除
-  private transformMessage = (
-    message: OpenAIChatMessage
-  ): OpenAIChatMessage => {
+  private transformMessage = (message: OpenAIChatMessage): OpenAIChatMessage => {
     return {
       ...message,
       content:
@@ -122,15 +116,12 @@ export class LobeZhipuAI implements LobeRuntimeAI {
                 case 'image_url': {
                   const { base64 } = parseDataUri(c.image_url.url);
                   return {
-                    image_url: {
-                      ...c.image_url,
-                      url: base64 || c.image_url.url
-                    },
-                    type: 'image_url'
+                    image_url: { ...c.image_url, url: base64 || c.image_url.url },
+                    type: 'image_url',
                   };
                 }
               }
-            })
+            }),
     };
   };
 }

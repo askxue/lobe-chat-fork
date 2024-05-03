@@ -23,15 +23,7 @@ interface DevModalProps {
 }
 
 const DevModal = memo<DevModalProps>(
-  ({
-    open,
-    mode = 'create',
-    value,
-    onValueChange,
-    onSave,
-    onOpenChange,
-    onDelete
-  }) => {
+  ({ open, mode = 'create', value, onValueChange, onSave, onOpenChange, onDelete }) => {
     const isEditMode = mode === 'edit';
     const [configMode, setConfigMode] = useState<'url' | 'local'>('url');
     const { t } = useTranslation('plugin');
@@ -53,7 +45,7 @@ const DevModal = memo<DevModalProps>(
             cancelText={t('cancel', { ns: 'common' })}
             okButtonProps={{
               danger: true,
-              type: 'primary'
+              type: 'primary',
             }}
             okText={t('ok', { ns: 'common' })}
             onConfirm={() => {
@@ -101,9 +93,7 @@ const DevModal = memo<DevModalProps>(
             await onSave?.(info.values as LobeToolCustomPlugin);
             setSubmitting(false);
           }
-          message.success(
-            t(isEditMode ? 'dev.updateSuccess' : 'dev.saveSuccess')
-          );
+          message.success(t(isEditMode ? 'dev.updateSuccess' : 'dev.saveSuccess'));
           onOpenChange(false);
         }}
       >
@@ -154,7 +144,7 @@ const DevModal = memo<DevModalProps>(
               options={[
                 {
                   label: t('dev.manifest.mode.url'),
-                  value: 'url'
+                  value: 'url',
                 },
                 {
                   disabled: true,
@@ -163,8 +153,8 @@ const DevModal = memo<DevModalProps>(
                       {t('dev.manifest.mode.local')}
                     </Tooltip>
                   ),
-                  value: 'local'
-                }
+                  value: 'local',
+                },
               ]}
             />
 
@@ -176,7 +166,7 @@ const DevModal = memo<DevModalProps>(
         </Modal>
       </Form.Provider>
     );
-  }
+  },
 );
 
 export default DevModal;

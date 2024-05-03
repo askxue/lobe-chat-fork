@@ -13,26 +13,24 @@ describe('currentSession', () => {
         config: {
           model: 'gpt-3.5-turbo',
           params: {},
-          systemRole: 'system-role'
+          systemRole: 'system-role',
         },
-        type: LobeSessionType.Agent
+        type: LobeSessionType.Agent,
       } as LobeAgentSession,
       {
         id: '2',
         config: {
           model: 'gpt-3.5-turbo',
           params: {},
-          systemRole: 'system-role'
+          systemRole: 'system-role',
         },
-        type: LobeSessionType.Agent
-      } as LobeAgentSession
-    ]
+        type: LobeSessionType.Agent,
+      } as LobeAgentSession,
+    ],
   } as unknown as SessionStore;
 
   it('should return undefined when s.activeId is not defined', () => {
-    expect(
-      sessionSelectors.currentSession({ sessions: {} } as any)
-    ).toBeUndefined();
+    expect(sessionSelectors.currentSession({ sessions: {} } as any)).toBeUndefined();
   });
 
   it('should return s.sessions[s.activeId] when s.activeId is not equal to INBOX_SESSION_ID', () => {
@@ -49,26 +47,26 @@ describe('currentSessionSafe', () => {
         config: {
           model: 'gpt-3.5-turbo',
           params: {},
-          systemRole: 'system-role'
+          systemRole: 'system-role',
         },
-        type: LobeSessionType.Agent
+        type: LobeSessionType.Agent,
       } as LobeAgentSession,
       {
         id: '2',
         config: {
           model: 'gpt-3.5-turbo',
           params: {},
-          systemRole: 'system-role'
+          systemRole: 'system-role',
         },
-        type: LobeSessionType.Agent
-      } as LobeAgentSession
-    ]
+        type: LobeSessionType.Agent,
+      } as LobeAgentSession,
+    ],
   } as unknown as SessionStore;
 
   it('should return initLobeSession when currentSession(s) returns undefined', () => {
-    expect(
-      sessionSelectors.currentSessionSafe({ sessions: {} } as any)
-    ).toEqual(DEFAULT_AGENT_LOBE_SESSION);
+    expect(sessionSelectors.currentSessionSafe({ sessions: {} } as any)).toEqual(
+      DEFAULT_AGENT_LOBE_SESSION,
+    );
   });
 
   it('should return the result of currentSession(s) when it returns a non-undefined value', () => {
@@ -85,20 +83,20 @@ describe('getSessionById', () => {
         config: {
           model: 'gpt-3.5-turbo',
           params: {},
-          systemRole: 'system-role'
+          systemRole: 'system-role',
         },
-        type: LobeSessionType.Agent
+        type: LobeSessionType.Agent,
       } as LobeAgentSession,
       {
         id: '2',
         config: {
           model: 'gpt-3.5-turbo',
           params: {},
-          systemRole: 'system-role'
+          systemRole: 'system-role',
         },
-        type: LobeSessionType.Agent
-      } as LobeAgentSession
-    ]
+        type: LobeSessionType.Agent,
+      } as LobeAgentSession,
+    ],
   } as unknown as SessionStore;
 
   it('should return the session with the specified id when id is not equal to INBOX_SESSION_ID', () => {
@@ -106,9 +104,7 @@ describe('getSessionById', () => {
   });
 
   it('should return initLobeSession when the session with the specified id does not exist', () => {
-    expect(sessionSelectors.getSessionById('3')(s)).toEqual(
-      DEFAULT_AGENT_LOBE_SESSION
-    );
+    expect(sessionSelectors.getSessionById('3')(s)).toEqual(DEFAULT_AGENT_LOBE_SESSION);
   });
 });
 
@@ -116,14 +112,12 @@ describe('getSessionMetaById', () => {
   const s: SessionStore = {
     sessions: [
       { id: '1', meta: { title: 'Session 1' } },
-      { id: '2', meta: { title: 'Session 2' } }
-    ]
+      { id: '2', meta: { title: 'Session 2' } },
+    ],
   } as unknown as SessionStore;
 
   it('should return the meta data of the session with the specified id', () => {
-    expect(sessionSelectors.getSessionMetaById('1')(s)).toEqual({
-      title: 'Session 1'
-    });
+    expect(sessionSelectors.getSessionMetaById('1')(s)).toEqual({ title: 'Session 1' });
   });
 
   it('should return an empty object when the session with the specified id does not exist', () => {

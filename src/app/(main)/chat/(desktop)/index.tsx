@@ -19,7 +19,4 @@ const Desktop = memo(() => (
   </>
 ));
 
-export default ClientResponsiveContent({
-  Desktop,
-  Mobile: () => import('../(mobile)')
-});
+export default ClientResponsiveContent({ Desktop, Mobile: () => import('../(mobile)') });

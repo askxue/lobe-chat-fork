@@ -1,8 +1,4 @@
-import {
-  ListResponse,
-  Ollama as OllamaBrowser,
-  ProgressResponse
-} from 'ollama/browser';
+import { ListResponse, Ollama as OllamaBrowser, ProgressResponse } from 'ollama/browser';
 
 import { createErrorResponse } from '@/app/api/errorResponse';
 import { ModelProvider } from '@/libs/agent-runtime';
@@ -25,10 +21,7 @@ export class OllamaService {
   constructor(params: OllamaServiceParams = {}) {
     this._host = this.getHost();
     this._fetch = params.fetch;
-    this._client = new OllamaBrowser({
-      fetch: params?.fetch,
-      host: this._host
-    });
+    this._client = new OllamaBrowser({ fetch: params?.fetch, host: this._host });
   }
 
   getHost = (): string => {
@@ -40,10 +33,7 @@ export class OllamaService {
   getOllamaClient = () => {
     if (this.getHost() !== this._host) {
       this._host = this.getHost();
-      this._client = new OllamaBrowser({
-        fetch: this._fetch,
-        host: this.getHost()
-      });
+      this._client = new OllamaBrowser({ fetch: this._fetch, host: this.getHost() });
     }
     return this._client;
   };
@@ -52,23 +42,16 @@ export class OllamaService {
     this._client.abort();
   };
 
-  pullModel = async (
-    model: string
-  ): Promise<AsyncGenerator<ProgressResponse>> => {
+  pullModel = async (model: string): Promise<AsyncGenerator<ProgressResponse>> => {
     let response: Response | AsyncGenerator<ProgressResponse>;
     try {
-      response = await this.getOllamaClient().pull({
-        insecure: true,
-        model,
-        stream: true
-      });
+      response = await this.getOllamaClient().pull({ insecure: true, model, stream: true });
       return response;
     } catch {
       response = createErrorResponse(ChatErrorType.OllamaServiceUnavailable, {
         host: this.getHost(),
-        message:
-          'please check whether your ollama service is available or set the CORS rules',
-        provider: ModelProvider.Ollama
+        message: 'please check whether your ollama service is available or set the CORS rules',
+        provider: ModelProvider.Ollama,
       });
     }
 
@@ -85,9 +68,8 @@ export class OllamaService {
     } catch {
       response = createErrorResponse(ChatErrorType.OllamaServiceUnavailable, {
         host: this.getHost(),
-        message:
-          'please check whether your ollama service is available or set the CORS rules',
-        provider: ModelProvider.Ollama
+        message: 'please check whether your ollama service is available or set the CORS rules',
+        provider: ModelProvider.Ollama,
       });
     }
 

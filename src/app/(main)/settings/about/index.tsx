@@ -17,23 +17,14 @@ import Analytics from './features/Analytics';
 const COPYRIGHT = `© 2023-${new Date().getFullYear()} LobeHub, LLC`;
 
 const Page = memo(({ mobile }: { mobile?: boolean }) => {
-  const enabledTelemetryChat = useServerConfigStore(
-    serverConfigSelectors.enabledTelemetryChat
-  );
+  const enabledTelemetryChat = useServerConfigStore(serverConfigSelectors.enabledTelemetryChat);
 
   return (
     <Flexbox align={'center'} gap={12} paddingBlock={36} width={'100%'}>
       <Link href={OFFICIAL_SITE} target={'_blank'}>
         <Logo size={mobile ? 100 : 120} />
       </Link>
-      <h1
-        style={{
-          fontSize: mobile ? 32 : 36,
-          fontWeight: 900,
-          lineHeight: 1,
-          marginBottom: 0
-        }}
-      >
+      <h1 style={{ fontSize: mobile ? 32 : 36, fontWeight: 900, lineHeight: 1, marginBottom: 0 }}>
         LobeChat
       </h1>
       <Link href={RELEASES_URL} target={'_blank'}>

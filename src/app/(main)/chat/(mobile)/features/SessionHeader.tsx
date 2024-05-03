@@ -7,10 +7,7 @@ import { Flexbox } from 'react-layout-kit';
 
 import { MOBILE_HEADER_ICON_SIZE } from '@/const/layoutTokens';
 import SyncStatusInspector from '@/features/SyncStatusInspector';
-import {
-  featureFlagsSelectors,
-  useServerConfigStore
-} from '@/store/serverConfig';
+import { featureFlagsSelectors, useServerConfigStore } from '@/store/serverConfig';
 import { useSessionStore } from '@/store/session';
 import { useUserStore } from '@/store/user';
 import { userProfileSelectors } from '@/store/user/selectors';
@@ -23,7 +20,7 @@ export const useStyles = createStyles(({ css, token }) => ({
   top: css`
     position: sticky;
     top: 0;
-  `
+  `,
 }));
 
 const Header = memo(() => {

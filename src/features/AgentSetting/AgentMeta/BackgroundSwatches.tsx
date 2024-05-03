@@ -21,7 +21,7 @@ const BackgroundSwatches = memo<BackgroundSwatchesProps>(
         onSelect={handleSelect}
       />
     );
-  }
+  },
 );
 
 export default BackgroundSwatches;

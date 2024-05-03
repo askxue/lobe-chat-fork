@@ -7,7 +7,7 @@ enum ElType {
   div,
   input,
   markdown,
-  debug
+  debug,
 }
 
 // 模拟elementFromPoint方法
@@ -41,9 +41,7 @@ describe('useAutoFocus', () => {
 
     // Simulate a mousedown event on an element outside of input or markdown element
     act(() => {
-      document.dispatchEvent(
-        new MouseEvent('mousedown', { bubbles: true, clientX: ElType.div })
-      );
+      document.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, clientX: ElType.div }));
     });
 
     // Simulate a mouseup event
@@ -60,9 +58,7 @@ describe('useAutoFocus', () => {
 
     // Simulate a mousedown event on an input element
     act(() => {
-      document.dispatchEvent(
-        new MouseEvent('mousedown', { bubbles: true, clientX: ElType.input })
-      );
+      document.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, clientX: ElType.input }));
     });
 
     // Simulate a mouseup event
@@ -80,7 +76,7 @@ describe('useAutoFocus', () => {
     // Simulate a mousedown event on a markdown element
     act(() => {
       document.dispatchEvent(
-        new MouseEvent('mousedown', { bubbles: true, clientX: ElType.markdown })
+        new MouseEvent('mousedown', { bubbles: true, clientX: ElType.markdown }),
       );
     });
 
@@ -98,9 +94,7 @@ describe('useAutoFocus', () => {
 
     // Simulate a mousedown event on a debug element
     act(() => {
-      document.dispatchEvent(
-        new MouseEvent('mousedown', { bubbles: true, clientX: ElType.debug })
-      );
+      document.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, clientX: ElType.debug }));
     });
 
     // Simulate a mouseup event

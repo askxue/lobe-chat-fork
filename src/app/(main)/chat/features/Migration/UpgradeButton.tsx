@@ -8,13 +8,7 @@ import { configService } from '@/services/config';
 import { useChatStore } from '@/store/chat';
 import { useSessionStore } from '@/store/session';
 
-import {
-  MIGRATE_KEY,
-  MigrationError,
-  UpgradeStatus,
-  V1DB_NAME,
-  V1DB_TABLE_NAME
-} from './const';
+import { MIGRATE_KEY, MigrationError, UpgradeStatus, V1DB_NAME, V1DB_TABLE_NAME } from './const';
 
 export interface UpgradeButtonProps {
   children?: ReactNode;
@@ -26,20 +20,13 @@ export interface UpgradeButtonProps {
 }
 
 const UpgradeButton = memo<UpgradeButtonProps>(
-  ({
-    setUpgradeStatus,
-    upgradeStatus,
-    state,
-    setError,
-    primary = true,
-    children
-  }) => {
+  ({ setUpgradeStatus, upgradeStatus, state, setError, primary = true, children }) => {
     const { t } = useTranslation('migration');
 
     const refreshSession = useSessionStore((s) => s.refreshSessions);
     const [refreshMessages, refreshTopic] = useChatStore((s) => [
       s.refreshMessages,
-      s.refreshTopic
+      s.refreshTopic,
     ]);
 
     const upgrade = async () => {
@@ -51,7 +38,7 @@ const UpgradeButton = memo<UpgradeButtonProps>(
         await configService.importConfigState({
           exportType: 'sessions',
           state: data.state,
-          version: 2
+          version: 2,
         });
 
         await refreshSession();
@@ -81,7 +68,7 @@ const UpgradeButton = memo<UpgradeButtonProps>(
         {children ?? t('dbV1.action.upgrade')}
       </Button>
     );
-  }
+  },
 );
 
 export default UpgradeButton;

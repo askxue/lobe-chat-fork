@@ -27,15 +27,15 @@ const OpenAI = memo(() => {
       {
         children: <Select options={opeanaiTTSOptions} />,
         label: t('settingTTS.openai.ttsModel'),
-        name: [TTS_SETTING_KEY, 'openAI', 'ttsModel']
+        name: [TTS_SETTING_KEY, 'openAI', 'ttsModel'],
       },
       {
         children: <Select options={opeanaiSTTOptions} />,
         label: t('settingTTS.openai.sttModel'),
-        name: [TTS_SETTING_KEY, 'openAI', 'sttModel']
-      }
+        name: [TTS_SETTING_KEY, 'openAI', 'sttModel'],
+      },
     ],
-    title: t('settingTTS.openai.title')
+    title: t('settingTTS.openai.title'),
   };
 
   return (

@@ -39,10 +39,7 @@ export const POST = async (req: Request) => {
 ```ts
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 
-export const createChatCompletion = async ({
-  payload,
-  openai
-}: CreateChatCompletionOptions) => {
+export const createChatCompletion = async ({ payload, openai }: CreateChatCompletionOptions) => {
   // 预处理消息
   const { messages, ...params } = payload;
   // 发送 API 请求
@@ -51,9 +48,9 @@ export const createChatCompletion = async ({
       {
         messages,
         ...params,
-        stream: true
+        stream: true,
       } as unknown as OpenAI.ChatCompletionCreateParamsStreaming,
-      { headers: { Accept: '*/*' } }
+      { headers: { Accept: '*/*' } },
     );
     const stream = OpenAIStream(response);
     return new StreamingTextResponse(stream);
@@ -69,23 +66,19 @@ export const createChatCompletion = async ({
       }
       // 如果没有其他请求错误，错误对象是一个类似 Response 的对象
       else {
-        errorResult = {
-          headers: error.headers,
-          stack: error.stack,
-          status: error.status
-        };
+        errorResult = { headers: error.headers, stack: error.stack, status: error.status };
       }
       console.error(errorResult);
       // 返回错误响应
       return createErrorResponse(ChatErrorType.OpenAIBizError, {
         endpoint: openai.baseURL,
-        error: errorResult
+        error: errorResult,
       });
     }
     console.error(error);
     return createErrorResponse(ChatErrorType.InternalServerError, {
       endpoint: openai.baseURL,
-      error: JSON.stringify(error)
+      error: JSON.stringify(error),
     });
   }
 };
@@ -115,10 +108,7 @@ class ChatService {
   }
 
   // 获取聊天完成任务
-  getChatCompletion(
-    payload: OpenAIChatStreamPayload,
-    fetchOptions?: FetchOptions
-  ) {
+  getChatCompletion(payload: OpenAIChatStreamPayload, fetchOptions?: FetchOptions) {
     // 实现细节...
   }
 
@@ -144,10 +134,7 @@ class ChatService {
 在 `src/utils/fetch.ts` 文件中，我们定义了 `fetchSSE` 方法，该方法使用流式方法获取数据，当读取到新的数据块时，会调用 `onMessageHandle` 回调函数处理数据块，进而实现打字机输出效果。
 
 ```ts
-export const fetchSSE = async (
-  fetchFn: () => Promise<Response>,
-  options: FetchSSEOptions = {}
-) => {
+export const fetchSSE = async (fetchFn: () => Promise<Response>, options: FetchSSEOptions = {}) => {
   const response = await fetchFn();
 
   // 如果不 ok 说明有请求错误

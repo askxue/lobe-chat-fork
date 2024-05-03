@@ -28,7 +28,7 @@ const STT = memo(() => {
         children: <Select options={sttOptions} />,
         desc: t('settingTTS.sttService.desc'),
         label: t('settingTTS.sttService.title'),
-        name: [TTS_SETTING_KEY, 'sttServer']
+        name: [TTS_SETTING_KEY, 'sttServer'],
       },
       {
         children: <Switch />,
@@ -36,10 +36,10 @@ const STT = memo(() => {
         label: t('settingTTS.sttAutoStop.title'),
         minWidth: undefined,
         name: [TTS_SETTING_KEY, 'sttAutoStop'],
-        valuePropName: 'checked'
-      }
+        valuePropName: 'checked',
+      },
     ],
-    title: t('settingTTS.stt')
+    title: t('settingTTS.stt'),
   };
 
   return (

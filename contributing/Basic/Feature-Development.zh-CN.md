@@ -26,7 +26,7 @@ import { z } from 'zod';
 
 export const DB_SessionGroupSchema = z.object({
   name: z.string(),
-  sort: z.number().optional()
+  sort: z.number().optional(),
 });
 
 export type DB_SessionGroup = z.infer<typeof DB_SessionGroupSchema>;
@@ -129,10 +129,7 @@ export class LocalDB extends Dexie {
 
 ```typescript
 import { BaseModel } from '@/database/client/core';
-import {
-  DB_SessionGroup,
-  DB_SessionGroupSchema
-} from '@/database/client/schemas/sessionGroup';
+import { DB_SessionGroup, DB_SessionGroupSchema } from '@/database/client/schemas/sessionGroup';
 import { nanoid } from '@/utils/uuid';
 
 class _SessionGroupModel extends BaseModel {
@@ -221,7 +218,7 @@ export const createSessionGroupSlice: StateCreator<
     await get().refreshSessions();
     // 返回新创建的会话组 ID
     return id;
-  }
+  },
   // ... 其他 action 实现
 });
 ```
@@ -250,25 +247,21 @@ export const createSessionSlice: StateCreator<
 > = (set, get) => ({
   // ... 其他方法
   useFetchSessions: () =>
-    useSWR<ChatSessionList>(
-      FETCH_SESSIONS_KEY,
-      sessionService.getGroupedSessions,
-      {
-        onSuccess: (data) => {
-          set(
-            {
-              customSessionGroups: data.customGroup,
-              defaultSessions: data.default,
-              isSessionsFirstFetchFinished: true,
-              pinnedSessions: data.pinned,
-              sessions: data.all
-            },
-            false,
-            n('useFetchSessions/onSuccess', data)
-          );
-        }
-      }
-    )
+    useSWR<ChatSessionList>(FETCH_SESSIONS_KEY, sessionService.getGroupedSessions, {
+      onSuccess: (data) => {
+        set(
+          {
+            customSessionGroups: data.customGroup,
+            defaultSessions: data.default,
+            isSessionsFirstFetchFinished: true,
+            pinnedSessions: data.pinned,
+            sessions: data.all,
+          },
+          false,
+          n('useFetchSessions/onSuccess', data),
+        );
+      },
+    }),
 });
 ```
 
@@ -304,13 +297,9 @@ class _SessionModel extends BaseModel {
     // 查询会话组数据
     const groups = await SessionGroupModel.query();
     // 根据会话组ID查询自定义会话组
-    const customGroups = await this.queryByGroupIds(
-      groups.map((item) => item.id)
-    );
+    const customGroups = await this.queryByGroupIds(groups.map((item) => item.id));
     // 查询默认会话列表
-    const defaultItems = await this.querySessionsByGroupId(
-      SessionDefaultGroup.Default
-    );
+    const defaultItems = await this.querySessionsByGroupId(SessionDefaultGroup.Default);
     // 查询置顶的会话
     const pinnedItems = await this.getPinnedSessions();
 
@@ -319,12 +308,9 @@ class _SessionModel extends BaseModel {
     // 组合并返回所有会话及其分组信息
     return {
       all, // 包含所有会话的数组
-      customGroup: groups.map((group) => ({
-        ...group,
-        children: customGroups[group.id]
-      })), // 自定义分组
+      customGroup: groups.map((group) => ({ ...group, children: customGroups[group.id] })), // 自定义分组
       default: defaultItems, // 默认会话列表
-      pinned: pinnedItems // 置顶会话列表
+      pinned: pinnedItems, // 置顶会话列表
     };
   }
 }
@@ -356,8 +342,7 @@ const unpinnedSessionList = (s: SessionStore) =>
 ```ts
 const defaultSessions = (s: SessionStore): LobeSessions => s.defaultSessions;
 const pinnedSessions = (s: SessionStore): LobeSessions => s.pinnedSessions;
-const customSessionGroups = (s: SessionStore): CustomSessionGroup[] =>
-  s.customSessionGroups;
+const customSessionGroups = (s: SessionStore): CustomSessionGroup[] => s.customSessionGroups;
 ```
 
 由于在 UI 中的取数全部是通过 `useSessionStore(sessionSelectors.defaultSessions)` 这样的写法实现的，因此我们只需要修改 `defaultSessions` 的选择器实现，即可完成数据结构的变更。 UI 层的取数代码完全不用变更，可以大大降低重构的成本和风险。
@@ -376,7 +361,7 @@ const CreateGroupModal = () => {
 
   const [updateSessionGroup, addCustomGroup] = useSessionStore((s) => [
     s.updateSessionGroupId,
-    s.addSessionGroup
+    s.addSessionGroup,
   ]);
 
   return (
@@ -462,8 +447,8 @@ export class MigrationV2ToV3 implements Migration {
       ...data,
       state: {
         ...data.state,
-        sessions: sessions.map((s) => this.migrateSession(s))
-      }
+        sessions: sessions.map((s) => this.migrateSession(s)),
+      },
     };
   }
 
@@ -471,7 +456,7 @@ export class MigrationV2ToV3 implements Migration {
     return {
       ...session,
       group: 'default',
-      pinned: session.group === 'pinned'
+      pinned: session.group === 'pinned',
     };
   };
 }
@@ -480,10 +465,7 @@ export class MigrationV2ToV3 implements Migration {
 可以看到迁移的实现非常简单。但重要的是，我们需要保证迁移的正确性，因此需要编写对应的测试用例 `src/migrations/FromV2ToV3/migrations.test.ts`：
 
 ```ts
-import {
-  MigrationData,
-  VersionController
-} from '@/migrations/VersionController';
+import { MigrationData, VersionController } from '@/migrations/VersionController';
 
 import { MigrationV1ToV2 } from '../FromV1ToV2';
 import inputV1Data from '../FromV1ToV2/fixtures/input-v1-session.json';
@@ -515,21 +497,14 @@ describe('MigrationV2ToV3', () => {
   it('should work correct from v1 to v3', () => {
     const data: MigrationData = inputV1Data;
 
-    versionController = new VersionController(
-      [MigrationV2ToV3, MigrationV1ToV2],
-      3
-    );
+    versionController = new VersionController([MigrationV2ToV3, MigrationV1ToV2], 3);
 
     const migratedData = versionController.migrate(data);
 
     expect(migratedData.version).toEqual(outputV3DataFromV1.version);
-    expect(migratedData.state.sessions).toEqual(
-      outputV3DataFromV1.state.sessions
-    );
+    expect(migratedData.state.sessions).toEqual(outputV3DataFromV1.state.sessions);
     expect(migratedData.state.topics).toEqual(outputV3DataFromV1.state.topics);
-    expect(migratedData.state.messages).toEqual(
-      outputV3DataFromV1.state.messages
-    );
+    expect(migratedData.state.messages).toEqual(outputV3DataFromV1.state.messages);
   });
 });
 ```

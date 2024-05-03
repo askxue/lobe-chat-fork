@@ -20,14 +20,8 @@ export const USAGE_DOCUMENTS = urlJoin(DOCUMENTS, '/usage');
 export const SELF_HOSTING_DOCUMENTS = urlJoin(DOCUMENTS, '/self-hosting');
 
 export const WIKI = urlJoin(GITHUB, 'wiki');
-export const WIKI_PLUGIN_GUIDE = urlJoin(
-  USAGE_DOCUMENTS,
-  '/plugins/development'
-);
-export const MANUAL_UPGRADE_URL = urlJoin(
-  SELF_HOSTING_DOCUMENTS,
-  '/advanced/upstream-sync'
-);
+export const WIKI_PLUGIN_GUIDE = urlJoin(USAGE_DOCUMENTS, '/plugins/development');
+export const MANUAL_UPGRADE_URL = urlJoin(SELF_HOSTING_DOCUMENTS, '/advanced/upstream-sync');
 
 export const BLOG = urlJoin(OFFICIAL_SITE, 'blog');
 
@@ -42,20 +36,13 @@ export const PLUGINS_INDEX_URL = 'https://chat-plugins.lobehub.com';
 export const MORE_MODEL_PROVIDER_REQUEST_URL =
   'https://github.com/lobehub/lobe-chat/discussions/1284';
 
-export const AGENTS_INDEX_GITHUB =
-  'https://github.com/lobehub/lobe-chat-agents';
-export const AGENTS_INDEX_GITHUB_ISSUE = urlJoin(
-  AGENTS_INDEX_GITHUB,
-  'issues/new'
-);
+export const AGENTS_INDEX_GITHUB = 'https://github.com/lobehub/lobe-chat-agents';
+export const AGENTS_INDEX_GITHUB_ISSUE = urlJoin(AGENTS_INDEX_GITHUB, 'issues/new');
 
-export const SESSION_CHAT_URL = (
-  id: string = INBOX_SESSION_ID,
-  mobile?: boolean
-) => (mobile ? `/chat/mobile?session=${id}` : `/chat?session=${id}`);
+export const SESSION_CHAT_URL = (id: string = INBOX_SESSION_ID, mobile?: boolean) =>
+  mobile ? `/chat/mobile?session=${id}` : `/chat?session=${id}`;
 
-export const imageUrl = (filename: string) =>
-  withBasePath(`/images/${filename}`);
+export const imageUrl = (filename: string) => withBasePath(`/images/${filename}`);
 
 export const LOBE_URL_IMPORT_NAME = 'settings';
 export const EMAIL_SUPPORT = 'support@lobehub.com';

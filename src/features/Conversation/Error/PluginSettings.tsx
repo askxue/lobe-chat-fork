@@ -23,19 +23,10 @@ const PluginSettings = memo<PluginSettingsProps>(({ id, plugin }) => {
   const { styles } = useStyles();
   const { t } = useTranslation('error');
   const theme = useTheme();
-  const [resend, deleteMessage] = useChatStore((s) => [
-    s.internalResendMessage,
-    s.deleteMessage
-  ]);
+  const [resend, deleteMessage] = useChatStore((s) => [s.internalResendMessage, s.deleteMessage]);
   const pluginIdentifier = plugin?.identifier as string;
-  const pluginMeta = useToolStore(
-    pluginSelectors.getPluginMetaById(pluginIdentifier),
-    isEqual
-  );
-  const manifest = useToolStore(
-    pluginSelectors.getPluginManifestById(pluginIdentifier),
-    isEqual
-  );
+  const pluginMeta = useToolStore(pluginSelectors.getPluginMetaById(pluginIdentifier), isEqual);
+  const manifest = useToolStore(pluginSelectors.getPluginManifestById(pluginIdentifier), isEqual);
 
   return (
     !!manifest && (
@@ -48,17 +39,12 @@ const PluginSettings = memo<PluginSettingsProps>(({ id, plugin }) => {
             size={80}
           />
           <Flexbox style={{ fontSize: 20 }}>
-            {t('pluginSettings.title', {
-              name: pluginHelpers.getPluginTitle(pluginMeta)
-            })}
+            {t('pluginSettings.title', { name: pluginHelpers.getPluginTitle(pluginMeta) })}
           </Flexbox>
           <Flexbox className={styles.desc}>{t('pluginSettings.desc')}</Flexbox>
           <Divider style={{ margin: '0 16px' }} />
           {manifest.settings && (
-            <PluginSettingsConfig
-              id={manifest.identifier}
-              schema={manifest.settings}
-            />
+            <PluginSettingsConfig id={manifest.identifier} schema={manifest.settings} />
           )}
           <Button
             block

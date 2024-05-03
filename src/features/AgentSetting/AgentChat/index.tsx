@@ -24,13 +24,13 @@ const AgentChat = memo(() => {
     enableAutoCreateTopic,
     enableHistoryCount,
     enableCompressThreshold,
-    updateConfig
+    updateConfig,
   ] = useStore((s) => [
     s.config.displayMode,
     s.config.enableAutoCreateTopic,
     s.config.enableHistoryCount,
     s.config.enableCompressThreshold,
-    s.setAgentConfig
+    s.setAgentConfig,
   ]);
 
   useSyncSettings(form);
@@ -45,20 +45,16 @@ const AgentChat = memo(() => {
             options={[
               {
                 icon: MessagesSquare,
-                img: imageUrl(
-                  `chatmode_chat_${isDarkMode ? 'dark' : 'light'}.webp`
-                ),
+                img: imageUrl(`chatmode_chat_${isDarkMode ? 'dark' : 'light'}.webp`),
                 label: t('settingChat.chatStyleType.type.chat'),
-                value: 'chat'
+                value: 'chat',
               },
               {
                 icon: LayoutList,
-                img: imageUrl(
-                  `chatmode_docs_${isDarkMode ? 'dark' : 'light'}.webp`
-                ),
+                img: imageUrl(`chatmode_docs_${isDarkMode ? 'dark' : 'light'}.webp`),
                 label: t('settingChat.chatStyleType.type.docs'),
-                value: 'docs'
-              }
+                value: 'docs',
+              },
             ]}
             unoptimized={false}
             value={displayMode}
@@ -66,17 +62,13 @@ const AgentChat = memo(() => {
           />
         ),
         label: t('settingChat.chatStyleType.title'),
-        minWidth: undefined
+        minWidth: undefined,
       },
       {
-        children: (
-          <Input.TextArea
-            placeholder={t('settingChat.inputTemplate.placeholder')}
-          />
-        ),
+        children: <Input.TextArea placeholder={t('settingChat.inputTemplate.placeholder')} />,
         desc: t('settingChat.inputTemplate.desc'),
         label: t('settingChat.inputTemplate.title'),
-        name: 'inputTemplate'
+        name: 'inputTemplate',
       },
       {
         children: <Switch />,
@@ -84,7 +76,7 @@ const AgentChat = memo(() => {
         label: t('settingChat.enableAutoCreateTopic.title'),
         minWidth: undefined,
         name: 'enableAutoCreateTopic',
-        valuePropName: 'checked'
+        valuePropName: 'checked',
       },
       {
         children: <SliderWithInput max={8} min={0} />,
@@ -92,14 +84,14 @@ const AgentChat = memo(() => {
         divider: false,
         hidden: !enableAutoCreateTopic,
         label: t('settingChat.autoCreateTopicThreshold.title'),
-        name: 'autoCreateTopicThreshold'
+        name: 'autoCreateTopicThreshold',
       },
       {
         children: <Switch />,
         label: t('settingChat.enableHistoryCount.title'),
         minWidth: undefined,
         name: 'enableHistoryCount',
-        valuePropName: 'checked'
+        valuePropName: 'checked',
       },
       {
         children: <SliderWithInput max={32} min={1} />,
@@ -107,14 +99,14 @@ const AgentChat = memo(() => {
         divider: false,
         hidden: !enableHistoryCount,
         label: t('settingChat.historyCount.title'),
-        name: 'historyCount'
+        name: 'historyCount',
       },
       {
         children: <Switch />,
         label: t('settingChat.enableCompressThreshold.title'),
         minWidth: undefined,
         name: 'enableCompressThreshold',
-        valuePropName: 'checked'
+        valuePropName: 'checked',
       },
       {
         children: <SliderWithInput max={32} min={0} />,
@@ -122,10 +114,10 @@ const AgentChat = memo(() => {
         divider: false,
         hidden: !enableCompressThreshold,
         label: t('settingChat.compressThreshold.title'),
-        name: 'compressThreshold'
-      }
+        name: 'compressThreshold',
+      },
     ],
-    title: t('settingChat.title')
+    title: t('settingChat.title'),
   };
 
   return (
