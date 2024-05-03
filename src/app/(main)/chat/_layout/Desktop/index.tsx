@@ -3,7 +3,8 @@ import { Flexbox } from 'react-layout-kit';
 import { LayoutProps } from '../type';
 import ResponsiveSessionList from './SessionList';
 
-const Layout = ({ children }: LayoutProps) => (
+const Layout = ({ children }: LayoutProps) => {
+  return (
     <>
       <ResponsiveSessionList />
       <Flexbox
@@ -16,6 +17,7 @@ const Layout = ({ children }: LayoutProps) => (
       </Flexbox>
     </>
   );
+};
 
 Layout.displayName = 'DesktopChatLayout';
 

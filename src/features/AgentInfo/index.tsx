@@ -33,7 +33,7 @@ const AgentInfo = memo<AgentInfoProps>(
   ({ systemRole, style, meta, onAvatarClick }) => {
     const { styles, theme } = useStyles();
 
-    if (!meta) {return;}
+    if (!meta) return;
 
     return (
       <Center gap={16} style={style}>

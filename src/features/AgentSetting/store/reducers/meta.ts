@@ -14,7 +14,9 @@ export const metaDataReducer = (
 ): MetaData => {
   switch (payload.type) {
     case 'update': {
-      return produce(state, (draftState) => merge(draftState, payload.value));
+      return produce(state, (draftState) => {
+        return merge(draftState, payload.value);
+      });
     }
 
     case 'reset': {

@@ -34,7 +34,7 @@ export const BrowserIcon = memo<BrowserIconProps>(
   ({ browser, className, style, size }) => {
     const Component = lastVersion[browser as Browsers];
 
-    if (!Component) {return null;}
+    if (!Component) return null;
 
     return (
       <Component

@@ -46,7 +46,6 @@ class ToolService {
 
     return data;
   };
-
   /**
    * get plugin list from store
    */

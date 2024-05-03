@@ -15,9 +15,13 @@ export class ClientService {
     return user as unknown as UserConfig;
   };
 
-  updateUserSettings = async (patch: DeepPartial<GlobalSettings>) => UserModel.updateSettings(patch);
+  updateUserSettings = async (patch: DeepPartial<GlobalSettings>) => {
+    return UserModel.updateSettings(patch);
+  };
 
-  resetUserSettings = async () => UserModel.resetSettings();
+  resetUserSettings = async () => {
+    return UserModel.resetSettings();
+  };
 
   updateAvatar(avatar: string) {
     return UserModel.updateAvatar(avatar);

@@ -7,7 +7,8 @@ import { ModelProvider } from '@/libs/agent-runtime';
 
 import ProviderConfig from '../components/ProviderConfig';
 
-const OpenRouterProvider = memo(() => (
+const OpenRouterProvider = memo(() => {
+  return (
     <ProviderConfig
       checkModel={'mistralai/mistral-7b-instruct:free'}
       modelList={{ showModelFetcher: true }}
@@ -19,6 +20,7 @@ const OpenRouterProvider = memo(() => (
         />
       }
     />
-  ));
+  );
+});
 
 export default OpenRouterProvider;

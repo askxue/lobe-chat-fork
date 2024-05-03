@@ -53,7 +53,7 @@ const ModelConfigModal = memo<ModelConfigModalProps>(
           closeModal();
         }}
         onOk={() => {
-          if (!editingProvider || !id) {return;}
+          if (!editingProvider || !id) return;
           const data = formInstance.getFieldsValue();
 
           dispatchCustomModelCards(editingProvider as any, {

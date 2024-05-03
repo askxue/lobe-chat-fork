@@ -50,8 +50,8 @@ const SelectWithTTSPreview = forwardRef<
         setDefaultError(err);
       },
       onSuccess: async () => {
-        if (!response) {return;}
-        if (response.status === 200) {return;}
+        if (!response) return;
+        if (response.status === 200) return;
         const message = await getMessageError(response);
         if (message) {
           setError(message);

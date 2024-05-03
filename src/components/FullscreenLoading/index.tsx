@@ -3,7 +3,8 @@ import { Loader2 } from 'lucide-react';
 import { memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
-const FullscreenLoading = memo<{ title?: string }>(({ title }) => (
+const FullscreenLoading = memo<{ title?: string }>(({ title }) => {
+  return (
     <Flexbox height={'100%'} style={{ userSelect: 'none' }} width={'100%'}>
       <Center flex={1} gap={12} width={'100%'}>
         <Logo extra={'Chat'} size={48} type={'combine'} />
@@ -13,6 +14,7 @@ const FullscreenLoading = memo<{ title?: string }>(({ title }) => (
         </Center>
       </Center>
     </Flexbox>
-  ));
+  );
+});
 
 export default FullscreenLoading;

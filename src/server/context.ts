@@ -19,8 +19,8 @@ export type Context = Awaited<ReturnType<typeof createContextInner>>;
  * Creates context for an incoming request
  * @link https://trpc.io/docs/v11/context
  */
-export const createContext = async (request: NextRequest): Promise<Context> =>
+export const createContext = async (request: NextRequest): Promise<Context> => {
   // for API-response caching see https://trpc.io/docs/v11/caching
 
-   createContextInner();
-
+  return createContextInner();
+};

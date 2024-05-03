@@ -30,7 +30,7 @@ export const createPluginSlice: StateCreator<
 > = (set, get) => ({
   checkPluginsIsInstalled: async (plugins) => {
     // if there is no plugins, just skip.
-    if (plugins.length === 0) {return;}
+    if (plugins.length === 0) return;
 
     const { loadPluginStore, installPlugins } = get();
 
@@ -58,7 +58,7 @@ export const createPluginSlice: StateCreator<
     useSWR(plugins, get().checkPluginsIsInstalled),
   validatePluginSettings: async (identifier) => {
     const manifest = pluginSelectors.getPluginManifestById(identifier)(get());
-    if (!manifest || !manifest.settings) {return;}
+    if (!manifest || !manifest.settings) return;
     const settings = pluginSelectors.getPluginSettingsById(identifier)(get());
 
     // validate the settings
@@ -66,7 +66,7 @@ export const createPluginSlice: StateCreator<
     const validator = new Validator(manifest.settings as Schema);
     const result = validator.validate(settings);
 
-    if (!result.valid) {return { errors: result.errors, valid: false };}
+    if (!result.valid) return { errors: result.errors, valid: false };
 
     return { errors: [], valid: true };
   }

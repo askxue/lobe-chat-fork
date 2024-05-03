@@ -1,12 +1,14 @@
 import OpenAI from './features/OpenAI';
 import STT from './features/STT';
 
-const Page = () => (
+const Page = () => {
+  return (
     <>
       <STT />
       <OpenAI />
     </>
   );
+};
 
 Page.displayName = 'TtsSetting';
 

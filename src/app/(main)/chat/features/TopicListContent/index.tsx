@@ -5,7 +5,8 @@ import Header from './Header';
 import { Topic } from './Topic';
 import TopicSearchBar from './TopicSearchBar';
 
-const TopicListContent = memo<{ mobile?: boolean }>(({ mobile }) => (
+const TopicListContent = memo<{ mobile?: boolean }>(({ mobile }) => {
+  return (
     <Flexbox
       gap={mobile ? 8 : 0}
       height={'100%'}
@@ -20,6 +21,7 @@ const TopicListContent = memo<{ mobile?: boolean }>(({ mobile }) => (
         <Topic />
       </Flexbox>
     </Flexbox>
-  ));
+  );
+});
 
 export default TopicListContent;

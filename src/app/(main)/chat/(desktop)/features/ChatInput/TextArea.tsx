@@ -12,7 +12,8 @@ import { isCommandPressed } from '@/utils/keyboard';
 
 import { useAutoFocus } from './useAutoFocus';
 
-const useStyles = createStyles(({ css }) => ({
+const useStyles = createStyles(({ css }) => {
+  return {
     textarea: css`
       resize: none !important;
 
@@ -27,7 +28,8 @@ const useStyles = createStyles(({ css }) => ({
       position: relative;
       flex: 1;
     `
-  }));
+  };
+});
 
 interface InputAreaProps {
   setExpand?: (expand: boolean) => void;
@@ -87,7 +89,7 @@ const InputArea = memo<InputAreaProps>(({ setExpand }) => {
         }}
         onPressEnter={(e) => {
           if (loading || e.altKey || e.shiftKey || isChineseInput.current)
-            {return;}
+            return;
 
           // eslint-disable-next-line unicorn/consistent-function-scoping
           const send = () => {
@@ -102,7 +104,7 @@ const InputArea = memo<InputAreaProps>(({ setExpand }) => {
 
           // when user like cmd + enter to send message
           if (useCmdEnterToSend) {
-            if (commandKey) {send();}
+            if (commandKey) send();
           } else {
             // cmd + enter to wrap
             if (commandKey) {

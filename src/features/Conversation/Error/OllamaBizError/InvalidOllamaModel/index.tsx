@@ -25,7 +25,9 @@ const OllamaModelForm = memo<OllamaModelFormProps>(({ id, model }) => {
   const [completed, setCompleted] = useState(0);
   const [total, setTotal] = useState(0);
   const { remainingTime, downloadSpeed } = useDownloadMonitor(total, completed);
-  const percent = useMemo(() => total ? Number(((completed / total) * 100).toFixed(0)) : 0, [completed, total]);
+  const percent = useMemo(() => {
+    return total ? Number(((completed / total) * 100).toFixed(0)) : 0;
+  }, [completed, total]);
 
   const [delAndRegenerateMessage, deleteMessage] = useChatStore((s) => [
     s.delAndRegenerateMessage,

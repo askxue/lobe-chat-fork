@@ -6,7 +6,8 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Flexbox } from 'react-layout-kit';
 
-const useStyles = createStyles(({ css, token }) => ({
+const useStyles = createStyles(({ css, token }) => {
+  return {
     desc: css`
       font-size: min(24px, 4vw);
       font-weight: 400;
@@ -23,7 +24,8 @@ const useStyles = createStyles(({ css, token }) => ({
       text-align: center;
       text-wrap: balance;
     `
-  }));
+  };
+});
 
 const Hero = memo(() => {
   const { styles } = useStyles();

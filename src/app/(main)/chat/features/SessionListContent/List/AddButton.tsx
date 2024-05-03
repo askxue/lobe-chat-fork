@@ -14,7 +14,9 @@ const AddButton = memo<{ groupId?: string }>(({ groupId }) => {
 
   const { mutate, isValidating } = useActionSWR(
     ['session.createSession', groupId],
-    () => createSession({ group: groupId })
+    () => {
+      return createSession({ group: groupId });
+    }
   );
 
   return (

@@ -2,7 +2,9 @@ import { memo } from 'react';
 
 import AvatarWithUpload from '@/features/AvatarWithUpload';
 
-const Avatar = memo(() => <AvatarWithUpload id={'avatar'} />);
+const Avatar = memo(() => {
+  return <AvatarWithUpload id={'avatar'} />;
+});
 
 Avatar.displayName = 'Avatar';
 

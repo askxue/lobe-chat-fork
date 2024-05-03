@@ -87,13 +87,13 @@ export const chatShare: StateCreator<
           }
           case 'function': {
             if (withPluginInfo)
-              {draft.push(
+              draft.push(
                 PLUGIN_INFO({
                   apiName: i.plugin?.apiName || 'undefined',
                   content: i.content,
                   identifier: i.plugin?.identifier || 'undefined'
                 })
-              );}
+              );
             break;
           }
           case 'user': {

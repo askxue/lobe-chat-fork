@@ -69,7 +69,9 @@ class _SessionModel extends BaseModel {
   }
 
   async queryByGroupIds(groups: string[]) {
-    const pools = groups.map(async (id) => [id, await this.querySessionsByGroupId(id)] as const);
+    const pools = groups.map(async (id) => {
+      return [id, await this.querySessionsByGroupId(id)] as const;
+    });
     const groupItems = await Promise.all(pools);
 
     return Object.fromEntries(groupItems);
@@ -80,17 +82,19 @@ class _SessionModel extends BaseModel {
    * @param keyword The keyword to search for
    */
   async queryByKeyword(keyword: string): Promise<LobeSessions> {
-    if (!keyword) {return [];}
+    if (!keyword) return [];
 
     const startTime = Date.now();
     const keywordLowerCase = keyword.toLowerCase();
 
     // First, filter sessions by title and description
     const matchingSessionsPromise = this.table
-      .filter((session) => (
+      .filter((session) => {
+        return (
           session.meta.title?.toLowerCase().includes(keywordLowerCase) ||
           session.meta.description?.toLowerCase().includes(keywordLowerCase)
-        ))
+        );
+      })
       .toArray();
 
     // Next, find message IDs that contain the keyword in content or translated content
@@ -98,7 +102,7 @@ class _SessionModel extends BaseModel {
       .filter((message) => {
         // check content
         if (message.content.toLowerCase().includes(keywordLowerCase))
-          {return true;}
+          return true;
 
         // check translate content
         if (message.translate && message.translate.content) {
@@ -113,7 +117,9 @@ class _SessionModel extends BaseModel {
 
     //  match topics
     const matchingTopicsPromise = this.db.topics
-      .filter((topic) => topic.title?.toLowerCase().includes(keywordLowerCase))
+      .filter((topic) => {
+        return topic.title?.toLowerCase().includes(keywordLowerCase);
+      })
       .toArray();
 
     // Resolve both promises
@@ -200,7 +206,7 @@ class _SessionModel extends BaseModel {
 
   async duplicate(id: string, newTitle?: string) {
     const session = await this.findById(id);
-    if (!session) {return;}
+    if (!session) return;
 
     const newSession = merge(session, { meta: { title: newTitle } });
 
@@ -245,7 +251,7 @@ class _SessionModel extends BaseModel {
 
   async updateConfig(id: string, data: DeepPartial<LobeAgentConfig>) {
     const session = await this.findById(id);
-    if (!session) {return;}
+    if (!session) return;
 
     const config = merge(session.config, data);
 

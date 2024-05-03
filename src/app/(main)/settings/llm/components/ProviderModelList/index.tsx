@@ -108,7 +108,7 @@ const ProviderModelListSelect = memo<CustomModelSelectProps>(
                   ) => {
                     // if is a known model, it should have value
                     // if is an unknown model, the option will be {}
-                    if (option.value) {return;}
+                    if (option.value) return;
 
                     const modelId = value[index];
 
@@ -123,14 +123,14 @@ const ProviderModelListSelect = memo<CustomModelSelectProps>(
               optionRender={({ label, value }) => {
                 // model is in the chatModels
                 if (chatModelCards.some((c) => c.id === value))
-                  {return (
+                  return (
                     <OptionRender
                       displayName={label as string}
                       id={value as string}
                       isAzure={showAzureDeployName}
                       provider={provider}
                     />
-                  );}
+                  );
 
                 // model is defined by user in client
                 return (

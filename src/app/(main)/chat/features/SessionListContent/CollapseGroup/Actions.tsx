@@ -101,7 +101,7 @@ const Actions = memo<ActionsProps>(
               centered: true,
               okButtonProps: { danger: true },
               onOk: async () => {
-                if (!id) {return;}
+                if (!id) return;
                 await removeSessionGroup(id);
               },
               rootClassName: styles.modalRoot,

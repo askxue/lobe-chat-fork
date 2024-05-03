@@ -30,7 +30,7 @@ class ShareService {
 
     const { id } = await res.json();
 
-    if (!id) {throw new Error('Failed to create ShareGPT URL');}
+    if (!id) throw new Error('Failed to create ShareGPT URL');
 
     // short link to the ShareGPT post
     return `https://shareg.pt/${id}`;

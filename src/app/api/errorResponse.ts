@@ -6,7 +6,7 @@ import { ChatErrorType, ErrorResponse, ErrorType } from '@/types/fetch';
 
 const getStatus = (errorType: ILobeAgentRuntimeErrorType | ErrorType) => {
   // InvalidAccessCode / InvalidAzureAPIKey / InvalidOpenAIAPIKey / InvalidZhipuAPIKey ....
-  if (errorType.toString().includes('Invalid')) {return 401;}
+  if (errorType.toString().includes('Invalid')) return 401;
 
   switch (errorType) {
     // TODO: Need to refactor to Invalid OpenAI API Key

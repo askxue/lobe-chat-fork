@@ -174,9 +174,11 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
 export const initAgentRuntimeWithUserPayload = (
   provider: string,
   payload: JWTPayload
-) => AgentRuntime.initializeWithProviderOptions(provider, {
+) => {
+  return AgentRuntime.initializeWithProviderOptions(provider, {
     [provider]: getLlmOptionsFromPayload(provider, payload)
   });
+};
 
 export const createTraceOptions = (
   payload: ChatStreamPayload,
