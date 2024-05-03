@@ -5,18 +5,18 @@ import DetailModal from './DetailModal';
 import Header from './Header';
 
 const Layout = ({ children, detail }: LayoutProps) => (
-    <>
-      <MobileContentLayout
-        gap={16}
-        header={<Header />}
-        style={{ paddingInline: 16, paddingTop: 8 }}
-        withNav
-      >
-        {children}
-      </MobileContentLayout>
-      <DetailModal>{detail}</DetailModal>
-    </>
-  );
+  <>
+    <MobileContentLayout
+      gap={16}
+      header={<Header />}
+      style={{ paddingInline: 16, paddingTop: 8 }}
+      withNav
+    >
+      {children}
+    </MobileContentLayout>
+    <DetailModal>{detail}</DetailModal>
+  </>
+);
 
 Layout.displayName = 'MobileMarketLayout';
 

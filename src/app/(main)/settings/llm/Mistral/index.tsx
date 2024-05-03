@@ -8,11 +8,11 @@ import { ModelProvider } from '@/libs/agent-runtime';
 import ProviderConfig from '../components/ProviderConfig';
 
 const MistralProvider = memo(() => (
-    <ProviderConfig
-      checkModel={'open-mistral-7b'}
-      provider={ModelProvider.Mistral}
-      title={<Mistral.Combine size={26} type={'color'} />}
-    />
-  ));
+  <ProviderConfig
+    checkModel={'open-mistral-7b'}
+    provider={ModelProvider.Mistral}
+    title={<Mistral.Combine size={26} type={'color'} />}
+  />
+));
 
 export default MistralProvider;

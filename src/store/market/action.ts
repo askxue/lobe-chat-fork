@@ -40,7 +40,9 @@ export const createMarketAction: StateCreator<
       draft[key] = value;
     });
 
-    if (isEqual(nextAgentMap, agentMap)) {return;}
+    if (isEqual(nextAgentMap, agentMap)) {
+      return;
+    }
 
     set({ agentMap: nextAgentMap }, false, `setAgentMap/${key}`);
   },

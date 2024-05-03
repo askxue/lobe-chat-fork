@@ -24,7 +24,9 @@ const FolderPanel = memo<PropsWithChildren>(({ children }) => {
     ]
   );
   const [tmpWidth, setWidth] = useState(sessionsWidth);
-  if (tmpWidth !== sessionsWidth) {setWidth(sessionsWidth);}
+  if (tmpWidth !== sessionsWidth) {
+    setWidth(sessionsWidth);
+  }
 
   return (
     <DraggablePanel
@@ -40,14 +42,18 @@ const FolderPanel = memo<PropsWithChildren>(({ children }) => {
         });
       }}
       onSizeChange={(_, size) => {
-        if (!size) {return;}
+        if (!size) {
+          return;
+        }
 
         const nextWidth =
           typeof size.width === 'string'
             ? Number.parseInt(size.width)
             : size.width;
 
-        if (isEqual(nextWidth, sessionsWidth)) {return;}
+        if (isEqual(nextWidth, sessionsWidth)) {
+          return;
+        }
 
         setWidth(nextWidth);
         updatePreference({ sessionsWidth: nextWidth });

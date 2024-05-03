@@ -10,7 +10,9 @@ interface HistoryDividerProps {
 
 const HistoryDivider = memo<HistoryDividerProps>(({ enable }) => {
   const { t } = useTranslation('common');
-  if (!enable) {return null;}
+  if (!enable) {
+    return null;
+  }
 
   return (
     <div style={{ padding: '0 20px' }}>

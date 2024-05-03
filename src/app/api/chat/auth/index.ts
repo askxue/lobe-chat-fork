@@ -29,8 +29,9 @@ export const checkAuth =
       const authorization = req.headers.get(LOBE_CHAT_AUTH_HEADER);
       const oauthAuthorized = !!req.headers.get(OAUTH_AUTHORIZED);
 
-      if (!authorization)
-        {throw AgentRuntimeError.createError(ChatErrorType.Unauthorized);}
+      if (!authorization) {
+        throw AgentRuntimeError.createError(ChatErrorType.Unauthorized);
+      }
 
       // check the Auth With payload
       jwtPayload = await getJWTPayload(authorization);

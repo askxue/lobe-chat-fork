@@ -42,8 +42,8 @@ const ImageItem = memo<DallEImageItem & { messageId: string }>(
       chatToolSelectors.isDallEImageGenerating(messageId + prompt)
     );
 
-    if (edit)
-      {return (
+    if (edit) {
+      return (
         <Flexbox className={styles.container} padding={8}>
           <EditMode
             imageId={imageId}
@@ -54,10 +54,11 @@ const ImageItem = memo<DallEImageItem & { messageId: string }>(
             style={style}
           />
         </Flexbox>
-      );}
+      );
+    }
 
-    if (imageId || previewUrl)
-      {return imageId ? (
+    if (imageId || previewUrl) {
+      return imageId ? (
         // <Flexbox className={styles.action}>
         //   <ActionIconGroup
         //     items={[{ icon: LucideEdit, key: 'edit', label: t('edit', { ns: 'common' }) }]}
@@ -80,7 +81,8 @@ const ImageItem = memo<DallEImageItem & { messageId: string }>(
             <Image alt={prompt} size={'100%'} src={previewUrl} />
           </Flexbox>
         )
-      );}
+      );
+    }
 
     return (
       <Flexbox className={styles.container} padding={8}>

@@ -211,12 +211,16 @@ export const chatMessage: StateCreator<
     isWelcomeQuestion
   }) => {
     const { coreProcessMessage, activeTopicId, activeId } = get();
-    if (!activeId) {return;}
+    if (!activeId) {
+      return;
+    }
 
     const fileIdList = files?.map((f) => f.id);
 
     // if message is empty and no files, then stop
-    if (!message && (!fileIdList || fileIdList?.length === 0)) {return;}
+    if (!message && (!fileIdList || fileIdList?.length === 0)) {
+      return;
+    }
 
     const newMessage: CreateMessageParams = {
       content: message,
@@ -231,7 +235,9 @@ export const chatMessage: StateCreator<
     const id = await get().internalCreateMessage(newMessage);
 
     // if only add user message, then stop
-    if (onlyAddUserMessage) {return;}
+    if (onlyAddUserMessage) {
+      return;
+    }
 
     // Get the current messages to generate AI response
     const messages = chatSelectors.currentChats(get());
@@ -243,7 +249,9 @@ export const chatMessage: StateCreator<
 
     const agentConfig = getAgentConfig();
     // if autoCreateTopic is false, then stop
-    if (!agentConfig.enableAutoCreateTopic) {return;}
+    if (!agentConfig.enableAutoCreateTopic) {
+      return;
+    }
 
     if (
       !activeTopicId &&
@@ -251,7 +259,9 @@ export const chatMessage: StateCreator<
     ) {
       const { saveToTopic, switchTopic } = get();
       const id = await saveToTopic();
-      if (id) {switchTopic(id);}
+      if (id) {
+        switchTopic(id);
+      }
     }
   },
   addAIMessage: async () => {
@@ -262,7 +272,9 @@ export const chatMessage: StateCreator<
       activeId,
       inputMessage
     } = get();
-    if (!activeId) {return;}
+    if (!activeId) {
+      return;
+    }
 
     await internalCreateMessage({
       content: inputMessage,
@@ -282,7 +294,9 @@ export const chatMessage: StateCreator<
 
   stopGenerateMessage: () => {
     const { abortController, toggleChatLoading } = get();
-    if (!abortController) {return;}
+    if (!abortController) {
+      return;
+    }
 
     abortController.abort();
 
@@ -394,7 +408,9 @@ export const chatMessage: StateCreator<
   dispatchMessage: (payload) => {
     const { activeId } = get();
 
-    if (!activeId) {return;}
+    if (!activeId) {
+      return;
+    }
 
     const messages = messagesReducer(get().messages, payload);
 
@@ -466,9 +482,10 @@ export const chatMessage: StateCreator<
     // we need to set the max_tokens a larger one.
     if (config.model === 'gpt-4-vision-preview') {
       /* eslint-disable unicorn/no-lonely-if */
-      if (!config.params.max_tokens)
+      if (!config.params.max_tokens) {
         // refs: https://github.com/lobehub/lobe-chat/issues/837
-        {config.params.max_tokens = 2048;}
+        config.params.max_tokens = 2048;
+      }
     }
 
     let output = '';
@@ -543,7 +560,9 @@ export const chatMessage: StateCreator<
         // if it's the first time to receive the message,
         // and the message is not a function call
         // then start the animation
-        if (!isAnimationActive && !isFunctionCall) {startAnimation();}
+        if (!isAnimationActive && !isFunctionCall) {
+          startAnimation();
+        }
       }
     });
 
@@ -597,7 +616,9 @@ export const chatMessage: StateCreator<
           } else {
             const index = draft.indexOf(id);
 
-            if (index >= 0) {draft.splice(index, 1);}
+            if (index >= 0) {
+              draft.splice(index, 1);
+            }
           }
         })
       },
@@ -611,7 +632,9 @@ export const chatMessage: StateCreator<
     const chats = chatSelectors.currentChats(get());
 
     const currentIndex = chats.findIndex((c) => c.id === messageId);
-    if (currentIndex < 0) {return;}
+    if (currentIndex < 0) {
+      return;
+    }
 
     const currentMessage = chats[currentIndex];
 
@@ -636,13 +659,17 @@ export const chatMessage: StateCreator<
       }
     }
 
-    if (contextMessages.length <= 0) {return;}
+    if (contextMessages.length <= 0) {
+      return;
+    }
 
     const { coreProcessMessage } = get();
 
     const latestMsg = contextMessages.filter((s) => s.role === 'user').at(-1);
 
-    if (!latestMsg) {return;}
+    if (!latestMsg) {
+      return;
+    }
 
     await coreProcessMessage(contextMessages, latestMsg.id, { traceId });
   },
@@ -753,7 +780,9 @@ export const chatMessage: StateCreator<
   internalTraceMessage: async (id, payload) => {
     // tracing the diff of update
     const message = chatSelectors.getMessageById(id)(get());
-    if (!message) {return;}
+    if (!message) {
+      return;
+    }
 
     const traceId = message?.traceId;
     const observationId = message?.observationId;

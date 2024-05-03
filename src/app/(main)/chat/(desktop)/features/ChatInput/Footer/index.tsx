@@ -25,29 +25,29 @@ import { LocalFiles } from './LocalFiles';
 import SendMore from './SendMore';
 
 const useStyles = createStyles(({ css, prefixCls, token }) => ({
-    arrow: css`
-      &.${prefixCls}-btn.${prefixCls}-btn-icon-only {
-        width: 28px;
-      }
-    `,
-    loadingButton: css`
+  arrow: css`
+    &.${prefixCls}-btn.${prefixCls}-btn-icon-only {
+      width: 28px;
+    }
+  `,
+  loadingButton: css`
+    display: flex;
+    align-items: center;
+  `,
+  overrideAntdIcon: css`
+    .${prefixCls}-btn.${prefixCls}-btn-icon-only {
       display: flex;
       align-items: center;
-    `,
-    overrideAntdIcon: css`
-      .${prefixCls}-btn.${prefixCls}-btn-icon-only {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+      justify-content: center;
+    }
 
-      .${prefixCls}-btn.${prefixCls}-dropdown-trigger {
-        &::before {
-          background-color: ${rgba(token.colorBgLayout, 0.1)} !important;
-        }
+    .${prefixCls}-btn.${prefixCls}-dropdown-trigger {
+      &::before {
+        background-color: ${rgba(token.colorBgLayout, 0.1)} !important;
       }
-    `
-  }));
+    }
+  `
+}));
 
 const isMac = isMacOS();
 

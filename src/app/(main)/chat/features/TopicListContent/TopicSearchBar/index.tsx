@@ -24,7 +24,9 @@ const TopicSearchBar = memo<{ onClear?: () => void }>(({ onClear }) => {
     <SearchBar
       autoFocus
       onBlur={() => {
-        if (keywords === '') {onClear?.();}
+        if (keywords === '') {
+          onClear?.();
+        }
       }}
       onChange={(e) => {
         const value = e.target.value;

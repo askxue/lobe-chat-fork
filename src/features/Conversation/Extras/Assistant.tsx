@@ -23,7 +23,9 @@ export const AssistantMessageExtra: RenderMessageExtra = memo<ChatMessage>(
 
     const showExtra = showModelTag || showTranslate || showTTS;
 
-    if (!showExtra) {return;}
+    if (!showExtra) {
+      return;
+    }
 
     return (
       <Flexbox gap={8} style={{ marginTop: 8 }}>

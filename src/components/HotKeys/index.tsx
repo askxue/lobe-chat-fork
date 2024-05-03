@@ -71,7 +71,9 @@ const HotKeys = memo<HotKeysProps>(({ keys, desc, inverseTheme }) => {
     </Flexbox>
   );
 
-  if (!desc) {return content;}
+  if (!desc) {
+    return content;
+  }
   return (
     <Flexbox gap={16} horizontal>
       {desc}

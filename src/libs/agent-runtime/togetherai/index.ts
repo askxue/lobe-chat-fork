@@ -38,19 +38,19 @@ export const LobeTogetherAI = LobeOpenAICompatibleFactory({
     return models
       .filter((m) => m.display_type === 'chat')
       .map((model) => ({
-          description: model.description,
-          displayName: model.display_name,
-          enabled:
-            LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))
-              ?.enabled || false,
-          functionCall: model.description?.includes('function calling'),
-          id: model.name,
-          maxOutput: model.context_length,
-          tokens: model.context_length,
-          vision:
-            model.description?.includes('vision') ||
-            model.name?.includes('vision')
-        }));
+        description: model.description,
+        displayName: model.display_name,
+        enabled:
+          LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))
+            ?.enabled || false,
+        functionCall: model.description?.includes('function calling'),
+        id: model.name,
+        maxOutput: model.context_length,
+        tokens: model.context_length,
+        vision:
+          model.description?.includes('vision') ||
+          model.name?.includes('vision')
+      }));
   },
   provider: ModelProvider.TogetherAI
 });

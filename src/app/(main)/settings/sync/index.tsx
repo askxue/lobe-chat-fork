@@ -11,12 +11,12 @@ const Page = ({
   mobile?: boolean;
   os?: string;
 }) => (
-    <>
-      <DeviceInfo browser={browser} os={os} />
-      <WebRTC />
-      <Alert mobile={mobile} />
-    </>
-  );
+  <>
+    <DeviceInfo browser={browser} os={os} />
+    <WebRTC />
+    <Alert mobile={mobile} />
+  </>
+);
 
 Page.displayName = 'SyncSetting';
 

@@ -1,7 +1,9 @@
 export const parserPluginSettings = (
   settingsStr?: string
 ): Record<string, Record<string, string>> => {
-  if (!settingsStr) {return {};}
+  if (!settingsStr) {
+    return {};
+  }
 
   const settings = new Map();
 
@@ -9,7 +11,9 @@ export const parserPluginSettings = (
 
   for (const item of array) {
     const [id, pluginSettingsStr] = item.split(':');
-    if (!id) {continue;}
+    if (!id) {
+      continue;
+    }
 
     const pluginSettingItems = pluginSettingsStr.split(';');
 
@@ -17,7 +21,9 @@ export const parserPluginSettings = (
 
     for (const item of pluginSettingItems) {
       const [key, value] = item.split('=');
-      if (!key || !value) {continue;}
+      if (!key || !value) {
+        continue;
+      }
       const cleanKey = key.trim();
       const cleanValue = value.trim();
 

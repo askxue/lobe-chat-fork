@@ -12,9 +12,13 @@ export const AssistantActionsBar: RenderAction = memo(
       useChatListActionsBar();
     const { translate, tts } = useCustomActions();
 
-    if (id === 'default') {return;}
+    if (id === 'default') {
+      return;
+    }
 
-    if (error) {return <ErrorActionsBar onActionClick={onActionClick} />;}
+    if (error) {
+      return <ErrorActionsBar onActionClick={onActionClick} />;
+    }
 
     return (
       <ActionIconGroup

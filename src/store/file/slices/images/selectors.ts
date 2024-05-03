@@ -11,7 +11,9 @@ const getImageUrlOrBase64ById =
   (s: FilesStoreState): { id: string; url: string } | undefined => {
     const preview = s.imagesMap[id];
 
-    if (!preview) {return undefined;}
+    if (!preview) {
+      return undefined;
+    }
 
     const url =
       preview.saveMode === 'local'

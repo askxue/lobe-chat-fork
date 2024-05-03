@@ -72,8 +72,12 @@ const BrowserSTT = memo<{ mobile?: boolean }>(({ mobile }) => {
         setDefaultError(err);
       },
       onSuccess: async () => {
-        if (!response) {return;}
-        if (response.status === 200) {return;}
+        if (!response) {
+          return;
+        }
+        if (response.status === 200) {
+          return;
+        }
         const message = await getMessageError(response);
         if (message) {
           setError(message);
@@ -83,15 +87,21 @@ const BrowserSTT = memo<{ mobile?: boolean }>(({ mobile }) => {
         stop();
       },
       onTextChange: (text) => {
-        if (loading) {stop();}
-        if (text) {updateInputMessage(text);}
+        if (loading) {
+          stop();
+        }
+        if (text) {
+          updateInputMessage(text);
+        }
       }
     });
 
   const desc = t('stt.action');
 
   const handleTriggerStartStop = useCallback(() => {
-    if (loading) {return;}
+    if (loading) {
+      return;
+    }
     if (!isLoading) {
       start();
     } else {

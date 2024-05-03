@@ -26,7 +26,9 @@ const PluginTag = memo<PluginTagProps>(({ plugins }) => {
     isEqual
   );
 
-  if (plugins.length === 0) {return null;}
+  if (plugins.length === 0) {
+    return null;
+  }
 
   const items: MenuProps['items'] = plugins.map((id) => {
     const item = list.find((i) => i.identifier === id);

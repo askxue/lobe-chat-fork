@@ -6,7 +6,9 @@ import {
 
 export const getTracePayload = (req: Request): TracePayload | undefined => {
   const header = req.headers.get(LOBE_CHAT_TRACE_HEADER);
-  if (!header) {return;}
+  if (!header) {
+    return;
+  }
 
   return JSON.parse(Buffer.from(header, 'base64').toString('utf8'));
 };
@@ -21,4 +23,6 @@ const createTracePayload = (data: TracePayload) => {
   return Buffer.from(buffer).toString('base64');
 };
 
-export const createTraceHeader = (data: TracePayload) => ({ [LOBE_CHAT_TRACE_HEADER]: createTracePayload(data) });
+export const createTraceHeader = (data: TracePayload) => ({
+  [LOBE_CHAT_TRACE_HEADER]: createTracePayload(data)
+});

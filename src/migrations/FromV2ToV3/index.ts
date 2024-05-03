@@ -21,8 +21,8 @@ export class MigrationV2ToV3 implements Migration {
   }
 
   migrateSession = (session: V2Session): V3Session => ({
-      ...session,
-      group: 'default',
-      pinned: session.group === 'pinned'
-    });
+    ...session,
+    group: 'default',
+    pinned: session.group === 'pinned'
+  });
 }

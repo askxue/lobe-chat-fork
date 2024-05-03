@@ -12,7 +12,9 @@ export const UserMessage = memo<
     editableContent: ReactNode;
   }
 >(({ id, editableContent, content, ...res }) => {
-  if (content === LOADING_FLAT) {return <BubblesLoading />;}
+  if (content === LOADING_FLAT) {
+    return <BubblesLoading />;
+  }
 
   return (
     <Flexbox gap={8} id={id}>
