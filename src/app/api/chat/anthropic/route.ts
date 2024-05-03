@@ -26,7 +26,7 @@ export const preferredRegion = [
   'pdx1',
   'sfo1',
   'sin1',
-  'syd1'
+  'syd1',
 ];
 
 export const POST = async (req: Request) =>

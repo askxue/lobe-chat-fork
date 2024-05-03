@@ -9,5 +9,5 @@ export interface UserSyncState {
 export const initialSyncState: UserSyncState = {
   syncAwareness: [],
   syncEnabled: false,
-  syncStatus: PeerSyncStatus.Disabled
+  syncStatus: PeerSyncStatus.Disabled,
 };

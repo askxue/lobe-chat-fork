@@ -22,7 +22,7 @@ beforeEach(() => {
 
   // 使用 vi.spyOn 来模拟 chat.completions.create 方法
   vi.spyOn(instance['client'], 'getGenerativeModel').mockReturnValue({
-    generateContentStream: vi.fn().mockResolvedValue(new ReadableStream())
+    generateContentStream: vi.fn().mockResolvedValue(new ReadableStream()),
   } as any);
 });
 
@@ -45,7 +45,7 @@ describe('LobeGoogleAI', () => {
       const result = await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'text-davinci-003',
-        temperature: 0
+        temperature: 0,
       });
 
       // Assert
@@ -57,16 +57,16 @@ describe('LobeGoogleAI', () => {
         start(controller) {
           controller.enqueue('Hello, world!');
           controller.close();
-        }
+        },
       });
       vi.spyOn(instance['client'], 'getGenerativeModel').mockReturnValue({
-        generateContentStream: vi.fn().mockResolvedValueOnce(mockStream)
+        generateContentStream: vi.fn().mockResolvedValueOnce(mockStream),
       } as any);
 
       const result = await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'text-davinci-003',
-        temperature: 0
+        temperature: 0,
       });
 
       expect(result).toBeInstanceOf(Response);
@@ -82,10 +82,10 @@ describe('LobeGoogleAI', () => {
         start(controller) {
           controller.enqueue('Debug mode test');
           controller.close();
-        }
+        },
       });
       vi.spyOn(instance['client'], 'getGenerativeModel').mockReturnValue({
-        generateContentStream: vi.fn().mockResolvedValueOnce(mockStream)
+        generateContentStream: vi.fn().mockResolvedValueOnce(mockStream),
       } as any);
       const debugStreamSpy = vi
         .spyOn(debugStreamModule, 'debugStream')
@@ -94,7 +94,7 @@ describe('LobeGoogleAI', () => {
       await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'text-davinci-003',
-        temperature: 0
+        temperature: 0,
       });
 
       expect(debugStreamSpy).toHaveBeenCalled();
@@ -111,21 +111,17 @@ describe('LobeGoogleAI', () => {
         const apiError = new Error(message);
 
         vi.spyOn(instance['client'], 'getGenerativeModel').mockReturnValue({
-          generateContentStream: vi.fn().mockRejectedValue(apiError)
+          generateContentStream: vi.fn().mockRejectedValue(apiError),
         } as any);
 
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
-          expect(e).toEqual({
-            errorType: invalidErrorType,
-            error: { message },
-            provider
-          });
+          expect(e).toEqual({ errorType: invalidErrorType, error: { message }, provider });
         }
       });
 
@@ -136,21 +132,17 @@ describe('LobeGoogleAI', () => {
         const apiError = new Error(message);
 
         vi.spyOn(instance['client'], 'getGenerativeModel').mockReturnValue({
-          generateContentStream: vi.fn().mockRejectedValue(apiError)
+          generateContentStream: vi.fn().mockRejectedValue(apiError),
         } as any);
 
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
-          expect(e).toEqual({
-            errorType: 'LocationNotSupportError',
-            error: { message },
-            provider
-          });
+          expect(e).toEqual({ errorType: 'LocationNotSupportError', error: { message }, provider });
         }
       });
 
@@ -161,14 +153,14 @@ describe('LobeGoogleAI', () => {
         const apiError = new Error(message);
 
         vi.spyOn(instance['client'], 'getGenerativeModel').mockReturnValue({
-          generateContentStream: vi.fn().mockRejectedValue(apiError)
+          generateContentStream: vi.fn().mockRejectedValue(apiError),
         } as any);
 
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           expect(e).toEqual({
@@ -176,14 +168,14 @@ describe('LobeGoogleAI', () => {
             error: [
               {
                 '@type': 'type.googleapis.com/google.rpc.ErrorInfo',
-                domain: 'googleapis.com',
-                metadata: {
-                  service: 'generativelanguage.googleapis.com'
+                'domain': 'googleapis.com',
+                'metadata': {
+                  service: 'generativelanguage.googleapis.com',
                 },
-                reason: 'Error'
-              }
+                'reason': 'Error',
+              },
             ],
-            provider
+            provider,
           });
         }
       });
@@ -195,22 +187,22 @@ describe('LobeGoogleAI', () => {
         const apiError = new Error(message);
 
         vi.spyOn(instance['client'], 'getGenerativeModel').mockReturnValue({
-          generateContentStream: vi.fn().mockRejectedValue(apiError)
+          generateContentStream: vi.fn().mockRejectedValue(apiError),
         } as any);
 
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           expect(e).toEqual({
             errorType: bizErrorType,
             error: {
-              message: `[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1/models/gemini-pro:streamGenerateContent?alt=sse: [400 Bad Request] API key not valid. Please pass a valid API key. [{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"Error","domain":"googleapis.com","metadata":{"service":"generativelanguage.googleapis.com}}]`
+              message: `[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1/models/gemini-pro:streamGenerateContent?alt=sse: [400 Bad Request] API key not valid. Please pass a valid API key. [{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"Error","domain":"googleapis.com","metadata":{"service":"generativelanguage.googleapis.com}}]`,
             },
-            provider
+            provider,
           });
         }
       });
@@ -221,7 +213,7 @@ describe('LobeGoogleAI', () => {
 
         // 使用 vi.spyOn 来模拟 chat.completions.create 方法
         vi.spyOn(instance['client'], 'getGenerativeModel').mockReturnValue({
-          generateContentStream: vi.fn().mockRejectedValue(apiError)
+          generateContentStream: vi.fn().mockRejectedValue(apiError),
         } as any);
 
         // Act
@@ -229,13 +221,13 @@ describe('LobeGoogleAI', () => {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           expect(e).toEqual({
             error: { message: 'Error message' },
             errorType: bizErrorType,
-            provider
+            provider,
           });
         }
       });
@@ -253,18 +245,13 @@ describe('LobeGoogleAI', () => {
         const errorInfo = {
           stack: 'abc',
           cause: {
-            message: 'api is undefined'
-          }
+            message: 'api is undefined',
+          },
         };
-        const apiError = new OpenAI.APIError(
-          400,
-          errorInfo,
-          'module error',
-          {}
-        );
+        const apiError = new OpenAI.APIError(400, errorInfo, 'module error', {});
 
         vi.spyOn(instance['client'], 'getGenerativeModel').mockReturnValue({
-          generateContentStream: vi.fn().mockRejectedValue(apiError)
+          generateContentStream: vi.fn().mockRejectedValue(apiError),
         } as any);
 
         // Act
@@ -272,15 +259,15 @@ describe('LobeGoogleAI', () => {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           expect(e).toEqual({
             error: {
-              message: `400 {"stack":"abc","cause":{"message":"api is undefined"}}`
+              message: `400 {"stack":"abc","cause":{"message":"api is undefined"}}`,
             },
             errorType: bizErrorType,
-            provider
+            provider,
           });
         }
       });
@@ -290,7 +277,7 @@ describe('LobeGoogleAI', () => {
         const genericError = new Error('Generic Error');
 
         vi.spyOn(instance['client'], 'getGenerativeModel').mockReturnValue({
-          generateContentStream: vi.fn().mockRejectedValue(genericError)
+          generateContentStream: vi.fn().mockRejectedValue(genericError),
         } as any);
 
         // Act
@@ -298,15 +285,15 @@ describe('LobeGoogleAI', () => {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           expect(e).toEqual({
             errorType: 'GoogleBizError',
             provider,
             error: {
-              message: 'Generic Error'
-            }
+              message: 'Generic Error',
+            },
           });
         }
       });
@@ -322,82 +309,66 @@ describe('LobeGoogleAI', () => {
         expect(() =>
           instance['convertContentToGooglePart']({
             type: 'image_url',
-            image_url: { url: invalidImageUrl }
-          })
+            image_url: { url: invalidImageUrl },
+          }),
         ).toThrow(TypeError);
       });
     });
 
     describe('buildGoogleMessages', () => {
       it('get default result with gemini-pro', () => {
-        const messages: OpenAIChatMessage[] = [
-          { content: 'Hello', role: 'user' }
-        ];
+        const messages: OpenAIChatMessage[] = [{ content: 'Hello', role: 'user' }];
 
-        const contents = instance['buildGoogleMessages'](
-          messages,
-          'gemini-pro'
-        );
+        const contents = instance['buildGoogleMessages'](messages, 'gemini-pro');
 
         expect(contents).toHaveLength(1);
-        expect(contents).toEqual([
-          { parts: [{ text: 'Hello' }], role: 'user' }
-        ]);
+        expect(contents).toEqual([{ parts: [{ text: 'Hello' }], role: 'user' }]);
       });
 
       it('messages should end with user if using gemini-pro', () => {
         const messages: OpenAIChatMessage[] = [
           { content: 'Hello', role: 'user' },
-          { content: 'Hi', role: 'assistant' }
+          { content: 'Hi', role: 'assistant' },
         ];
 
-        const contents = instance['buildGoogleMessages'](
-          messages,
-          'gemini-pro'
-        );
+        const contents = instance['buildGoogleMessages'](messages, 'gemini-pro');
 
         expect(contents).toHaveLength(3);
         expect(contents).toEqual([
           { parts: [{ text: 'Hello' }], role: 'user' },
           { parts: [{ text: 'Hi' }], role: 'model' },
-          { parts: [{ text: '' }], role: 'user' }
+          { parts: [{ text: '' }], role: 'user' },
         ]);
       });
 
       it('should include system role if there is a system role prompt', () => {
         const messages: OpenAIChatMessage[] = [
           { content: 'you are ChatGPT', role: 'system' },
-          { content: 'Who are you', role: 'user' }
+          { content: 'Who are you', role: 'user' },
         ];
 
-        const contents = instance['buildGoogleMessages'](
-          messages,
-          'gemini-pro'
-        );
+        const contents = instance['buildGoogleMessages'](messages, 'gemini-pro');
 
         expect(contents).toHaveLength(3);
         expect(contents).toEqual([
           { parts: [{ text: 'you are ChatGPT' }], role: 'user' },
           { parts: [{ text: '' }], role: 'model' },
-          { parts: [{ text: 'Who are you' }], role: 'user' }
+          { parts: [{ text: 'Who are you' }], role: 'user' },
         ]);
       });
 
       it('should not modify the length if model is gemini-1.5-pro', () => {
         const messages: OpenAIChatMessage[] = [
           { content: 'Hello', role: 'user' },
-          { content: 'Hi', role: 'assistant' }
+          { content: 'Hi', role: 'assistant' },
         ];
 
-        const contents = instance['buildGoogleMessages'](
-          messages,
-          'gemini-1.5-pro-latest'
-        );
+        const contents = instance['buildGoogleMessages'](messages, 'gemini-1.5-pro-latest');
 
         expect(contents).toHaveLength(2);
         expect(contents).toEqual([
           { parts: [{ text: 'Hello' }], role: 'user' },
-          { parts: [{ text: 'Hi' }], role: 'model' }
+          { parts: [{ text: 'Hi' }], role: 'model' },
         ]);
       });
 
@@ -406,13 +377,10 @@ describe('LobeGoogleAI', () => {
           {
             content: [
               { type: 'text', text: 'Hello' },
-              {
-                type: 'image_url',
-                image_url: { url: 'data:image/png;base64,...' }
-              }
+              { type: 'image_url', image_url: { url: 'data:image/png;base64,...' } },
             ],
-            role: 'user'
-          }
+            role: 'user',
+          },
         ];
         const model = 'gemini-pro-vision';
 
@@ -422,12 +390,9 @@ describe('LobeGoogleAI', () => {
         expect(contents).toHaveLength(1);
         expect(contents).toEqual([
           {
-            parts: [
-              { text: 'Hello' },
-              { inlineData: { data: '...', mimeType: 'image/png' } }
-            ],
-            role: 'user'
-          }
+            parts: [{ text: 'Hello' }, { inlineData: { data: '...', mimeType: 'image/png' } }],
+            role: 'user',
+          },
         ]);
       });
     });
@@ -436,7 +401,7 @@ describe('LobeGoogleAI', () => {
       it('should use default text model when no images are included in messages', () => {
         const messages: OpenAIChatMessage[] = [
           { content: 'Hello', role: 'user' },
-          { content: 'Hi', role: 'assistant' }
+          { content: 'Hi', role: 'assistant' },
         ];
 
         // 调用 buildGoogleMessages 方法
@@ -450,13 +415,10 @@ describe('LobeGoogleAI', () => {
           {
             content: [
               { type: 'text', text: 'Hello' },
-              {
-                type: 'image_url',
-                image_url: { url: 'data:image/png;base64,...' }
-              }
+              { type: 'image_url', image_url: { url: 'data:image/png;base64,...' } },
             ],
-            role: 'user'
-          }
+            role: 'user',
+          },
         ];
 
         const model = instance['convertModel']('gemini-pro-vision', messages);

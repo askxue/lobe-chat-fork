@@ -6,7 +6,7 @@ import { getMessageError } from './fetch';
 
 // 模拟 i18next
 vi.mock('i18next', () => ({
-  t: vi.fn((key) => `translated_${key}`)
+  t: vi.fn((key) => `translated_${key}`),
 }));
 
 // 模拟 Response
@@ -28,15 +28,15 @@ const createMockResponse = (body: any, ok: boolean, status: number = 200) => ({
             done = true;
             return Promise.resolve({
               value: new TextEncoder().encode(JSON.stringify(body)),
-              done: false
+              done: false,
             });
           } else {
             return Promise.resolve({ done: true });
           }
-        }
+        },
       };
-    }
-  }
+    },
+  },
 });
 
 // 在每次测试后清理所有模拟
@@ -48,7 +48,7 @@ describe('getMessageError', () => {
   it('should handle business error correctly', async () => {
     const mockErrorResponse: ErrorResponse = {
       body: 'Error occurred',
-      errorType: 'InvalidAccessCode'
+      errorType: 'InvalidAccessCode',
     };
     const mockResponse = createMockResponse(mockErrorResponse, false, 400);
 
@@ -57,7 +57,7 @@ describe('getMessageError', () => {
     expect(error).toEqual({
       body: mockErrorResponse.body,
       message: 'translated_response.InvalidAccessCode',
-      type: mockErrorResponse.errorType
+      type: mockErrorResponse.errorType,
     });
     expect(mockResponse.json).toHaveBeenCalled();
   });
@@ -72,7 +72,7 @@ describe('getMessageError', () => {
 
     expect(error).toEqual({
       message: 'translated_response.500',
-      type: 500
+      type: 500,
     });
     expect(mockResponse.json).toHaveBeenCalled();
   });

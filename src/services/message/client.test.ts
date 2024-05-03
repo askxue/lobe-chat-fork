@@ -1,14 +1,7 @@
 import { Mock, describe, expect, it, vi } from 'vitest';
 
-import {
-  CreateMessageParams,
-  MessageModel
-} from '@/database/client/models/message';
-import {
-  ChatMessage,
-  ChatMessageError,
-  ChatPluginPayload
-} from '@/types/message';
+import { CreateMessageParams, MessageModel } from '@/database/client/models/message';
+import { ChatMessage, ChatMessageError, ChatPluginPayload } from '@/types/message';
 
 import { ClientService } from './client';
 
@@ -29,8 +22,8 @@ vi.mock('@/database/client/models/message', () => {
       clearTable: vi.fn(),
       batchUpdate: vi.fn(),
       queryAll: vi.fn(),
-      updatePluginState: vi.fn()
-    }
+      updatePluginState: vi.fn(),
+    },
   };
 });
 
@@ -43,7 +36,7 @@ describe('MessageClientService', () => {
     sessionId: 'mock-session-id',
     createdAt: 100,
     updatedAt: 100,
-    role: 'user'
+    role: 'user',
     // ... other properties
   } as ChatMessage;
   const mockMessages = [mockMessage];
@@ -58,7 +51,7 @@ describe('MessageClientService', () => {
       // Setup
       const createParams = {
         content: 'New message content',
-        sessionId: '1'
+        sessionId: '1',
         // ... other properties
       } as CreateMessageParams;
       (MessageModel.create as Mock).mockResolvedValue({ id: mockMessageId });
@@ -142,10 +135,7 @@ describe('MessageClientService', () => {
       const result = await messageService.removeMessages(assistantId, topicId);
 
       // Assert
-      expect(MessageModel.batchDelete).toHaveBeenCalledWith(
-        assistantId,
-        topicId
-      );
+      expect(MessageModel.batchDelete).toHaveBeenCalledWith(assistantId, topicId);
       expect(result).toBe(true);
     });
   });
@@ -172,15 +162,10 @@ describe('MessageClientService', () => {
       (MessageModel.batchUpdate as Mock).mockResolvedValue(mockMessages);
 
       // Execute
-      const result = await messageService.bindMessagesToTopic(
-        topicId,
-        messageIds
-      );
+      const result = await messageService.bindMessagesToTopic(topicId, messageIds);
 
       // Assert
-      expect(MessageModel.batchUpdate).toHaveBeenCalledWith(messageIds, {
-        topicId
-      });
+      expect(MessageModel.batchUpdate).toHaveBeenCalledWith(messageIds, { topicId });
       expect(result).toBe(mockMessages);
     });
   });
@@ -202,25 +187,14 @@ describe('MessageClientService', () => {
   describe('updateMessageError', () => {
     it('should update the error field of a message', async () => {
       // Setup
-      const newError = {
-        type: 'NoOpenAIAPIKey',
-        message: 'Error occurred'
-      } as ChatMessageError;
-      (MessageModel.update as Mock).mockResolvedValue({
-        ...mockMessage,
-        error: newError
-      });
+      const newError = { type: 'NoOpenAIAPIKey', message: 'Error occurred' } as ChatMessageError;
+      (MessageModel.update as Mock).mockResolvedValue({ ...mockMessage, error: newError });
 
       // Execute
-      const result = await messageService.updateMessageError(
-        mockMessageId,
-        newError
-      );
+      const result = await messageService.updateMessageError(mockMessageId, newError);
 
       // Assert
-      expect(MessageModel.update).toHaveBeenCalledWith(mockMessageId, {
-        error: newError
-      });
+      expect(MessageModel.update).toHaveBeenCalledWith(mockMessageId, { error: newError });
       expect(result).toEqual({ ...mockMessage, error: newError });
     });
   });
@@ -232,24 +206,16 @@ describe('MessageClientService', () => {
         type: 'default',
         apiName: 'abc',
         arguments: '',
-        identifier: 'plugin1'
+        identifier: 'plugin1',
       } as ChatPluginPayload;
 
-      (MessageModel.update as Mock).mockResolvedValue({
-        ...mockMessage,
-        plugin: newPlugin
-      });
+      (MessageModel.update as Mock).mockResolvedValue({ ...mockMessage, plugin: newPlugin });
 
       // Execute
-      const result = await messageService.updateMessagePlugin(
-        mockMessageId,
-        newPlugin
-      );
+      const result = await messageService.updateMessagePlugin(mockMessageId, newPlugin);
 
       // Assert
-      expect(MessageModel.update).toHaveBeenCalledWith(mockMessageId, {
-        plugin: newPlugin
-      });
+      expect(MessageModel.update).toHaveBeenCalledWith(mockMessageId, { plugin: newPlugin });
       expect(result).toEqual({ ...mockMessage, plugin: newPlugin });
     });
   });
@@ -262,22 +228,14 @@ describe('MessageClientService', () => {
       const newPluginState = { [key]: value };
       (MessageModel.updatePluginState as Mock).mockResolvedValue({
         ...mockMessage,
-        pluginState: newPluginState
+        pluginState: newPluginState,
       });
 
       // Execute
-      const result = await messageService.updateMessagePluginState(
-        mockMessageId,
-        key,
-        value
-      );
+      const result = await messageService.updateMessagePluginState(mockMessageId, key, value);
 
       // Assert
-      expect(MessageModel.updatePluginState).toHaveBeenCalledWith(
-        mockMessageId,
-        key,
-        value
-      );
+      expect(MessageModel.updatePluginState).toHaveBeenCalledWith(mockMessageId, key, value);
       expect(result).toEqual({ ...mockMessage, pluginState: newPluginState });
     });
   });

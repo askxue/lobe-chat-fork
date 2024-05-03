@@ -24,17 +24,12 @@ const EditableFileList = memo<EditableFileListProps>(
       >
         <ImageGallery>
           {items.map((i) => (
-            <ImageFileItem
-              alwaysShowClose={alwaysShowClose}
-              editable={editable}
-              id={i}
-              key={i}
-            />
+            <ImageFileItem alwaysShowClose={alwaysShowClose} editable={editable} id={i} key={i} />
           ))}
         </ImageGallery>
       </Flexbox>
     );
-  }
+  },
 );
 
 export default EditableFileList;

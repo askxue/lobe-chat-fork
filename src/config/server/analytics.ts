@@ -17,9 +17,7 @@ declare global {
 
 export const getAnalyticsConfig = () => {
   if (typeof process === 'undefined') {
-    throw new Error(
-      '[Server Config] you are importing a server-only module outside of server'
-    );
+    throw new Error('[Server Config] you are importing a server-only module outside of server');
   }
 
   return {
@@ -29,6 +27,6 @@ export const getAnalyticsConfig = () => {
 
     // Google Analytics
     ENABLE_GOOGLE_ANALYTICS: process.env.ENABLE_GOOGLE_ANALYTICS === '1',
-    GOOGLE_ANALYTICS_MEASUREMENT_ID: process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID
+    GOOGLE_ANALYTICS_MEASUREMENT_ID: process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID,
   };
 };

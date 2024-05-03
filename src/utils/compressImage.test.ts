@@ -1,9 +1,6 @@
 import compressImage from './compressImage';
 
-const getContextSpy = vi.spyOn(
-  global.HTMLCanvasElement.prototype,
-  'getContext'
-);
+const getContextSpy = vi.spyOn(global.HTMLCanvasElement.prototype, 'getContext');
 const drawImageSpy = vi.spyOn(CanvasRenderingContext2D.prototype, 'drawImage');
 
 beforeEach(() => {
@@ -25,17 +22,7 @@ describe('compressImage', () => {
     expect(getContextSpy).toBeCalledWith('2d');
 
     expect(drawImageSpy).toBeCalledTimes(1);
-    expect(drawImageSpy).toBeCalledWith(
-      img,
-      0,
-      0,
-      3000,
-      2000,
-      0,
-      0,
-      2160,
-      1440
-    );
+    expect(drawImageSpy).toBeCalledWith(img, 0, 0, 3000, 2000, 0, 0, 2160, 1440);
   });
 
   it('should compress image with maxHeight', () => {
@@ -51,17 +38,7 @@ describe('compressImage', () => {
     expect(getContextSpy).toBeCalledWith('2d');
 
     expect(drawImageSpy).toBeCalledTimes(1);
-    expect(drawImageSpy).toBeCalledWith(
-      img,
-      0,
-      0,
-      2000,
-      3000,
-      0,
-      0,
-      1440,
-      2160
-    );
+    expect(drawImageSpy).toBeCalledWith(img, 0, 0, 2000, 3000, 0, 0, 1440, 2160);
   });
 
   it('should not compress image', () => {
@@ -77,16 +54,6 @@ describe('compressImage', () => {
     expect(getContextSpy).toBeCalledWith('2d');
 
     expect(drawImageSpy).toBeCalledTimes(1);
-    expect(drawImageSpy).toBeCalledWith(
-      img,
-      0,
-      0,
-      2000,
-      2000,
-      0,
-      0,
-      2000,
-      2000
-    );
+    expect(drawImageSpy).toBeCalledWith(img, 0, 0, 2000, 2000, 0, 0, 2000, 2000);
   });
 });

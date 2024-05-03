@@ -1,10 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import { DEFAULT_AGENT_CONFIG } from '@/const/settings';
-import {
-  CreateMessageParams,
-  MessageModel
-} from '@/database/client/models/message';
+import { CreateMessageParams, MessageModel } from '@/database/client/models/message';
 import { SessionGroupModel } from '@/database/client/models/sessionGroup';
 import { TopicModel } from '@/database/client/models/topic';
 import { LobeAgentConfig } from '@/types/agent';
@@ -12,7 +9,7 @@ import {
   LobeAgentSession,
   LobeSessionType,
   SessionDefaultGroup,
-  SessionGroupId
+  SessionGroupId,
 } from '@/types/session';
 
 import { SessionModel } from '../session';
@@ -26,7 +23,7 @@ describe('SessionModel', () => {
       type: LobeSessionType.Agent,
       group: 'testGroup',
       meta: {},
-      config: DEFAULT_AGENT_CONFIG
+      config: DEFAULT_AGENT_CONFIG,
       // ... other properties based on LobeAgentSession
     };
   });
@@ -51,9 +48,7 @@ describe('SessionModel', () => {
   describe('batchCreate', () => {
     it('should batch create session records', async () => {
       const sessionsToCreate = [sessionData, sessionData];
-      const results = await SessionModel.batchCreate(
-        sessionsToCreate as LobeAgentSession[]
-      );
+      const results = await SessionModel.batchCreate(sessionsToCreate as LobeAgentSession[]);
 
       expect(results.ids).toHaveLength(sessionsToCreate.length);
       // Verify that the sessions have been added to the database
@@ -66,12 +61,10 @@ describe('SessionModel', () => {
     it('should set group to default if it does not exist in SessionGroup', async () => {
       const sessionDataWithInvalidGroup = {
         ...sessionData,
-        group: 'nonExistentGroup'
+        group: 'nonExistentGroup',
       } as LobeAgentSession;
 
-      const results = await SessionModel.batchCreate([
-        sessionDataWithInvalidGroup
-      ]);
+      const results = await SessionModel.batchCreate([sessionDataWithInvalidGroup]);
 
       // Verify that the group has been set to default
       for (const result of results.ids!) {
@@ -84,15 +77,9 @@ describe('SessionModel', () => {
   describe('query', () => {
     it('should query sessions with pagination', async () => {
       // Create multiple sessions to test the query method
-      await SessionModel.batchCreate([
-        sessionData,
-        sessionData
-      ] as LobeAgentSession[]);
+      await SessionModel.batchCreate([sessionData, sessionData] as LobeAgentSession[]);
 
-      const queriedSessions = await SessionModel.query({
-        pageSize: 1,
-        current: 0
-      });
+      const queriedSessions = await SessionModel.query({ pageSize: 1, current: 0 });
 
       expect(queriedSessions).toHaveLength(1);
     });
@@ -104,10 +91,7 @@ describe('SessionModel', () => {
       const group: SessionGroupId = 'testGroup';
       await SessionGroupModel.create('测试分组', 0, group);
 
-      await SessionModel.batchCreate([
-        sessionData,
-        sessionData
-      ] as LobeAgentSession[]);
+      await SessionModel.batchCreate([sessionData, sessionData] as LobeAgentSession[]);
 
       const sessionsByGroup = await SessionModel.querySessionsByGroupId(group);
 
@@ -141,10 +125,7 @@ describe('SessionModel', () => {
       const { id } = await SessionModel.create('agent', sessionData);
       const dbSession = await SessionModel.findById(id);
 
-      const newConfig = {
-        ...dbSession.config,
-        systemRole: 'newValue'
-      } as LobeAgentConfig;
+      const newConfig = { ...dbSession.config, systemRole: 'newValue' } as LobeAgentConfig;
       await SessionModel.updateConfig(id, newConfig);
       const updatedSession = await SessionModel.findById(id);
       expect(updatedSession.config).toEqual(newConfig);
@@ -153,10 +134,7 @@ describe('SessionModel', () => {
 
   describe('clearTable', () => {
     it('should clear all sessions', async () => {
-      await SessionModel.batchCreate([
-        sessionData,
-        sessionData
-      ] as LobeAgentSession[]);
+      await SessionModel.batchCreate([sessionData, sessionData] as LobeAgentSession[]);
       await SessionModel.clearTable();
       const sessionsInDb = await SessionModel.query();
       expect(sessionsInDb).toHaveLength(0);
@@ -189,10 +167,7 @@ describe('SessionModel', () => {
     it('should get pinned sessions', async () => {
       const pinnedSession = { ...sessionData, pinned: true };
       const unpinnedSession = { ...sessionData, pinned: false };
-      await SessionModel.batchCreate([
-        pinnedSession,
-        unpinnedSession
-      ] as LobeAgentSession[]);
+      await SessionModel.batchCreate([pinnedSession, unpinnedSession] as LobeAgentSession[]);
       const pinnedSessions = await SessionModel.getPinnedSessions();
       expect(pinnedSessions).toHaveLength(1);
       expect(pinnedSessions[0].pinned).toBeTruthy();
@@ -205,9 +180,7 @@ describe('SessionModel', () => {
 
       const sessionsWithGroups = await SessionModel.queryWithGroups();
       expect(sessionsWithGroups.sessions).toHaveLength(1);
-      expect(sessionsWithGroups.sessions[0]).toEqual(
-        expect.objectContaining(sessionData)
-      );
+      expect(sessionsWithGroups.sessions[0]).toEqual(expect.objectContaining(sessionData));
     });
   });
 
@@ -215,13 +188,9 @@ describe('SessionModel', () => {
     it('should query sessions by group ids', async () => {
       const createdSession = await SessionModel.create('agent', sessionData);
       const session = await SessionModel.findById(createdSession.id);
-      const sessionsByGroupIds = await SessionModel.queryByGroupIds([
-        session.group
-      ]);
+      const sessionsByGroupIds = await SessionModel.queryByGroupIds([session.group]);
       expect(sessionsByGroupIds[session.group]).toHaveLength(1);
-      expect(sessionsByGroupIds[session.group][0]).toEqual(
-        expect.objectContaining(sessionData)
-      );
+      expect(sessionsByGroupIds[session.group][0]).toEqual(expect.objectContaining(sessionData));
     });
   });
 
@@ -241,7 +210,7 @@ describe('SessionModel', () => {
       const topicData = {
         title: 'Test Topic',
         sessionId: sessionId,
-        favorite: false
+        favorite: false,
       };
       const createdTopic = await TopicModel.create(topicData);
 
@@ -249,7 +218,7 @@ describe('SessionModel', () => {
         content: 'Test Message',
         sessionId: sessionId,
         topicId: createdTopic.id,
-        role: 'user'
+        role: 'user',
       };
       await MessageModel.create(messageData);
 

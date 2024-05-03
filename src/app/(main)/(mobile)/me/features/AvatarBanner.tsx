@@ -15,8 +15,7 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => ({
     margin-top: -${AVATAR_SIZE / 2 + 6}px;
 
     background: ${isDarkMode ? token.colorBgLayout : token.colorBgContainer};
-    border: 6px solid
-      ${isDarkMode ? token.colorBgLayout : token.colorBgContainer};
+    border: 6px solid ${isDarkMode ? token.colorBgLayout : token.colorBgContainer};
     border-radius: 50%;
   `,
   banner: css`
@@ -38,19 +37,14 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => ({
     position: absolute;
     scale: 5;
     filter: blur(24px) saturate(2);
-  `
+  `,
 }));
 
 const AvatarBanner = memo<PropsWithChildren>(({ children }) => {
   const { styles } = useStyles();
 
   return (
-    <Flexbox
-      align={'center'}
-      className={styles.banner}
-      justify={'center'}
-      width={'100%'}
-    >
+    <Flexbox align={'center'} className={styles.banner} justify={'center'} width={'100%'}>
       <Flexbox align={'center'} className={styles.bannerBox} justify={'center'}>
         <div className={styles.bannerImg}>{children}</div>
       </Flexbox>

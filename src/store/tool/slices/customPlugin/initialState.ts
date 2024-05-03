@@ -7,11 +7,11 @@ export const defaultCustomPlugin: Partial<LobeToolCustomPlugin> = {
   customParams: {
     apiMode: 'simple',
     enableSettings: false,
-    manifestMode: 'url'
+    manifestMode: 'url',
   },
-  type: 'customPlugin'
+  type: 'customPlugin',
 };
 
 export const initialCustomPluginState: CustomPluginState = {
-  newCustomPlugin: defaultCustomPlugin
+  newCustomPlugin: defaultCustomPlugin,
 };

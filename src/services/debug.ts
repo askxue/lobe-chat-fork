@@ -6,7 +6,7 @@ class DebugService {
       messageCount: 100_000,
       sessionCount: 40,
       startIndex: 0,
-      topicCount: 200
+      topicCount: 200,
     });
 
     console.log('已插入10w');
@@ -15,7 +15,7 @@ class DebugService {
       messageCount: 300_000,
       sessionCount: 40,
       startIndex: 100_001,
-      topicCount: 200
+      topicCount: 200,
     });
     console.log('已插入40w');
 
@@ -23,7 +23,7 @@ class DebugService {
       messageCount: 300_000,
       sessionCount: 40,
       startIndex: 400_001,
-      topicCount: 200
+      topicCount: 200,
     });
     console.log('已插入70w');
 
@@ -31,7 +31,7 @@ class DebugService {
       messageCount: 300_000,
       sessionCount: 40,
       startIndex: 700_001,
-      topicCount: 200
+      topicCount: 200,
     });
     console.log('已插入100w');
   }

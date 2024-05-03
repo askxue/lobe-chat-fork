@@ -37,11 +37,9 @@ export const createFileSlice: StateCreator<
     await fileService.removeFile(id);
 
     set(
-      ({ inputFilesList }) => ({
-        inputFilesList: inputFilesList.filter((i) => i !== id)
-      }),
+      ({ inputFilesList }) => ({ inputFilesList: inputFilesList.filter((i) => i !== id) }),
       false,
-      n('removeFile')
+      n('removeFile'),
     );
   },
   setImageMapItem: (id, item) => {
@@ -52,7 +50,7 @@ export const createFileSlice: StateCreator<
         draft.imagesMap[id] = item;
       }),
       false,
-      n('setImageMapItem')
+      n('setImageMapItem'),
     );
   },
   uploadFile: async (file) => {
@@ -63,15 +61,13 @@ export const createFileSlice: StateCreator<
         fileType: file.type,
         name: file.name,
         saveMode: 'local',
-        size: file.size
+        size: file.size,
       });
 
       set(
-        ({ inputFilesList }) => ({
-          inputFilesList: [...inputFilesList, data.id]
-        }),
+        ({ inputFilesList }) => ({ inputFilesList: [...inputFilesList, data.id] }),
         false,
-        n('uploadFile')
+        n('uploadFile'),
       );
     } catch (error) {
       // 提示用户上传失败
@@ -85,5 +81,5 @@ export const createFileSlice: StateCreator<
       get().setImageMapItem(id, item);
 
       return item;
-    })
+    }),
 });

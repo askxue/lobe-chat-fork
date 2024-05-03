@@ -3,17 +3,14 @@ import { DeepPartial } from 'utility-types';
 import { DEFAULT_AGENT_LOBE_SESSION } from '@/const/session';
 import { BaseModel } from '@/database/client/core';
 import { DBModel } from '@/database/client/core/types/db';
-import {
-  DB_Session,
-  DB_SessionSchema
-} from '@/database/client/schemas/session';
+import { DB_Session, DB_SessionSchema } from '@/database/client/schemas/session';
 import { LobeAgentConfig } from '@/types/agent';
 import {
   ChatSessionList,
   LobeAgentSession,
   LobeSessions,
   SessionDefaultGroup,
-  SessionGroupId
+  SessionGroupId,
 } from '@/types/session';
 import { merge } from '@/utils/merge';
 import { uuid } from '@/utils/uuid';
@@ -31,7 +28,7 @@ class _SessionModel extends BaseModel {
 
   async query({
     pageSize = 9999,
-    current = 0
+    current = 0,
   }: { current?: number; pageSize?: number } = {}): Promise<LobeSessions> {
     const offset = current * pageSize;
 
@@ -101,14 +98,11 @@ class _SessionModel extends BaseModel {
     const matchingMessagesPromise = this.db.messages
       .filter((message) => {
         // check content
-        if (message.content.toLowerCase().includes(keywordLowerCase))
-          return true;
+        if (message.content.toLowerCase().includes(keywordLowerCase)) return true;
 
         // check translate content
         if (message.translate && message.translate.content) {
-          return message.translate.content
-            .toLowerCase()
-            .includes(keywordLowerCase);
+          return message.translate.content.toLowerCase().includes(keywordLowerCase);
         }
 
         return false;
@@ -123,23 +117,20 @@ class _SessionModel extends BaseModel {
       .toArray();
 
     // Resolve both promises
-    const [matchingSessions, matchingMessages, matchingTopics] =
-      await Promise.all([
-        matchingSessionsPromise,
-        matchingMessagesPromise,
-        matchingTopicsPromise
-      ]);
+    const [matchingSessions, matchingMessages, matchingTopics] = await Promise.all([
+      matchingSessionsPromise,
+      matchingMessagesPromise,
+      matchingTopicsPromise,
+    ]);
 
-    const sessionIdsFromMessages = matchingMessages.map(
-      (message) => message.sessionId
-    );
+    const sessionIdsFromMessages = matchingMessages.map((message) => message.sessionId);
     const sessionIdsFromTopics = matchingTopics.map((topic) => topic.sessionId);
 
     // Combine session IDs from both sources
     const combinedSessionIds = new Set([
       ...sessionIdsFromMessages,
       ...sessionIdsFromTopics,
-      ...matchingSessions.map((session) => session.id)
+      ...matchingSessions.map((session) => session.id),
     ]);
 
     // Retrieve unique sessions by IDs
@@ -176,11 +167,7 @@ class _SessionModel extends BaseModel {
 
   // **************** Create *************** //
 
-  async create(
-    type: 'agent' | 'group',
-    defaultValue: Partial<LobeAgentSession>,
-    id = uuid()
-  ) {
+  async create(type: 'agent' | 'group', defaultValue: Partial<LobeAgentSession>, id = uuid()) {
     const data = merge(DEFAULT_AGENT_LOBE_SESSION, { type, ...defaultValue });
     const dataDB = this.mapToDB_Session(data);
     return this._addWithSync(dataDB, id);
@@ -198,7 +185,7 @@ class _SessionModel extends BaseModel {
           }
         }
         return this.mapToDB_Session(s);
-      })
+      }),
     );
 
     return this._batchAdd<DB_Session>(DB_Sessions, { idGenerator: uuid });
@@ -219,20 +206,16 @@ class _SessionModel extends BaseModel {
    * Delete a session , also delete all messages and topic associated with it.
    */
   async delete(id: string) {
-    return this.db.transaction(
-      'rw',
-      [this.table, this.db.topics, this.db.messages],
-      async () => {
-        // Delete all topics associated with the session
-        await TopicModel.batchDeleteBySessionId(id);
+    return this.db.transaction('rw', [this.table, this.db.topics, this.db.messages], async () => {
+      // Delete all topics associated with the session
+      await TopicModel.batchDeleteBySessionId(id);
 
-        // Delete all messages associated with the session
-        await MessageModel.batchDeleteBySessionId(id);
+      // Delete all messages associated with the session
+      await MessageModel.batchDeleteBySessionId(id);
 
-        // Finally, delete the session itself
-        await this._deleteWithSync(id);
-      }
-    );
+      // Finally, delete the session itself
+      await this._deleteWithSync(id);
+    });
   }
 
   async batchDelete(ids: string[]) {
@@ -264,7 +247,7 @@ class _SessionModel extends BaseModel {
     return {
       ...session,
       group: session.group || SessionDefaultGroup.Default,
-      pinned: session.pinned ? 1 : 0
+      pinned: session.pinned ? 1 : 0,
     };
   }
 
@@ -272,7 +255,7 @@ class _SessionModel extends BaseModel {
     return {
       ...session,
       model: session.config.model,
-      pinned: !!session.pinned
+      pinned: !!session.pinned,
     } as LobeAgentSession;
   }
 

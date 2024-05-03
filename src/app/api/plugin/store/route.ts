@@ -11,9 +11,7 @@ export const GET = async (req: Request) => {
 
   let res: Response;
 
-  res = await fetch(pluginStore.getPluginIndexUrl(locale as any), {
-    next: { revalidate: 3600 }
-  });
+  res = await fetch(pluginStore.getPluginIndexUrl(locale as any), { next: { revalidate: 3600 } });
 
   if (res.status === 404) {
     res = await fetch(pluginStore.getPluginIndexUrl(DEFAULT_LANG));

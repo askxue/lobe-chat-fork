@@ -18,7 +18,7 @@ import {
   dbSchemaV4,
   dbSchemaV5,
   dbSchemaV6,
-  dbSchemaV7
+  dbSchemaV7,
 } from './schemas';
 import { DBModel, LOBE_CHAT_LOCAL_DB_NAME } from './types/db';
 
@@ -149,9 +149,7 @@ export class BrowserDB extends Dexie {
     const users = trans.table('users');
     await users.toCollection().modify((user: DB_User) => {
       if (user.settings) {
-        user.settings = MigrationLLMSettings.migrateSettings(
-          user.settings as any
-        );
+        user.settings = MigrationLLMSettings.migrateSettings(user.settings as any);
       }
     });
   };
@@ -172,5 +170,4 @@ export type BrowserDBSchema = {
     table: Dexie.Table<DBModel<LobeDBSchemaMap[t]>, string>;
   };
 };
-type BrowserDBTable<T extends keyof LobeDBSchemaMap> =
-  BrowserDBSchema[T]['table'];
+type BrowserDBTable<T extends keyof LobeDBSchemaMap> = BrowserDBSchema[T]['table'];

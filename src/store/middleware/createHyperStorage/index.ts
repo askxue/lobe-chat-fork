@@ -7,7 +7,7 @@ import { HyperStorageOptions } from './type';
 import { creatUrlStorage } from './urlStorage';
 
 export const createHyperStorage = <T extends object>(
-  options: HyperStorageOptions
+  options: HyperStorageOptions,
 ): PersistStorage<T> => {
   const optionsObj = typeof options === 'function' ? options() : options;
 
@@ -26,8 +26,7 @@ export const createHyperStorage = <T extends object>(
 
   const { skipLocalStorage, useIndexedDB, dbName } = getLocalStorageConfig();
 
-  const { mapStateKeyToStorageKey, getStateKeyFromStorageKey } =
-    createKeyMapper(optionsObj);
+  const { mapStateKeyToStorageKey, getStateKeyFromStorageKey } = createKeyMapper(optionsObj);
 
   const indexedDB = createIndexedDB(dbName);
   const localStorage = createLocalStorage();
@@ -122,6 +121,6 @@ export const createHyperStorage = <T extends object>(
 
         urlStorage.setItem(name, Object.fromEntries(finalEntries));
       }
-    }
+    },
   };
 };

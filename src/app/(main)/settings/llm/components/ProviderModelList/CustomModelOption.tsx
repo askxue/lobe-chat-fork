@@ -22,18 +22,15 @@ const CustomModelOption = memo<CustomModelOptionProps>(({ id, provider }) => {
   const { t: s } = useTranslation('setting');
   const { modal } = App.useApp();
 
-  const [
-    dispatchCustomModelCards,
-    toggleEditingCustomModelCard,
-    removeEnabledModels
-  ] = useUserStore((s) => [
-    s.dispatchCustomModelCards,
-    s.toggleEditingCustomModelCard,
-    s.removeEnabledModels
-  ]);
+  const [dispatchCustomModelCards, toggleEditingCustomModelCard, removeEnabledModels] =
+    useUserStore((s) => [
+      s.dispatchCustomModelCards,
+      s.toggleEditingCustomModelCard,
+      s.removeEnabledModels,
+    ]);
   const modelCard = useUserStore(
     modelConfigSelectors.getCustomModelCard({ id, provider }),
-    isEqual
+    isEqual,
   );
 
   return (
@@ -78,7 +75,7 @@ const CustomModelOption = memo<CustomModelOptionProps>(({ id, provider }) => {
               centered: true,
               content: s('llm.customModelCards.confirmDelete'),
               okButtonProps: { danger: true },
-              type: 'warning'
+              type: 'warning',
             });
 
             // delete model and deactive id

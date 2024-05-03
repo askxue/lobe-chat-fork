@@ -15,15 +15,13 @@ export const useChatInput = () => {
   const onSend = useSendMessage();
 
   const model = useAgentStore(agentSelectors.currentAgentModel);
-  const canUpload = useUserStore(
-    modelProviderSelectors.isModelEnabledUpload(model)
-  );
+  const canUpload = useUserStore(modelProviderSelectors.isModelEnabledUpload(model));
 
   const [loading, value, onInput, onStop] = useChatStore((s) => [
     !!s.chatLoadingId,
     s.inputMessage,
     s.updateInputMessage,
-    s.stopGenerateMessage
+    s.stopGenerateMessage,
   ]);
 
   const handleSend = useCallback(() => {
@@ -41,6 +39,6 @@ export const useChatInput = () => {
     onStop,
     ref,
     setExpand,
-    value
+    value,
   };
 };

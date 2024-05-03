@@ -12,7 +12,7 @@ import {
   LobeSessionType,
   LobeSessions,
   SessionGroupItem,
-  SessionGroups
+  SessionGroups,
 } from '@/types/session';
 
 import { ISessionService } from './type';
@@ -20,7 +20,7 @@ import { ISessionService } from './type';
 export class ClientService implements ISessionService {
   async createSession(
     type: LobeSessionType,
-    defaultValue: Partial<LobeAgentSession>
+    defaultValue: Partial<LobeAgentSession>,
   ): Promise<string> {
     const item = await SessionModel.create(type, defaultValue);
     if (!item) {
@@ -33,10 +33,7 @@ export class ClientService implements ISessionService {
     return SessionModel.batchCreate(importSessions);
   }
 
-  async cloneSession(
-    id: string,
-    newTitle: string
-  ): Promise<string | undefined> {
+  async cloneSession(id: string, newTitle: string): Promise<string | undefined> {
     const res = await SessionModel.duplicate(id, newTitle);
 
     if (res) return res?.id;
@@ -58,9 +55,7 @@ export class ClientService implements ISessionService {
     return res.config as LobeAgentConfig;
   }
 
-  async getSessionsByType(
-    type: 'agent' | 'group' | 'all' = 'all'
-  ): Promise<LobeSessions> {
+  async getSessionsByType(type: 'agent' | 'group' | 'all' = 'all'): Promise<LobeSessions> {
     switch (type) {
       // TODO: add a filter to get only agents or agents
       case 'group': {
@@ -94,17 +89,13 @@ export class ClientService implements ISessionService {
 
   async updateSession(
     id: string,
-    data: Partial<Pick<LobeAgentSession, 'group' | 'meta' | 'pinned'>>
+    data: Partial<Pick<LobeAgentSession, 'group' | 'meta' | 'pinned'>>,
   ) {
-    const pinned =
-      typeof data.pinned === 'boolean' ? (data.pinned ? 1 : 0) : undefined;
+    const pinned = typeof data.pinned === 'boolean' ? (data.pinned ? 1 : 0) : undefined;
     return SessionModel.update(id, { ...data, pinned });
   }
 
-  async updateSessionConfig(
-    activeId: string,
-    config: DeepPartial<LobeAgentConfig>
-  ) {
+  async updateSessionConfig(activeId: string, config: DeepPartial<LobeAgentConfig>) {
     if (activeId === INBOX_SESSION_ID) {
       return useUserStore.getState().updateDefaultAgent({ config });
     }

@@ -15,16 +15,10 @@ const n = setNamespace('tool');
  * builtin tool action
  */
 export interface ChatToolAction {
-  generateImageFromPrompts: (
-    items: DallEImageItem[],
-    id: string
-  ) => Promise<void>;
+  generateImageFromPrompts: (items: DallEImageItem[], id: string) => Promise<void>;
   text2image: (id: string, data: DallEImageItem[]) => Promise<void>;
   toggleDallEImageLoading: (key: string, value: boolean) => void;
-  updateImageItem: (
-    id: string,
-    updater: (data: DallEImageItem[]) => void
-  ) => Promise<void>;
+  updateImageItem: (id: string, updater: (data: DallEImageItem[]) => void) => Promise<void>;
 }
 
 export const chatToolSlice: StateCreator<
@@ -36,8 +30,7 @@ export const chatToolSlice: StateCreator<
   generateImageFromPrompts: async (items, messageId) => {
     const { toggleDallEImageLoading, updateImageItem } = get();
     // eslint-disable-next-line unicorn/consistent-function-scoping
-    const getMessageById = (id: string) =>
-      chatSelectors.getMessageById(id)(get());
+    const getMessageById = (id: string) => chatSelectors.getMessageById(id)(get());
 
     const message = getMessageById(messageId);
     if (!message) return;
@@ -58,7 +51,7 @@ export const chatToolSlice: StateCreator<
       fileService
         .uploadImageByUrl(url, {
           metadata: { ...params, originPrompt: originPrompt },
-          name: `${originPrompt || params.prompt}_${index}.png`
+          name: `${originPrompt || params.prompt}_${index}.png`,
         })
         .then(({ id }) => {
           updateImageItem(messageId, (draft) => {
@@ -78,7 +71,7 @@ export const chatToolSlice: StateCreator<
     set(
       { dalleImageLoading: { ...get().dalleImageLoading, [key]: value } },
       false,
-      n('toggleDallEImageLoading')
+      n('toggleDallEImageLoading'),
     );
   },
   updateImageItem: async (id, updater) => {
@@ -89,5 +82,5 @@ export const chatToolSlice: StateCreator<
 
     const nextContent = produce(data, updater);
     await get().internalUpdateMessageContent(id, JSON.stringify(nextContent));
-  }
+  },
 });

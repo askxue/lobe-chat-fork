@@ -4,11 +4,7 @@ import { SVGComponent } from '../types';
 
 export default ({ ...props }: SVGComponent) => {
   return (
-    <svg
-      viewBox="0 0 112.4 131.9"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg viewBox="0 0 112.4 131.9" xmlns="http://www.w3.org/2000/svg" {...props}>
       <defs>
         <linearGradient
           gradientTransform="matrix(112.31 0 0 -131.86 53355.92 89180.8)"

@@ -10,7 +10,7 @@ export const useStyles = createStyles(({ css, token }) => ({
   logo: css`
     color: ${token.colorText};
     fill: ${token.colorText};
-  `
+  `,
 }));
 
 const Header = memo(() => {
@@ -18,14 +18,7 @@ const Header = memo(() => {
 
   return (
     <ChatHeader
-      left={
-        <Logo
-          className={styles.logo}
-          extra={'Discover'}
-          size={36}
-          type={'text'}
-        />
-      }
+      left={<Logo className={styles.logo} extra={'Discover'} size={36} type={'text'} />}
       right={<ShareAgentButton />}
     />
   );

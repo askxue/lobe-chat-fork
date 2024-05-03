@@ -10,9 +10,7 @@ const LargeTokenContent = dynamic(() => import('./TokenTag'), { ssr: false });
 
 const Token = memo(() => {
   const model = useAgentStore(agentSelectors.currentAgentModel);
-  const showTag = useUserStore(
-    modelProviderSelectors.isModelHasMaxToken(model)
-  );
+  const showTag = useUserStore(modelProviderSelectors.isModelHasMaxToken(model));
 
   return showTag && <LargeTokenContent />;
 });

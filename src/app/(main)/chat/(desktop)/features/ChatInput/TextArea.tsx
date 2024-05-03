@@ -27,7 +27,7 @@ const useStyles = createStyles(({ css }) => {
     textareaContainer: css`
       position: relative;
       flex: 1;
-    `
+    `,
   };
 });
 
@@ -44,7 +44,7 @@ const InputArea = memo<InputAreaProps>(({ setExpand }) => {
   const [loading, value, updateInputMessage] = useChatStore((s) => [
     !!s.chatLoadingId,
     s.inputMessage,
-    s.updateInputMessage
+    s.updateInputMessage,
   ]);
 
   const useCmdEnterToSend = useUserStore(preferenceSelectors.useCmdEnterToSend);
@@ -88,8 +88,7 @@ const InputArea = memo<InputAreaProps>(({ setExpand }) => {
           isChineseInput.current = true;
         }}
         onPressEnter={(e) => {
-          if (loading || e.altKey || e.shiftKey || isChineseInput.current)
-            return;
+          if (loading || e.altKey || e.shiftKey || isChineseInput.current) return;
 
           // eslint-disable-next-line unicorn/consistent-function-scoping
           const send = () => {

@@ -20,7 +20,7 @@ const useStyles = createStyles(({ css }) => ({
     > li {
       height: 14px !important;
     }
-  `
+  `,
 }));
 
 interface SkeletonListProps {

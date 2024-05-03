@@ -8,7 +8,7 @@ import { LOBE_LOCALE_COOKIE } from '@/const/locale';
 import {
   LOBE_THEME_APPEARANCE,
   LOBE_THEME_NEUTRAL_COLOR,
-  LOBE_THEME_PRIMARY_COLOR
+  LOBE_THEME_PRIMARY_COLOR,
 } from '@/const/theme';
 import { getServerGlobalConfig } from '@/server/globalConfig';
 import { ServerConfigStoreProvider } from '@/store/serverConfig';

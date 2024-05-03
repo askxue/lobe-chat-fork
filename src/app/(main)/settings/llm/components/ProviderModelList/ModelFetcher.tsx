@@ -11,7 +11,7 @@ import { useUserStore } from '@/store/user';
 import {
   modelConfigSelectors,
   modelProviderSelectors,
-  settingsSelectors
+  settingsSelectors,
 } from '@/store/user/selectors';
 import { GlobalLLMProviderKey } from '@/types/settings';
 
@@ -26,7 +26,7 @@ const useStyles = createStyles(({ css, token }) => ({
       color: ${token.colorText};
       background-color: ${token.colorFillSecondary};
     }
-  `
+  `,
 }));
 
 interface ModelFetcherProps {
@@ -38,22 +38,17 @@ const ModelFetcher = memo<ModelFetcherProps>(({ provider }) => {
   const { t } = useTranslation('setting');
   const [useFetchProviderModelList] = useUserStore((s) => [
     s.useFetchProviderModelList,
-    s.setModelProviderConfig
+    s.setModelProviderConfig,
   ]);
-  const enabledAutoFetch = useUserStore(
-    modelConfigSelectors.isAutoFetchModelsEnabled(provider)
-  );
+  const enabledAutoFetch = useUserStore(modelConfigSelectors.isAutoFetchModelsEnabled(provider));
   const latestFetchTime = useUserStore(
-    (s) => settingsSelectors.providerConfig(provider)(s)?.latestFetchTime
+    (s) => settingsSelectors.providerConfig(provider)(s)?.latestFetchTime,
   );
   const totalModels = useUserStore(
-    (s) => modelProviderSelectors.getModelCardsById(provider)(s).length
+    (s) => modelProviderSelectors.getModelCardsById(provider)(s).length,
   );
 
-  const { mutate, isValidating } = useFetchProviderModelList(
-    provider,
-    enabledAutoFetch
-  );
+  const { mutate, isValidating } = useFetchProviderModelList(provider, enabledAutoFetch);
 
   return (
     <Typography.Text style={{ fontSize: 12 }} type={'secondary'}>
@@ -63,7 +58,7 @@ const ModelFetcher = memo<ModelFetcherProps>(({ provider }) => {
           title={
             latestFetchTime
               ? t('llm.fetcher.latestTime', {
-                  time: dayjs(latestFetchTime).format('YYYY-MM-DD HH:mm:ss')
+                  time: dayjs(latestFetchTime).format('YYYY-MM-DD HH:mm:ss'),
                 })
               : t('llm.fetcher.noLatestTime')
           }
@@ -80,11 +75,7 @@ const ModelFetcher = memo<ModelFetcherProps>(({ provider }) => {
               size={'small'}
               spin={isValidating}
             />
-            <div>
-              {isValidating
-                ? t('llm.fetcher.fetching')
-                : t('llm.fetcher.fetch')}
-            </div>
+            <div>{isValidating ? t('llm.fetcher.fetching') : t('llm.fetcher.fetch')}</div>
           </Flexbox>
         </Tooltip>
       </Flexbox>

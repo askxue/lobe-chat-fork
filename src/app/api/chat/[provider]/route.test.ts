@@ -10,7 +10,7 @@ import { POST } from './route';
 
 vi.mock('../auth/utils', () => ({
   getJWTPayload: vi.fn(),
-  checkAuthMethod: vi.fn()
+  checkAuthMethod: vi.fn(),
 }));
 
 // 模拟请求和响应
@@ -19,10 +19,10 @@ beforeEach(() => {
   request = new Request(new URL('https://test.com'), {
     headers: {
       [LOBE_CHAT_AUTH_HEADER]: 'Bearer some-valid-token',
-      [OAUTH_AUTHORIZED]: 'true'
+      [OAUTH_AUTHORIZED]: 'true',
     },
     method: 'POST',
-    body: JSON.stringify({ model: 'test-model' })
+    body: JSON.stringify({ model: 'test-model' }),
   });
 });
 
@@ -40,7 +40,7 @@ describe('POST handler', () => {
       vi.mocked(getJWTPayload).mockResolvedValue({
         accessCode: 'test-access-code',
         apiKey: 'test-api-key',
-        azureApiVersion: 'v1'
+        azureApiVersion: 'v1',
       });
 
       const mockRuntime: LobeRuntimeAI = { baseURL: 'abc', chat: vi.fn() };
@@ -60,32 +60,25 @@ describe('POST handler', () => {
 
     it('should return Unauthorized error when LOBE_CHAT_AUTH_HEADER is missing', async () => {
       const mockParams = { provider: 'test-provider' };
-      const requestWithoutAuthHeader = new Request(
-        new URL('https://test.com'),
-        {
-          method: 'POST',
-          body: JSON.stringify({ model: 'test-model' })
-        }
-      );
-
-      const response = await POST(requestWithoutAuthHeader, {
-        params: mockParams
+      const requestWithoutAuthHeader = new Request(new URL('https://test.com'), {
+        method: 'POST',
+        body: JSON.stringify({ model: 'test-model' }),
       });
+
+      const response = await POST(requestWithoutAuthHeader, { params: mockParams });
 
       expect(response.status).toBe(401);
       expect(await response.json()).toEqual({
         body: {
           error: { errorType: 401 },
-          provider: 'test-provider'
+          provider: 'test-provider',
         },
-        errorType: 401
+        errorType: 401,
       });
     });
     it('should return InternalServerError error when throw a unknown error', async () => {
       const mockParams = { provider: 'test-provider' };
-      vi.mocked(getJWTPayload).mockRejectedValueOnce(
-        new Error('unknown error')
-      );
+      vi.mocked(getJWTPayload).mockRejectedValueOnce(new Error('unknown error'));
 
       const response = await POST(request, { params: mockParams });
 
@@ -93,9 +86,9 @@ describe('POST handler', () => {
       expect(await response.json()).toEqual({
         body: {
           error: {},
-          provider: 'test-provider'
+          provider: 'test-provider',
         },
-        errorType: 500
+        errorType: 500,
       });
     });
   });
@@ -107,21 +100,14 @@ describe('POST handler', () => {
       request = new Request(new URL('https://test.com'), {
         headers: { [LOBE_CHAT_AUTH_HEADER]: 'Bearer some-valid-token' },
         method: 'POST',
-        body: JSON.stringify(mockChatPayload)
+        body: JSON.stringify(mockChatPayload),
       });
 
-      const mockChatResponse: any = {
-        success: true,
-        message: 'Reply from agent'
-      };
+      const mockChatResponse: any = { success: true, message: 'Reply from agent' };
 
-      vi.spyOn(AgentRuntime.prototype, 'chat').mockResolvedValue(
-        mockChatResponse
-      );
+      vi.spyOn(AgentRuntime.prototype, 'chat').mockResolvedValue(mockChatResponse);
 
-      const response = await POST(request as unknown as Request, {
-        params: mockParams
-      });
+      const response = await POST(request as unknown as Request, { params: mockParams });
 
       expect(response).toEqual(mockChatResponse);
       expect(AgentRuntime.prototype.chat).toHaveBeenCalledWith(mockChatPayload);
@@ -133,17 +119,15 @@ describe('POST handler', () => {
       request = new Request(new URL('https://test.com'), {
         headers: { [LOBE_CHAT_AUTH_HEADER]: 'Bearer some-valid-token' },
         method: 'POST',
-        body: JSON.stringify(mockChatPayload)
+        body: JSON.stringify(mockChatPayload),
       });
 
       const mockErrorResponse = {
         errorType: ChatErrorType.InternalServerError,
-        errorMessage: 'Something went wrong'
+        errorMessage: 'Something went wrong',
       };
 
-      vi.spyOn(AgentRuntime.prototype, 'chat').mockRejectedValue(
-        mockErrorResponse
-      );
+      vi.spyOn(AgentRuntime.prototype, 'chat').mockRejectedValue(mockErrorResponse);
 
       const response = await POST(request, { params: mockParams });
 
@@ -153,11 +137,11 @@ describe('POST handler', () => {
           errorMessage: 'Something went wrong',
           error: {
             errorMessage: 'Something went wrong',
-            errorType: 500
+            errorType: 500,
           },
-          provider: 'test-provider'
+          provider: 'test-provider',
         },
-        errorType: 500
+        errorType: 500,
       });
     });
   });

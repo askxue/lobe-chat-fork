@@ -30,8 +30,8 @@ module.exports = {
     'ja-JP',
     // ...Other languages
 
-    'vi-VN' // Add 'vi-VN' to the array
-  ]
+    'vi-VN', // Add 'vi-VN' to the array
+  ],
 };
 ```
 

@@ -17,21 +17,16 @@ class _DEBUG_MODEL extends BaseModel<'sessions'> {
   }
 
   private randomString(length: number) {
-    const characters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
     for (let i = 0; i < length; i++) {
-      result += characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     return result;
   }
 
   private randomDate(start: Date, end: Date) {
-    return new Date(
-      start.getTime() + Math.random() * (end.getTime() - start.getTime())
-    ).getTime();
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).getTime();
   }
 
   private randomPick<T>(array: T[]): T {
@@ -43,7 +38,7 @@ class _DEBUG_MODEL extends BaseModel<'sessions'> {
     sessionCount = 10,
     topicCount = 2000,
     messageCount = 10_000,
-    startIndex = 1
+    startIndex = 1,
   }) => {
     const numberOfSessions = sessionCount;
     const numberOfTopics = topicCount;
@@ -63,10 +58,10 @@ class _DEBUG_MODEL extends BaseModel<'sessions'> {
         id: `sess_${i}`,
         meta: {
           description: `Session Description ${i}`,
-          title: `Session Title ${i}`
+          title: `Session Title ${i}`,
         },
         type: 'agent',
-        updatedAt: this.randomDate(new Date(2020, 0, 1), new Date())
+        updatedAt: this.randomDate(new Date(2020, 0, 1), new Date()),
       });
     }
 
@@ -78,7 +73,7 @@ class _DEBUG_MODEL extends BaseModel<'sessions'> {
         id: `topic_${i}`,
         sessionId: `sess_${this.getRandomInt(startIndex, numberOfSessions)}`,
         title: `Topic Title ${i}`,
-        updatedAt: this.randomDate(new Date(2020, 0, 1), new Date())
+        updatedAt: this.randomDate(new Date(2020, 0, 1), new Date()),
       });
     }
 
@@ -95,7 +90,7 @@ class _DEBUG_MODEL extends BaseModel<'sessions'> {
         role: this.randomPick(['user', 'assistant']),
         sessionId: `sess_${this.getRandomInt(startIndex, numberOfSessions)}`,
         topicId: `topic_${this.getRandomInt(startIndex, numberOfTopics)}`,
-        updatedAt: this.randomDate(new Date(2020, 0, 1), new Date())
+        updatedAt: this.randomDate(new Date(2020, 0, 1), new Date()),
       });
     }
 
@@ -121,7 +116,7 @@ class _DEBUG_MODEL extends BaseModel<'sessions'> {
         console.time('插入messages');
         await this.db.messages.bulkAdd(messagesData);
         console.timeEnd('插入messages');
-      }
+      },
     );
   };
 }

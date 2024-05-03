@@ -13,14 +13,12 @@ describe('useOnPluginReadyForInteraction', () => {
   });
 
   it('sets readyForRender to true when a PluginChannel.pluginReadyForRender message is received', async () => {
-    const { result } = renderHook(() =>
-      useOnPluginReadyForInteraction(mockOnReady)
-    );
+    const { result } = renderHook(() => useOnPluginReadyForInteraction(mockOnReady));
 
     expect(result.current).toBe(false); // Initially, readyForRender should be false
 
     const event = new MessageEvent('message', {
-      data: { type: PluginChannel.pluginReadyForRender }
+      data: { type: PluginChannel.pluginReadyForRender },
     });
 
     act(() => {
@@ -31,14 +29,12 @@ describe('useOnPluginReadyForInteraction', () => {
   });
 
   it('sets readyForRender to true when a PluginChannel.pluginReadyForRender message is received', async () => {
-    const { result } = renderHook(() =>
-      useOnPluginReadyForInteraction(mockOnReady)
-    );
+    const { result } = renderHook(() => useOnPluginReadyForInteraction(mockOnReady));
 
     expect(result.current).toBe(false); // Initially, readyForRender should be false
 
     const event = new MessageEvent('message', {
-      data: { type: PluginChannel.pluginReadyForRender }
+      data: { type: PluginChannel.pluginReadyForRender },
     });
 
     act(() => {
@@ -53,7 +49,7 @@ describe('useOnPluginReadyForInteraction', () => {
     renderHook(() => useOnPluginReadyForInteraction(mockOnReady));
 
     const event = new MessageEvent('message', {
-      data: { type: 'nonPluginReadyMessage' }
+      data: { type: 'nonPluginReadyMessage' },
     });
 
     act(() => {
@@ -64,14 +60,12 @@ describe('useOnPluginReadyForInteraction', () => {
   });
 
   it('cleans up message event listener on unmount', () => {
-    const { unmount } = renderHook(() =>
-      useOnPluginReadyForInteraction(mockOnReady)
-    );
+    const { unmount } = renderHook(() => useOnPluginReadyForInteraction(mockOnReady));
 
     unmount();
 
     const event = new MessageEvent('message', {
-      data: { type: PluginChannel.pluginReadyForRender }
+      data: { type: PluginChannel.pluginReadyForRender },
     });
 
     window.dispatchEvent(event);

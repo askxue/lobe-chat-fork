@@ -9,23 +9,23 @@ import { creatUrlStorage } from './urlStorage';
 // Mock the dependent modules
 vi.mock('./indexedDB', () => {
   return {
-    createIndexedDB: vi.fn()
+    createIndexedDB: vi.fn(),
   };
 });
 
 vi.mock('./localStorage', () => ({
-  createLocalStorage: vi.fn()
+  createLocalStorage: vi.fn(),
 }));
 
 vi.mock('./urlStorage', () => ({
-  creatUrlStorage: vi.fn()
+  creatUrlStorage: vi.fn(),
 }));
 
 vi.mock('./keyMapper', () => ({
   createKeyMapper: vi.fn().mockReturnValue({
     mapStateKeyToStorageKey: vi.fn((k) => k),
-    getStateKeyFromStorageKey: vi.fn((k) => k)
-  })
+    getStateKeyFromStorageKey: vi.fn((k) => k),
+  }),
 }));
 
 afterEach(() => {
@@ -49,7 +49,7 @@ describe('createHyperStorage', () => {
     vi.mocked(createIndexedDB).mockImplementation(() => ({
       getItem: vi.fn(),
       removeItem: vi.fn(),
-      setItem: indexDBSetItemMock
+      setItem: indexDBSetItemMock,
     }));
 
     const localStorageSetItemMock = vi.fn();
@@ -57,7 +57,7 @@ describe('createHyperStorage', () => {
     vi.mocked(createLocalStorage).mockImplementation(() => ({
       getItem: vi.fn(),
       removeItem: vi.fn(),
-      setItem: localStorageSetItemMock
+      setItem: localStorageSetItemMock,
     }));
 
     expect(indexDBSetItemMock).not.toHaveBeenCalled();
@@ -72,11 +72,11 @@ describe('createHyperStorage', () => {
     vi.mocked(createIndexedDB).mockImplementation(() => ({
       getItem: vi.fn(),
       removeItem: vi.fn(),
-      setItem: indexDBSetItemMock
+      setItem: indexDBSetItemMock,
     }));
 
     const storage = createHyperStorage({
-      localStorage: { mode: 'indexedDB', dbName: 'testDB', selectors: [] }
+      localStorage: { mode: 'indexedDB', dbName: 'testDB', selectors: [] },
     });
 
     await storage.setItem('key', { state: {}, version: 1 });
@@ -86,9 +86,7 @@ describe('createHyperStorage', () => {
 
   it('should use the provided dbName for indexedDB', async () => {
     const dbName = 'customDB';
-    createHyperStorage({
-      localStorage: { mode: 'indexedDB', dbName, selectors: [] }
-    });
+    createHyperStorage({ localStorage: { mode: 'indexedDB', dbName, selectors: [] } });
 
     expect(vi.mocked(createIndexedDB)).toHaveBeenCalledWith(dbName);
   });
@@ -100,12 +98,10 @@ describe('createHyperStorage', () => {
     vi.mocked(creatUrlStorage).mockImplementation(() => ({
       getItem: vi.fn(),
       removeItem: vi.fn(),
-      setItem: setItemMock
+      setItem: setItemMock,
     }));
 
-    const storage = createHyperStorage({
-      url: { mode: urlMode, selectors: [] }
-    });
+    const storage = createHyperStorage({ url: { mode: urlMode, selectors: [] } });
 
     await storage.setItem('key', { state: {}, version: 1 });
 
@@ -122,12 +118,10 @@ describe('createHyperStorage', () => {
       vi.mocked(createIndexedDB).mockImplementation(() => ({
         getItem: indexedDBGetItemMock,
         removeItem: vi.fn(),
-        setItem: vi.fn()
+        setItem: vi.fn(),
       }));
 
-      const storage = createHyperStorage({
-        localStorage: { mode: 'indexedDB', selectors: [] }
-      });
+      const storage = createHyperStorage({ localStorage: { mode: 'indexedDB', selectors: [] } });
       const item = await storage.getItem('key');
 
       expect(indexedDBGetItemMock).toHaveBeenCalledWith('key');
@@ -143,18 +137,16 @@ describe('createHyperStorage', () => {
       vi.mocked(createIndexedDB).mockImplementation(() => ({
         getItem: indexedDBGetItemMock,
         removeItem: vi.fn(),
-        setItem: vi.fn()
+        setItem: vi.fn(),
       }));
 
       vi.mocked(createLocalStorage).mockImplementation(() => ({
         getItem: localStorageGetItemMock,
         removeItem: vi.fn(),
-        setItem: vi.fn()
+        setItem: vi.fn(),
       }));
 
-      const storage = createHyperStorage({
-        localStorage: { mode: 'indexedDB', selectors: [] }
-      });
+      const storage = createHyperStorage({ localStorage: { mode: 'indexedDB', selectors: [] } });
       const item = await storage.getItem('key');
 
       expect(indexedDBGetItemMock).toHaveBeenCalledWith('key');
@@ -174,13 +166,13 @@ describe('createHyperStorage', () => {
       vi.mocked(createIndexedDB).mockImplementation(() => ({
         getItem: indexedDBGetItemMock,
         removeItem: vi.fn(),
-        setItem: vi.fn()
+        setItem: vi.fn(),
       }));
 
       vi.mocked(createLocalStorage).mockImplementation(() => ({
         getItem: localStorageGetItemMock,
         removeItem: vi.fn(),
-        setItem: vi.fn()
+        setItem: vi.fn(),
       }));
 
       expect(indexedDBGetItemMock).not.toHaveBeenCalled();
@@ -190,26 +182,22 @@ describe('createHyperStorage', () => {
 
     describe('getItem method with URL storage', () => {
       it('should override state from URL storage if hasUrl is true', async () => {
-        const urlStorageGetItemMock = vi
-          .fn()
-          .mockReturnValue({ state: { urlKey: 'urlValue' } });
+        const urlStorageGetItemMock = vi.fn().mockReturnValue({ state: { urlKey: 'urlValue' } });
         vi.mocked(creatUrlStorage).mockImplementation(() => ({
           getItem: urlStorageGetItemMock,
           removeItem: vi.fn(),
-          setItem: vi.fn()
+          setItem: vi.fn(),
         }));
 
         // Mock createKeyMapper to simulate state key mapping from URL storage keys
         vi.mocked(createKeyMapper).mockReturnValue({
           mapStateKeyToStorageKey: vi.fn((k) => k),
-          getStateKeyFromStorageKey: vi.fn((k) =>
-            k === 'urlKey' ? 'mappedKey' : undefined
-          )
+          getStateKeyFromStorageKey: vi.fn((k) => (k === 'urlKey' ? 'mappedKey' : undefined)),
         });
 
         const storage = createHyperStorage({
           url: { mode: 'hash', selectors: [] },
-          localStorage: false
+          localStorage: false,
         });
         const item = await storage.getItem('key');
 
@@ -218,24 +206,22 @@ describe('createHyperStorage', () => {
       });
 
       it('should not include URL storage state if key mapping is undefined', async () => {
-        const urlStorageGetItemMock = vi
-          .fn()
-          .mockReturnValue({ state: { urlKey: 'urlValue' } });
+        const urlStorageGetItemMock = vi.fn().mockReturnValue({ state: { urlKey: 'urlValue' } });
         vi.mocked(creatUrlStorage).mockImplementation(() => ({
           getItem: urlStorageGetItemMock,
           removeItem: vi.fn(),
-          setItem: vi.fn()
+          setItem: vi.fn(),
         }));
 
         // Mock createKeyMapper to simulate state key mapping from URL storage keys
         vi.mocked(createKeyMapper).mockReturnValue({
           mapStateKeyToStorageKey: vi.fn((k) => k),
-          getStateKeyFromStorageKey: vi.fn(() => undefined) // No key will be mapped
+          getStateKeyFromStorageKey: vi.fn(() => undefined), // No key will be mapped
         });
 
         const storage = createHyperStorage({
           url: { mode: 'hash', selectors: [] },
-          localStorage: false
+          localStorage: false,
         });
         const item = await storage.getItem('key');
 
@@ -248,7 +234,7 @@ describe('createHyperStorage', () => {
         vi.mocked(creatUrlStorage).mockImplementation(() => ({
           getItem: urlStorageGetItemMock,
           removeItem: vi.fn(),
-          setItem: vi.fn()
+          setItem: vi.fn(),
         }));
 
         const storage = createHyperStorage({ localStorage: false }); // No URL options provided
@@ -265,12 +251,10 @@ describe('createHyperStorage', () => {
       vi.mocked(createIndexedDB).mockImplementation(() => ({
         getItem: vi.fn(),
         removeItem: indexedDBRemoveItemMock,
-        setItem: vi.fn()
+        setItem: vi.fn(),
       }));
 
-      const storage = createHyperStorage({
-        localStorage: { mode: 'indexedDB', selectors: [] }
-      });
+      const storage = createHyperStorage({ localStorage: { mode: 'indexedDB', selectors: [] } });
       await storage.removeItem('key');
 
       expect(indexedDBRemoveItemMock).toHaveBeenCalledWith('key');
@@ -281,7 +265,7 @@ describe('createHyperStorage', () => {
       vi.mocked(createLocalStorage).mockImplementation(() => ({
         getItem: vi.fn(),
         removeItem: localStorageRemoveItemMock,
-        setItem: vi.fn()
+        setItem: vi.fn(),
       }));
 
       const storage = createHyperStorage({});
@@ -296,17 +280,15 @@ describe('createHyperStorage', () => {
       vi.mocked(creatUrlStorage).mockImplementation(() => ({
         getItem: vi.fn(),
         removeItem: urlStorageRemoveItemMock,
-        setItem: vi.fn()
+        setItem: vi.fn(),
       }));
       // Mock createKeyMapper to simulate state key mapping from URL storage keys
       vi.mocked(createKeyMapper).mockReturnValue({
         mapStateKeyToStorageKey: vi.fn((k) => k),
-        getStateKeyFromStorageKey: vi.fn((k) => k) // No key will be mapped
+        getStateKeyFromStorageKey: vi.fn((k) => k), // No key will be mapped
       });
 
-      const storage = createHyperStorage({
-        url: { mode: 'hash', selectors: ['key'] }
-      });
+      const storage = createHyperStorage({ url: { mode: 'hash', selectors: ['key'] } });
       await storage.removeItem('key');
 
       expect(urlStorageRemoveItemMock).toHaveBeenCalledWith('key');
@@ -319,19 +301,13 @@ describe('createHyperStorage', () => {
       vi.mocked(createIndexedDB).mockImplementation(() => ({
         getItem: vi.fn(),
         removeItem: vi.fn(),
-        setItem: indexedDBSetItemMock
+        setItem: indexedDBSetItemMock,
       }));
 
-      const storage = createHyperStorage({
-        localStorage: { mode: 'indexedDB', selectors: [] }
-      });
+      const storage = createHyperStorage({ localStorage: { mode: 'indexedDB', selectors: [] } });
       await storage.setItem('key', { state: { key: 'value' }, version: 1 });
 
-      expect(indexedDBSetItemMock).toHaveBeenCalledWith(
-        'key',
-        { key: 'value' },
-        1
-      );
+      expect(indexedDBSetItemMock).toHaveBeenCalledWith('key', { key: 'value' }, 1);
     });
 
     it('should save item to localStorage when useIndexedDB is false', async () => {
@@ -339,17 +315,13 @@ describe('createHyperStorage', () => {
       vi.mocked(createLocalStorage).mockImplementation(() => ({
         getItem: vi.fn(),
         removeItem: vi.fn(),
-        setItem: localStorageSetItemMock
+        setItem: localStorageSetItemMock,
       }));
 
       const storage = createHyperStorage({});
       await storage.setItem('key', { state: { key: 'value' }, version: 1 });
 
-      expect(localStorageSetItemMock).toHaveBeenCalledWith(
-        'key',
-        { key: 'value' },
-        1
-      );
+      expect(localStorageSetItemMock).toHaveBeenCalledWith('key', { key: 'value' }, 1);
     });
 
     it('should save state to URL storage if URL options provided', async () => {
@@ -357,12 +329,10 @@ describe('createHyperStorage', () => {
       vi.mocked(creatUrlStorage).mockImplementation(() => ({
         getItem: vi.fn(),
         removeItem: vi.fn(),
-        setItem: urlStorageSetItemMock
+        setItem: urlStorageSetItemMock,
       }));
 
-      const storage = createHyperStorage({
-        url: { mode: 'hash', selectors: [] }
-      });
+      const storage = createHyperStorage({ url: { mode: 'hash', selectors: [] } });
       await storage.setItem('key', { state: { key: 'value' }, version: 1 });
 
       expect(urlStorageSetItemMock).toHaveBeenCalled();

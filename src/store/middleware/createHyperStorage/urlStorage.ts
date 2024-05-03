@@ -10,8 +10,7 @@ const createUrlSearch = (mode: 'search' | 'hash' = 'hash'): UrlSearchHelper => {
   if (mode === 'hash')
     return {
       getUrlSearch: () => location.hash.slice(1),
-      setUrlSearch: (params: URLSearchParams) =>
-        (location.hash = params.toString())
+      setUrlSearch: (params: URLSearchParams) => (location.hash = params.toString()),
     };
 
   return {
@@ -20,13 +19,11 @@ const createUrlSearch = (mode: 'search' | 'hash' = 'hash'): UrlSearchHelper => {
       if (params.size === 0) return;
 
       history.replaceState({}, '', '?' + params.toString());
-    }
+    },
   };
 };
 
-export const creatUrlStorage = <State extends object>(
-  mode: 'hash' | 'search' = 'hash'
-) => {
+export const creatUrlStorage = <State extends object>(mode: 'hash' | 'search' = 'hash') => {
   const { setUrlSearch, getUrlSearch } = createUrlSearch(mode);
 
   return {
@@ -79,6 +76,6 @@ export const creatUrlStorage = <State extends object>(
       }
 
       setUrlSearch(searchParameters);
-    }
+    },
   };
 };

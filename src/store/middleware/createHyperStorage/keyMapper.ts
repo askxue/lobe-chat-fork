@@ -3,7 +3,7 @@ import { HyperStorageOptionsObj } from './type';
 export const createKeyMapper = (options: HyperStorageOptionsObj) => {
   const mapStateKeyToStorageKey = (
     key: string,
-    mode: keyof HyperStorageOptionsObj = 'localStorage'
+    mode: keyof HyperStorageOptionsObj = 'localStorage',
   ) => {
     const media = options[mode];
     if (media === false) return key;
@@ -26,7 +26,7 @@ export const createKeyMapper = (options: HyperStorageOptionsObj) => {
 
   const getStateKeyFromStorageKey = (
     key: string,
-    mode: keyof HyperStorageOptionsObj = 'localStorage'
+    mode: keyof HyperStorageOptionsObj = 'localStorage',
   ) => {
     const media = options[mode];
     if (media === false) return key;
@@ -52,6 +52,6 @@ export const createKeyMapper = (options: HyperStorageOptionsObj) => {
 
   return {
     getStateKeyFromStorageKey,
-    mapStateKeyToStorageKey
+    mapStateKeyToStorageKey,
   };
 };

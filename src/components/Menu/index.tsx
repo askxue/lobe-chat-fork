@@ -1,8 +1,4 @@
-import {
-  Menu as AntdMenu,
-  MenuProps as AntdMenuProps,
-  ConfigProvider
-} from 'antd';
+import { Menu as AntdMenu, MenuProps as AntdMenuProps, ConfigProvider } from 'antd';
 import { createStyles } from 'antd-style';
 import { memo } from 'react';
 
@@ -59,47 +55,43 @@ const useStyles = createStyles(({ css, token, prefixCls }) => ({
     .${prefixCls}-menu-title-content {
       flex: 1;
     }
-  `
+  `,
 }));
 
 export interface MenuProps extends AntdMenuProps {
   variant?: 'default' | 'compact';
 }
 
-const Menu = memo<MenuProps>(
-  ({ className, selectable = false, variant, ...rest }) => {
-    const isCompact = variant === 'compact';
-    const { cx, styles, theme } = useStyles();
-    return (
-      <ConfigProvider
-        theme={{
-          components: {
-            Menu: {
-              controlHeightLG: 36,
-              iconMarginInlineEnd: 8,
-              iconSize: 16,
-              itemBorderRadius: theme.borderRadius,
-              itemColor: selectable
-                ? theme.colorTextSecondary
-                : theme.colorText,
-              itemHoverBg: theme.colorFillTertiary,
-              itemMarginBlock: isCompact ? 0 : 4,
-              itemMarginInline: isCompact ? 0 : 4,
-              itemSelectedBg: theme.colorFillSecondary,
-              paddingXS: -8
-            }
-          }
-        }}
-      >
-        <AntdMenu
-          className={cx(styles.menu, isCompact && styles.compact, className)}
-          mode="vertical"
-          selectable={selectable}
-          {...rest}
-        />
-      </ConfigProvider>
-    );
-  }
-);
+const Menu = memo<MenuProps>(({ className, selectable = false, variant, ...rest }) => {
+  const isCompact = variant === 'compact';
+  const { cx, styles, theme } = useStyles();
+  return (
+    <ConfigProvider
+      theme={{
+        components: {
+          Menu: {
+            controlHeightLG: 36,
+            iconMarginInlineEnd: 8,
+            iconSize: 16,
+            itemBorderRadius: theme.borderRadius,
+            itemColor: selectable ? theme.colorTextSecondary : theme.colorText,
+            itemHoverBg: theme.colorFillTertiary,
+            itemMarginBlock: isCompact ? 0 : 4,
+            itemMarginInline: isCompact ? 0 : 4,
+            itemSelectedBg: theme.colorFillSecondary,
+            paddingXS: -8,
+          },
+        },
+      }}
+    >
+      <AntdMenu
+        className={cx(styles.menu, isCompact && styles.compact, className)}
+        mode="vertical"
+        selectable={selectable}
+        {...rest}
+      />
+    </ConfigProvider>
+  );
+});
 
 export default Menu;

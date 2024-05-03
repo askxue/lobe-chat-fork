@@ -7,5 +7,5 @@ const prefixCls = 'ant';
 
 export const GlobalStyle = createGlobalStyle(({ theme }) => [
   global({ prefixCls, token: theme }),
-  antdOverride({ prefixCls, token: theme })
+  antdOverride({ prefixCls, token: theme }),
 ]);

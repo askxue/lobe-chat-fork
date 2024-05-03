@@ -9,9 +9,7 @@ const MOBILE_IGNORE_NAV_ROUTES = ['/settings/', '/chat/'];
 
 const Layout = memo(({ children, nav }: LayoutProps) => {
   const pathname = usePathname();
-  const hideNav = MOBILE_IGNORE_NAV_ROUTES.some((path) =>
-    pathname.startsWith(path)
-  );
+  const hideNav = MOBILE_IGNORE_NAV_ROUTES.some((path) => pathname.startsWith(path));
 
   return (
     <>

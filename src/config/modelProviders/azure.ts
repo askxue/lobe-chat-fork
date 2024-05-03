@@ -11,14 +11,14 @@ const Azure: ModelProviderCard = {
       functionCall: true,
       id: 'gpt-35-turbo',
       maxOutput: 4096,
-      tokens: 16_385
+      tokens: 16_385,
     },
     {
       deploymentName: 'gpt-35-turbo-16k',
       displayName: 'GPT-3.5 Turbo',
       functionCall: true,
       id: 'gpt-35-turbo-16k',
-      tokens: 16_384
+      tokens: 16_384,
     },
     {
       deploymentName: 'gpt-4-turbo',
@@ -26,7 +26,7 @@ const Azure: ModelProviderCard = {
       enabled: true,
       functionCall: true,
       id: 'gpt-4',
-      tokens: 128_000
+      tokens: 128_000,
     },
     {
       deploymentName: 'gpt-4-vision',
@@ -34,10 +34,10 @@ const Azure: ModelProviderCard = {
       displayName: 'GPT-4 Turbo with Vision Preview',
       id: 'gpt-4-vision-preview',
       tokens: 128_000,
-      vision: true
-    }
+      vision: true,
+    },
   ],
-  id: 'azure'
+  id: 'azure',
 };
 
 export default Azure;

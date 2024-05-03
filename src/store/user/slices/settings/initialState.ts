@@ -20,7 +20,7 @@ export const initialSettingsState: UserSettingsState = {
   defaultSettings: DEFAULT_SETTINGS,
   modelProviderList: DEFAULT_MODEL_PROVIDER_LIST,
   serverConfig: {
-    telemetry: {}
+    telemetry: {},
   },
-  settings: {}
+  settings: {},
 };

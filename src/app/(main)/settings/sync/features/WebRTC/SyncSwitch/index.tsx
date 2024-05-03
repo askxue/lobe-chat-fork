@@ -21,18 +21,10 @@ const SyncSwitch = memo<SyncSwitchProps>(({ value, onChange }) => {
         />
         <span className="switch__base-outer"></span>
         <span className="switch__base-inner"></span>
-        <svg
-          className="switch__base-neon"
-          height="24px"
-          viewBox="0 0 40 24"
-          width="40px"
-        >
+        <svg className="switch__base-neon" height="24px" viewBox="0 0 40 24" width="40px">
           <defs>
             <filter id="switch-glow">
-              <feGaussianBlur
-                result="coloredBlur"
-                stdDeviation="1"
-              ></feGaussianBlur>
+              <feGaussianBlur result="coloredBlur" stdDeviation="1"></feGaussianBlur>
               <feMerge>
                 <feMergeNode in="coloredBlur"></feMergeNode>
                 <feMergeNode in="SourceGraphic"></feMergeNode>
@@ -42,19 +34,10 @@ const SyncSwitch = memo<SyncSwitchProps>(({ value, onChange }) => {
               <stop offset="0%" stopColor="hsl(var(--on-hue1),90%,70%)" />
               <stop offset="100%" stopColor="hsl(var(--on-hue2),90%,70%)" />
             </linearGradient>
-            <linearGradient
-              id="switch-gradient2"
-              x1="0.7"
-              x2="0.3"
-              y1="0"
-              y2="1"
-            >
+            <linearGradient id="switch-gradient2" x1="0.7" x2="0.3" y1="0" y2="1">
               <stop offset="25%" stopColor="hsla(var(--on-hue1),90%,70%,0)" />
               <stop offset="50%" stopColor="hsla(var(--on-hue1),90%,70%,0.3)" />
-              <stop
-                offset="100%"
-                stopColor="hsla(var(--on-hue2),90%,70%,0.3)"
-              />
+              <stop offset="100%" stopColor="hsla(var(--on-hue2),90%,70%,0.3)" />
             </linearGradient>
           </defs>
           <path
@@ -71,12 +54,7 @@ const SyncSwitch = memo<SyncSwitchProps>(({ value, onChange }) => {
         <span className="switch__knob-shadow"></span>
         <span className="switch__knob-container">
           <span className="switch__knob">
-            <svg
-              className="switch__knob-neon"
-              height="48px"
-              viewBox="0 0 48 48"
-              width="48px"
-            >
+            <svg className="switch__knob-neon" height="48px" viewBox="0 0 48 48" width="48px">
               <circle
                 cx="24"
                 cy="24"

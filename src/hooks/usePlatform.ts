@@ -10,6 +10,6 @@ export const usePlatform = () => {
     isChrome: browser.current === 'Chrome',
     isIOS: platform.current === 'iOS',
     isMacOS: platform.current === 'Mac OS',
-    isSafari: browser.current === 'Safari'
+    isSafari: browser.current === 'Safari',
   };
 };

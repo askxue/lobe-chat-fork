@@ -13,8 +13,8 @@ vi.mock('@/components/AntdStaticMethods', () => ({
     loading: vi.fn(),
     success: vi.fn(),
     error: vi.fn(),
-    destroy: vi.fn()
-  }
+    destroy: vi.fn(),
+  },
 }));
 
 describe('createSessionGroupSlice', () => {
@@ -23,10 +23,7 @@ describe('createSessionGroupSlice', () => {
       const mockId = 'mock-id';
       const mockName = 'Test Group';
       vi.spyOn(sessionService, 'createSessionGroup').mockResolvedValue(mockId);
-      const spyOnRefreshSessions = vi.spyOn(
-        useSessionStore.getState(),
-        'refreshSessions'
-      );
+      const spyOnRefreshSessions = vi.spyOn(useSessionStore.getState(), 'refreshSessions');
 
       const { result } = renderHook(() => useSessionStore());
 
@@ -44,10 +41,7 @@ describe('createSessionGroupSlice', () => {
   describe('clearSessionGroups', () => {
     it('should clear session groups and refresh sessions', async () => {
       vi.spyOn(sessionService, 'removeSessionGroups');
-      const spyOnRefreshSessions = vi.spyOn(
-        useSessionStore.getState(),
-        'refreshSessions'
-      );
+      const spyOnRefreshSessions = vi.spyOn(useSessionStore.getState(), 'refreshSessions');
 
       const { result } = renderHook(() => useSessionStore());
 
@@ -64,10 +58,7 @@ describe('createSessionGroupSlice', () => {
     it('should remove a session group and refresh sessions', async () => {
       const mockId = 'mock-id';
       vi.spyOn(sessionService, 'removeSessionGroup');
-      const spyOnRefreshSessions = vi.spyOn(
-        useSessionStore.getState(),
-        'refreshSessions'
-      );
+      const spyOnRefreshSessions = vi.spyOn(useSessionStore.getState(), 'refreshSessions');
 
       const { result } = renderHook(() => useSessionStore());
 
@@ -85,10 +76,7 @@ describe('createSessionGroupSlice', () => {
       const mockSessionId = 'session-id';
       const mockGroupId = 'group-id';
       vi.spyOn(sessionService, 'updateSession');
-      const spyOnRefreshSessions = vi.spyOn(
-        useSessionStore.getState(),
-        'refreshSessions'
-      );
+      const spyOnRefreshSessions = vi.spyOn(useSessionStore.getState(), 'refreshSessions');
 
       const { result } = renderHook(() => useSessionStore());
 
@@ -97,7 +85,7 @@ describe('createSessionGroupSlice', () => {
       });
 
       expect(sessionService.updateSession).toHaveBeenCalledWith(mockSessionId, {
-        group: mockGroupId
+        group: mockGroupId,
       });
       expect(spyOnRefreshSessions).toHaveBeenCalled();
     });
@@ -107,10 +95,7 @@ describe('createSessionGroupSlice', () => {
     it('should update a session group name and refresh sessions', async () => {
       const mockId = 'mock-id';
       const mockName = 'New Name';
-      const spyOnRefreshSessions = vi.spyOn(
-        useSessionStore.getState(),
-        'refreshSessions'
-      );
+      const spyOnRefreshSessions = vi.spyOn(useSessionStore.getState(), 'refreshSessions');
       vi.spyOn(sessionService, 'updateSessionGroup');
 
       const { result } = renderHook(() => useSessionStore());
@@ -119,9 +104,7 @@ describe('createSessionGroupSlice', () => {
         await result.current.updateSessionGroupName(mockId, mockName);
       });
 
-      expect(sessionService.updateSessionGroup).toHaveBeenCalledWith(mockId, {
-        name: mockName
-      });
+      expect(sessionService.updateSessionGroup).toHaveBeenCalledWith(mockId, { name: mockName });
       expect(spyOnRefreshSessions).toHaveBeenCalled();
     });
   });
@@ -130,13 +113,10 @@ describe('createSessionGroupSlice', () => {
     it('should update session group sort order and refresh sessions', async () => {
       const mockItems: any[] = [
         { id: 'id1', sort: 0 },
-        { id: 'id2', sort: 1 }
+        { id: 'id2', sort: 1 },
       ];
       vi.spyOn(sessionService, 'updateSessionGroupOrder');
-      const spyOnRefreshSessions = vi.spyOn(
-        useSessionStore.getState(),
-        'refreshSessions'
-      );
+      const spyOnRefreshSessions = vi.spyOn(useSessionStore.getState(), 'refreshSessions');
 
       const { result } = renderHook(() => useSessionStore());
 
@@ -145,7 +125,7 @@ describe('createSessionGroupSlice', () => {
       });
 
       expect(sessionService.updateSessionGroupOrder).toHaveBeenCalledWith(
-        mockItems.map((item) => ({ id: item.id, sort: item.sort }))
+        mockItems.map((item) => ({ id: item.id, sort: item.sort })),
       );
       expect(spyOnRefreshSessions).toHaveBeenCalled();
     });

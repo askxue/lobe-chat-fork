@@ -22,7 +22,7 @@ const useStyles = createStyles(({ token, css }) => ({
     font-size: 18px;
     font-weight: 700;
     line-height: 1.2;
-  `
+  `,
 }));
 
 const Header = memo<PropsWithChildren & Pick<DrawerProps, 'getContainer'>>(
@@ -41,12 +41,7 @@ const Header = memo<PropsWithChildren & Pick<DrawerProps, 'getContainer'>>(
             <div style={{ paddingLeft: 8 }}>
               <ChatHeaderTitle
                 title={
-                  <Flexbox
-                    align={'center'}
-                    className={styles.title}
-                    gap={4}
-                    horizontal
-                  >
+                  <Flexbox align={'center'} className={styles.title} gap={4} horizontal>
                     <ActionIcon
                       color={theme.colorText}
                       icon={Menu}
@@ -69,7 +64,7 @@ const Header = memo<PropsWithChildren & Pick<DrawerProps, 'getContainer'>>(
             flexDirection: 'column',
             gap: 20,
             justifyContent: 'space-between',
-            padding: 16
+            padding: 16,
           }}
           getContainer={getContainer}
           headerStyle={{ display: 'none' }}
@@ -81,7 +76,7 @@ const Header = memo<PropsWithChildren & Pick<DrawerProps, 'getContainer'>>(
           rootStyle={{ position: 'absolute' }}
           style={{
             background: theme.colorBgContainer,
-            borderRight: `1px solid ${theme.colorSplit}`
+            borderRight: `1px solid ${theme.colorSplit}`,
           }}
           width={260}
           zIndex={10}
@@ -91,7 +86,7 @@ const Header = memo<PropsWithChildren & Pick<DrawerProps, 'getContainer'>>(
         </Drawer>
       </>
     );
-  }
+  },
 );
 
 export default Header;

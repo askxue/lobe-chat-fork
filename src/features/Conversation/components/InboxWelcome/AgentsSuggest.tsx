@@ -45,7 +45,7 @@ const useStyles = createStyles(({ css, token }) => ({
   `,
   title: css`
     color: ${token.colorTextDescription};
-  `
+  `,
 }));
 
 const AgentsSuggest = memo(() => {
@@ -79,7 +79,7 @@ const AgentsSuggest = memo(() => {
           </Flexbox>
         </Link>
       )),
-    [agentList, sliceStart]
+    [agentList, sliceStart],
   );
 
   const handleRefresh = () => {

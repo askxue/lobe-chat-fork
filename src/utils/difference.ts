@@ -18,10 +18,7 @@ export const difference = <T extends object>(object: T, base: T) => {
       }
       // If they are objects, we recursively call changes to compare their values.
       else if (!isEqual(value, base[key])) {
-        result[key] =
-          isObject(value) && isObject(base[key])
-            ? changes(value, base[key])
-            : value;
+        result[key] = isObject(value) && isObject(base[key]) ? changes(value, base[key]) : value;
       }
     });
 

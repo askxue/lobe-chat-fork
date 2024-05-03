@@ -37,7 +37,7 @@ export const PluginStore = memo<PluginStoreProps>(({ setOpen, open }) => {
           }}
           options={[
             { label: t('store.tabs.all'), value: 'all' },
-            { label: t('store.tabs.installed'), value: 'installed' }
+            { label: t('store.tabs.installed'), value: 'installed' },
           ]}
           style={{ flex: 1 }}
           value={listType}

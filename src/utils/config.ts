@@ -8,7 +8,7 @@ import {
   ConfigFileSettings,
   ConfigFileSingleSession,
   ConfigModelMap,
-  ExportType
+  ExportType,
 } from '@/types/exportConfig';
 
 export const exportConfigFile = (config: object, fileName?: string) => {
@@ -34,10 +34,7 @@ export const exportConfigFile = (config: object, fileName?: string) => {
   a.remove();
 };
 
-export const importConfigFile = (
-  file: File,
-  onConfigImport: (config: ConfigFile) => void
-) => {
+export const importConfigFile = (file: File, onConfigImport: (config: ConfigFile) => void) => {
   file.text().then((text) => {
     try {
       const config = JSON.parse(text);
@@ -48,7 +45,7 @@ export const importConfigFile = (
       console.error(error);
       notification.error({
         description: `出错原因: ${(error as Error).message}`,
-        message: '导入失败'
+        message: '导入失败',
       });
     }
   });
@@ -60,14 +57,14 @@ type CreateConfigFile<T extends ExportType> = ConfigModelMap[T]['file'];
 
 export const createConfigFile = <T extends ExportType>(
   type: T,
-  state: CreateConfigFileState<T>
+  state: CreateConfigFileState<T>,
 ): CreateConfigFile<T> => {
   switch (type) {
     case 'agents': {
       return {
         exportType: 'agents',
         state,
-        version: Migration.targetVersion
+        version: Migration.targetVersion,
       } as ConfigFileAgents;
     }
 
@@ -75,7 +72,7 @@ export const createConfigFile = <T extends ExportType>(
       return {
         exportType: 'sessions',
         state,
-        version: Migration.targetVersion
+        version: Migration.targetVersion,
       } as ConfigFileSessions;
     }
 
@@ -83,7 +80,7 @@ export const createConfigFile = <T extends ExportType>(
       return {
         exportType: 'settings',
         state,
-        version: Migration.targetVersion
+        version: Migration.targetVersion,
       } as ConfigFileSettings;
     }
 
@@ -91,7 +88,7 @@ export const createConfigFile = <T extends ExportType>(
       return {
         exportType: 'sessions',
         state,
-        version: Migration.targetVersion
+        version: Migration.targetVersion,
       } as ConfigFileSingleSession;
     }
 
@@ -99,7 +96,7 @@ export const createConfigFile = <T extends ExportType>(
       return {
         exportType: 'all',
         state,
-        version: Migration.targetVersion
+        version: Migration.targetVersion,
       } as ConfigFileAll;
     }
   }

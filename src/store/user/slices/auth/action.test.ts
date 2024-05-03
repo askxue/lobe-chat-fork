@@ -10,14 +10,14 @@ import { switchLang } from '@/utils/client/switchLang';
 vi.mock('zustand/traditional');
 
 vi.mock('@/utils/client/switchLang', () => ({
-  switchLang: vi.fn()
+  switchLang: vi.fn(),
 }));
 
 vi.mock('swr', async (importOriginal) => {
   const modules = await importOriginal();
   return {
     ...(modules as any),
-    mutate: vi.fn()
+    mutate: vi.fn(),
   };
 });
 
@@ -41,16 +41,11 @@ describe('createAuthSlice', () => {
   describe('useFetchUserConfig', () => {
     it('should not fetch user config if initServer is false', async () => {
       const mockUserConfig: any = undefined; // 模拟未初始化服务器的情况
-      vi.spyOn(userService, 'getUserConfig').mockResolvedValueOnce(
-        mockUserConfig
-      );
+      vi.spyOn(userService, 'getUserConfig').mockResolvedValueOnce(mockUserConfig);
 
-      const { result } = renderHook(
-        () => useUserStore().useFetchUserConfig(false),
-        {
-          wrapper: withSWR
-        }
-      );
+      const { result } = renderHook(() => useUserStore().useFetchUserConfig(false), {
+        wrapper: withSWR,
+      });
 
       // 因为 initServer 为 false，所以不会触发 getUserConfig 的调用
       expect(userService.getUserConfig).not.toHaveBeenCalled();
@@ -62,19 +57,14 @@ describe('createAuthSlice', () => {
       const mockUserConfig: any = {
         avatar: 'new-avatar-url',
         settings: {
-          language: 'en'
-        }
+          language: 'en',
+        },
       };
-      vi.spyOn(userService, 'getUserConfig').mockResolvedValueOnce(
-        mockUserConfig
-      );
+      vi.spyOn(userService, 'getUserConfig').mockResolvedValueOnce(mockUserConfig);
 
-      const { result } = renderHook(
-        () => useUserStore().useFetchUserConfig(true),
-        {
-          wrapper: withSWR
-        }
-      );
+      const { result } = renderHook(() => useUserStore().useFetchUserConfig(true), {
+        wrapper: withSWR,
+      });
 
       // 等待 SWR 完成数据获取
       await waitFor(() => expect(result.current.data).toEqual(mockUserConfig));
@@ -90,19 +80,14 @@ describe('createAuthSlice', () => {
       const mockUserConfig: any = {
         avatar: 'new-avatar-url',
         settings: {
-          language: 'auto'
-        }
+          language: 'auto',
+        },
       };
-      vi.spyOn(userService, 'getUserConfig').mockResolvedValueOnce(
-        mockUserConfig
-      );
+      vi.spyOn(userService, 'getUserConfig').mockResolvedValueOnce(mockUserConfig);
 
-      const { result } = renderHook(
-        () => useUserStore().useFetchUserConfig(true),
-        {
-          wrapper: withSWR
-        }
-      );
+      const { result } = renderHook(() => useUserStore().useFetchUserConfig(true), {
+        wrapper: withSWR,
+      });
 
       // 等待 SWR 完成数据获取
       await waitFor(() => expect(result.current.data).toEqual(mockUserConfig));
@@ -118,12 +103,9 @@ describe('createAuthSlice', () => {
     it('should handle the case when user config is null', async () => {
       vi.spyOn(userService, 'getUserConfig').mockResolvedValueOnce(null as any);
 
-      const { result } = renderHook(
-        () => useUserStore().useFetchUserConfig(true),
-        {
-          wrapper: withSWR
-        }
-      );
+      const { result } = renderHook(() => useUserStore().useFetchUserConfig(true), {
+        wrapper: withSWR,
+      });
 
       // 等待 SWR 完成数据获取
       await waitFor(() => expect(result.current.data).toBeNull());

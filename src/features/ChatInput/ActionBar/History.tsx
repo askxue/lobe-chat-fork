@@ -13,11 +13,7 @@ const History = memo(() => {
 
   const [historyCount, unlimited, updateAgentConfig] = useAgentStore((s) => {
     const config = agentSelectors.currentAgentConfig(s);
-    return [
-      config.historyCount,
-      !config.enableHistoryCount,
-      s.updateAgentConfig
-    ];
+    return [config.historyCount, !config.enableHistoryCount, s.updateAgentConfig];
   });
 
   return (
@@ -58,7 +54,7 @@ const History = memo(() => {
           unlimited
             ? 'settingChat.enableHistoryCount.unlimited'
             : 'settingChat.enableHistoryCount.limited',
-          { number: historyCount || 0 }
+          { number: historyCount || 0 },
         )}
       />
     </Popover>

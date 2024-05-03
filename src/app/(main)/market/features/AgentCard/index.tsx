@@ -28,14 +28,13 @@ const useStyles = createStyles(({ css, token, isDarkMode }) => ({
 
     background: ${token.colorBgContainer};
     border-radius: ${token.borderRadiusLG}px;
-    box-shadow: 0 0 1px 1px
-      ${isDarkMode ? token.colorFillQuaternary : token.colorFillSecondary} inset;
+    box-shadow: 0 0 1px 1px ${isDarkMode ? token.colorFillQuaternary : token.colorFillSecondary}
+      inset;
 
     transition: box-shadow 0.2s ${token.motionEaseInOut};
 
     &:hover {
-      box-shadow: 0 0 1px 1px
-        ${isDarkMode ? token.colorFillSecondary : token.colorFill} inset;
+      box-shadow: 0 0 1px 1px ${isDarkMode ? token.colorFillSecondary : token.colorFill} inset;
     }
   `,
   desc: css`
@@ -53,7 +52,7 @@ const useStyles = createStyles(({ css, token, isDarkMode }) => ({
     margin-bottom: 0 !important;
     font-size: 18px !important;
     font-weight: bold;
-  `
+  `,
 }));
 
 interface AgentCardProps extends AgentsMarketIndexItem {
@@ -77,18 +76,8 @@ const AgentCard = memo<AgentCardProps>(
       >
         {!isCompact && <AgentCardBanner avatar={avatar} />}
         <Flexbox className={styles.inner} gap={12}>
-          <Flexbox
-            align={'flex-end'}
-            gap={16}
-            horizontal
-            justify={'space-between'}
-            width={'100%'}
-          >
-            <Title
-              className={styles.title}
-              ellipsis={{ rows: 1, tooltip: title }}
-              level={3}
-            >
+          <Flexbox align={'flex-end'} gap={16} horizontal justify={'space-between'} width={'100%'}>
+            <Title className={styles.title} ellipsis={{ rows: 1, tooltip: title }} level={3}>
               {title}
             </Title>
             {isCompact ? (
@@ -108,7 +97,7 @@ const AgentCard = memo<AgentCardProps>(
                   borderRadius: '50%',
                   marginTop: -6,
                   overflow: 'hidden',
-                  zIndex: 2
+                  zIndex: 2,
                 }}
                 width={64}
               >
@@ -121,10 +110,7 @@ const AgentCard = memo<AgentCardProps>(
               <Link aria-label={author} href={homepage} target={'_blank'}>
                 @{author}
               </Link>
-              <time
-                className={styles.time}
-                dateTime={new Date(createAt).toISOString()}
-              >
+              <time className={styles.time} dateTime={new Date(createAt).toISOString()}>
                 {createAt}
               </time>
             </Flexbox>
@@ -145,7 +131,7 @@ const AgentCard = memo<AgentCardProps>(
         </Flexbox>
       </Flexbox>
     );
-  }
+  },
 );
 
 AgentCard.displayName = 'AgentCard';

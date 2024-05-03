@@ -43,12 +43,7 @@ export class ClientService implements ITopicService {
   }
 
   async updateTopic(id: string, data: Partial<ChatTopic>) {
-    const favorite =
-      typeof data.favorite !== 'undefined'
-        ? data.favorite
-          ? 1
-          : 0
-        : undefined;
+    const favorite = typeof data.favorite !== 'undefined' ? (data.favorite ? 1 : 0) : undefined;
 
     return TopicModel.update(id, { ...data, favorite });
   }

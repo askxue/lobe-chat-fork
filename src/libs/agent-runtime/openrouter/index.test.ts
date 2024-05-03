@@ -2,10 +2,7 @@
 import OpenAI from 'openai';
 import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import {
-  ChatStreamCallbacks,
-  LobeOpenAICompatibleRuntime
-} from '@/libs/agent-runtime';
+import { ChatStreamCallbacks, LobeOpenAICompatibleRuntime } from '@/libs/agent-runtime';
 
 import * as debugStreamModule from '../utils/debugStream';
 import models from './fixtures/models.json';
@@ -26,11 +23,9 @@ beforeEach(() => {
 
   // 使用 vi.spyOn 来模拟 chat.completions.create 方法
   vi.spyOn(instance['client'].chat.completions, 'create').mockResolvedValue(
-    new ReadableStream() as any
+    new ReadableStream() as any,
   );
-  vi.spyOn(instance['client'].models, 'list').mockResolvedValue({
-    data: []
-  } as any);
+  vi.spyOn(instance['client'].models, 'list').mockResolvedValue({ data: [] } as any);
 });
 
 afterEach(() => {
@@ -52,15 +47,13 @@ describe('LobeOpenRouterAI', () => {
       const mockStream = new ReadableStream();
       const mockResponse = Promise.resolve(mockStream);
 
-      (instance['client'].chat.completions.create as Mock).mockResolvedValue(
-        mockResponse
-      );
+      (instance['client'].chat.completions.create as Mock).mockResolvedValue(mockResponse);
 
       // Act
       const result = await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'mistralai/mistral-7b-instruct:free',
-        temperature: 0
+        temperature: 0,
       });
 
       // Assert
@@ -72,9 +65,7 @@ describe('LobeOpenRouterAI', () => {
       const mockStream = new ReadableStream();
       const mockResponse = Promise.resolve(mockStream);
 
-      (instance['client'].chat.completions.create as Mock).mockResolvedValue(
-        mockResponse
-      );
+      (instance['client'].chat.completions.create as Mock).mockResolvedValue(mockResponse);
 
       // Act
       const result = await instance.chat({
@@ -82,7 +73,7 @@ describe('LobeOpenRouterAI', () => {
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'mistralai/mistral-7b-instruct:free',
         temperature: 0.7,
-        top_p: 1
+        top_p: 1,
       });
 
       // Assert
@@ -92,9 +83,9 @@ describe('LobeOpenRouterAI', () => {
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'mistralai/mistral-7b-instruct:free',
           temperature: 0.7,
-          top_p: 1
+          top_p: 1,
         },
-        { headers: { Accept: '*/*' } }
+        { headers: { Accept: '*/*' } },
       );
       expect(result).toBeInstanceOf(Response);
     });
@@ -107,34 +98,31 @@ describe('LobeOpenRouterAI', () => {
           {
             status: 400,
             error: {
-              message: 'Bad Request'
-            }
+              message: 'Bad Request',
+            },
           },
           'Error message',
-          {}
+          {},
         );
 
-        vi.spyOn(
-          instance['client'].chat.completions,
-          'create'
-        ).mockRejectedValue(apiError);
+        vi.spyOn(instance['client'].chat.completions, 'create').mockRejectedValue(apiError);
 
         // Act
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'mistralai/mistral-7b-instruct:free',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           expect(e).toEqual({
             endpoint: defaultBaseURL,
             error: {
               error: { message: 'Bad Request' },
-              status: 400
+              status: 400,
             },
             errorType: bizErrorType,
-            provider
+            provider,
           });
         }
       });
@@ -152,37 +140,29 @@ describe('LobeOpenRouterAI', () => {
         const errorInfo = {
           stack: 'abc',
           cause: {
-            message: 'api is undefined'
-          }
+            message: 'api is undefined',
+          },
         };
-        const apiError = new OpenAI.APIError(
-          400,
-          errorInfo,
-          'module error',
-          {}
-        );
+        const apiError = new OpenAI.APIError(400, errorInfo, 'module error', {});
 
-        vi.spyOn(
-          instance['client'].chat.completions,
-          'create'
-        ).mockRejectedValue(apiError);
+        vi.spyOn(instance['client'].chat.completions, 'create').mockRejectedValue(apiError);
 
         // Act
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'mistralai/mistral-7b-instruct:free',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           expect(e).toEqual({
             endpoint: defaultBaseURL,
             error: {
               cause: { message: 'api is undefined' },
-              stack: 'abc'
+              stack: 'abc',
             },
             errorType: bizErrorType,
-            provider
+            provider,
           });
         }
       });
@@ -191,42 +171,34 @@ describe('LobeOpenRouterAI', () => {
         // Arrange
         const errorInfo = {
           stack: 'abc',
-          cause: { message: 'api is undefined' }
+          cause: { message: 'api is undefined' },
         };
-        const apiError = new OpenAI.APIError(
-          400,
-          errorInfo,
-          'module error',
-          {}
-        );
+        const apiError = new OpenAI.APIError(400, errorInfo, 'module error', {});
 
         instance = new LobeOpenRouterAI({
           apiKey: 'test',
 
-          baseURL: 'https://api.abc.com/v1'
+          baseURL: 'https://api.abc.com/v1',
         });
 
-        vi.spyOn(
-          instance['client'].chat.completions,
-          'create'
-        ).mockRejectedValue(apiError);
+        vi.spyOn(instance['client'].chat.completions, 'create').mockRejectedValue(apiError);
 
         // Act
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'mistralai/mistral-7b-instruct:free',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           expect(e).toEqual({
             endpoint: 'https://api.***.com/v1',
             error: {
               cause: { message: 'api is undefined' },
-              stack: 'abc'
+              stack: 'abc',
             },
             errorType: bizErrorType,
-            provider
+            provider,
           });
         }
       });
@@ -235,15 +207,13 @@ describe('LobeOpenRouterAI', () => {
         // Mock the API call to simulate a 401 error
         const error = new Error('Unauthorized') as any;
         error.status = 401;
-        vi.mocked(instance['client'].chat.completions.create).mockRejectedValue(
-          error
-        );
+        vi.mocked(instance['client'].chat.completions.create).mockRejectedValue(error);
 
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'mistralai/mistral-7b-instruct:free',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           // Expect the chat method to throw an error with InvalidMoonshotAPIKey
@@ -251,7 +221,7 @@ describe('LobeOpenRouterAI', () => {
             endpoint: defaultBaseURL,
             error: new Error('Unauthorized'),
             errorType: invalidErrorType,
-            provider
+            provider,
           });
         }
       });
@@ -260,17 +230,14 @@ describe('LobeOpenRouterAI', () => {
         // Arrange
         const genericError = new Error('Generic Error');
 
-        vi.spyOn(
-          instance['client'].chat.completions,
-          'create'
-        ).mockRejectedValue(genericError);
+        vi.spyOn(instance['client'].chat.completions, 'create').mockRejectedValue(genericError);
 
         // Act
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'mistralai/mistral-7b-instruct:free',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           expect(e).toEqual({
@@ -281,8 +248,8 @@ describe('LobeOpenRouterAI', () => {
               name: genericError.name,
               cause: genericError.cause,
               message: genericError.message,
-              stack: genericError.stack
-            }
+              stack: genericError.stack,
+            },
           });
         }
       });
@@ -303,23 +270,18 @@ describe('LobeOpenRouterAI', () => {
                   model: 'mistralai/mistral-7b-instruct:free',
                   system_fingerprint: 'fp_86156a94a0',
                   choices: [
-                    {
-                      index: 0,
-                      delta: { content: 'hello' },
-                      logprobs: null,
-                      finish_reason: null
-                    }
-                  ]
+                    { index: 0, delta: { content: 'hello' }, logprobs: null, finish_reason: null },
+                  ],
                 });
                 controller.close();
-              }
-            }) as any
+              },
+            }) as any,
           );
 
         // 准备 callback 和 headers
         const mockCallback: ChatStreamCallbacks = {
           onStart: vi.fn(),
-          onToken: vi.fn()
+          onToken: vi.fn(),
         };
         const mockHeaders = { 'Custom-Header': 'TestValue' };
 
@@ -328,9 +290,9 @@ describe('LobeOpenRouterAI', () => {
           {
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'mistralai/mistral-7b-instruct:free',
-            temperature: 0
+            temperature: 0,
           },
-          { callback: mockCallback, headers: mockHeaders }
+          { callback: mockCallback, headers: mockHeaders },
         );
 
         // 验证 callback 被调用
@@ -354,16 +316,13 @@ describe('LobeOpenRouterAI', () => {
           start(controller) {
             controller.enqueue('Debug stream content');
             controller.close();
-          }
+          },
         }) as any;
         mockDebugStream.toReadableStream = () => mockDebugStream; // 添加 toReadableStream 方法
 
         // 模拟 chat.completions.create 返回值，包括模拟的 tee 方法
         (instance['client'].chat.completions.create as Mock).mockResolvedValue({
-          tee: () => [
-            mockProdStream,
-            { toReadableStream: () => mockDebugStream }
-          ]
+          tee: () => [mockProdStream, { toReadableStream: () => mockDebugStream }],
         });
 
         // 保存原始环境变量值
@@ -371,9 +330,7 @@ describe('LobeOpenRouterAI', () => {
 
         // 模拟环境变量
         process.env.DEBUG_OPENROUTER_CHAT_COMPLETION = '1';
-        vi.spyOn(debugStreamModule, 'debugStream').mockImplementation(() =>
-          Promise.resolve()
-        );
+        vi.spyOn(debugStreamModule, 'debugStream').mockImplementation(() => Promise.resolve());
 
         // 执行测试
         // 运行你的测试函数，确保它会在条件满足时调用 debugStream
@@ -381,7 +338,7 @@ describe('LobeOpenRouterAI', () => {
         await instance.chat({
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'mistralai/mistral-7b-instruct:free',
-          temperature: 0
+          temperature: 0,
         });
 
         // 验证 debugStream 被调用
@@ -396,9 +353,7 @@ describe('LobeOpenRouterAI', () => {
   describe('models', () => {
     it('should get models', async () => {
       // mock the models.list method
-      (instance['client'].models.list as Mock).mockResolvedValue({
-        data: models
-      });
+      (instance['client'].models.list as Mock).mockResolvedValue({ data: models });
 
       const list = await instance.models();
 

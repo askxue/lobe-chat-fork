@@ -19,10 +19,7 @@ export class ClientService implements IFileService {
     return FileModel.create(file);
   }
 
-  async uploadImageByUrl(
-    url: string,
-    file: Pick<DB_File, 'name' | 'metadata'>
-  ) {
+  async uploadImageByUrl(url: string, file: Pick<DB_File, 'name' | 'metadata'>) {
     const res = await fetch(API_ENDPOINTS.proxy, { body: url, method: 'POST' });
     const data = await res.arrayBuffer();
     const fileType = res.headers.get('content-type') || 'image/webp';
@@ -33,7 +30,7 @@ export class ClientService implements IFileService {
       metadata: file.metadata,
       name: file.name,
       saveMode: 'local',
-      size: data.byteLength
+      size: data.byteLength,
     });
   }
 
@@ -44,9 +41,7 @@ export class ClientService implements IFileService {
     }
 
     // arrayBuffer to url
-    const url = URL.createObjectURL(
-      new Blob([item.data], { type: item.fileType })
-    );
+    const url = URL.createObjectURL(new Blob([item.data], { type: item.fileType }));
     const base64 = Buffer.from(item.data).toString('base64');
 
     return {
@@ -54,7 +49,7 @@ export class ClientService implements IFileService {
       fileType: item.fileType,
       name: item.name,
       saveMode: 'local',
-      url
+      url,
     };
   }
 
@@ -85,9 +80,7 @@ export class ClientService implements IFileService {
     // 压缩图片
     const base64String = compressImage({ img, type: file.fileType });
     const binaryString = atob(base64String.split('base64,')[1]);
-    const uint8Array = Uint8Array.from(binaryString, (char) =>
-      char.charCodeAt(0)
-    );
+    const uint8Array = Uint8Array.from(binaryString, (char) => char.charCodeAt(0));
     file.data = uint8Array.buffer;
 
     return FileModel.create(file);

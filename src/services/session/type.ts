@@ -10,14 +10,11 @@ import {
   LobeSessions,
   SessionGroupId,
   SessionGroupItem,
-  SessionGroups
+  SessionGroups,
 } from '@/types/session';
 
 export interface ISessionService {
-  createSession(
-    type: LobeSessionType,
-    defaultValue: Partial<LobeAgentSession>
-  ): Promise<string>;
+  createSession(type: LobeSessionType, defaultValue: Partial<LobeAgentSession>): Promise<string>;
   batchCreateSessions(importSessions: LobeSessions): Promise<any>;
   cloneSession(id: string, newTitle: string): Promise<string | undefined>;
 
@@ -29,14 +26,11 @@ export interface ISessionService {
 
   updateSession(
     id: string,
-    data: Partial<{ group?: SessionGroupId; pinned?: boolean }>
+    data: Partial<{ group?: SessionGroupId; pinned?: boolean }>,
   ): Promise<any>;
 
   getSessionConfig(id: string): Promise<LobeAgentConfig>;
-  updateSessionConfig(
-    id: string,
-    config: DeepPartial<LobeAgentConfig>
-  ): Promise<any>;
+  updateSessionConfig(id: string, config: DeepPartial<LobeAgentConfig>): Promise<any>;
 
   removeSession(id: string): Promise<any>;
   removeAllSessions(): Promise<any>;
@@ -51,9 +45,7 @@ export interface ISessionService {
   getSessionGroups(): Promise<SessionGroupItem[]>;
 
   updateSessionGroup(id: string, data: Partial<SessionGroupItem>): Promise<any>;
-  updateSessionGroupOrder(
-    sortMap: { id: string; sort: number }[]
-  ): Promise<any>;
+  updateSessionGroupOrder(sortMap: { id: string; sort: number }[]): Promise<any>;
 
   removeSessionGroup(id: string, removeChildren?: boolean): Promise<any>;
   removeSessionGroups(): Promise<any>;

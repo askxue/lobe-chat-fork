@@ -3,10 +3,7 @@ import { LobeAgentSession, LobeSessions } from '@/types/session';
 
 export const getSessionPinned = (session: LobeAgentSession) => session.pinned;
 
-const getSessionById = (
-  id: string,
-  sessions: LobeSessions
-): LobeAgentSession => {
+const getSessionById = (id: string, sessions: LobeSessions): LobeAgentSession => {
   const session = sessions.find((s) => s.id === id);
 
   if (!session) return DEFAULT_AGENT_LOBE_SESSION;
@@ -16,5 +13,5 @@ const getSessionById = (
 
 export const sessionHelpers = {
   getSessionById,
-  getSessionPinned
+  getSessionPinned,
 };

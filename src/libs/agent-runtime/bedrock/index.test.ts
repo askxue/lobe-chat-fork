@@ -16,7 +16,7 @@ vi.mock('@aws-sdk/client-bedrock-runtime', async (importOriginal) => {
   const module = await importOriginal();
   return {
     ...(module as any),
-    InvokeModelWithResponseStreamCommand: vi.fn()
+    InvokeModelWithResponseStreamCommand: vi.fn(),
   };
 });
 
@@ -26,12 +26,10 @@ beforeEach(() => {
   instance = new LobeBedrockAI({
     region: 'us-west-2',
     accessKeyId: 'test-access-key-id',
-    accessKeySecret: 'test-access-key-secret'
+    accessKeySecret: 'test-access-key-secret',
   });
 
-  vi.spyOn(instance['client'], 'send').mockReturnValue(
-    new ReadableStream() as any
-  );
+  vi.spyOn(instance['client'], 'send').mockReturnValue(new ReadableStream() as any);
 });
 
 afterEach(() => {
@@ -44,7 +42,7 @@ describe('LobeBedrockAI', () => {
       const instance = new LobeBedrockAI({
         region: 'us-west-2',
         accessKeyId: 'test-access-key-id',
-        accessKeySecret: 'test-access-key-secret'
+        accessKeySecret: 'test-access-key-secret',
       });
       expect(instance).toBeInstanceOf(LobeBedrockAI);
     });
@@ -59,7 +57,7 @@ describe('LobeBedrockAI', () => {
       await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'meta.llama:1',
-        temperature: 0
+        temperature: 0,
       });
 
       // Assert
@@ -74,7 +72,7 @@ describe('LobeBedrockAI', () => {
       await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'anthropic.claude-v2:1',
-        temperature: 0
+        temperature: 0,
       });
 
       // Assert
@@ -86,7 +84,7 @@ describe('LobeBedrockAI', () => {
         const result = await instance.chat({
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'anthropic.claude-v2:1',
-          temperature: 0
+          temperature: 0,
         });
 
         // Assert
@@ -99,7 +97,7 @@ describe('LobeBedrockAI', () => {
           start(controller) {
             controller.enqueue('Hello, world!');
             controller.close();
-          }
+          },
         });
         const mockResponse = Promise.resolve(mockStream);
         (instance['client'].send as Mock).mockResolvedValue(mockResponse);
@@ -109,7 +107,7 @@ describe('LobeBedrockAI', () => {
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'anthropic.claude-v2:1',
           temperature: 0,
-          top_p: 1
+          top_p: 1,
         });
 
         // Assert
@@ -120,10 +118,10 @@ describe('LobeBedrockAI', () => {
             max_tokens: 4096,
             messages: [{ content: 'Hello', role: 'user' }],
             temperature: 0,
-            top_p: 1
+            top_p: 1,
           }),
           contentType: 'application/json',
-          modelId: 'anthropic.claude-v2:1'
+          modelId: 'anthropic.claude-v2:1',
         });
         expect(result).toBeInstanceOf(Response);
       });
@@ -134,7 +132,7 @@ describe('LobeBedrockAI', () => {
           start(controller) {
             controller.enqueue('Hello, world!');
             controller.close();
-          }
+          },
         });
         const mockResponse = Promise.resolve(mockStream);
         (instance['client'].send as Mock).mockResolvedValue(mockResponse);
@@ -143,11 +141,11 @@ describe('LobeBedrockAI', () => {
         const result = await instance.chat({
           messages: [
             { content: 'You are an awesome greeter', role: 'system' },
-            { content: 'Hello', role: 'user' }
+            { content: 'Hello', role: 'user' },
           ],
           model: 'anthropic.claude-v2:1',
           temperature: 0,
-          top_p: 1
+          top_p: 1,
         });
 
         // Assert
@@ -159,10 +157,10 @@ describe('LobeBedrockAI', () => {
             messages: [{ content: 'Hello', role: 'user' }],
             system: 'You are an awesome greeter',
             temperature: 0,
-            top_p: 1
+            top_p: 1,
           }),
           contentType: 'application/json',
-          modelId: 'anthropic.claude-v2:1'
+          modelId: 'anthropic.claude-v2:1',
         });
         expect(result).toBeInstanceOf(Response);
       });
@@ -173,7 +171,7 @@ describe('LobeBedrockAI', () => {
           start(controller) {
             controller.enqueue('Hello, world!');
             controller.close();
-          }
+          },
         });
         const mockResponse = Promise.resolve(mockStream);
         (instance['client'].send as Mock).mockResolvedValue(mockResponse);
@@ -184,7 +182,7 @@ describe('LobeBedrockAI', () => {
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'anthropic.claude-v2:1',
           temperature: 0.5,
-          top_p: 1
+          top_p: 1,
         });
 
         // Assert
@@ -195,10 +193,10 @@ describe('LobeBedrockAI', () => {
             max_tokens: 2048,
             messages: [{ content: 'Hello', role: 'user' }],
             temperature: 0.5,
-            top_p: 1
+            top_p: 1,
           }),
           contentType: 'application/json',
-          modelId: 'anthropic.claude-v2:1'
+          modelId: 'anthropic.claude-v2:1',
         });
         expect(result).toBeInstanceOf(Response);
       });
@@ -209,7 +207,7 @@ describe('LobeBedrockAI', () => {
           start(controller) {
             controller.enqueue('Hello, world!');
             controller.close();
-          }
+          },
         });
         const mockResponse = Promise.resolve(mockStream);
         (instance['client'].send as Mock).mockResolvedValue(mockResponse);
@@ -222,7 +220,7 @@ describe('LobeBedrockAI', () => {
           model: 'anthropic.claude-v2:1',
           presence_penalty: 0.5,
           temperature: 0.5,
-          top_p: 1
+          top_p: 1,
         });
 
         // Assert
@@ -233,10 +231,10 @@ describe('LobeBedrockAI', () => {
             max_tokens: 2048,
             messages: [{ content: 'Hello', role: 'user' }],
             temperature: 0.5,
-            top_p: 1
+            top_p: 1,
           }),
           contentType: 'application/json',
-          modelId: 'anthropic.claude-v2:1'
+          modelId: 'anthropic.claude-v2:1',
         });
         expect(result).toBeInstanceOf(Response);
       });
@@ -250,7 +248,7 @@ describe('LobeBedrockAI', () => {
         await instance.chat({
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'anthropic.claude-v2:1',
-          temperature: 0
+          temperature: 0,
         });
 
         // Assert
@@ -274,19 +272,19 @@ describe('LobeBedrockAI', () => {
             max_tokens: 100,
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'anthropic.claude-v2:1',
-            temperature: 0
-          })
+            temperature: 0,
+          }),
         ).rejects.toThrow(
           expect.objectContaining({
             error: {
               body: errorMetadata,
               message: errorMessage,
-              type: 'Error'
+              type: 'Error',
             },
             errorType: AgentRuntimeErrorType.BedrockBizError,
             provider: ModelProvider.Bedrock,
-            region: 'us-west-2'
-          })
+            region: 'us-west-2',
+          }),
         );
       });
     });
@@ -298,7 +296,7 @@ describe('LobeBedrockAI', () => {
           start(controller) {
             controller.enqueue('Hello, world!');
             controller.close();
-          }
+          },
         });
         const mockResponse = Promise.resolve(mockStream);
         (instance['client'].send as Mock).mockResolvedValue(mockResponse);
@@ -308,7 +306,7 @@ describe('LobeBedrockAI', () => {
           temperature: 0,
           max_tokens: 100,
           messages: [{ content: 'Hello', role: 'user' }],
-          model: 'meta.llama:1'
+          model: 'meta.llama:1',
         });
 
         // Assert
@@ -316,10 +314,10 @@ describe('LobeBedrockAI', () => {
           accept: 'application/json',
           body: JSON.stringify({
             max_gen_len: 100,
-            prompt: '<s>[INST] Hello [/INST]'
+            prompt: '<s>[INST] Hello [/INST]',
           }),
           contentType: 'application/json',
-          modelId: 'meta.llama:1'
+          modelId: 'meta.llama:1',
         });
         expect(result).toBeInstanceOf(Response);
       });
@@ -338,20 +336,20 @@ describe('LobeBedrockAI', () => {
             max_tokens: 100,
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'meta.llama:1',
-            temperature: 0
-          })
+            temperature: 0,
+          }),
         ).rejects.toThrow(
           expect.objectContaining({
             error: {
               body: errorMetadata,
               message: errorMessage,
               region: 'us-west-2',
-              type: 'Error'
+              type: 'Error',
             },
             errorType: AgentRuntimeErrorType.BedrockBizError,
             provider: ModelProvider.Bedrock,
-            region: 'us-west-2'
-          })
+            region: 'us-west-2',
+          }),
         );
       });
 
@@ -364,7 +362,7 @@ describe('LobeBedrockAI', () => {
         await instance.chat({
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'meta.llama:1',
-          temperature: 0
+          temperature: 0,
         });
 
         // Assert
@@ -384,9 +382,9 @@ describe('LobeBedrockAI', () => {
         {
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'anthropic.claude-v2:1',
-          temperature: 0
+          temperature: 0,
         },
-        { callback: { onStart } }
+        { callback: { onStart } },
       );
 
       // Assert

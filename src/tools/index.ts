@@ -6,6 +6,6 @@ export const builtinTools: LobeBuiltinTool[] = [
   {
     identifier: DalleManifest.identifier,
     manifest: DalleManifest,
-    type: 'builtin'
-  }
+    type: 'builtin',
+  },
 ];

@@ -1,7 +1,4 @@
-import {
-  LobeChatPluginManifest,
-  LobeChatPluginMeta
-} from '@lobehub/chat-plugin-sdk';
+import { LobeChatPluginManifest, LobeChatPluginMeta } from '@lobehub/chat-plugin-sdk';
 import { describe, expect, it } from 'vitest';
 
 import { initialState } from '../../initialState';
@@ -12,7 +9,7 @@ const mockState = {
   ...initialState,
   pluginInstallLoading: {
     'plugin-1': false,
-    'plugin-2': true
+    'plugin-2': true,
   },
   installedPlugins: [
     {
@@ -21,26 +18,26 @@ const mockState = {
       manifest: {
         identifier: 'plugin-1',
         api: [{ name: 'api-1' }],
-        type: 'default'
+        type: 'default',
       } as LobeChatPluginManifest,
-      settings: { setting1: 'value1' }
+      settings: { setting1: 'value1' },
     },
     {
       identifier: 'plugin-2',
       manifest: {
         identifier: 'plugin-2',
-        api: [{ name: 'api-2' }]
+        api: [{ name: 'api-2' }],
       },
-      type: 'plugin'
+      type: 'plugin',
     },
     {
       identifier: 'plugin-3',
       manifest: {
         identifier: 'plugin-3',
-        api: [{ name: 'api-3' }]
+        api: [{ name: 'api-3' }],
       },
-      type: 'customPlugin'
-    }
+      type: 'customPlugin',
+    },
   ],
   pluginStoreList: [
     {
@@ -48,23 +45,22 @@ const mockState = {
       author: 'Author 1',
       createdAt: '2021-01-01',
       meta: { avatar: 'avatar-url-1', title: 'Plugin 1' },
-      homepage: 'http://homepage-1.com'
+      homepage: 'http://homepage-1.com',
     } as LobeChatPluginMeta,
     {
       identifier: 'plugin-2',
       author: 'Author 2',
       createdAt: '2022-02-02',
       meta: { avatar: 'avatar-url-2', title: 'Plugin 2' },
-      homepage: 'http://homepage-2.com'
-    }
-  ]
+      homepage: 'http://homepage-2.com',
+    },
+  ],
 } as ToolStoreState;
 
 describe('pluginSelectors', () => {
   describe('getPluginManifestById', () => {
     it('getPluginManifestById should return the correct manifest', () => {
-      const result =
-        pluginSelectors.getPluginManifestById('plugin-1')(mockState);
+      const result = pluginSelectors.getPluginManifestById('plugin-1')(mockState);
       expect(result).toEqual(mockState.installedPlugins[0].manifest);
     });
   });
@@ -78,8 +74,7 @@ describe('pluginSelectors', () => {
 
   describe('getDevPluginById', () => {
     it('should return undefined for non-existing custom plugin', () => {
-      const result =
-        pluginSelectors.getCustomPluginById('non-existing')(mockState);
+      const result = pluginSelectors.getCustomPluginById('non-existing')(mockState);
       expect(result).toBeUndefined();
     });
 
@@ -92,17 +87,15 @@ describe('pluginSelectors', () => {
           author: 'Custom Author',
           createAt: '2023-03-03',
           meta: { avatar: 'avatar-url-custom', title: 'Custom Plugin' },
-          homepage: 'http://homepage-custom.com'
-        }
+          homepage: 'http://homepage-custom.com',
+        },
       };
 
       const stateWithCustomPlugin = {
         ...mockState,
-        installedPlugins: [...mockState.installedPlugins, customPlugin]
+        installedPlugins: [...mockState.installedPlugins, customPlugin],
       } as ToolStoreState;
-      const result = pluginSelectors.getCustomPluginById('custom-plugin')(
-        stateWithCustomPlugin
-      );
+      const result = pluginSelectors.getCustomPluginById('custom-plugin')(stateWithCustomPlugin);
       expect(result).toEqual(customPlugin);
     });
   });
@@ -111,8 +104,7 @@ describe('pluginSelectors', () => {
     it('should return the plugin settings by id', () => {
       const mockSettings = { setting1: 'value1' };
 
-      const result =
-        pluginSelectors.getPluginSettingsById('plugin-1')(mockState);
+      const result = pluginSelectors.getPluginSettingsById('plugin-1')(mockState);
       expect(result).toEqual(mockSettings);
     });
   });
@@ -134,13 +126,12 @@ describe('pluginSelectors', () => {
             manifest: {
               ...mockState.installedPlugins[0].manifest,
               identifier: 'ui-plugin',
-              ui: true
-            }
-          }
-        ]
+              ui: true,
+            },
+          },
+        ],
       } as ToolStoreState;
-      const result =
-        pluginSelectors.isPluginHasUI('ui-plugin')(stateWithUIPlugin);
+      const result = pluginSelectors.isPluginHasUI('ui-plugin')(stateWithUIPlugin);
       expect(result).toBe(true);
     });
   });
@@ -152,24 +143,19 @@ describe('pluginSelectors', () => {
     });
 
     it('should return false if the plugin is not installed', () => {
-      const result = pluginSelectors.isPluginInstalled('non-installed-plugin')(
-        mockState
-      );
+      const result = pluginSelectors.isPluginInstalled('non-installed-plugin')(mockState);
       expect(result).toBe(false);
     });
   });
 
   describe('getInstalledPluginById', () => {
     it('should return the installed plugin by id', () => {
-      const result =
-        pluginSelectors.getInstalledPluginById('plugin-1')(mockState);
+      const result = pluginSelectors.getInstalledPluginById('plugin-1')(mockState);
       expect(result).toEqual(mockState.installedPlugins[0]);
     });
 
     it('should return undefined if the plugin is not installed', () => {
-      const result = pluginSelectors.getInstalledPluginById(
-        'non-installed-plugin'
-      )(mockState);
+      const result = pluginSelectors.getInstalledPluginById('non-installed-plugin')(mockState);
       expect(result).toBeUndefined();
     });
   });
@@ -184,9 +170,7 @@ describe('pluginSelectors', () => {
   describe('installedPluginManifestList', () => {
     it('should return a list of manifests for installed plugins', () => {
       const result = pluginSelectors.installedPluginManifestList(mockState);
-      const expectedManifests = mockState.installedPlugins.map(
-        (p) => p.manifest
-      );
+      const expectedManifests = mockState.installedPlugins.map((p) => p.manifest);
       expect(result).toEqual(expectedManifests);
     });
   });
@@ -197,7 +181,7 @@ describe('pluginSelectors', () => {
       const expectedMetaList = mockState.installedPlugins.map((p) => ({
         identifier: p.identifier,
         meta: pluginSelectors.getPluginMetaById(p.identifier)(mockState),
-        type: p.type
+        type: p.type,
       }));
       expect(result).toEqual(expectedMetaList);
     });
@@ -207,9 +191,7 @@ describe('pluginSelectors', () => {
     it('should return a list of meta information for installed plugins', () => {
       const result = pluginSelectors.installedCustomPluginMetaList(mockState);
 
-      expect(result).toEqual([
-        { identifier: 'plugin-3', type: 'customPlugin' }
-      ]);
+      expect(result).toEqual([{ identifier: 'plugin-3', type: 'customPlugin' }]);
     });
   });
 });

@@ -28,11 +28,11 @@ export const Topic = memo(() => {
   const [topicsInit, activeTopicId, topicLength] = useChatStore((s) => [
     s.topicsInit,
     s.activeTopicId,
-    topicSelectors.currentTopicLength(s)
+    topicSelectors.currentTopicLength(s),
   ]);
   const [visible, updateGuideState] = useUserStore((s) => [
     s.preference.guide?.topic,
-    s.updateGuideState
+    s.updateGuideState,
   ]);
 
   const topics = useChatStore(
@@ -40,11 +40,11 @@ export const Topic = memo(() => {
       {
         favorite: false,
         id: 'default',
-        title: t('topic.defaultTitle')
+        title: t('topic.defaultTitle'),
       } as ChatTopic,
-      ...topicSelectors.displayTopics(s)
+      ...topicSelectors.displayTopics(s),
     ],
-    isEqual
+    isEqual,
   );
 
   const itemContent = useCallback(
@@ -52,15 +52,9 @@ export const Topic = memo(() => {
       index === 0 ? (
         <TopicItem active={!activeTopicId} fav={favorite} title={title} />
       ) : (
-        <TopicItem
-          active={activeTopicId === id}
-          fav={favorite}
-          id={id}
-          key={id}
-          title={title}
-        />
+        <TopicItem active={activeTopicId === id} fav={favorite} id={id} key={id} title={title} />
       ),
-    [activeTopicId]
+    [activeTopicId],
   );
 
   const activeIndex = topics.findIndex((topic) => topic.id === activeTopicId);
@@ -73,13 +67,11 @@ export const Topic = memo(() => {
         <Flexbox flex={1} paddingInline={8}>
           <EmptyCard
             alt={t('topic.guide.desc')}
-            cover={imageUrl(
-              `empty_topic_${isDarkMode ? 'dark' : 'light'}.webp`
-            )}
+            cover={imageUrl(`empty_topic_${isDarkMode ? 'dark' : 'light'}.webp`)}
             desc={t('topic.guide.desc')}
             height={120}
             imageProps={{
-              priority: true
+              priority: true,
             }}
             onVisibleChange={(visible) => {
               updateGuideState({ topic: visible });
@@ -103,7 +95,7 @@ export const Topic = memo(() => {
         ref={virtuosoRef}
         scrollSeekConfiguration={{
           enter: (velocity) => Math.abs(velocity) > 350,
-          exit: (velocity) => Math.abs(velocity) < 10
+          exit: (velocity) => Math.abs(velocity) < 10,
         }}
       />
     </Flexbox>

@@ -7,7 +7,7 @@ export enum SidebarTabKey {
   Chat = 'chat',
   Market = 'market',
   Me = 'me',
-  Setting = 'settings'
+  Setting = 'settings',
 }
 
 export enum SettingsTabs {
@@ -16,7 +16,7 @@ export enum SettingsTabs {
   Common = 'common',
   LLM = 'llm',
   Sync = 'sync',
-  TTS = 'tts'
+  TTS = 'tts',
 }
 
 export interface GlobalPreference {
@@ -51,17 +51,14 @@ export type GlobalState = GlobalCommonState & GlobalPreferenceState;
 export const initialState: GlobalState = {
   isMobile: false,
   preference: {
-    expandSessionGroupKeys: [
-      SessionDefaultGroup.Pinned,
-      SessionDefaultGroup.Default
-    ],
+    expandSessionGroupKeys: [SessionDefaultGroup.Pinned, SessionDefaultGroup.Default],
     inputHeight: 200,
     mobileShowTopic: false,
     sessionsWidth: 320,
     showChatSideBar: true,
     showSessionPanel: true,
-    showSystemRole: false
+    showSystemRole: false,
   },
   preferenceStorage: new AsyncLocalStorage('LOBE_GLOBAL_PREFERENCE'),
-  sidebarKey: SidebarTabKey.Chat
+  sidebarKey: SidebarTabKey.Chat,
 };

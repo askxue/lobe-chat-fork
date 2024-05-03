@@ -3,7 +3,7 @@ import { SWRConfig } from 'swr';
 
 // 全局的 SWR 配置
 const swrConfig = {
-  provider: () => new Map()
+  provider: () => new Map(),
 };
 
 export const withSWR = ({ children }: PropsWithChildren) => (

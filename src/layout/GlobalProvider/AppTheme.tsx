@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  ConfigProvider,
-  NeutralColors,
-  PrimaryColors,
-  ThemeProvider
-} from '@lobehub/ui';
+import { ConfigProvider, NeutralColors, PrimaryColors, ThemeProvider } from '@lobehub/ui';
 import { App } from 'antd';
 import { ThemeAppearance, createStyles } from 'antd-style';
 import 'antd/dist/reset.css';
@@ -17,7 +12,7 @@ import AntdStaticMethods from '@/components/AntdStaticMethods';
 import {
   LOBE_THEME_APPEARANCE,
   LOBE_THEME_NEUTRAL_COLOR,
-  LOBE_THEME_PRIMARY_COLOR
+  LOBE_THEME_PRIMARY_COLOR,
 } from '@/const/theme';
 import { useUserStore } from '@/store/user';
 import { settingsSelectors } from '@/store/user/selectors';
@@ -66,16 +61,14 @@ const useStyles = createStyles(({ css, token }) => ({
     ::-webkit-scrollbar-track {
       background-color: transparent;
     }
-  `
+  `,
 }));
 
 const Container = memo<PropsWithChildren>(({ children }) => {
   const { styles, cx } = useStyles();
 
   return (
-    <App className={cx(styles.bg, styles.scrollbar, styles.scrollbarPolyfill)}>
-      {children}
-    </App>
+    <App className={cx(styles.bg, styles.scrollbar, styles.scrollbarPolyfill)}>{children}</App>
   );
 });
 
@@ -87,22 +80,15 @@ export interface AppThemeProps {
 }
 
 const AppTheme = memo<AppThemeProps>(
-  ({
-    children,
-    defaultAppearance,
-    defaultPrimaryColor,
-    defaultNeutralColor
-  }) => {
+  ({ children, defaultAppearance, defaultPrimaryColor, defaultNeutralColor }) => {
     // console.debug('server:appearance', defaultAppearance);
     // console.debug('server:primaryColor', defaultPrimaryColor);
     // console.debug('server:neutralColor', defaultNeutralColor);
-    const themeMode = useUserStore(
-      (s) => settingsSelectors.currentSettings(s).themeMode
-    );
+    const themeMode = useUserStore((s) => settingsSelectors.currentSettings(s).themeMode);
 
     const [primaryColor, neutralColor] = useUserStore((s) => [
       settingsSelectors.currentSettings(s).primaryColor,
-      settingsSelectors.currentSettings(s).neutralColor
+      settingsSelectors.currentSettings(s).neutralColor,
     ]);
 
     useEffect(() => {
@@ -117,7 +103,7 @@ const AppTheme = memo<AppThemeProps>(
       <ThemeProvider
         customTheme={{
           neutralColor: neutralColor ?? defaultNeutralColor,
-          primaryColor: primaryColor ?? defaultPrimaryColor
+          primaryColor: primaryColor ?? defaultPrimaryColor,
         }}
         defaultAppearance={defaultAppearance}
         onAppearanceChange={(appearance) => {
@@ -127,14 +113,12 @@ const AppTheme = memo<AppThemeProps>(
       >
         <GlobalStyle />
         <AntdStaticMethods />
-        <ConfigProvider
-          config={{ aAs: Link, imgAs: Image, imgUnoptimized: true }}
-        >
+        <ConfigProvider config={{ aAs: Link, imgAs: Image, imgUnoptimized: true }}>
           <Container>{children}</Container>
         </ConfigProvider>
       </ThemeProvider>
     );
-  }
+  },
 );
 
 export default AppTheme;

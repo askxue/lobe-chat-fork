@@ -30,8 +30,8 @@ module.exports = {
     'ja-JP',
     // ...其他语言
 
-    'vi-VN' // 在数组中添加 'vi-VN'
-  ]
+    'vi-VN', // 在数组中添加 'vi-VN'
+  ],
 };
 ```
 

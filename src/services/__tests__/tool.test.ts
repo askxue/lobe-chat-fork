@@ -10,8 +10,8 @@ import OpenAIPlugin from './openai/plugin.json';
 
 vi.mock('@/store/user/helpers', () => ({
   globalHelpers: {
-    getCurrentLanguage: vi.fn()
-  }
+    getCurrentLanguage: vi.fn(),
+  },
 }));
 
 beforeEach(() => {
@@ -26,8 +26,8 @@ describe('ToolService', () => {
       (globalHelpers.getCurrentLanguage as Mock).mockReturnValue('tt');
       global.fetch = vi.fn(() =>
         Promise.resolve({
-          json: () => Promise.resolve(fakeResponse)
-        })
+          json: () => Promise.resolve(fakeResponse),
+        }),
       ) as any;
 
       // Act
@@ -46,9 +46,7 @@ describe('ToolService', () => {
       global.fetch = vi.fn(() => Promise.reject(new Error('Network error')));
 
       // Act & Assert
-      await expect(toolService.getPluginList()).rejects.toThrow(
-        'Network error'
-      );
+      await expect(toolService.getPluginList()).rejects.toThrow('Network error');
     });
   });
 
@@ -67,13 +65,13 @@ describe('ToolService', () => {
               properties: {
                 city: {
                   description: '城市名称',
-                  type: 'string'
-                }
+                  type: 'string',
+                },
               },
               required: ['city'],
-              type: 'object'
-            }
-          }
+              type: 'object',
+            },
+          },
         ],
         author: 'LobeHub',
         createAt: '2023-08-12',
@@ -83,21 +81,21 @@ describe('ToolService', () => {
           avatar: '🌈',
           tags: ['weather', 'realtime'],
           title: 'Realtime Weather',
-          description: 'Get realtime weather information'
+          description: 'Get realtime weather information',
         },
         ui: {
           url: 'https://realtime-weather.chat-plugin.lobehub.com/iframe',
-          height: 310
+          height: 310,
         },
-        version: '1'
+        version: '1',
       };
 
       global.fetch = vi.fn(() =>
         Promise.resolve({
           headers: new Headers({ 'content-type': 'application/json' }),
           ok: true,
-          json: () => Promise.resolve(fakeManifest)
-        })
+          json: () => Promise.resolve(fakeManifest),
+        }),
       ) as any;
 
       const manifest = await toolService.getPluginManifest(manifestUrl);
@@ -121,8 +119,8 @@ describe('ToolService', () => {
         Promise.resolve({
           headers: new Headers({ 'content-type': 'application/json' }),
           ok: true,
-          json: () => Promise.resolve(fakeManifest)
-        })
+          json: () => Promise.resolve(fakeManifest),
+        }),
       ) as any;
 
       try {
@@ -153,8 +151,8 @@ describe('ToolService', () => {
           ok: true,
           json: () => {
             throw new Error('abc');
-          }
-        })
+          },
+        }),
       ) as any;
 
       try {
@@ -171,8 +169,8 @@ describe('ToolService', () => {
         Promise.resolve({
           ok: false,
           headers: new Headers({ 'content-type': 'application/json' }),
-          json: () => Promise.resolve(fakeManifest)
-        })
+          json: () => Promise.resolve(fakeManifest),
+        }),
       ) as any;
 
       try {
@@ -199,22 +197,21 @@ describe('ToolService', () => {
             avatar: '🌈',
             tags: ['weather', 'realtime'],
             title: 'Realtime Weather',
-            description: 'Get realtime weather information'
+            description: 'Get realtime weather information',
           },
           ui: {
             url: 'https://realtime-weather.chat-plugin.lobehub.com/iframe',
-            height: 310
+            height: 310,
           },
-          version: '1'
+          version: '1',
         };
 
         global.fetch = vi.fn((url) =>
           Promise.resolve({
             ok: true,
             headers: new Headers({ 'content-type': 'application/json' }),
-            json: () =>
-              Promise.resolve(url === openapiUrl ? openAPIV3 : fakeManifest)
-          })
+            json: () => Promise.resolve(url === openapiUrl ? openAPIV3 : fakeManifest),
+          }),
         ) as any;
 
         const manifest = await toolService.getPluginManifest(manifestUrl);
@@ -237,21 +234,21 @@ describe('ToolService', () => {
             avatar: '🌈',
             tags: ['weather', 'realtime'],
             title: 'Realtime Weather',
-            description: 'Get realtime weather information'
+            description: 'Get realtime weather information',
           },
           ui: {
             url: 'https://realtime-weather.chat-plugin.lobehub.com/iframe',
-            height: 310
+            height: 310,
           },
-          version: '1'
+          version: '1',
         };
 
         global.fetch = vi.fn((url) =>
           Promise.resolve({
             ok: true,
             headers: new Headers({ 'content-type': 'application/json' }),
-            json: () => Promise.resolve(url === openapiUrl ? [] : fakeManifest)
-          })
+            json: () => Promise.resolve(url === openapiUrl ? [] : fakeManifest),
+          }),
         ) as any;
 
         try {
@@ -264,9 +261,7 @@ describe('ToolService', () => {
   });
 
   it('can parse the OpenAI plugin', async () => {
-    const manifest = toolService['convertOpenAIManifestToLobeManifest'](
-      OpenAIPlugin as any
-    );
+    const manifest = toolService['convertOpenAIManifestToLobeManifest'](OpenAIPlugin as any);
 
     expect(manifest).toMatchSnapshot();
   });

@@ -18,16 +18,16 @@ const Loading = memo(() => {
             style: {
               alignItems: 'center',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
             },
-            width: ['60%', '80%', '20%']
+            width: ['60%', '80%', '20%'],
           }}
           title={{
             style: {
               alignSelf: 'center',
-              marginBottom: 0
+              marginBottom: 0,
             },
-            width: '50%'
+            width: '50%',
           }}
         />
         <Skeleton.Button active block />
@@ -41,9 +41,9 @@ const Loading = memo(() => {
               alignItems: 'center',
               display: 'flex',
               flexDirection: 'column',
-              marginBottom: 0
+              marginBottom: 0,
             },
-            width: ['20%']
+            width: ['20%'],
           }}
           title={false}
         />

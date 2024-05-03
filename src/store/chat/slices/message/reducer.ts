@@ -41,10 +41,7 @@ export type MessageDispatch =
   | UpdateMessageExtra
   | DeleteMessage;
 
-export const messagesReducer = (
-  state: ChatMessage[],
-  payload: MessageDispatch
-): ChatMessage[] => {
+export const messagesReducer = (state: ChatMessage[], payload: MessageDispatch): ChatMessage[] => {
   switch (payload.type) {
     case 'updateMessage': {
       return produce(state, (draftState) => {
@@ -98,13 +95,7 @@ export const messagesReducer = (
       return produce(state, (draftState) => {
         const { value, id } = payload;
 
-        draftState.push({
-          ...value,
-          createdAt: Date.now(),
-          id,
-          meta: {},
-          updatedAt: Date.now()
-        });
+        draftState.push({ ...value, createdAt: Date.now(), id, meta: {}, updatedAt: Date.now() });
       });
     }
     case 'deleteMessage': {

@@ -18,11 +18,7 @@ export const useOAuthSession = () => {
   }
 
   const { data: session, status } = authSession || {};
-  const isOAuthLoggedIn =
-    (status === 'authenticated' && session && !!session.user) || false;
+  const isOAuthLoggedIn = (status === 'authenticated' && session && !!session.user) || false;
 
-  return useMemo<OAuthSession>(
-    () => ({ isOAuthLoggedIn, user: session?.user }),
-    [session, status]
-  );
+  return useMemo<OAuthSession>(() => ({ isOAuthLoggedIn, user: session?.user }), [session, status]);
 };

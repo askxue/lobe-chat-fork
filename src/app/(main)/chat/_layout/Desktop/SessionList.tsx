@@ -17,8 +17,8 @@ const useStyles = createStyles(({ stylish, css, cx }) =>
       flex-direction: column;
       gap: 2px;
       padding: 8px 8px 0;
-    `
-  )
+    `,
+  ),
 );
 
 const Sessions = memo(() => {

@@ -5,13 +5,9 @@ import {
   LOBE_CHAT_OBSERVATION_ID,
   LOBE_CHAT_TRACE_ID,
   TracePayload,
-  TraceTagMap
+  TraceTagMap,
 } from '@/const/trace';
-import {
-  AgentRuntime,
-  ChatStreamPayload,
-  ModelProvider
-} from '@/libs/agent-runtime';
+import { AgentRuntime, ChatStreamPayload, ModelProvider } from '@/libs/agent-runtime';
 import { TraceClient } from '@/libs/traces';
 
 import apiKeyManager from './apiKeyManager';
@@ -40,26 +36,25 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       const apiKey = apiKeyManager.pick(openaiApiKey);
       return {
         apiKey,
-        baseURL
+        baseURL,
       };
     }
     case ModelProvider.Azure: {
-      const { AZURE_API_KEY, AZURE_API_VERSION, AZURE_ENDPOINT } =
-        getServerConfig();
+      const { AZURE_API_KEY, AZURE_API_VERSION, AZURE_ENDPOINT } = getServerConfig();
       const apiKey = apiKeyManager.pick(payload?.apiKey || AZURE_API_KEY);
       const endpoint = payload?.endpoint || AZURE_ENDPOINT;
       const apiVersion = payload?.azureApiVersion || AZURE_API_VERSION;
       return {
         apiVersion,
         apikey: apiKey,
-        endpoint
+        endpoint,
       };
     }
     case ModelProvider.ZhiPu: {
       const { ZHIPU_API_KEY } = getServerConfig();
       const apiKey = apiKeyManager.pick(payload?.apiKey || ZHIPU_API_KEY);
       return {
-        apiKey
+        apiKey,
       };
     }
     case ModelProvider.Google: {
@@ -68,7 +63,7 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       const baseURL = payload?.endpoint || GOOGLE_PROXY_URL;
       return {
         apiKey,
-        baseURL
+        baseURL,
       };
     }
     case ModelProvider.Moonshot: {
@@ -76,12 +71,11 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       const apiKey = apiKeyManager.pick(payload?.apiKey || MOONSHOT_API_KEY);
       return {
         apiKey,
-        baseURL: MOONSHOT_PROXY_URL
+        baseURL: MOONSHOT_PROXY_URL,
       };
     }
     case ModelProvider.Bedrock: {
-      const { AWS_SECRET_ACCESS_KEY, AWS_ACCESS_KEY_ID, AWS_REGION } =
-        getServerConfig();
+      const { AWS_SECRET_ACCESS_KEY, AWS_ACCESS_KEY_ID, AWS_REGION } = getServerConfig();
       let accessKeyId: string | undefined = AWS_ACCESS_KEY_ID;
       let accessKeySecret: string | undefined = AWS_SECRET_ACCESS_KEY;
       let region = AWS_REGION;
@@ -94,21 +88,21 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       return {
         accessKeyId,
         accessKeySecret,
-        region
+        region,
       };
     }
     case ModelProvider.Ollama: {
       const { OLLAMA_PROXY_URL } = getServerConfig();
       const baseURL = payload?.endpoint || OLLAMA_PROXY_URL;
       return {
-        baseURL
+        baseURL,
       };
     }
     case ModelProvider.Perplexity: {
       const { PERPLEXITY_API_KEY } = getServerConfig();
       const apiKey = apiKeyManager.pick(payload?.apiKey || PERPLEXITY_API_KEY);
       return {
-        apiKey
+        apiKey,
       };
     }
     case ModelProvider.Anthropic: {
@@ -117,49 +111,49 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       const baseURL = payload?.endpoint || ANTHROPIC_PROXY_URL;
       return {
         apiKey,
-        baseURL
+        baseURL,
       };
     }
     case ModelProvider.Minimax: {
       const { MINIMAX_API_KEY } = getServerConfig();
       const apiKey = apiKeyManager.pick(payload?.apiKey || MINIMAX_API_KEY);
       return {
-        apiKey
+        apiKey,
       };
     }
     case ModelProvider.Mistral: {
       const { MISTRAL_API_KEY } = getServerConfig();
       const apiKey = apiKeyManager.pick(payload?.apiKey || MISTRAL_API_KEY);
       return {
-        apiKey
+        apiKey,
       };
     }
     case ModelProvider.Groq: {
       const { GROQ_API_KEY } = getServerConfig();
       const apiKey = apiKeyManager.pick(payload?.apiKey || GROQ_API_KEY);
       return {
-        apiKey
+        apiKey,
       };
     }
     case ModelProvider.OpenRouter: {
       const { OPENROUTER_API_KEY } = getServerConfig();
       const apiKey = apiKeyManager.pick(payload?.apiKey || OPENROUTER_API_KEY);
       return {
-        apiKey
+        apiKey,
       };
     }
     case ModelProvider.TogetherAI: {
       const { TOGETHERAI_API_KEY } = getServerConfig();
       const apiKey = apiKeyManager.pick(payload?.apiKey || TOGETHERAI_API_KEY);
       return {
-        apiKey
+        apiKey,
       };
     }
     case ModelProvider.ZeroOne: {
       const { ZEROONE_API_KEY } = getServerConfig();
       const apiKey = apiKeyManager.pick(payload?.apiKey || ZEROONE_API_KEY);
       return {
-        apiKey
+        apiKey,
       };
     }
   }
@@ -171,18 +165,15 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
  * @param payload - The JWT payload.
  * @returns A promise that resolves when the agent runtime is initialized.
  */
-export const initAgentRuntimeWithUserPayload = (
-  provider: string,
-  payload: JWTPayload
-) => {
+export const initAgentRuntimeWithUserPayload = (provider: string, payload: JWTPayload) => {
   return AgentRuntime.initializeWithProviderOptions(provider, {
-    [provider]: getLlmOptionsFromPayload(provider, payload)
+    [provider]: getLlmOptionsFromPayload(provider, payload),
   });
 };
 
 export const createTraceOptions = (
   payload: ChatStreamPayload,
-  { trace: tracePayload, provider }: AgentChatOptions
+  { trace: tracePayload, provider }: AgentChatOptions,
 ) => {
   const { messages, model, tools, ...parameters } = payload;
   // create a trace to monitor the completion
@@ -194,7 +185,7 @@ export const createTraceOptions = (
     name: tracePayload?.traceName,
     sessionId: `${tracePayload?.sessionId || INBOX_SESSION_ID}@${tracePayload?.topicId || 'start'}`,
     tags: tracePayload?.tags,
-    userId: tracePayload?.userId
+    userId: tracePayload?.userId,
   });
 
   const generation = trace?.generation({
@@ -203,14 +194,14 @@ export const createTraceOptions = (
     model,
     modelParameters: parameters as any,
     name: `Chat Completion (${provider})`,
-    startTime: new Date()
+    startTime: new Date(),
   });
 
   return {
     callback: {
       experimental_onToolCall: async () => {
         trace?.update({
-          tags: [...(tracePayload?.tags || []), TraceTagMap.ToolsCall]
+          tags: [...(tracePayload?.tags || []), TraceTagMap.ToolsCall],
         });
       },
 
@@ -218,7 +209,7 @@ export const createTraceOptions = (
         generation?.update({
           endTime: new Date(),
           metadata: { provider, tools },
-          output: completion
+          output: completion,
         });
 
         trace?.update({ output: completion });
@@ -230,11 +221,11 @@ export const createTraceOptions = (
 
       onStart: () => {
         generation?.update({ completionStartTime: new Date() });
-      }
+      },
     },
     headers: {
       [LOBE_CHAT_OBSERVATION_ID]: generation?.id,
-      [LOBE_CHAT_TRACE_ID]: trace?.id
-    }
+      [LOBE_CHAT_TRACE_ID]: trace?.id,
+    },
   };
 };

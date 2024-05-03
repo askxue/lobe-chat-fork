@@ -45,9 +45,7 @@ class ConfigService {
     return sessionService.batchCreateSessionGroups(sessionGroups || []);
   };
 
-  importConfigState = async (
-    config: ConfigFile
-  ): Promise<ImportResults | undefined> => {
+  importConfigState = async (config: ConfigFile): Promise<ImportResults | undefined> => {
     switch (config.exportType) {
       case 'settings': {
         await this.importSettings(config.state.settings);
@@ -56,14 +54,12 @@ class ConfigService {
       }
 
       case 'agents': {
-        const sessionGroups = await this.importSessionGroups(
-          config.state.sessionGroups
-        );
+        const sessionGroups = await this.importSessionGroups(config.state.sessionGroups);
 
         const data = await this.importSessions(config.state.sessions);
         return {
           sessionGroups: this.mapImportResult(sessionGroups),
-          sessions: this.mapImportResult(data)
+          sessions: this.mapImportResult(data),
         };
       }
 
@@ -74,9 +70,7 @@ class ConfigService {
 
       // eslint-disable-next-line no-fallthrough
       case 'sessions': {
-        const sessionGroups = await this.importSessionGroups(
-          config.state.sessionGroups
-        );
+        const sessionGroups = await this.importSessionGroups(config.state.sessionGroups);
         const sessions = await this.importSessions(config.state.sessions);
         const topics = await this.importTopics(config.state.topics);
         const messages = await this.importMessages(config.state.messages);
@@ -85,7 +79,7 @@ class ConfigService {
           messages: this.mapImportResult(messages),
           sessionGroups: this.mapImportResult(sessionGroups),
           sessions: this.mapImportResult(sessions),
-          topics: this.mapImportResult(topics)
+          topics: this.mapImportResult(topics),
         };
       }
     }
@@ -98,10 +92,7 @@ class ConfigService {
     const agents = await sessionService.getSessionsByType('agent');
     const sessionGroups = await sessionService.getSessionGroups();
 
-    const config = createConfigFile('agents', {
-      sessionGroups,
-      sessions: agents
-    });
+    const config = createConfigFile('agents', { sessionGroups, sessions: agents });
 
     exportConfigFile(config, 'agents');
   };
@@ -115,12 +106,7 @@ class ConfigService {
     const messages = await messageService.getAllMessages();
     const topics = await topicService.getAllTopics();
 
-    const config = createConfigFile('sessions', {
-      messages,
-      sessionGroups,
-      sessions,
-      topics
-    });
+    const config = createConfigFile('sessions', { messages, sessionGroups, sessions, topics });
 
     exportConfigFile(config, 'sessions');
   };
@@ -135,11 +121,7 @@ class ConfigService {
     const messages = await messageService.getAllMessagesInSession(id);
     const topics = await topicService.getTopics({ sessionId: id });
 
-    const config = createConfigFile('singleSession', {
-      messages,
-      sessions: [session],
-      topics
-    });
+    const config = createConfigFile('singleSession', { messages, sessions: [session], topics });
 
     exportConfigFile(config, `${session.meta?.title}-session`);
   };
@@ -160,7 +142,7 @@ class ConfigService {
     const config = createConfigFile('singleSession', {
       messages,
       sessions: [session],
-      topics: [topic]
+      topics: [topic],
     });
 
     exportConfigFile(config, `${topic.title}-topic`);
@@ -170,10 +152,7 @@ class ConfigService {
     const agent = this.getAgent(id);
     if (!agent) return;
 
-    const config = createConfigFile('agents', {
-      sessionGroups: [],
-      sessions: [agent]
-    });
+    const config = createConfigFile('agents', { sessionGroups: [], sessions: [agent] });
 
     exportConfigFile(config, agent.meta?.title || 'agent');
   };
@@ -199,19 +178,12 @@ class ConfigService {
     const topics = await topicService.getAllTopics();
     const settings = this.getSettings();
 
-    const config = createConfigFile('all', {
-      messages,
-      sessionGroups,
-      sessions,
-      settings,
-      topics
-    });
+    const config = createConfigFile('all', { messages, sessionGroups, sessions, settings, topics });
 
     exportConfigFile(config, 'config');
   };
 
-  private getSettings = () =>
-    settingsSelectors.exportSettings(useUserStore.getState());
+  private getSettings = () => settingsSelectors.exportSettings(useUserStore.getState());
 
   private getSession = (id: string) =>
     sessionSelectors.getSessionById(id)(useSessionStore.getState());
@@ -227,7 +199,7 @@ class ConfigService {
     return {
       added: input.added,
       errors: input.errors?.length || 0,
-      skips: input.skips.length
+      skips: input.skips.length,
     };
   };
 }

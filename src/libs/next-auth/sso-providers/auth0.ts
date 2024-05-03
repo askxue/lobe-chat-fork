@@ -2,8 +2,7 @@ import Auth0 from 'next-auth/providers/auth0';
 
 import { getServerConfig } from '@/config/server';
 
-const { AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_ISSUER } =
-  getServerConfig();
+const { AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_ISSUER } = getServerConfig();
 
 const provider = {
   id: 'auth0',
@@ -13,8 +12,8 @@ const provider = {
     authorization: { params: { scope: 'openid email profile' } },
     clientId: AUTH0_CLIENT_ID,
     clientSecret: AUTH0_CLIENT_SECRET,
-    issuer: AUTH0_ISSUER
-  })
+    issuer: AUTH0_ISSUER,
+  }),
 };
 
 export default provider;

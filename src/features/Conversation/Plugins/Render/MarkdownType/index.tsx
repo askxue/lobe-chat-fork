@@ -11,19 +11,15 @@ export interface PluginMarkdownTypeProps {
   loading?: boolean;
 }
 
-const PluginMarkdownType = memo<PluginMarkdownTypeProps>(
-  ({ content, loading }) => {
-    const fontSize = useUserStore(
-      (s) => settingsSelectors.currentSettings(s).fontSize
-    );
-    if (loading) return <Loading />;
+const PluginMarkdownType = memo<PluginMarkdownTypeProps>(({ content, loading }) => {
+  const fontSize = useUserStore((s) => settingsSelectors.currentSettings(s).fontSize);
+  if (loading) return <Loading />;
 
-    return (
-      <Markdown fontSize={fontSize} variant={'chat'}>
-        {content}
-      </Markdown>
-    );
-  }
-);
+  return (
+    <Markdown fontSize={fontSize} variant={'chat'}>
+      {content}
+    </Markdown>
+  );
+});
 
 export default PluginMarkdownType;

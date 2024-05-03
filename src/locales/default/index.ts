@@ -21,7 +21,7 @@ const resources = {
   plugin,
   setting,
   tool,
-  welcome
+  welcome,
 } as const;
 
 export default resources;

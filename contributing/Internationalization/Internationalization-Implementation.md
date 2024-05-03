@@ -85,7 +85,7 @@ const createI18nInstance = (lang) => {
       resourcesToBackend((language, namespace) => {
         // Dynamically load translation resources for the corresponding language
         return import(`path/to/locales/${language}/${namespace}.json`);
-      })
+      }),
     );
 
   // Listen for language change events and dynamically set document direction

@@ -29,10 +29,7 @@ export class AsyncLocalStorage<State> {
   async saveToLocalStorage(state: object) {
     const data = await this.getFromLocalStorage();
 
-    localStorage.setItem(
-      this.storageKey,
-      JSON.stringify({ ...data, ...state })
-    );
+    localStorage.setItem(this.storageKey, JSON.stringify({ ...data, ...state }));
   }
 
   async getFromLocalStorage(key: StorageKey = this.storageKey): Promise<State> {

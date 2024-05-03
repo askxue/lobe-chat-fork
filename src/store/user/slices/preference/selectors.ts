@@ -1,7 +1,6 @@
 import { UserStore } from '@/store/user';
 
-const useCmdEnterToSend = (s: UserStore): boolean =>
-  s.preference.useCmdEnterToSend || false;
+const useCmdEnterToSend = (s: UserStore): boolean => s.preference.useCmdEnterToSend || false;
 
 const userAllowTrace = (s: UserStore) => s.preference.telemetry;
 
@@ -12,5 +11,5 @@ export const preferenceSelectors = {
   hideSyncAlert,
   isPreferenceInit,
   useCmdEnterToSend,
-  userAllowTrace
+  userAllowTrace,
 };

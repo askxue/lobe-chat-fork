@@ -38,9 +38,7 @@ const Temperature = memo(() => {
       <ActionIcon
         icon={Thermometer}
         placement={'bottom'}
-        title={t('settingModel.temperature.titleWithValue', {
-          value: temperature
-        })}
+        title={t('settingModel.temperature.titleWithValue', { value: temperature })}
       />
     </Popover>
   );

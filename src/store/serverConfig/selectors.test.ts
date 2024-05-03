@@ -10,8 +10,8 @@ describe('featureFlagsSelectors', () => {
     const store = initServerConfigStore({
       featureFlags: {
         language_model_settings: false,
-        edit_agent: false
-      }
+        edit_agent: false,
+      },
     });
 
     const result = featureFlagsSelectors(store.getState());
@@ -23,7 +23,7 @@ describe('featureFlagsSelectors', () => {
       showDalle: true,
       showLLM: false,
       showOpenAIApiKey: true,
-      showOpenAIProxyUrl: true
+      showOpenAIProxyUrl: true,
     });
   });
 });
@@ -34,8 +34,8 @@ describe('serverConfigSelectors', () => {
       const store = initServerConfigStore({
         serverConfig: {
           enabledOAuthSSO: true,
-          telemetry: {}
-        }
+          telemetry: {},
+        },
       });
 
       const result = serverConfigSelectors.enabledOAuthSSO(store.getState());
@@ -48,13 +48,11 @@ describe('serverConfigSelectors', () => {
     it('should return langfuse value from store when defined', () => {
       const store = initServerConfigStore({
         serverConfig: {
-          telemetry: { langfuse: true }
-        }
+          telemetry: { langfuse: true },
+        },
       });
 
-      const result = serverConfigSelectors.enabledTelemetryChat(
-        store.getState()
-      );
+      const result = serverConfigSelectors.enabledTelemetryChat(store.getState());
 
       expect(result).toBe(true);
     });
@@ -62,13 +60,11 @@ describe('serverConfigSelectors', () => {
     it('should return false when langfuse is not defined', () => {
       const store = initServerConfigStore({
         serverConfig: {
-          telemetry: {}
-        }
+          telemetry: {},
+        },
       });
 
-      const result = serverConfigSelectors.enabledTelemetryChat(
-        store.getState()
-      );
+      const result = serverConfigSelectors.enabledTelemetryChat(store.getState());
 
       expect(result).toBe(false);
     });

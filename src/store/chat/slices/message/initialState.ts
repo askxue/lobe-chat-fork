@@ -22,5 +22,5 @@ export const initialMessageState: ChatMessageState = {
   inputMessage: '',
   messageLoadingIds: [],
   messages: [],
-  messagesInit: false
+  messagesInit: false,
 };

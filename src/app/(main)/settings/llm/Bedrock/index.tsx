@@ -29,7 +29,7 @@ const BedrockProvider = memo(() => {
           ),
           desc: t(`${providerKey}.accessKeyId.desc`),
           label: t(`${providerKey}.accessKeyId.title`),
-          name: [LLMProviderConfigKey, providerKey, 'accessKeyId']
+          name: [LLMProviderConfigKey, providerKey, 'accessKeyId'],
         },
         {
           children: (
@@ -40,25 +40,23 @@ const BedrockProvider = memo(() => {
           ),
           desc: t(`${providerKey}.secretAccessKey.desc`),
           label: t(`${providerKey}.secretAccessKey.title`),
-          name: [LLMProviderConfigKey, providerKey, 'secretAccessKey']
+          name: [LLMProviderConfigKey, providerKey, 'secretAccessKey'],
         },
         {
           children: (
             <Select
               allowClear
-              options={['us-east-1', 'us-west-2', 'ap-southeast-1'].map(
-                (i) => ({
-                  label: i,
-                  value: i
-                })
-              )}
+              options={['us-east-1', 'us-west-2', 'ap-southeast-1'].map((i) => ({
+                label: i,
+                value: i,
+              }))}
               placeholder={'us-east-1'}
             />
           ),
           desc: t(`${providerKey}.region.desc`),
           label: t(`${providerKey}.region.title`),
-          name: [LLMProviderConfigKey, providerKey, 'region']
-        }
+          name: [LLMProviderConfigKey, providerKey, 'region'],
+        },
       ]}
       checkModel={'anthropic.claude-instant-v1'}
       provider={ModelProvider.Bedrock}

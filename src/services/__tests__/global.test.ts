@@ -17,9 +17,9 @@ vi.mock('@/libs/trpc/client', () => {
     trpcClient: {
       config: {
         getGlobalConfig: { query: vi.fn() },
-        getDefaultAgentConfig: { query: vi.fn() }
-      }
-    }
+        getDefaultAgentConfig: { query: vi.fn() },
+      },
+    },
   };
 });
 
@@ -29,23 +29,21 @@ describe('GlobalService', () => {
       // Arrange
       const mockVersion = '1.0.0';
       (fetch as Mock).mockResolvedValue({
-        json: () => Promise.resolve({ 'dist-tags': { latest: mockVersion } })
+        json: () => Promise.resolve({ 'dist-tags': { latest: mockVersion } }),
       });
 
       // Act
       const version = await globalService.getLatestVersion();
 
       // Assert
-      expect(fetch).toHaveBeenCalledWith(
-        'https://registry.npmmirror.com/@lobehub/chat'
-      );
+      expect(fetch).toHaveBeenCalledWith('https://registry.npmmirror.com/@lobehub/chat');
       expect(version).toBe(mockVersion);
     });
 
     it('should return undefined if the latest version is not found in the response', async () => {
       // Arrange
       (fetch as Mock).mockResolvedValue({
-        json: () => Promise.resolve({})
+        json: () => Promise.resolve({}),
       });
 
       // Act
@@ -60,24 +58,17 @@ describe('GlobalService', () => {
       (fetch as Mock).mockRejectedValue(new Error('Network error'));
 
       // Act & Assert
-      await expect(globalService.getLatestVersion()).rejects.toThrow(
-        'Network error'
-      );
+      await expect(globalService.getLatestVersion()).rejects.toThrow('Network error');
     });
 
     it('should handle non-JSON responses gracefully', async () => {
       // Arrange
       (fetch as Mock).mockResolvedValue({
-        json: () =>
-          Promise.reject(
-            new SyntaxError('Unexpected token < in JSON at position 0')
-          )
+        json: () => Promise.reject(new SyntaxError('Unexpected token < in JSON at position 0')),
       });
 
       // Act & Assert
-      await expect(globalService.getLatestVersion()).rejects.toThrow(
-        SyntaxError
-      );
+      await expect(globalService.getLatestVersion()).rejects.toThrow(SyntaxError);
     });
   });
 
@@ -85,9 +76,7 @@ describe('GlobalService', () => {
     it('should return the serverConfig when fetch is successful', async () => {
       // Arrange
       const mockConfig = { enabledOAuthSSO: true } as GlobalServerConfig;
-      vi.spyOn(trpcClient.config.getGlobalConfig, 'query').mockResolvedValue(
-        mockConfig
-      );
+      vi.spyOn(trpcClient.config.getGlobalConfig, 'query').mockResolvedValue(mockConfig);
 
       // Act
       const config = await globalService.getGlobalConfig();
@@ -98,11 +87,8 @@ describe('GlobalService', () => {
 
     it('should return the defaultAgentConfig when fetch is successful', async () => {
       // Arrange
-      vi.spyOn(
-        trpcClient.config.getDefaultAgentConfig,
-        'query'
-      ).mockResolvedValue({
-        model: 'gemini-pro'
+      vi.spyOn(trpcClient.config.getDefaultAgentConfig, 'query').mockResolvedValue({
+        model: 'gemini-pro',
       });
 
       // Act

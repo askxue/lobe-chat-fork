@@ -11,7 +11,7 @@ const useStyles = createStyles(({ css, token, isDarkMode }) => ({
     padding-block: 16px !important;
     background: ${isDarkMode ? token.colorBgLayout : token.colorBgContainer};
     border-radius: 0;
-  `
+  `,
 }));
 
 export interface CellProps {

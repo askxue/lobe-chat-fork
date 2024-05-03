@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  Form,
-  type ItemGroup,
-  SelectWithImg,
-  SliderWithInput
-} from '@lobehub/ui';
+import { Form, type ItemGroup, SelectWithImg, SliderWithInput } from '@lobehub/ui';
 import { Select } from 'antd';
 import isEqual from 'fast-deep-equal';
 import { Monitor, Moon, Sun } from 'lucide-react';
@@ -29,10 +24,7 @@ const Theme = memo(() => {
   const { t } = useTranslation('setting');
   const [form] = Form.useForm();
   const settings = useUserStore(settingsSelectors.currentSettings, isEqual);
-  const [setThemeMode, setSettings] = useUserStore((s) => [
-    s.switchThemeMode,
-    s.setSettings
-  ]);
+  const [setThemeMode, setSettings] = useUserStore((s) => [s.switchThemeMode, s.setSettings]);
 
   useSyncSettings(form);
 
@@ -41,7 +33,7 @@ const Theme = memo(() => {
       {
         children: <AvatarWithUpload />,
         label: t('settingTheme.avatar.title'),
-        minWidth: undefined
+        minWidth: undefined,
       },
       {
         children: (
@@ -54,40 +46,37 @@ const Theme = memo(() => {
                 icon: Sun,
                 img: imageUrl('theme_light.webp'),
                 label: t('settingTheme.themeMode.light'),
-                value: 'light'
+                value: 'light',
               },
               {
                 icon: Moon,
                 img: imageUrl('theme_dark.webp'),
                 label: t('settingTheme.themeMode.dark'),
-                value: 'dark'
+                value: 'dark',
               },
               {
                 icon: Monitor,
                 img: imageUrl('theme_auto.webp'),
                 label: t('settingTheme.themeMode.auto'),
-                value: 'auto'
-              }
+                value: 'auto',
+              },
             ]}
             unoptimized={false}
             width={100}
           />
         ),
         label: t('settingTheme.themeMode.title'),
-        minWidth: undefined
+        minWidth: undefined,
       },
       {
         children: (
           <Select
             onChange={switchLang}
-            options={[
-              { label: t('settingTheme.lang.autoMode'), value: 'auto' },
-              ...localeOptions
-            ]}
+            options={[{ label: t('settingTheme.lang.autoMode'), value: 'auto' }, ...localeOptions]}
           />
         ),
         label: t('settingTheme.lang.title'),
-        name: 'language'
+        name: 'language',
       },
       {
         children: (
@@ -97,23 +86,23 @@ const Theme = memo(() => {
                 label: 'A',
                 style: {
                   fontSize: 12,
-                  marginTop: 4
-                }
+                  marginTop: 4,
+                },
               },
               14: {
                 label: t('settingTheme.fontSize.marks.normal'),
                 style: {
                   fontSize: 14,
-                  marginTop: 4
-                }
+                  marginTop: 4,
+                },
               },
               18: {
                 label: 'A',
                 style: {
                   fontSize: 18,
-                  marginTop: 4
-                }
-              }
+                  marginTop: 4,
+                },
+              },
             }}
             max={18}
             min={12}
@@ -122,22 +111,22 @@ const Theme = memo(() => {
         ),
         desc: t('settingTheme.fontSize.desc'),
         label: t('settingTheme.fontSize.title'),
-        name: 'fontSize'
+        name: 'fontSize',
       },
       {
         children: <ThemeSwatchesPrimary />,
         desc: t('settingTheme.primaryColor.desc'),
         label: t('settingTheme.primaryColor.title'),
-        minWidth: undefined
+        minWidth: undefined,
       },
       {
         children: <ThemeSwatchesNeutral />,
         desc: t('settingTheme.neutralColor.desc'),
         label: t('settingTheme.neutralColor.title'),
-        minWidth: undefined
-      }
+        minWidth: undefined,
+      },
     ],
-    title: t('settingTheme.title')
+    title: t('settingTheme.title'),
   };
 
   return (

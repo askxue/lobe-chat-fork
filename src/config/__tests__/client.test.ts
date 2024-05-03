@@ -5,7 +5,7 @@ import { getClientConfig } from '../client';
 // 测试前重置 process.env
 vi.stubGlobal('process', {
   ...process, // 保持原有的 process 对象
-  env: { ...process.env } // 克隆环境变量对象，以便修改
+  env: { ...process.env }, // 克隆环境变量对象，以便修改
 });
 
 describe('getClientConfig', () => {

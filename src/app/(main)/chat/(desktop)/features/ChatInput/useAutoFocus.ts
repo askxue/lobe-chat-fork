@@ -15,7 +15,7 @@ export const useAutoFocus = (inputRef: RefObject<TextAreaRef>) => {
       // 所以向上查找全局点击对象是否是 Markdown 或者 Input 或者 Debug 元素
       while (currentElement && !isInputOrMarkdown) {
         isInputOrMarkdown = ['TEXTAREA', 'INPUT', 'ARTICLE', 'PRE'].includes(
-          currentElement.tagName
+          currentElement.tagName,
         );
         currentElement = currentElement.parentElement;
       }

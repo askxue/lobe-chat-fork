@@ -13,7 +13,7 @@ export const useSyncSettings = (form: FormInstance) => {
       (s) => s.settings,
       (settings) => {
         form.setFieldsValue(settings);
-      }
+      },
     );
 
     return () => {

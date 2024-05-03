@@ -12,15 +12,12 @@ export const DEFAULT_AGENT_LOBE_SESSION: LobeAgentSession = {
   meta: DEFAULT_AGENT_META,
   model: DEFAULT_AGENT_CONFIG.model,
   type: LobeSessionType.Agent,
-  updatedAt: Date.now()
+  updatedAt: Date.now(),
 };
 
-export const DEFAULT_INBOX_SESSION: LobeAgentSession = merge(
-  DEFAULT_AGENT_LOBE_SESSION,
-  {
-    id: 'inbox',
-    meta: {
-      avatar: DEFAULT_INBOX_AVATAR
-    }
-  }
-);
+export const DEFAULT_INBOX_SESSION: LobeAgentSession = merge(DEFAULT_AGENT_LOBE_SESSION, {
+  id: 'inbox',
+  meta: {
+    avatar: DEFAULT_INBOX_AVATAR,
+  },
+});

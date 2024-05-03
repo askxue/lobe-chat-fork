@@ -1,9 +1,7 @@
 import { PluginChannel } from '@lobehub/chat-plugin-sdk/client';
 import { useEffect } from 'react';
 
-export const useOnPluginSettingsUpdate = (
-  callback: (settings: any) => void
-) => {
+export const useOnPluginSettingsUpdate = (callback: (settings: any) => void) => {
   useEffect(() => {
     const fn = (e: MessageEvent) => {
       if (e.data.type === PluginChannel.updatePluginSettings) {

@@ -15,13 +15,11 @@ const CreateGroupModal = memo<CreateGroupModalProps>(
   ({ id, open, onCancel }: CreateGroupModalProps) => {
     const { t } = useTranslation('chat');
 
-    const toggleExpandSessionGroup = useGlobalStore(
-      (s) => s.toggleExpandSessionGroup
-    );
+    const toggleExpandSessionGroup = useGlobalStore((s) => s.toggleExpandSessionGroup);
     const { message } = App.useApp();
     const [updateSessionGroup, addCustomGroup] = useSessionStore((s) => [
       s.updateSessionGroupId,
-      s.addSessionGroup
+      s.addSessionGroup,
     ]);
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
@@ -66,7 +64,7 @@ const CreateGroupModal = memo<CreateGroupModalProps>(
         </Modal>
       </div>
     );
-  }
+  },
 );
 
 export default CreateGroupModal;

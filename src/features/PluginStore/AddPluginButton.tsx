@@ -13,7 +13,7 @@ const AddPluginButton = forwardRef<HTMLButtonElement>((props, ref) => {
 
   const [installCustomPlugin, updateNewDevPlugin] = useToolStore((s) => [
     s.installCustomPlugin,
-    s.updateNewCustomPlugin
+    s.updateNewCustomPlugin,
   ]);
 
   return (

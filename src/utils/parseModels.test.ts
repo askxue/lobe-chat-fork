@@ -5,16 +5,14 @@ import { parseModelString } from './parseModels';
 describe('parseModelString', () => {
   it('custom deletion, addition, and renaming of models', () => {
     const result = parseModelString(
-      '-all,+llama,+claude-2，-gpt-3.5-turbo,gpt-4-1106-preview=gpt-4-turbo,gpt-4-1106-preview=gpt-4-32k'
+      '-all,+llama,+claude-2，-gpt-3.5-turbo,gpt-4-1106-preview=gpt-4-turbo,gpt-4-1106-preview=gpt-4-32k',
     );
 
     expect(result).toMatchSnapshot();
   });
 
   it('duplicate naming model', () => {
-    const result = parseModelString(
-      'gpt-4-1106-preview=gpt-4-turbo，gpt-4-1106-preview=gpt-4-32k'
-    );
+    const result = parseModelString('gpt-4-1106-preview=gpt-4-turbo，gpt-4-1106-preview=gpt-4-32k');
     expect(result).toMatchSnapshot();
   });
 
@@ -31,7 +29,7 @@ describe('parseModelString', () => {
       expect(result.add[0]).toEqual({
         displayName: 'ChatGLM 6B',
         id: 'chatglm-6b',
-        tokens: 4096
+        tokens: 4096,
       });
     });
 
@@ -42,13 +40,13 @@ describe('parseModelString', () => {
         displayName: '讯飞星火 v3.5',
         functionCall: true,
         id: 'spark-v3.5',
-        tokens: 8192
+        tokens: 8192,
       });
     });
 
     it('multi models', () => {
       const result = parseModelString(
-        'gemini-pro-vision=Gemini Pro Vision<16000:vision>,gpt-4-all=ChatGPT Plus<128000:fc:vision:file>'
+        'gemini-pro-vision=Gemini Pro Vision<16000:vision>,gpt-4-all=ChatGPT Plus<128000:fc:vision:file>',
       );
 
       expect(result.add).toEqual([
@@ -56,7 +54,7 @@ describe('parseModelString', () => {
           displayName: 'Gemini Pro Vision',
           vision: true,
           id: 'gemini-pro-vision',
-          tokens: 16000
+          tokens: 16000,
         },
         {
           displayName: 'ChatGPT Plus',
@@ -64,8 +62,8 @@ describe('parseModelString', () => {
           functionCall: true,
           files: true,
           id: 'gpt-4-all',
-          tokens: 128000
-        }
+          tokens: 128000,
+        },
       ]);
     });
 
@@ -76,38 +74,22 @@ describe('parseModelString', () => {
 
     it('should handle empty extension capability name', () => {
       const result = parseModelString('model1<1024::file>');
-      expect(result.add[0]).toEqual({
-        id: 'model1',
-        tokens: 1024,
-        files: true
-      });
+      expect(result.add[0]).toEqual({ id: 'model1', tokens: 1024, files: true });
     });
 
     it('should handle duplicate extension capabilities', () => {
       const result = parseModelString('model1<1024:vision:vision>');
-      expect(result.add[0]).toEqual({
-        id: 'model1',
-        tokens: 1024,
-        vision: true
-      });
+      expect(result.add[0]).toEqual({ id: 'model1', tokens: 1024, vision: true });
     });
 
     it('should handle case-sensitive extension capability names', () => {
       const result = parseModelString('model1<1024:VISION:FC:file>');
-      expect(result.add[0]).toEqual({
-        id: 'model1',
-        tokens: 1024,
-        files: true
-      });
+      expect(result.add[0]).toEqual({ id: 'model1', tokens: 1024, files: true });
     });
 
     it('should handle case-sensitive extension capability values', () => {
       const result = parseModelString('model1<1024:vision:Fc:File>');
-      expect(result.add[0]).toEqual({
-        id: 'model1',
-        tokens: 1024,
-        vision: true
-      });
+      expect(result.add[0]).toEqual({ id: 'model1', tokens: 1024, vision: true });
     });
 
     it('should handle empty angle brackets', () => {
@@ -172,19 +154,16 @@ describe('parseModelString', () => {
       expect(result.add[0]).toEqual({
         id: 'model1',
         displayName: 'Model 1',
-        deploymentName: 'model1'
+        deploymentName: 'model1',
       });
     });
 
     it('should have diff deployment name as id', () => {
-      const result = parseModelString(
-        'gpt-35-turbo->my-deploy=GPT 3.5 Turbo',
-        true
-      );
+      const result = parseModelString('gpt-35-turbo->my-deploy=GPT 3.5 Turbo', true);
       expect(result.add[0]).toEqual({
         id: 'gpt-35-turbo',
         displayName: 'GPT 3.5 Turbo',
-        deploymentName: 'my-deploy'
+        deploymentName: 'my-deploy',
       });
     });
   });

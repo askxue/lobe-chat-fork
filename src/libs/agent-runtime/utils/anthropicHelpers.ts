@@ -4,7 +4,7 @@ import { OpenAIChatMessage, UserMessageContentPart } from '../types';
 import { parseDataUri } from './uriParser';
 
 export const buildAnthropicBlock = (
-  content: UserMessageContentPart
+  content: UserMessageContentPart,
 ): Anthropic.ContentBlock | Anthropic.ImageBlockParam => {
   switch (content.type) {
     case 'text': {
@@ -17,33 +17,25 @@ export const buildAnthropicBlock = (
       return {
         source: {
           data: base64 as string,
-          media_type:
-            mimeType as Anthropic.ImageBlockParam.Source['media_type'],
-          type: 'base64'
+          media_type: mimeType as Anthropic.ImageBlockParam.Source['media_type'],
+          type: 'base64',
         },
-        type: 'image'
+        type: 'image',
       };
     }
   }
 };
 
 export const buildAnthropicMessage = (
-  message: OpenAIChatMessage
+  message: OpenAIChatMessage,
 ): Anthropic.Messages.MessageParam => {
   const content = message.content as string | UserMessageContentPart[];
   return {
-    content:
-      typeof content === 'string'
-        ? content
-        : content.map((c) => buildAnthropicBlock(c)),
-    role:
-      message.role === 'function' || message.role === 'system'
-        ? 'assistant'
-        : message.role
+    content: typeof content === 'string' ? content : content.map((c) => buildAnthropicBlock(c)),
+    role: message.role === 'function' || message.role === 'system' ? 'assistant' : message.role,
   };
 };
 
 export const buildAnthropicMessages = (
-  messages: OpenAIChatMessage[]
-): Anthropic.Messages.MessageParam[] =>
-  messages.map((message) => buildAnthropicMessage(message));
+  messages: OpenAIChatMessage[],
+): Anthropic.Messages.MessageParam[] => messages.map((message) => buildAnthropicMessage(message));

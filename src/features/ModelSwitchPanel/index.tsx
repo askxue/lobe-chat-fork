@@ -34,7 +34,7 @@ const useStyles = createStyles(({ css, prefixCls }) => ({
   `,
   tag: css`
     cursor: pointer;
-  `
+  `,
 }));
 
 const ModelSwitchPanel = memo<PropsWithChildren>(({ children }) => {
@@ -42,14 +42,11 @@ const ModelSwitchPanel = memo<PropsWithChildren>(({ children }) => {
   const { styles, theme } = useStyles();
   const [model, updateAgentConfig] = useAgentStore((s) => [
     agentSelectors.currentAgentModel(s),
-    s.updateAgentConfig
+    s.updateAgentConfig,
   ]);
 
   const router = useRouter();
-  const enabledList = useUserStore(
-    modelProviderSelectors.modelProviderListForModelSelect,
-    isEqual
-  );
+  const enabledList = useUserStore(modelProviderSelectors.modelProviderListForModelSelect, isEqual);
 
   const items = useMemo(() => {
     const getModelItems = (provider: ModelProviderCard) => {
@@ -58,7 +55,7 @@ const ModelSwitchPanel = memo<PropsWithChildren>(({ children }) => {
         label: <ModelItemRender {...model} />,
         onClick: () => {
           updateAgentConfig({ model: model.id, provider: provider.id });
-        }
+        },
       }));
 
       // if there is empty items, add a placeholder guide
@@ -67,19 +64,15 @@ const ModelSwitchPanel = memo<PropsWithChildren>(({ children }) => {
           {
             key: 'empty',
             label: (
-              <Flexbox
-                gap={8}
-                horizontal
-                style={{ color: theme.colorTextTertiary }}
-              >
+              <Flexbox gap={8} horizontal style={{ color: theme.colorTextTertiary }}>
                 {t('ModelSwitchPanel.emptyModel')}
                 <Icon icon={LucideArrowRight} />
               </Flexbox>
             ),
             onClick: () => {
               router.push(withBasePath('/settings/llm'));
-            }
-          }
+            },
+          },
         ];
 
       return items;
@@ -90,7 +83,7 @@ const ModelSwitchPanel = memo<PropsWithChildren>(({ children }) => {
       children: getModelItems(provider),
       key: provider.id,
       label: <ProviderItemRender provider={provider.id} />,
-      type: 'group'
+      type: 'group',
     }));
   }, [enabledList]);
 
@@ -102,8 +95,8 @@ const ModelSwitchPanel = memo<PropsWithChildren>(({ children }) => {
         items,
         style: {
           maxHeight: 500,
-          overflowY: 'scroll'
-        }
+          overflowY: 'scroll',
+        },
       }}
       placement={'topLeft'}
       trigger={['click']}

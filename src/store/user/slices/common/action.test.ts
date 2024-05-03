@@ -16,7 +16,7 @@ vi.mock('swr', async (importOriginal) => {
   const modules = await importOriginal();
   return {
     ...(modules as any),
-    mutate: vi.fn()
+    mutate: vi.fn(),
   };
 });
 
@@ -47,26 +47,20 @@ describe('createCommonSlice', () => {
       const mockServerConfig = {
         defaultAgent: 'agent1',
         languageModel: 'model1',
-        telemetry: {}
+        telemetry: {},
       } as GlobalServerConfig;
-      vi.spyOn(globalService, 'getGlobalConfig').mockResolvedValueOnce(
-        mockServerConfig
-      );
+      vi.spyOn(globalService, 'getGlobalConfig').mockResolvedValueOnce(mockServerConfig);
 
-      const { result } = renderHook(() =>
-        useUserStore().useFetchServerConfig()
-      );
+      const { result } = renderHook(() => useUserStore().useFetchServerConfig());
 
-      await waitFor(() =>
-        expect(result.current.data).toEqual(mockServerConfig)
-      );
+      await waitFor(() => expect(result.current.data).toEqual(mockServerConfig));
     });
   });
 
   describe('useCheckTrace', () => {
     it('should return false when shouldFetch is false', async () => {
       const { result } = renderHook(() => useUserStore().useCheckTrace(false), {
-        wrapper: withSWR
+        wrapper: withSWR,
       });
 
       await waitFor(() => expect(result.current.data).toBe(false));
@@ -76,7 +70,7 @@ describe('createCommonSlice', () => {
       vi.spyOn(preferenceSelectors, 'userAllowTrace').mockReturnValueOnce(true);
 
       const { result } = renderHook(() => useUserStore().useCheckTrace(true), {
-        wrapper: withSWR
+        wrapper: withSWR,
       });
 
       await waitFor(() => expect(result.current.data).toBe(false));
@@ -89,7 +83,7 @@ describe('createCommonSlice', () => {
         .mockResolvedValueOnce(true);
 
       const { result } = renderHook(() => useUserStore().useCheckTrace(true), {
-        wrapper: withSWR
+        wrapper: withSWR,
       });
 
       await waitFor(() => expect(result.current.data).toBe(true));

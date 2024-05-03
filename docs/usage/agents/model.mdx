@@ -34,11 +34,10 @@ This parameter controls the randomness of the model's output. The higher the val
 - Higher values: More random output (more creative)
 
 <Callout>
-  Generally, the longer and clearer the prompt, the better the quality and
-  confidence of the model's output. In such cases, the temperature value can be
-  adjusted appropriately. Conversely, if the prompt is short and ambiguous,
-  setting a relatively high temperature value will result in unstable model
-  output.
+  Generally, the longer and clearer the prompt, the better the quality and confidence of the model's
+  output. In such cases, the temperature value can be adjusted appropriately. Conversely, if the
+  prompt is short and ambiguous, setting a relatively high temperature value will result in unstable
+  model output.
 </Callout>
 
 <br />
@@ -48,8 +47,8 @@ This parameter controls the randomness of the model's output. The higher the val
 Top_p is also a sampling parameter, but it differs from temperature in its sampling method. Before outputting, the model generates a bunch of tokens, and these tokens are ranked based on their quality. In the top-p sampling mode, the candidate word list is dynamic, and tokens are selected from the tokens based on a percentage. Top_p introduces randomness in token selection, allowing other high-scoring tokens to have a chance of being selected, rather than always choosing the highest-scoring one.
 
 <Callout>
-  Top\_p is similar to randomness, and it is generally not recommended to change
-  it together with the randomness of temperature.
+  Top\_p is similar to randomness, and it is generally not recommended to change it together with
+  the randomness of temperature.
 </Callout>
 
 <br />
@@ -62,14 +61,12 @@ The presence penalty parameter can be seen as a punishment for repetitive conten
 - Preventing the generation of loops and meaningless content: In some cases, the generation model may produce repetitive or meaningless text that usually fails to convey useful information. By appropriately increasing the value of the presence penalty parameter, the probability of generating such meaningless content can be reduced, thereby improving the readability and practicality of the generated text.
 
 <Callout>
-  It is worth noting that the presence penalty parameter, in conjunction with
-  other parameters such as temperature and top-p, collectively influences the
-  quality of the generated text. Compared to other parameters, the presence
-  penalty parameter primarily focuses on the originality and repetitiveness of
-  the text, while the temperature and top-p parameters more significantly affect
-  the randomness and determinism of the generated text. By adjusting these
-  parameters reasonably, comprehensive control over the quality of the generated
-  text can be achieved.
+  It is worth noting that the presence penalty parameter, in conjunction with other parameters such
+  as temperature and top-p, collectively influences the quality of the generated text. Compared to
+  other parameters, the presence penalty parameter primarily focuses on the originality and
+  repetitiveness of the text, while the temperature and top-p parameters more significantly affect
+  the randomness and determinism of the generated text. By adjusting these parameters reasonably,
+  comprehensive control over the quality of the generated text can be achieved.
 </Callout>
 
 ### `frequency_penalty`

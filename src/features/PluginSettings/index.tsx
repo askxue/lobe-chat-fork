@@ -22,7 +22,7 @@ export const transformPluginSettings = (pluginSettings: PluginSchema) => {
     minimum: i.minimum,
     name,
     tag: name,
-    type: i.type
+    type: i.type,
   }));
 };
 
@@ -36,59 +36,52 @@ const useStyles = createStyles(({ css, token }) => ({
     p {
       color: ${token.colorTextDescription};
     }
-  `
+  `,
 }));
 
-const PluginSettingsConfig = memo<PluginSettingsConfigProps>(
-  ({ schema, id }) => {
-    const { styles } = useStyles();
+const PluginSettingsConfig = memo<PluginSettingsConfigProps>(({ schema, id }) => {
+  const { styles } = useStyles();
 
-    const [updatePluginSettings] = useToolStore((s) => [
-      s.updatePluginSettings
-    ]);
-    const pluginSetting = useToolStore(
-      pluginSelectors.getPluginSettingsById(id),
-      isEqual
-    );
+  const [updatePluginSettings] = useToolStore((s) => [s.updatePluginSettings]);
+  const pluginSetting = useToolStore(pluginSelectors.getPluginSettingsById(id), isEqual);
 
-    const [form] = AForm.useForm();
-    useEffect(() => {
-      form.setFieldsValue(pluginSetting);
-    }, []);
+  const [form] = AForm.useForm();
+  useEffect(() => {
+    form.setFieldsValue(pluginSetting);
+  }, []);
 
-    const items = transformPluginSettings(schema);
+  const items = transformPluginSettings(schema);
 
-    return (
-      <Form form={form} layout={'vertical'} style={{ width: '100%' }}>
-        {items.map((item) => (
-          <Form.Item
-            desc={
-              item.desc && (
-                <Markdown className={styles.markdown} variant={'chat'}>
-                  {item.desc as string}
-                </Markdown>
-              )
-            }
-            key={item.label}
-            label={item.label}
-            tag={item.tag}
-          >
-            <PluginSettingRender
-              defaultValue={pluginSetting[item.name]}
-              enum={item.enum}
-              format={item.format}
-              maximum={item.maximum}
-              minimum={item.minimum}
-              onChange={(value) => {
-                updatePluginSettings(id, { [item.name]: value });
-              }}
-              type={item.type as any}
-            />
-          </Form.Item>
-        ))}
-      </Form>
-    );
-  }
-);
+  return (
+    <Form form={form} layout={'vertical'} style={{ width: '100%' }}>
+      {items.map((item) => (
+        <Form.Item
+          desc={
+            item.desc && (
+              <Markdown className={styles.markdown} variant={'chat'}>
+                {item.desc as string}
+              </Markdown>
+            )
+          }
+          key={item.label}
+          label={item.label}
+          tag={item.tag}
+        >
+          <PluginSettingRender
+            defaultValue={pluginSetting[item.name]}
+            enum={item.enum}
+            format={item.format}
+            maximum={item.maximum}
+            minimum={item.minimum}
+            onChange={(value) => {
+              updatePluginSettings(id, { [item.name]: value });
+            }}
+            type={item.type as any}
+          />
+        </Form.Item>
+      ))}
+    </Form>
+  );
+});
 
 export default PluginSettingsConfig;

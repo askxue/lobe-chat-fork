@@ -47,9 +47,9 @@ const nextAuth = NextAuth({
     Okta({
       clientId: OKTA_CLIENT_ID,
       clientSecret: OKTA_CLIENT_SECRET,
-      issuer: OKTA_ISSUER
-    })
-  ]
+      issuer: OKTA_ISSUER,
+    }),
+  ],
 });
 ```
 
@@ -66,7 +66,7 @@ export const getAppConfig = () => {
 
     OKTA_CLIENT_ID: process.env.OKTA_CLIENT_ID || '',
     OKTA_CLIENT_SECRET: process.env.OKTA_CLIENT_SECRET || '',
-    OKTA_ISSUER: process.env.OKTA_ISSUER || ''
+    OKTA_ISSUER: process.env.OKTA_ISSUER || '',
   };
 };
 ```

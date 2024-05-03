@@ -8,7 +8,7 @@ vi.mock('idb-keyval', () => ({
   createStore: vi.fn().mockImplementation(() => 'abc'),
   getMany: vi.fn(),
   setMany: vi.fn(),
-  delMany: vi.fn()
+  delMany: vi.fn(),
 }));
 
 describe('createIndexedDB', () => {
@@ -58,7 +58,7 @@ describe('createIndexedDB', () => {
 
     expect(vi.mocked(setMany).mock.calls[0][0]).toEqual([
       ['version', mockVersion],
-      ['state', mockState]
+      ['state', mockState],
     ]);
   });
 });

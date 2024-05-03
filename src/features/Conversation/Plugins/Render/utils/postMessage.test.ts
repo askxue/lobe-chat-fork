@@ -5,12 +5,12 @@ import {
   sendMessageContentToPlugin,
   sendPayloadToPlugin,
   sendPluginSettingsToPlugin,
-  sendPluginStateToPlugin
+  sendPluginStateToPlugin,
 } from './postMessage';
 
 // Mock window object with a postMessage spy
 const mockWindow = {
-  postMessage: vi.fn()
+  postMessage: vi.fn(),
 };
 
 describe('plugin communication functions', () => {
@@ -19,7 +19,7 @@ describe('plugin communication functions', () => {
     sendMessageContentToPlugin(mockWindow as unknown as Window, props);
     expect(mockWindow.postMessage).toHaveBeenCalledWith(
       { props, type: PluginChannel.renderPlugin },
-      '*'
+      '*',
     );
   });
 
@@ -32,9 +32,9 @@ describe('plugin communication functions', () => {
         payload: props.payload,
         settings: props.settings,
         state: props.state,
-        props: props.payload // Note: This is due to the TODO in your code
+        props: props.payload, // Note: This is due to the TODO in your code
       },
-      '*'
+      '*',
     );
   });
 
@@ -44,7 +44,7 @@ describe('plugin communication functions', () => {
     sendPluginStateToPlugin(mockWindow as unknown as Window, key, value);
     expect(mockWindow.postMessage).toHaveBeenCalledWith(
       { key, type: PluginChannel.renderPluginState, value },
-      '*'
+      '*',
     );
   });
 
@@ -53,7 +53,7 @@ describe('plugin communication functions', () => {
     sendPluginSettingsToPlugin(mockWindow as unknown as Window, settings);
     expect(mockWindow.postMessage).toHaveBeenCalledWith(
       { type: PluginChannel.renderPluginSettings, value: settings },
-      '*'
+      '*',
     );
   });
 });

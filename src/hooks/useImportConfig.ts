@@ -9,10 +9,7 @@ import { importConfigFile } from '@/utils/config';
 
 export const useImportConfig = () => {
   const refreshSessions = useSessionStore((s) => s.refreshSessions);
-  const [refreshMessages, refreshTopics] = useChatStore((s) => [
-    s.refreshMessages,
-    s.refreshTopic
-  ]);
+  const [refreshMessages, refreshTopics] = useChatStore((s) => [s.refreshMessages, s.refreshTopic]);
   const [setSettings] = useUserStore((s) => [s.setSettings]);
 
   const importConfig = async (file: File) =>

@@ -1,9 +1,6 @@
 import { describe } from 'vitest';
 
-import {
-  MigrationData,
-  VersionController
-} from '@/migrations/VersionController';
+import { MigrationData, VersionController } from '@/migrations/VersionController';
 
 import { MigrationV1ToV2 } from '../FromV1ToV2';
 import inputV1Data from '../FromV1ToV2/fixtures/input-v1-session.json';
@@ -36,7 +33,7 @@ describe('MigrationV3ToV4', () => {
 
       expect(migratedData.version).toEqual(openaiOutputV4.version);
       expect(migratedData.state.settings.languageModel).toEqual(
-        openaiOutputV4.state.settings.languageModel
+        openaiOutputV4.state.settings.languageModel,
       );
     });
 
@@ -47,7 +44,7 @@ describe('MigrationV3ToV4', () => {
 
       expect(migratedData.version).toEqual(azureOutputV4.version);
       expect(migratedData.state.settings.languageModel).toEqual(
-        azureOutputV4.state.settings.languageModel
+        azureOutputV4.state.settings.languageModel,
       );
     });
 
@@ -58,7 +55,7 @@ describe('MigrationV3ToV4', () => {
 
       expect(migratedData.version).toEqual(openrouterOutputV4.version);
       expect(migratedData.state.settings.languageModel).toEqual(
-        openrouterOutputV4.state.settings.languageModel
+        openrouterOutputV4.state.settings.languageModel,
       );
     });
 
@@ -69,7 +66,7 @@ describe('MigrationV3ToV4', () => {
 
       expect(migratedData.version).toEqual(ollamaOutputV4.version);
       expect(migratedData.state.settings.languageModel).toEqual(
-        ollamaOutputV4.state.settings.languageModel
+        ollamaOutputV4.state.settings.languageModel,
       );
     });
   });
@@ -79,7 +76,7 @@ describe('MigrationV3ToV4', () => {
 
     versionController = new VersionController(
       [MigrationV3ToV4, MigrationV2ToV3, MigrationV1ToV2],
-      4
+      4,
     );
 
     const migratedData = versionController.migrate(data);
@@ -96,7 +93,7 @@ describe('MigrationV3ToV4', () => {
         version: 3,
         state: {
           // settings undefined
-        }
+        },
       };
 
       const migratedData = versionController.migrate(data);
@@ -111,8 +108,8 @@ describe('MigrationV3ToV4', () => {
         state: {
           settings: {
             // languageModel undefined
-          }
-        }
+          },
+        },
       };
 
       const migratedData = versionController.migrate(data);
@@ -130,21 +127,17 @@ describe('MigrationV3ToV4', () => {
               // missing togetherai、openrouter 、 ollama
               openAI: {
                 // openAI
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       };
 
       const migratedData = versionController.migrate(data);
 
       expect(migratedData.version).toEqual(4);
-      expect(
-        migratedData.state.settings.languageModel.togetherai
-      ).toBeUndefined();
-      expect(
-        migratedData.state.settings.languageModel.openrouter
-      ).toBeUndefined();
+      expect(migratedData.state.settings.languageModel.togetherai).toBeUndefined();
+      expect(migratedData.state.settings.languageModel.openrouter).toBeUndefined();
       expect(migratedData.state.settings.languageModel.ollama).toBeUndefined();
     });
 
@@ -154,24 +147,18 @@ describe('MigrationV3ToV4', () => {
         state: {
           settings: {
             languageModel: {
-              openAI: 'invalid-config' // 错误的配置格式
-            }
-          }
-        }
+              openAI: 'invalid-config', // 错误的配置格式
+            },
+          },
+        },
       };
 
       const migratedData = versionController.migrate(data);
 
       expect(migratedData.version).toEqual(4);
-      expect(migratedData.state.settings.languageModel.openai).toEqual({
-        enabled: true
-      });
-      expect(
-        migratedData.state.settings.languageModel.togetherai
-      ).toBeUndefined();
-      expect(
-        migratedData.state.settings.languageModel.openrouter
-      ).toBeUndefined();
+      expect(migratedData.state.settings.languageModel.openai).toEqual({ enabled: true });
+      expect(migratedData.state.settings.languageModel.togetherai).toBeUndefined();
+      expect(migratedData.state.settings.languageModel.openrouter).toBeUndefined();
       expect(migratedData.state.settings.languageModel.ollama).toBeUndefined();
     });
 
@@ -185,11 +172,11 @@ describe('MigrationV3ToV4', () => {
               togetherai: {
                 apiKey: '',
                 endpoint: '',
-                customModelName: ''
-              }
-            }
-          }
-        }
+                customModelName: '',
+              },
+            },
+          },
+        },
       };
 
       const migratedData = versionController.migrate(data);
@@ -197,18 +184,12 @@ describe('MigrationV3ToV4', () => {
       expect(migratedData.version).toEqual(4);
       expect(migratedData.state.settings.languageModel.openai).toEqual({
         apiKey: '',
-        enabled: true
+        enabled: true,
       });
 
-      expect(
-        migratedData.state.settings.languageModel.togetherai.apiKey
-      ).toEqual('');
-      expect(
-        migratedData.state.settings.languageModel.togetherai.endpoint
-      ).toEqual('');
-      expect(
-        migratedData.state.settings.languageModel.togetherai.customModelCards
-      ).toBeUndefined();
+      expect(migratedData.state.settings.languageModel.togetherai.apiKey).toEqual('');
+      expect(migratedData.state.settings.languageModel.togetherai.endpoint).toEqual('');
+      expect(migratedData.state.settings.languageModel.togetherai.customModelCards).toBeUndefined();
     });
   });
 });

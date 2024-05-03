@@ -12,8 +12,8 @@ vi.mock('@/database/client/models/file', () => ({
   FileModel: {
     create: vi.fn(),
     delete: vi.fn(),
-    findById: vi.fn()
-  }
+    findById: vi.fn(),
+  },
 }));
 
 // Mocks for the URL and Blob objects
@@ -32,7 +32,7 @@ describe('FileService', () => {
       data: new ArrayBuffer(1),
       fileType: 'image/png',
       saveMode: 'local',
-      size: 1
+      size: 1,
     };
 
     (FileModel.create as Mock).mockResolvedValue(localFile);
@@ -60,7 +60,7 @@ describe('FileService', () => {
       data: new ArrayBuffer(1),
       fileType: 'image/png',
       saveMode: 'local',
-      size: 1
+      size: 1,
     };
 
     (FileModel.findById as Mock).mockResolvedValue(fileData);
@@ -75,7 +75,7 @@ describe('FileService', () => {
       fileType: 'image/png',
       name: 'test',
       saveMode: 'local',
-      url: 'blob:test'
+      url: 'blob:test',
     });
   });
 

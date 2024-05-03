@@ -11,10 +11,7 @@ import { MANUAL_UPGRADE_URL } from '@/const/url';
 import { useGlobalStore } from '@/store/global';
 
 const UpgradeAlert = memo(() => {
-  const [hasNewVersion, latestVersion] = useGlobalStore((s) => [
-    s.hasNewVersion,
-    s.latestVersion
-  ]);
+  const [hasNewVersion, latestVersion] = useGlobalStore((s) => [s.hasNewVersion, s.latestVersion]);
   const { t } = useTranslation('common');
 
   if (!hasNewVersion) return;
@@ -24,9 +21,7 @@ const UpgradeAlert = memo(() => {
       closable
       message={
         <Flexbox gap={8}>
-          <p>
-            {t('upgradeVersion.newVersion', { version: `v${latestVersion}` })}
-          </p>
+          <p>{t('upgradeVersion.newVersion', { version: `v${latestVersion}` })}</p>
           <Link
             aria-label={t('upgradeVersion.action')}
             href={MANUAL_UPGRADE_URL}

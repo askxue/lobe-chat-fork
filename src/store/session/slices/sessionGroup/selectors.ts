@@ -7,5 +7,5 @@ const getGroupById = (id: string) => (s: SessionStore) =>
 
 export const sessionGroupSelectors = {
   getGroupById,
-  sessionGroupItems
+  sessionGroupItems,
 };

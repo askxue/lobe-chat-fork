@@ -3,11 +3,7 @@ import { Mock, beforeEach, describe, expect, it, vi } from 'vitest';
 import { SessionModel } from '@/database/client/models/session';
 import { SessionGroupModel } from '@/database/client/models/sessionGroup';
 import { LobeAgentConfig } from '@/types/agent';
-import {
-  LobeAgentSession,
-  LobeSessionType,
-  SessionGroups
-} from '@/types/session';
+import { LobeAgentSession, LobeSessionType, SessionGroups } from '@/types/session';
 
 import { ClientService } from './client';
 
@@ -30,8 +26,8 @@ vi.mock('@/database/client/models/session', () => {
       queryByGroupIds: vi.fn(),
       updatePinned: vi.fn(),
       duplicate: vi.fn(),
-      queryWithGroups: vi.fn()
-    }
+      queryWithGroups: vi.fn(),
+    },
   };
 });
 
@@ -49,8 +45,8 @@ vi.mock('@/database/client/models/sessionGroup', () => {
       updateOrder: vi.fn(),
       queryByKeyword: vi.fn(),
       updateConfig: vi.fn(),
-      queryByGroupIds: vi.fn()
-    }
+      queryByGroupIds: vi.fn(),
+    },
   };
 });
 
@@ -59,7 +55,7 @@ describe('SessionService', () => {
   const mockSession = {
     id: mockSessionId,
     type: 'agent',
-    meta: { title: 'Mock Session' }
+    meta: { title: 'Mock Session' },
   } as LobeAgentSession;
   const mockSessions = [mockSession];
 
@@ -72,37 +68,27 @@ describe('SessionService', () => {
     it('should create a new session and return its id', async () => {
       // Setup
       const sessionType = LobeSessionType.Agent;
-      const defaultValue = {
-        meta: { title: 'New Session' }
-      } as Partial<LobeAgentSession>;
+      const defaultValue = { meta: { title: 'New Session' } } as Partial<LobeAgentSession>;
       (SessionModel.create as Mock).mockResolvedValue(mockSession);
 
       // Execute
-      const sessionId = await sessionService.createSession(
-        sessionType,
-        defaultValue
-      );
+      const sessionId = await sessionService.createSession(sessionType, defaultValue);
 
       // Assert
-      expect(SessionModel.create).toHaveBeenCalledWith(
-        sessionType,
-        defaultValue
-      );
+      expect(SessionModel.create).toHaveBeenCalledWith(sessionType, defaultValue);
       expect(sessionId).toBe(mockSessionId);
     });
 
     it('should throw an error if session creation fails', async () => {
       // Setup
       const sessionType = LobeSessionType.Agent;
-      const defaultValue = {
-        meta: { title: 'New Session' }
-      } as Partial<LobeAgentSession>;
+      const defaultValue = { meta: { title: 'New Session' } } as Partial<LobeAgentSession>;
       (SessionModel.create as Mock).mockResolvedValue(null);
 
       // Execute & Assert
-      await expect(
-        sessionService.createSession(sessionType, defaultValue)
-      ).rejects.toThrow('session create Error');
+      await expect(sessionService.createSession(sessionType, defaultValue)).rejects.toThrow(
+        'session create Error',
+      );
     });
   });
 
@@ -136,9 +122,7 @@ describe('SessionService', () => {
     it('should retrieve all agent sessions', async () => {
       // Setup
       // Assuming that SessionModel.query has been modified to accept filters
-      const agentSessions = mockSessions.filter(
-        (session) => session.type === 'agent'
-      );
+      const agentSessions = mockSessions.filter((session) => session.type === 'agent');
       (SessionModel.query as Mock).mockResolvedValue(agentSessions);
 
       // Execute
@@ -183,40 +167,26 @@ describe('SessionService', () => {
     it('should update the group of a session', async () => {
       // Setup
       const groupId = 'new-group';
-      (SessionModel.update as Mock).mockResolvedValue({
-        ...mockSession,
-        group: groupId
-      });
+      (SessionModel.update as Mock).mockResolvedValue({ ...mockSession, group: groupId });
 
       // Execute
-      const result = await sessionService.updateSession(mockSessionId, {
-        group: groupId
-      });
+      const result = await sessionService.updateSession(mockSessionId, { group: groupId });
 
       // Assert
-      expect(SessionModel.update).toHaveBeenCalledWith(mockSessionId, {
-        group: groupId
-      });
+      expect(SessionModel.update).toHaveBeenCalledWith(mockSessionId, { group: groupId });
       expect(result).toEqual({ ...mockSession, group: groupId });
     });
 
     it('should update the meta of a session', async () => {
       // Setup
       const newMeta = { description: 'Updated description' };
-      (SessionModel.update as Mock).mockResolvedValue({
-        ...mockSession,
-        meta: newMeta
-      });
+      (SessionModel.update as Mock).mockResolvedValue({ ...mockSession, meta: newMeta });
 
       // Execute
-      const result = await sessionService.updateSession(mockSessionId, {
-        meta: newMeta
-      });
+      const result = await sessionService.updateSession(mockSessionId, { meta: newMeta });
 
       // Assert
-      expect(SessionModel.update).toHaveBeenCalledWith(mockSessionId, {
-        meta: newMeta
-      });
+      expect(SessionModel.update).toHaveBeenCalledWith(mockSessionId, { meta: newMeta });
       expect(result).toEqual({ ...mockSession, meta: newMeta });
     });
 
@@ -228,9 +198,7 @@ describe('SessionService', () => {
       await sessionService.updateSession(mockSessionId, { pinned });
 
       // Assert
-      expect(SessionModel.update).toHaveBeenCalledWith(mockSessionId, {
-        pinned: 1
-      });
+      expect(SessionModel.update).toHaveBeenCalledWith(mockSessionId, { pinned: 1 });
     });
   });
 
@@ -238,22 +206,13 @@ describe('SessionService', () => {
     it('should update the config of a session', async () => {
       // Setup
       const newConfig = { compressThreshold: 2 } as LobeAgentConfig;
-      (SessionModel.updateConfig as Mock).mockResolvedValue({
-        ...mockSession,
-        config: newConfig
-      });
+      (SessionModel.updateConfig as Mock).mockResolvedValue({ ...mockSession, config: newConfig });
 
       // Execute
-      const result = await sessionService.updateSessionConfig(
-        mockSessionId,
-        newConfig
-      );
+      const result = await sessionService.updateSessionConfig(mockSessionId, newConfig);
 
       // Assert
-      expect(SessionModel.updateConfig).toHaveBeenCalledWith(
-        mockSessionId,
-        newConfig
-      );
+      expect(SessionModel.updateConfig).toHaveBeenCalledWith(mockSessionId, newConfig);
       expect(result).toEqual({ ...mockSession, config: newConfig });
     });
   });
@@ -331,20 +290,14 @@ describe('SessionService', () => {
       const newTitle = 'Duplicated Session';
       (SessionModel.duplicate as Mock).mockResolvedValue({
         ...mockSession,
-        id: 'duplicated-session-id'
+        id: 'duplicated-session-id',
       });
 
       // Execute
-      const duplicatedSessionId = await sessionService.cloneSession(
-        mockSessionId,
-        newTitle
-      );
+      const duplicatedSessionId = await sessionService.cloneSession(mockSessionId, newTitle);
 
       // Assert
-      expect(SessionModel.duplicate).toHaveBeenCalledWith(
-        mockSessionId,
-        newTitle
-      );
+      expect(SessionModel.duplicate).toHaveBeenCalledWith(mockSessionId, newTitle);
       expect(duplicatedSessionId).toBe('duplicated-session-id');
     });
   });
@@ -372,7 +325,7 @@ describe('SessionService', () => {
       (SessionGroupModel.create as Mock).mockResolvedValue({
         id: 'new-group-id',
         name: groupName,
-        sort
+        sort,
       });
 
       // Execute
@@ -389,7 +342,7 @@ describe('SessionService', () => {
       // Setup
       const groups = [
         { id: 'group-1', name: 'Group 1', sort: 1 },
-        { id: 'group-2', name: 'Group 2', sort: 2 }
+        { id: 'group-2', name: 'Group 2', sort: 2 },
       ] as SessionGroups;
 
       (SessionGroupModel.batchCreate as Mock).mockResolvedValue(groups);
@@ -410,16 +363,10 @@ describe('SessionService', () => {
       (SessionGroupModel.delete as Mock).mockResolvedValue(true);
 
       // Execute
-      const result = await sessionService.removeSessionGroup(
-        'group-id',
-        removeChildren
-      );
+      const result = await sessionService.removeSessionGroup('group-id', removeChildren);
 
       // Assert
-      expect(SessionGroupModel.delete).toHaveBeenCalledWith(
-        'group-id',
-        removeChildren
-      );
+      expect(SessionGroupModel.delete).toHaveBeenCalledWith('group-id', removeChildren);
       expect(result).toBe(true);
     });
   });
@@ -443,7 +390,7 @@ describe('SessionService', () => {
       // Setup
       const groups = [
         { id: 'group-1', name: 'Group 1', sort: 1 },
-        { id: 'group-2', name: 'Group 2', sort: 2 }
+        { id: 'group-2', name: 'Group 2', sort: 2 },
       ];
       (SessionGroupModel.query as Mock).mockResolvedValue(groups);
 
@@ -461,10 +408,7 @@ describe('SessionService', () => {
       // Setup
       const groupId = 'group-1';
       const data = { name: 'Updated Group', sort: 2 };
-      (SessionGroupModel.update as Mock).mockResolvedValue({
-        id: groupId,
-        ...data
-      });
+      (SessionGroupModel.update as Mock).mockResolvedValue({ id: groupId, ...data });
 
       // Execute
       const result = await sessionService.updateSessionGroup(groupId, data);
@@ -480,7 +424,7 @@ describe('SessionService', () => {
       // Setup
       const sortMap = [
         { id: 'group-1', sort: 2 },
-        { id: 'group-2', sort: 1 }
+        { id: 'group-2', sort: 1 },
       ];
       (SessionGroupModel.updateOrder as Mock).mockResolvedValue(true);
 

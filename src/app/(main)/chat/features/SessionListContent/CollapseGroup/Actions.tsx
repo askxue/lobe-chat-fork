@@ -10,7 +10,7 @@ import { useSessionStore } from '@/store/session';
 const useStyles = createStyles(({ css }) => ({
   modalRoot: css`
     z-index: 2000;
-  `
+  `,
 }));
 interface ActionsProps extends Pick<DropdownProps, 'onOpenChange'> {
   id?: string;
@@ -24,21 +24,14 @@ type ItemOfType<T> = T extends (infer Item)[] ? Item : never;
 type MenuItemType = ItemOfType<MenuProps['items']>;
 
 const Actions = memo<ActionsProps>(
-  ({
-    id,
-    openRenameModal,
-    openConfigModal,
-    onOpenChange,
-    isCustomGroup,
-    isPinned
-  }) => {
+  ({ id, openRenameModal, openConfigModal, onOpenChange, isCustomGroup, isPinned }) => {
     const { t } = useTranslation('chat');
     const { styles } = useStyles();
     const { modal, message } = App.useApp();
 
     const [createSession, removeSessionGroup] = useSessionStore((s) => [
       s.createSession,
-      s.removeSessionGroup
+      s.removeSessionGroup,
     ]);
 
     const sessionGroupConfigPublicItem: MenuItemType = {
@@ -48,7 +41,7 @@ const Actions = memo<ActionsProps>(
       onClick: ({ domEvent }) => {
         domEvent.stopPropagation();
         openConfigModal();
-      }
+      },
     };
 
     const newAgentPublicItem: MenuItemType = {
@@ -58,24 +51,20 @@ const Actions = memo<ActionsProps>(
       onClick: async ({ domEvent }) => {
         domEvent.stopPropagation();
         const key = 'createNewAgentInGroup';
-        message.loading({
-          content: t('sessionGroup.creatingAgent'),
-          duration: 0,
-          key
-        });
+        message.loading({ content: t('sessionGroup.creatingAgent'), duration: 0, key });
 
         await createSession({ group: id, pinned: isPinned });
 
         message.destroy(key);
         message.success({ content: t('sessionGroup.createAgentSuccess') });
-      }
+      },
     };
 
     const customGroupItems: MenuProps['items'] = useMemo(
       () => [
         newAgentPublicItem,
         {
-          type: 'divider'
+          type: 'divider',
         },
         {
           icon: <Icon icon={PencilLine} />,
@@ -84,11 +73,11 @@ const Actions = memo<ActionsProps>(
           onClick: ({ domEvent }) => {
             domEvent.stopPropagation();
             openRenameModal?.();
-          }
+          },
         },
         sessionGroupConfigPublicItem,
         {
-          type: 'divider'
+          type: 'divider',
         },
         {
           danger: true,
@@ -105,23 +94,23 @@ const Actions = memo<ActionsProps>(
                 await removeSessionGroup(id);
               },
               rootClassName: styles.modalRoot,
-              title: t('sessionGroup.confirmRemoveGroupAlert')
+              title: t('sessionGroup.confirmRemoveGroupAlert'),
             });
-          }
-        }
+          },
+        },
       ],
-      []
+      [],
     );
 
     const defaultItems: MenuProps['items'] = useMemo(
       () => [
         newAgentPublicItem,
         {
-          type: 'divider'
+          type: 'divider',
         },
-        sessionGroupConfigPublicItem
+        sessionGroupConfigPublicItem,
       ],
-      []
+      [],
     );
 
     return (
@@ -131,7 +120,7 @@ const Actions = memo<ActionsProps>(
           items: isCustomGroup ? customGroupItems : defaultItems,
           onClick: ({ domEvent }) => {
             domEvent.stopPropagation();
-          }
+          },
         }}
         onOpenChange={onOpenChange}
         trigger={['click']}
@@ -146,7 +135,7 @@ const Actions = memo<ActionsProps>(
         />
       </Dropdown>
     );
-  }
+  },
 );
 
 export default Actions;

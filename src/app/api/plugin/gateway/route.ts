@@ -13,10 +13,7 @@ import { getTracePayload } from '@/utils/trace';
 
 import { parserPluginSettings } from './settings';
 
-const checkAuth = (
-  accessCode: string | null,
-  oauthAuthorized: boolean | null
-) => {
+const checkAuth = (accessCode: string | null, oauthAuthorized: boolean | null) => {
   const { ACCESS_CODES, PLUGIN_SETTINGS, ENABLE_OAUTH_SSO } = getServerConfig();
 
   // if there is no plugin settings, just skip the auth
@@ -35,21 +32,16 @@ const checkAuth = (
   return { auth: true };
 };
 
-const { PLUGINS_INDEX_URL: pluginsIndexUrl, PLUGIN_SETTINGS } =
-  getServerConfig();
+const { PLUGINS_INDEX_URL: pluginsIndexUrl, PLUGIN_SETTINGS } = getServerConfig();
 
 const defaultPluginSettings = parserPluginSettings(PLUGIN_SETTINGS);
 
-const handler = createGatewayOnEdgeRuntime({
-  defaultPluginSettings,
-  pluginsIndexUrl
-});
+const handler = createGatewayOnEdgeRuntime({ defaultPluginSettings, pluginsIndexUrl });
 
 export const POST = async (req: Request) => {
   // get Authorization from header
   const authorization = req.headers.get(LOBE_CHAT_AUTH_HEADER);
-  if (!authorization)
-    throw AgentRuntimeError.createError(ChatErrorType.Unauthorized);
+  if (!authorization) throw AgentRuntimeError.createError(ChatErrorType.Unauthorized);
 
   const oauthAuthorized = !!req.headers.get(OAUTH_AUTHORIZED);
   const payload = await getJWTPayload(authorization);
@@ -65,17 +57,15 @@ export const POST = async (req: Request) => {
   const traceClient = new TraceClient();
   const trace = traceClient.createTrace({
     id: tracePayload?.traceId,
-    ...tracePayload
+    ...tracePayload,
   });
 
-  const { manifest, indexUrl, ...input } = (await req
-    .clone()
-    .json()) as PluginRequestPayload;
+  const { manifest, indexUrl, ...input } = (await req.clone().json()) as PluginRequestPayload;
 
   const span = trace?.span({
     input,
     metadata: { indexUrl, manifest },
-    name: TraceNameMap.FetchPluginAPI
+    name: TraceNameMap.FetchPluginAPI,
   });
 
   span?.update({ parentObservationId: tracePayload?.observationId });

@@ -18,7 +18,7 @@ const OllamaProvider = memo(() => {
         children: <Checker />,
         desc: t('llm.checker.ollamaDesc'),
         label: t('llm.checker.title'),
-        minWidth: undefined
+        minWidth: undefined,
       }}
       modelList={{ showModelFetcher: true }}
       provider={ModelProvider.Ollama}

@@ -12,27 +12,27 @@ import { useChatStore } from '../../store';
 vi.mock('@/services/message', () => ({
   messageService: {
     updateMessageTTS: vi.fn(),
-    updateMessage: vi.fn()
-  }
+    updateMessage: vi.fn(),
+  },
 }));
 
 vi.mock('@/services/chat', () => ({
   chatService: {
-    fetchPresetTaskResult: vi.fn()
-  }
+    fetchPresetTaskResult: vi.fn(),
+  },
 }));
 
 vi.mock('@/chains/langDetect', () => ({
-  chainLangDetect: vi.fn()
+  chainLangDetect: vi.fn(),
 }));
 
 vi.mock('@/chains/translate', () => ({
-  chainTranslate: vi.fn()
+  chainTranslate: vi.fn(),
 }));
 
 // Mock supportLocales
 vi.mock('@/locales/options', () => ({
-  supportLocales: ['en-US', 'zh-CN']
+  supportLocales: ['en-US', 'zh-CN'],
 }));
 
 beforeEach(() => {
@@ -41,7 +41,7 @@ beforeEach(() => {
     {
       // ... 初始状态
     },
-    false
+    false,
   );
 });
 
@@ -59,9 +59,7 @@ describe('ChatEnhanceAction', () => {
         await result.current.clearTTS(messageId);
       });
 
-      expect(messageService.updateMessage).toHaveBeenCalledWith(messageId, {
-        tts: false
-      });
+      expect(messageService.updateMessage).toHaveBeenCalledWith(messageId, { tts: false });
     });
   });
 
@@ -84,23 +82,21 @@ describe('ChatEnhanceAction', () => {
               role: 'user',
               sessionId: 'test',
               topicId: 'test',
-              meta: {}
-            }
-          ]
+              meta: {},
+            },
+          ],
         });
       });
 
-      (chatService.fetchPresetTaskResult as Mock).mockImplementation(
-        ({ params }) => {
-          if (params === chainLangDetect(messageContent)) {
-            return Promise.resolve(detectedLang);
-          }
-          if (params === chainTranslate(messageContent, targetLang)) {
-            return Promise.resolve('Hola Mundo');
-          }
-          return Promise.resolve(undefined);
+      (chatService.fetchPresetTaskResult as Mock).mockImplementation(({ params }) => {
+        if (params === chainLangDetect(messageContent)) {
+          return Promise.resolve(detectedLang);
         }
-      );
+        if (params === chainTranslate(messageContent, targetLang)) {
+          return Promise.resolve('Hola Mundo');
+        }
+        return Promise.resolve(undefined);
+      });
 
       await act(async () => {
         await result.current.translateMessage(messageId, targetLang);
@@ -119,9 +115,7 @@ describe('ChatEnhanceAction', () => {
         await result.current.clearTranslate(messageId);
       });
 
-      expect(messageService.updateMessage).toHaveBeenCalledWith(messageId, {
-        translate: false
-      });
+      expect(messageService.updateMessage).toHaveBeenCalledWith(messageId, { translate: false });
     });
   });
 });

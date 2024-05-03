@@ -41,12 +41,8 @@ export const createPreferenceSlice: StateCreator<
       () => get().preferenceStorage.getFromLocalStorage(),
       {
         onSuccess: (preference) => {
-          set(
-            { isPreferenceInit: true, preference },
-            false,
-            n('initPreference')
-          );
-        }
-      }
-    )
+          set({ isPreferenceInit: true, preference }, false, n('initPreference'));
+        },
+      },
+    ),
 });

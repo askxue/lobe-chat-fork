@@ -1,10 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { INBOX_SESSION_ID } from '@/const/session';
-import {
-  DEFAULT_AGENT_CONFIG,
-  DEFAUTT_AGENT_TTS_CONFIG
-} from '@/const/settings';
+import { DEFAULT_AGENT_CONFIG, DEFAUTT_AGENT_TTS_CONFIG } from '@/const/settings';
 import { AgentStore } from '@/store/agent';
 import { UserStore } from '@/store/user';
 import { settingsSelectors } from '@/store/user/slices/settings/selectors';
@@ -13,12 +10,12 @@ import { LobeAgentConfig } from '@/types/agent';
 import { agentSelectors } from './selectors';
 
 vi.mock('i18next', () => ({
-  t: vi.fn((key) => key) // Simplified mock return value
+  t: vi.fn((key) => key), // Simplified mock return value
 }));
 
 const mockSessionStore = {
   activeId: '1',
-  agentConfig: DEFAULT_AGENT_CONFIG
+  agentConfig: DEFAULT_AGENT_CONFIG,
 } as AgentStore;
 
 describe('agentSelectors', () => {
@@ -29,9 +26,9 @@ describe('agentSelectors', () => {
           systemRole: 'user',
           model: 'gpt-3.5-turbo',
           params: {
-            temperature: 0.7
-          }
-        }
+            temperature: 0.7,
+          },
+        },
       } as unknown as AgentStore;
 
       const result = agentSelectors.defaultAgentConfig(s);
@@ -43,9 +40,7 @@ describe('agentSelectors', () => {
   describe('currentAgentConfig', () => {
     it('should return the merged default and session-specific agent config', () => {
       const config = agentSelectors.currentAgentConfig(mockSessionStore);
-      expect(config).toEqual(
-        expect.objectContaining(mockSessionStore.agentConfig)
-      );
+      expect(config).toEqual(expect.objectContaining(mockSessionStore.agentConfig));
     });
   });
 
@@ -67,8 +62,8 @@ describe('agentSelectors', () => {
         ...mockSessionStore,
         agentConfig: {
           ...mockSessionStore.agentConfig,
-          systemRole: 'test'
-        }
+          systemRole: 'test',
+        },
       };
       const hasRole = agentSelectors.hasSystemRole(modifiedSessionStore);
       expect(hasRole).toBe(true);
@@ -89,10 +84,10 @@ describe('agentSelectors', () => {
             ...mockSessionStore.agentConfig,
             config: {
               ...mockSessionStore.agentConfig,
-              tts: DEFAUTT_AGENT_TTS_CONFIG
-            }
-          }
-        ]
+              tts: DEFAUTT_AGENT_TTS_CONFIG,
+            },
+          },
+        ],
       };
       const ttsConfig = agentSelectors.currentAgentTTS(modifiedSessionStore);
       expect(ttsConfig).toEqual(DEFAUTT_AGENT_TTS_CONFIG);
@@ -102,8 +97,7 @@ describe('agentSelectors', () => {
   describe('currentAgentTTSVoice', () => {
     it('should return the appropriate TTS voice based on the service and language', () => {
       const lang = 'en';
-      const ttsVoice =
-        agentSelectors.currentAgentTTSVoice(lang)(mockSessionStore);
+      const ttsVoice = agentSelectors.currentAgentTTSVoice(lang)(mockSessionStore);
       expect(ttsVoice).toBe(mockSessionStore.agentConfig.tts?.voice?.openai);
     });
 
@@ -114,9 +108,9 @@ describe('agentSelectors', () => {
           ...mockSessionStore.agentConfig,
           tts: {
             ...DEFAUTT_AGENT_TTS_CONFIG,
-            ttsService: 'edge'
-          }
-        }
+            ttsService: 'edge',
+          },
+        },
       } as AgentStore;
       const ttsVoice = agentSelectors.currentAgentTTSVoice('en')(modifiedStore);
       expect(ttsVoice).toBe('ar-SA-HamedNeural');
@@ -129,9 +123,9 @@ describe('agentSelectors', () => {
           ...mockSessionStore.agentConfig,
           tts: {
             ...DEFAUTT_AGENT_TTS_CONFIG,
-            ttsService: 'microsoft'
-          }
-        }
+            ttsService: 'microsoft',
+          },
+        },
       } as AgentStore;
       const ttsVoice = agentSelectors.currentAgentTTSVoice('en')(modifiedStore);
       expect(ttsVoice).toBe('ar-SA-HamedNeural');
@@ -147,22 +141,19 @@ describe('agentSelectors', () => {
             ...DEFAUTT_AGENT_TTS_CONFIG,
             ttsService: 'avc',
             voice: {
-              openai: 'non-existent-voice'
-            }
-          }
-        }
+              openai: 'non-existent-voice',
+            },
+          },
+        },
       };
-      const ttsVoice = agentSelectors.currentAgentTTSVoice(lang)(
-        modifiedStore as any
-      );
+      const ttsVoice = agentSelectors.currentAgentTTSVoice(lang)(modifiedStore as any);
       expect(ttsVoice).toBe('alloy');
     });
   });
 
   describe('currentAgentModelProvider', () => {
     it('should return the provider from the agent config', () => {
-      const provider =
-        agentSelectors.currentAgentModelProvider(mockSessionStore);
+      const provider = agentSelectors.currentAgentModelProvider(mockSessionStore);
       expect(provider).toBe(mockSessionStore.agentConfig.provider);
     });
 
@@ -171,8 +162,8 @@ describe('agentSelectors', () => {
         ...mockSessionStore,
         agentConfig: {
           ...mockSessionStore.agentConfig,
-          provider: undefined
-        }
+          provider: undefined,
+        },
       };
       const provider = agentSelectors.currentAgentModelProvider(modifiedStore);
       expect(provider).toBeUndefined();
@@ -190,8 +181,8 @@ describe('agentSelectors', () => {
         ...mockSessionStore,
         agentConfig: {
           ...mockSessionStore.agentConfig,
-          plugins: undefined
-        }
+          plugins: undefined,
+        },
       };
       const plugins = agentSelectors.currentAgentPlugins(modifiedStore);
       expect(plugins).toEqual([]);
@@ -200,8 +191,7 @@ describe('agentSelectors', () => {
 
   describe('currentAgentSystemRole', () => {
     it('should return the system role from the agent config', () => {
-      const systemRole =
-        agentSelectors.currentAgentSystemRole(mockSessionStore);
+      const systemRole = agentSelectors.currentAgentSystemRole(mockSessionStore);
       expect(systemRole).toBe(mockSessionStore.agentConfig.systemRole);
     });
 
@@ -210,8 +200,8 @@ describe('agentSelectors', () => {
         ...mockSessionStore,
         agentConfig: {
           ...mockSessionStore.agentConfig,
-          systemRole: undefined
-        }
+          systemRole: undefined,
+        },
       };
       const systemRole = agentSelectors.currentAgentSystemRole(modifiedStore);
       expect(systemRole).toBeUndefined();
@@ -222,7 +212,7 @@ describe('agentSelectors', () => {
     it('should return true if activeId is INBOX_SESSION_ID', () => {
       const modifiedStore = {
         ...mockSessionStore,
-        activeId: INBOX_SESSION_ID
+        activeId: INBOX_SESSION_ID,
       };
       const isInbox = agentSelectors.isInboxSession(modifiedStore);
       expect(isInbox).toBe(true);

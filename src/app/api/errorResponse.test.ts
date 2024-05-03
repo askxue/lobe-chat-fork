@@ -160,7 +160,7 @@ describe('createErrorResponse', () => {
     return response.json().then((data) => {
       expect(data).toEqual({
         body,
-        errorType
+        errorType,
       });
     });
   });

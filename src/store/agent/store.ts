@@ -12,18 +12,16 @@ import { AgentChatAction, createChatSlice } from './slices/chat/action';
 
 export interface AgentStore extends AgentChatAction, SessionStoreState {}
 
-const createStore: StateCreator<AgentStore, [['zustand/devtools', never]]> = (
-  ...parameters
-) => ({
+const createStore: StateCreator<AgentStore, [['zustand/devtools', never]]> = (...parameters) => ({
   ...initialState,
-  ...createChatSlice(...parameters)
+  ...createChatSlice(...parameters),
 });
 
 //  ===============  implement useStore ============ //
 
 export const useAgentStore = createWithEqualityFn<AgentStore>()(
   devtools(createStore, {
-    name: 'LobeChat_Agent' + (isDev ? '_DEV' : '')
+    name: 'LobeChat_Agent' + (isDev ? '_DEV' : ''),
   }),
-  shallow
+  shallow,
 );

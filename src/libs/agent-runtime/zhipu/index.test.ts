@@ -17,9 +17,7 @@ vi.mock('./authToken');
 describe('LobeZhipuAI', () => {
   beforeEach(() => {
     // Mock generateApiToken
-    vi.spyOn(authTokenModule, 'generateApiToken').mockResolvedValue(
-      'mocked_token'
-    );
+    vi.spyOn(authTokenModule, 'generateApiToken').mockResolvedValue('mocked_token');
   });
 
   afterEach(() => {
@@ -28,19 +26,13 @@ describe('LobeZhipuAI', () => {
 
   describe('fromAPIKey', () => {
     it('should correctly initialize with an API key', async () => {
-      const lobeZhipuAI = await LobeZhipuAI.fromAPIKey({
-        apiKey: 'test_api_key'
-      });
+      const lobeZhipuAI = await LobeZhipuAI.fromAPIKey({ apiKey: 'test_api_key' });
       expect(lobeZhipuAI).toBeInstanceOf(LobeZhipuAI);
-      expect(lobeZhipuAI.baseURL).toEqual(
-        'https://open.bigmodel.cn/api/paas/v4'
-      );
+      expect(lobeZhipuAI.baseURL).toEqual('https://open.bigmodel.cn/api/paas/v4');
     });
 
     it('should throw an error if API key is invalid', async () => {
-      vi.spyOn(authTokenModule, 'generateApiToken').mockRejectedValue(
-        new Error('Invalid API Key')
-      );
+      vi.spyOn(authTokenModule, 'generateApiToken').mockRejectedValue(new Error('Invalid API Key'));
       try {
         await LobeZhipuAI.fromAPIKey({ apiKey: 'asd' });
       } catch (e) {
@@ -54,12 +46,12 @@ describe('LobeZhipuAI', () => {
 
     beforeEach(async () => {
       instance = await LobeZhipuAI.fromAPIKey({
-        apiKey: 'test_api_key'
+        apiKey: 'test_api_key',
       });
 
       // Mock chat.completions.create
       vi.spyOn(instance['client'].chat.completions, 'create').mockResolvedValue(
-        new ReadableStream() as any
+        new ReadableStream() as any,
       );
     });
 
@@ -67,7 +59,7 @@ describe('LobeZhipuAI', () => {
       const result = await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
         model: 'glm-4',
-        temperature: 0
+        temperature: 0,
       });
       expect(result).toBeInstanceOf(StreamingTextResponse);
     });
@@ -86,23 +78,18 @@ describe('LobeZhipuAI', () => {
                 model: 'gpt-3.5-turbo-0125',
                 system_fingerprint: 'fp_86156a94a0',
                 choices: [
-                  {
-                    index: 0,
-                    delta: { content: 'hello' },
-                    logprobs: null,
-                    finish_reason: null
-                  }
-                ]
+                  { index: 0, delta: { content: 'hello' }, logprobs: null, finish_reason: null },
+                ],
               });
               controller.close();
-            }
-          }) as any
+            },
+          }) as any,
         );
 
       // 准备 callback 和 headers
       const mockCallback: ChatStreamCallbacks = {
         onStart: vi.fn(),
-        onToken: vi.fn()
+        onToken: vi.fn(),
       };
       const mockHeaders = { 'Custom-Header': 'TestValue' };
 
@@ -111,9 +98,9 @@ describe('LobeZhipuAI', () => {
         {
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'text-davinci-003',
-          temperature: 0
+          temperature: 0,
         },
-        { callback: mockCallback, headers: mockHeaders }
+        { callback: mockCallback, headers: mockHeaders },
       );
 
       // 验证 callback 被调用
@@ -134,18 +121,16 @@ describe('LobeZhipuAI', () => {
       await instance.chat({
         messages: [
           { content: 'Hello', role: 'user' },
-          { content: [{ type: 'text', text: 'Hello again' }], role: 'user' }
+          { content: [{ type: 'text', text: 'Hello again' }], role: 'user' },
         ],
         model: 'glm-4',
         temperature: 0,
-        top_p: 1
+        top_p: 1,
       });
 
       const calledWithParams = spyOn.mock.calls[0][0];
 
-      expect(calledWithParams.messages[1].content).toEqual([
-        { type: 'text', text: 'Hello again' }
-      ]);
+      expect(calledWithParams.messages[1].content).toEqual([{ type: 'text', text: 'Hello again' }]);
       expect(calledWithParams.temperature).toBeUndefined(); // temperature 0 should be undefined
       expect((calledWithParams as any).do_sample).toBeTruthy(); // temperature 0 should be undefined
       expect(calledWithParams.top_p).toEqual(0.99); // top_p should be transformed correctly
@@ -159,34 +144,31 @@ describe('LobeZhipuAI', () => {
           {
             status: 400,
             error: {
-              message: 'Bad Request'
-            }
+              message: 'Bad Request',
+            },
           },
           'Error message',
-          {}
+          {},
         );
 
-        vi.spyOn(
-          instance['client'].chat.completions,
-          'create'
-        ).mockRejectedValue(apiError);
+        vi.spyOn(instance['client'].chat.completions, 'create').mockRejectedValue(apiError);
 
         // Act
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           expect(e).toEqual({
             endpoint: 'https://open.bigmodel.cn/api/paas/v4',
             error: {
               error: { message: 'Bad Request' },
-              status: 400
+              status: 400,
             },
             errorType: 'ZhipuBizError',
-            provider: 'zhipu'
+            provider: 'zhipu',
           });
         }
       });
@@ -204,37 +186,29 @@ describe('LobeZhipuAI', () => {
         const errorInfo = {
           stack: 'abc',
           cause: {
-            message: 'api is undefined'
-          }
+            message: 'api is undefined',
+          },
         };
-        const apiError = new OpenAI.APIError(
-          400,
-          errorInfo,
-          'module error',
-          {}
-        );
+        const apiError = new OpenAI.APIError(400, errorInfo, 'module error', {});
 
-        vi.spyOn(
-          instance['client'].chat.completions,
-          'create'
-        ).mockRejectedValue(apiError);
+        vi.spyOn(instance['client'].chat.completions, 'create').mockRejectedValue(apiError);
 
         // Act
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0.2
+            temperature: 0.2,
           });
         } catch (e) {
           expect(e).toEqual({
             endpoint: 'https://open.bigmodel.cn/api/paas/v4',
             error: {
               cause: { message: 'api is undefined' },
-              stack: 'abc'
+              stack: 'abc',
             },
             errorType: 'ZhipuBizError',
-            provider: 'zhipu'
+            provider: 'zhipu',
           });
         }
       });
@@ -243,42 +217,34 @@ describe('LobeZhipuAI', () => {
         // Arrange
         const errorInfo = {
           stack: 'abc',
-          cause: { message: 'api is undefined' }
+          cause: { message: 'api is undefined' },
         };
-        const apiError = new OpenAI.APIError(
-          400,
-          errorInfo,
-          'module error',
-          {}
-        );
+        const apiError = new OpenAI.APIError(400, errorInfo, 'module error', {});
 
         instance = await LobeZhipuAI.fromAPIKey({
           apiKey: 'test',
 
-          baseURL: 'https://abc.com/v2'
+          baseURL: 'https://abc.com/v2',
         });
 
-        vi.spyOn(
-          instance['client'].chat.completions,
-          'create'
-        ).mockRejectedValue(apiError);
+        vi.spyOn(instance['client'].chat.completions, 'create').mockRejectedValue(apiError);
 
         // Act
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'gpt-3.5-turbo',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           expect(e).toEqual({
             endpoint: 'https://***.com/v2',
             error: {
               cause: { message: 'api is undefined' },
-              stack: 'abc'
+              stack: 'abc',
             },
             errorType: 'ZhipuBizError',
-            provider: 'zhipu'
+            provider: 'zhipu',
           });
         }
       });
@@ -287,17 +253,14 @@ describe('LobeZhipuAI', () => {
         // Arrange
         const genericError = new Error('Generic Error');
 
-        vi.spyOn(
-          instance['client'].chat.completions,
-          'create'
-        ).mockRejectedValue(genericError);
+        vi.spyOn(instance['client'].chat.completions, 'create').mockRejectedValue(genericError);
 
         // Act
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
             model: 'text-davinci-003',
-            temperature: 0
+            temperature: 0,
           });
         } catch (e) {
           expect(e).toEqual({
@@ -308,8 +271,8 @@ describe('LobeZhipuAI', () => {
               name: genericError.name,
               cause: genericError.cause,
               message: genericError.message,
-              stack: genericError.stack
-            }
+              stack: genericError.stack,
+            },
           });
         }
       });
@@ -323,16 +286,13 @@ describe('LobeZhipuAI', () => {
           start(controller) {
             controller.enqueue('Debug stream content');
             controller.close();
-          }
+          },
         }) as any;
         mockDebugStream.toReadableStream = () => mockDebugStream; // 添加 toReadableStream 方法
 
         // 模拟 chat.completions.create 返回值，包括模拟的 tee 方法
         (instance['client'].chat.completions.create as Mock).mockResolvedValue({
-          tee: () => [
-            mockProdStream,
-            { toReadableStream: () => mockDebugStream }
-          ]
+          tee: () => [mockProdStream, { toReadableStream: () => mockDebugStream }],
         });
 
         // 保存原始环境变量值
@@ -340,9 +300,7 @@ describe('LobeZhipuAI', () => {
 
         // 模拟环境变量
         process.env.DEBUG_ZHIPU_CHAT_COMPLETION = '1';
-        vi.spyOn(debugStreamModule, 'debugStream').mockImplementation(() =>
-          Promise.resolve()
-        );
+        vi.spyOn(debugStreamModule, 'debugStream').mockImplementation(() => Promise.resolve());
 
         // 执行测试
         // 运行你的测试函数，确保它会在条件满足时调用 debugStream
@@ -350,7 +308,7 @@ describe('LobeZhipuAI', () => {
         await instance.chat({
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'text-davinci-003',
-          temperature: 0
+          temperature: 0,
         });
 
         // 验证 debugStream 被调用

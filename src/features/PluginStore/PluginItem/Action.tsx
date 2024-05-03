@@ -19,21 +19,17 @@ interface ActionsProps {
 }
 
 const Actions = memo<ActionsProps>(({ identifier, type }) => {
-  const [installed, installing, installPlugin, unInstallPlugin] = useToolStore(
-    (s) => [
-      pluginSelectors.isPluginInstalled(identifier)(s),
-      pluginStoreSelectors.isPluginInstallLoading(identifier)(s),
-      s.installPlugin,
-      s.uninstallPlugin
-    ]
-  );
+  const [installed, installing, installPlugin, unInstallPlugin] = useToolStore((s) => [
+    pluginSelectors.isPluginInstalled(identifier)(s),
+    pluginStoreSelectors.isPluginInstallLoading(identifier)(s),
+    s.installPlugin,
+    s.uninstallPlugin,
+  ]);
   const { mobile } = useResponsive();
   const isCustomPlugin = type === 'customPlugin';
   const { t } = useTranslation('plugin');
   const [open, setOpen] = useState(false);
-  const plugin = useToolStore(
-    pluginSelectors.getPluginManifestById(identifier)
-  );
+  const plugin = useToolStore(pluginSelectors.getPluginManifestById(identifier));
 
   const [tab, setTab] = useState('info');
   const hasSettings = pluginHelpers.isSettingSchemaNonEmpty(plugin?.settings);
@@ -64,7 +60,7 @@ const Actions = memo<ActionsProps>(({ identifier, type }) => {
                     onClick: () => {
                       setOpen(true);
                       setTab('info');
-                    }
+                    },
                   },
                   {
                     danger: true,
@@ -84,9 +80,9 @@ const Actions = memo<ActionsProps>(({ identifier, type }) => {
                       >
                         {t('store.actions.uninstall')}
                       </Popconfirm>
-                    )
-                  }
-                ]
+                    ),
+                  },
+                ],
               }}
               placement="bottomRight"
               trigger={['click']}

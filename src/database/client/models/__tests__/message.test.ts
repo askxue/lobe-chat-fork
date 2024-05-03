@@ -13,7 +13,7 @@ describe('MessageModel', () => {
       content: 'Test message content',
       role: 'user',
       sessionId: 'session1',
-      topicId: 'topic1'
+      topicId: 'topic1',
     };
   });
 
@@ -35,8 +35,8 @@ describe('MessageModel', () => {
           content: messageData.content,
           role: messageData.role,
           sessionId: messageData.sessionId,
-          topicId: messageData.topicId
-        })
+          topicId: messageData.topicId,
+        }),
       );
     });
 
@@ -45,7 +45,7 @@ describe('MessageModel', () => {
         content: 'abc',
         role: 'assistant',
         extra: { translate: { content: 'avc', from: 'a', to: 'f' } },
-        sessionId: 'a'
+        sessionId: 'a',
       });
 
       // 验证消息是否已添加到数据库
@@ -56,8 +56,8 @@ describe('MessageModel', () => {
           content: 'abc',
           role: 'assistant',
           translate: { content: 'avc', from: 'a', to: 'f' },
-          sessionId: 'a'
-        })
+          sessionId: 'a',
+        }),
       );
     });
   });
@@ -78,8 +78,8 @@ describe('MessageModel', () => {
             content: messageData.content,
             role: messageData.role,
             sessionId: messageData.sessionId,
-            topicId: messageData.topicId
-          })
+            topicId: messageData.topicId,
+          }),
         );
       }
     });
@@ -88,16 +88,13 @@ describe('MessageModel', () => {
   describe('query', () => {
     it('should query messages with pagination', async () => {
       // 创建多条消息以测试查询方法
-      await MessageModel.batchCreate([
-        messageData,
-        messageData
-      ] as ChatMessage[]);
+      await MessageModel.batchCreate([messageData, messageData] as ChatMessage[]);
 
       const queriedMessages = await MessageModel.query({
         pageSize: 1,
         current: 0,
         sessionId: messageData.sessionId,
-        topicId: messageData.topicId
+        topicId: messageData.topicId,
       });
 
       expect(queriedMessages).toHaveLength(1);
@@ -105,14 +102,9 @@ describe('MessageModel', () => {
 
     it('should query correctly without topic id', async () => {
       // 创建多条消息以测试查询方法
-      await MessageModel.batchCreate([
-        messageData,
-        messageData
-      ] as ChatMessage[]);
+      await MessageModel.batchCreate([messageData, messageData] as ChatMessage[]);
 
-      const queriedMessages = await MessageModel.query({
-        sessionId: messageData.sessionId
-      });
+      const queriedMessages = await MessageModel.query({ sessionId: messageData.sessionId });
 
       expect(queriedMessages).toHaveLength(0);
     });
@@ -121,12 +113,10 @@ describe('MessageModel', () => {
       // 创建多条消息以测试查询方法
       await MessageModel.batchCreate([
         messageData,
-        { ...messageData, topicId: undefined }
+        { ...messageData, topicId: undefined },
       ] as ChatMessage[]);
 
-      const queriedMessages = await MessageModel.query({
-        sessionId: messageData.sessionId
-      });
+      const queriedMessages = await MessageModel.query({ sessionId: messageData.sessionId });
 
       expect(queriedMessages).toHaveLength(1);
     });
@@ -141,7 +131,7 @@ describe('MessageModel', () => {
           updatedAt: 1697120181827,
           extra: {},
           meta: {},
-          sessionId: '1'
+          sessionId: '1',
         },
         {
           role: 'assistant',
@@ -152,9 +142,9 @@ describe('MessageModel', () => {
           updatedAt: 1697120181827,
           meta: {},
           extra: {
-            fromModel: 'gpt-3.5-turbo-16k'
+            fromModel: 'gpt-3.5-turbo-16k',
           },
-          sessionId: '1'
+          sessionId: '1',
         },
         {
           role: 'assistant',
@@ -165,9 +155,9 @@ describe('MessageModel', () => {
           id: '5Ie5hClg',
           updatedAt: 1697120181827,
           extra: {
-            fromModel: 'gpt-3.5-turbo-16k'
+            fromModel: 'gpt-3.5-turbo-16k',
           },
-          sessionId: '1'
+          sessionId: '1',
         },
         {
           role: 'user',
@@ -177,8 +167,8 @@ describe('MessageModel', () => {
           id: 'tOMH7c5R',
           updatedAt: 1697120181827,
           extra: {},
-          sessionId: '1'
-        }
+          sessionId: '1',
+        },
       ];
 
       await MessageModel.batchCreate(data);
@@ -194,7 +184,7 @@ describe('MessageModel', () => {
           updatedAt: 1697120181827,
           sessionId: '1',
           extra: {},
-          meta: {}
+          meta: {},
         },
         {
           role: 'assistant',
@@ -206,8 +196,8 @@ describe('MessageModel', () => {
           updatedAt: 1697120181827,
           meta: {},
           extra: {
-            fromModel: 'gpt-3.5-turbo-16k'
-          }
+            fromModel: 'gpt-3.5-turbo-16k',
+          },
         },
         {
           role: 'user',
@@ -217,7 +207,7 @@ describe('MessageModel', () => {
           id: 'tOMH7c5R',
           updatedAt: 1697120181827,
           meta: {},
-          extra: {}
+          extra: {},
         },
         {
           role: 'assistant',
@@ -229,9 +219,9 @@ describe('MessageModel', () => {
           id: '5Ie5hClg',
           updatedAt: 1697120181827,
           extra: {
-            fromModel: 'gpt-3.5-turbo-16k'
-          }
-        }
+            fromModel: 'gpt-3.5-turbo-16k',
+          },
+        },
       ]);
     });
   });
@@ -244,8 +234,8 @@ describe('MessageModel', () => {
       expect(messageInDb).toEqual(
         expect.objectContaining({
           id: createdMessage.id,
-          content: messageData.content
-        })
+          content: messageData.content,
+        }),
       );
     });
   });
@@ -275,7 +265,7 @@ describe('MessageModel', () => {
       const createdMessage = await MessageModel.create(messageData);
       const updateData = {
         role: 'function' as const,
-        plugin: { apiName: 'a', identifier: 'b', arguments: 'abc' }
+        plugin: { apiName: 'a', identifier: 'b', arguments: 'abc' },
       };
 
       await MessageModel.update(createdMessage.id, updateData);
@@ -293,7 +283,7 @@ describe('MessageModel', () => {
 
       const numUpdated = await MessageModel.batchUpdate(
         [createdMessage1.id, createdMessage2.id],
-        updateData
+        updateData,
       );
 
       expect(numUpdated).toBe(2);
@@ -301,14 +291,8 @@ describe('MessageModel', () => {
       const updatedMessage1 = await MessageModel.findById(createdMessage1.id);
       const updatedMessage2 = await MessageModel.findById(createdMessage2.id);
 
-      expect(updatedMessage1).toHaveProperty(
-        'content',
-        'Batch updated content'
-      );
-      expect(updatedMessage2).toHaveProperty(
-        'content',
-        'Batch updated content'
-      );
+      expect(updatedMessage1).toHaveProperty('content', 'Batch updated content');
+      expect(updatedMessage2).toHaveProperty('content', 'Batch updated content');
     });
   });
 
@@ -321,9 +305,7 @@ describe('MessageModel', () => {
       await MessageModel.batchDelete(messageData.sessionId, undefined);
 
       // 验证所有具有给定会话 ID 的消息是否已删除
-      const messagesInDb = await MessageModel.query({
-        sessionId: messageData.sessionId
-      });
+      const messagesInDb = await MessageModel.query({ sessionId: messageData.sessionId });
       expect(messagesInDb).toHaveLength(0);
     });
 
@@ -332,15 +314,12 @@ describe('MessageModel', () => {
       const createdMessage1 = await MessageModel.create(messageData);
       const createdMessage2 = await MessageModel.create(messageData);
 
-      await MessageModel.batchDelete(
-        messageData.sessionId,
-        messageData.topicId
-      );
+      await MessageModel.batchDelete(messageData.sessionId, messageData.topicId);
 
       // 验证所有具有给定会话 ID 和话题 ID 的消息是否已删除
       const messagesInDb = await MessageModel.query({
         sessionId: messageData.sessionId,
-        topicId: messageData.topicId
+        topicId: messageData.topicId,
       });
       expect(messagesInDb).toHaveLength(0);
     });
@@ -353,7 +332,7 @@ describe('MessageModel', () => {
         content: 'Parent message content',
         role: 'user',
         sessionId: 'session1',
-        topicId: undefined
+        topicId: undefined,
       };
       const parentMessage = await MessageModel.create(parentMessageData);
 
@@ -361,7 +340,7 @@ describe('MessageModel', () => {
         content: 'Child message content',
         role: 'user',
         sessionId: 'session1',
-        parentId: parentMessage.id
+        parentId: parentMessage.id,
       };
 
       await MessageModel.create(childMessageData);
@@ -370,27 +349,22 @@ describe('MessageModel', () => {
       const originalMessages = await MessageModel.queryAll();
 
       // 执行复制操作
-      const duplicatedMessages =
-        await MessageModel.duplicateMessages(originalMessages);
+      const duplicatedMessages = await MessageModel.duplicateMessages(originalMessages);
 
       // 验证复制的消息数量是否正确
       expect(duplicatedMessages.length).toBe(originalMessages.length);
 
       // 验证每个复制的消息是否具有新的唯一ID，并且parentId被正确更新
       for (const original of originalMessages) {
-        const copied = duplicatedMessages.find(
-          (m) => m.content === original.content
-        );
+        const copied = duplicatedMessages.find((m) => m.content === original.content);
         expect(copied).toBeDefined();
         expect(copied).not.toBeNull();
         expect(copied!.id).not.toBe(original.id);
         if (original.parentId) {
-          const originalParent = originalMessages.find(
-            (m) => m.id === original.parentId
-          );
+          const originalParent = originalMessages.find((m) => m.id === original.parentId);
           expect(originalParent).toBeDefined();
           const copiedParent = duplicatedMessages.find(
-            (m) => m.content === originalParent!.content
+            (m) => m.content === originalParent!.content,
           );
 
           expect(copied!.parentId).toBe(copiedParent!.id);
@@ -411,11 +385,7 @@ describe('MessageModel', () => {
   describe('updatePluginState', () => {
     it('should update plugin state', async () => {
       const createdMessage = await MessageModel.create(messageData);
-      await MessageModel.updatePluginState(
-        createdMessage.id,
-        'testKey',
-        'testValue'
-      );
+      await MessageModel.updatePluginState(createdMessage.id, 'testKey', 'testValue');
       const updatedMessage = await MessageModel.findById(createdMessage.id);
       expect(updatedMessage.pluginState).toHaveProperty('testKey', 'testValue');
     });
@@ -432,11 +402,7 @@ describe('MessageModel', () => {
   describe('updatePluginState', () => {
     it('should update plugin state', async () => {
       const createdMessage = await MessageModel.create(messageData);
-      await MessageModel.updatePluginState(
-        createdMessage.id,
-        'testKey',
-        'testValue'
-      );
+      await MessageModel.updatePluginState(createdMessage.id, 'testKey', 'testValue');
       const updatedMessage = await MessageModel.findById(createdMessage.id);
       expect(updatedMessage.pluginState).toHaveProperty('testKey', 'testValue');
     });

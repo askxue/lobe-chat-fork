@@ -25,9 +25,7 @@ export type ChatStore = ChatStoreAction & ChatStoreState;
 
 //  ===============  聚合 createStoreFn ============ //
 
-const createStore: StateCreator<ChatStore, [['zustand/devtools', never]]> = (
-  ...params
-) => ({
+const createStore: StateCreator<ChatStore, [['zustand/devtools', never]]> = (...params) => ({
   ...initialState,
 
   ...chatMessage(...params),
@@ -35,7 +33,7 @@ const createStore: StateCreator<ChatStore, [['zustand/devtools', never]]> = (
   ...chatShare(...params),
   ...chatEnhance(...params),
   ...chatToolSlice(...params),
-  ...chatPlugin(...params)
+  ...chatPlugin(...params),
 });
 
 //  ===============  实装 useStore ============ //
@@ -43,8 +41,8 @@ const createStore: StateCreator<ChatStore, [['zustand/devtools', never]]> = (
 export const useChatStore = createWithEqualityFn<ChatStore>()(
   subscribeWithSelector(
     devtools(createStore, {
-      name: 'LobeChat_Chat' + (isDev ? '_DEV' : '')
-    })
+      name: 'LobeChat_Chat' + (isDev ? '_DEV' : ''),
+    }),
   ),
-  shallow
+  shallow,
 );

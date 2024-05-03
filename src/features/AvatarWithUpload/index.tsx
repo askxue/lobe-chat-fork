@@ -27,7 +27,7 @@ const useStyle = createStyles(
     &:active {
       scale: 0.8;
     }
-  `
+  `,
 );
 
 interface AvatarWithUploadProps {
@@ -42,7 +42,7 @@ const AvatarWithUpload = memo<AvatarWithUploadProps>(
     const { styles } = useStyle();
     const [avatar, updateAvatar] = useUserStore((s) => [
       userProfileSelectors.userAvatar(s),
-      s.updateAvatar
+      s.updateAvatar,
     ]);
 
     const handleUploadAvatar = useCallback(
@@ -54,20 +54,12 @@ const AvatarWithUpload = memo<AvatarWithUploadProps>(
           updateAvatar(webpBase64);
         });
       }),
-      []
+      [],
     );
 
     return (
-      <div
-        className={styles}
-        id={id}
-        style={{ maxHeight: size, maxWidth: size, ...style }}
-      >
-        <Upload
-          beforeUpload={handleUploadAvatar}
-          itemRender={() => void 0}
-          maxCount={1}
-        >
+      <div className={styles} id={id} style={{ maxHeight: size, maxWidth: size, ...style }}>
+        <Upload beforeUpload={handleUploadAvatar} itemRender={() => void 0} maxCount={1}>
           <NextImage
             alt={avatar ? 'userAvatar' : 'LobeChat'}
             height={size}
@@ -78,7 +70,7 @@ const AvatarWithUpload = memo<AvatarWithUploadProps>(
         </Upload>
       </div>
     );
-  }
+  },
 );
 
 export default AvatarWithUpload;

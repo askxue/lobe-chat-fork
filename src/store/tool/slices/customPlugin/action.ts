@@ -19,10 +19,7 @@ export interface CustomPluginAction {
   installCustomPlugin: (value: LobeToolCustomPlugin) => Promise<void>;
   reinstallCustomPlugin: (id: string) => Promise<void>;
   uninstallCustomPlugin: (id: string) => Promise<void>;
-  updateCustomPlugin: (
-    id: string,
-    value: LobeToolCustomPlugin
-  ) => Promise<void>;
+  updateCustomPlugin: (id: string, value: LobeToolCustomPlugin) => Promise<void>;
   updateNewCustomPlugin: (value: Partial<LobeToolCustomPlugin>) => void;
 }
 
@@ -36,11 +33,7 @@ export const createCustomPluginSlice: StateCreator<
     await pluginService.createCustomPlugin(value);
 
     await get().refreshPlugins();
-    set(
-      { newCustomPlugin: defaultCustomPlugin },
-      false,
-      n('saveToCustomPluginList')
-    );
+    set({ newCustomPlugin: defaultCustomPlugin }, false, n('saveToCustomPluginList'));
   },
   reinstallCustomPlugin: async (id) => {
     const plugin = pluginSelectors.getCustomPluginById(id)(get());
@@ -51,7 +44,7 @@ export const createCustomPluginSlice: StateCreator<
       updateInstallLoadingState(id, true);
       const manifest = await toolService.getPluginManifest(
         plugin.customParams?.manifestUrl,
-        plugin.customParams?.useProxy
+        plugin.customParams?.useProxy,
       );
       updateInstallLoadingState(id, false);
 
@@ -67,11 +60,8 @@ export const createCustomPluginSlice: StateCreator<
       const name = pluginHelpers.getPluginTitle(meta);
 
       notification.error({
-        description: t(`error.${err.message}`, {
-          error: err.cause,
-          ns: 'plugin'
-        }),
-        message: t('error.reinstallError', { name, ns: 'plugin' })
+        description: t(`error.${err.message}`, { error: err.cause, ns: 'plugin' }),
+        message: t('error.reinstallError', { name, ns: 'plugin' }),
       });
     }
   },
@@ -92,7 +82,7 @@ export const createCustomPluginSlice: StateCreator<
     set(
       { newCustomPlugin: merge({}, get().newCustomPlugin, newCustomPlugin) },
       false,
-      n('updateNewDevPlugin')
+      n('updateNewDevPlugin'),
     );
-  }
+  },
 });

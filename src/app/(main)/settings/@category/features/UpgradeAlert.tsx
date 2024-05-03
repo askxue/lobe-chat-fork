@@ -8,10 +8,7 @@ import { MANUAL_UPGRADE_URL } from '@/const/url';
 import { useGlobalStore } from '@/store/global';
 
 const UpgradeAlert = memo(() => {
-  const [hasNewVersion, latestVersion] = useGlobalStore((s) => [
-    s.hasNewVersion,
-    s.latestVersion
-  ]);
+  const [hasNewVersion, latestVersion] = useGlobalStore((s) => [s.hasNewVersion, s.latestVersion]);
   const { t } = useTranslation('common');
 
   if (!hasNewVersion) return null;

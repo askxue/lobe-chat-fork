@@ -7,7 +7,7 @@ import { configRouter } from './config';
 
 export const appRouter = router({
   config: configRouter,
-  healthcheck: publicProcedure.query(() => "i'm live!")
+  healthcheck: publicProcedure.query(() => "i'm live!"),
 });
 
 export type AppRouter = typeof appRouter;

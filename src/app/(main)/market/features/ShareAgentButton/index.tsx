@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { MOBILE_HEADER_ICON_SIZE } from '@/const/layoutTokens';
 
 const Inner = dynamic(() => import('./Inner'), {
-  loading: () => <Skeleton paragraph={{ rows: 8 }} title={false} />
+  loading: () => <Skeleton paragraph={{ rows: 8 }} title={false} />,
 });
 
 const ShareAgentButton = memo<{ mobile?: boolean }>(({ mobile }) => {
@@ -26,10 +26,7 @@ const ShareAgentButton = memo<{ mobile?: boolean }>(({ mobile }) => {
         title={t('submitAgent')}
       />
     ) : (
-      <Button
-        icon={<Icon icon={Upload} />}
-        onClick={() => setIsModalOpen(true)}
-      >
+      <Button icon={<Icon icon={Upload} />} onClick={() => setIsModalOpen(true)}>
         {t('submitAgent')}
       </Button>
     );

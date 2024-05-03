@@ -29,7 +29,7 @@ const useStyles = createStyles(({ css, token, prefixCls }) => ({
     .${prefixCls}-spin-nested-loading {
       height: 100%;
     }
-  `
+  `,
 }));
 
 const ImageItem = memo<DallEImageItem & { messageId: string }>(
@@ -38,9 +38,7 @@ const ImageItem = memo<DallEImageItem & { messageId: string }>(
     const { styles } = useStyles();
 
     const [edit, setEdit] = useState(false);
-    const loading = useChatStore(
-      chatToolSelectors.isDallEImageGenerating(messageId + prompt)
-    );
+    const loading = useChatStore(chatToolSelectors.isDallEImageGenerating(messageId + prompt));
 
     if (edit)
       return (
@@ -85,11 +83,7 @@ const ImageItem = memo<DallEImageItem & { messageId: string }>(
     return (
       <Flexbox className={styles.container} padding={8}>
         {loading ? (
-          <Spin
-            indicator={<Icon icon={Loader2} spin />}
-            size={'large'}
-            tip={t('dalle.generating')}
-          >
+          <Spin indicator={<Icon icon={Loader2} spin />} size={'large'} tip={t('dalle.generating')}>
             {prompt}
           </Spin>
         ) : (
@@ -97,7 +91,7 @@ const ImageItem = memo<DallEImageItem & { messageId: string }>(
         )}
       </Flexbox>
     );
-  }
+  },
 );
 
 export default ImageItem;

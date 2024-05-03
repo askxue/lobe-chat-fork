@@ -7,16 +7,14 @@ const metaList =
   (showDalle?: boolean) =>
   (s: ToolStoreState): LobeToolMeta[] =>
     s.builtinTools
-      .filter((item) =>
-        !showDalle ? item.identifier !== DalleManifest.identifier : true
-      )
+      .filter((item) => (!showDalle ? item.identifier !== DalleManifest.identifier : true))
       .map((t) => ({
         author: 'LobeHub',
         identifier: t.identifier,
         meta: t.manifest.meta,
-        type: 'builtin'
+        type: 'builtin',
       }));
 
 export const builtinToolSelectors = {
-  metaList
+  metaList,
 };

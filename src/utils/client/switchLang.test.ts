@@ -6,7 +6,7 @@ import { LocaleMode } from '@/types/locale';
 import { switchLang } from './switchLang';
 
 vi.mock('i18next', () => ({
-  changeLanguage: vi.fn()
+  changeLanguage: vi.fn(),
 }));
 
 describe('switchLang', () => {

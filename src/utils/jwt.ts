@@ -17,18 +17,15 @@ export const createJWT = async <T>(payload: T) => {
   }
 
   // create a secret key
-  const secretKey = await crypto.subtle.digest(
-    'SHA-256',
-    encoder.encode(JWT_SECRET_KEY)
-  );
+  const secretKey = await crypto.subtle.digest('SHA-256', encoder.encode(JWT_SECRET_KEY));
 
   // get the JWK from the secret key
   const jwkSecretKey = await importJWK(
     {
       k: Buffer.from(secretKey).toString('base64'),
-      kty: 'oct'
+      kty: 'oct',
     },
-    'HS256'
+    'HS256',
   );
 
   // 创建JWT

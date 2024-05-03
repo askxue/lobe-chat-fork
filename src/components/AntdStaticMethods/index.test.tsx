@@ -9,13 +9,13 @@ import EntryComponent, { message, modal, notification } from './index';
 const mockUseApp = {
   message: { success: vi.fn() },
   modal: { confirm: vi.fn() },
-  notification: { open: vi.fn() }
+  notification: { open: vi.fn() },
 };
 
 vi.mock('antd', () => ({
   App: {
-    useApp: vi.fn(() => mockUseApp)
-  }
+    useApp: vi.fn(() => mockUseApp),
+  },
 }));
 
 describe('EntryComponent', () => {

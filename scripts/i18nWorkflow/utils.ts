@@ -42,24 +42,16 @@ export type Locales = keyof Resources;
 export const genNamespaceList = (files: string[], locale: string) => {
   return files.map((file) => ({
     name: file.replace('.json', ''),
-    path: resolve(i18nConfig.output, locale, file)
+    path: resolve(i18nConfig.output, locale, file),
   }));
 };
 
-export const tagBlue = (text: string) =>
-  colors.bgBlueBright(colors.black(` ${text} `));
-export const tagYellow = (text: string) =>
-  colors.bgYellowBright(colors.black(` ${text} `));
-export const tagGreen = (text: string) =>
-  colors.bgGreenBright(colors.black(` ${text} `));
-export const tagWhite = (text: string) =>
-  colors.bgWhiteBright(colors.black(` ${text} `));
+export const tagBlue = (text: string) => colors.bgBlueBright(colors.black(` ${text} `));
+export const tagYellow = (text: string) => colors.bgYellowBright(colors.black(` ${text} `));
+export const tagGreen = (text: string) => colors.bgGreenBright(colors.black(` ${text} `));
+export const tagWhite = (text: string) => colors.bgWhiteBright(colors.black(` ${text} `));
 
 export const split = (name: string) => {
   consola.log('');
-  consola.log(
-    colors.gray(
-      `========================== ${name} ==============================`
-    )
-  );
+  consola.log(colors.gray(`========================== ${name} ==============================`));
 };

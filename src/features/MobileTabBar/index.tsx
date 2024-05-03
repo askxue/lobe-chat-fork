@@ -13,7 +13,7 @@ const useStyles = createStyles(({ css, token }) => ({
     svg {
       fill: ${rgba(token.colorPrimary, 0.25)};
     }
-  `
+  `,
 }));
 
 interface Props {
@@ -29,47 +29,33 @@ export default memo<Props>(({ className, tabBarKey }) => {
     () => [
       {
         icon: (active) => (
-          <Icon
-            className={active ? styles.active : undefined}
-            icon={MessageSquare}
-          />
+          <Icon className={active ? styles.active : undefined} icon={MessageSquare} />
         ),
         key: SidebarTabKey.Chat,
         onClick: () => {
           router.push('/chat');
         },
-        title: t('tab.chat')
+        title: t('tab.chat'),
       },
       {
-        icon: (active) => (
-          <Icon className={active ? styles.active : undefined} icon={Bot} />
-        ),
+        icon: (active) => <Icon className={active ? styles.active : undefined} icon={Bot} />,
         key: SidebarTabKey.Market,
         onClick: () => {
           router.push('/market');
         },
-        title: t('tab.market')
+        title: t('tab.market'),
       },
       {
-        icon: (active) => (
-          <Icon className={active ? styles.active : undefined} icon={User} />
-        ),
+        icon: (active) => <Icon className={active ? styles.active : undefined} icon={User} />,
         key: SidebarTabKey.Setting,
         onClick: () => {
           router.push('/settings');
         },
-        title: t('tab.setting')
-      }
+        title: t('tab.setting'),
+      },
     ],
-    [t]
+    [t],
   );
 
-  return (
-    <MobileTabBar
-      activeKey={tabBarKey}
-      className={className}
-      items={items}
-      safeArea
-    />
-  );
+  return <MobileTabBar activeKey={tabBarKey} className={className} items={items} safeArea />;
 });

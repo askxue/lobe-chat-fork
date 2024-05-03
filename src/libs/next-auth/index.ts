@@ -35,16 +35,16 @@ const nextAuth = NextAuth({
         session.user.id = (token.userId ?? session.user.id) as string;
       }
       return session;
-    }
+    },
   },
   providers: initSSOProviders(),
   secret: NEXTAUTH_SECRET,
-  trustHost: true
+  trustHost: true,
 });
 
 export const {
   handlers: { GET, POST },
-  auth
+  auth,
 } = nextAuth;
 
 declare module '@auth/core/jwt' {

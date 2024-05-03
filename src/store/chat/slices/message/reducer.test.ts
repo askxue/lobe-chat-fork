@@ -13,7 +13,7 @@ describe('messagesReducer', () => {
         createdAt: 1629264000000,
         updatedAt: 1629264000000,
         role: 'user',
-        meta: {}
+        meta: {},
       },
       {
         id: 'message2',
@@ -21,8 +21,8 @@ describe('messagesReducer', () => {
         createdAt: 1629264000000,
         updatedAt: 1629264000000,
         role: 'system',
-        meta: {}
-      }
+        meta: {},
+      },
     ];
   });
 
@@ -32,7 +32,7 @@ describe('messagesReducer', () => {
         type: 'updateMessage',
         id: 'message1',
         key: 'content',
-        value: 'Updated Message'
+        value: 'Updated Message',
       };
 
       const newState = messagesReducer(initialState, payload);
@@ -48,7 +48,7 @@ describe('messagesReducer', () => {
         type: 'updateMessage',
         id: 'nonexistentMessage',
         key: 'content',
-        value: 'Updated Message'
+        value: 'Updated Message',
       };
 
       const newState = messagesReducer(initialState, payload);
@@ -61,7 +61,7 @@ describe('messagesReducer', () => {
         type: 'updateMessage',
         id: 'nonexistentMessage',
         key: 'content',
-        value: 'Updated Message'
+        value: 'Updated Message',
       };
 
       const newState = messagesReducer(initialState, payload);
@@ -76,7 +76,7 @@ describe('messagesReducer', () => {
       const payload: MessageDispatch = { type: 'unimplementedType' };
 
       expect(() => messagesReducer(initialState, payload)).toThrowError(
-        '暂未实现的 type，请检查 reducer'
+        '暂未实现的 type，请检查 reducer',
       );
     });
   });

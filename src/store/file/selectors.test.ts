@@ -15,18 +15,18 @@ describe('filesSelectors', () => {
           fileType: 'image/png',
           saveMode: 'local',
           base64Url: 'base64string1',
-          url: 'blob:abc'
+          url: 'blob:abc',
         },
         '2': {
           name: 'b',
           fileType: 'image/png',
           saveMode: 'url',
           base64Url: 'base64string2',
-          url: 'url2'
-        }
+          url: 'url2',
+        },
       },
       // 假设 '3' 是不存在的 ID
-      inputFilesList: ['1', '2', '3']
+      inputFilesList: ['1', '2', '3'],
     };
   });
 
@@ -69,7 +69,7 @@ describe('filesSelectors', () => {
 
     expect(urlsOrBase64s).toEqual([
       { id: '1', url: 'base64string1' }, // 本地保存的图像应该使用 base64 URL
-      { id: '2', url: 'url2' } // 服务器保存的图像应该使用普通 URL
+      { id: '2', url: 'url2' }, // 服务器保存的图像应该使用普通 URL
     ]);
   });
 });

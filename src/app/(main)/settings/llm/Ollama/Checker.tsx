@@ -22,8 +22,8 @@ const OllamaChecker = memo(() => {
     {
       revalidateOnFocus: false,
       revalidateOnMount: false,
-      revalidateOnReconnect: false
-    }
+      revalidateOnReconnect: false,
+    },
   );
 
   const checkConnection = () => {
@@ -34,16 +34,12 @@ const OllamaChecker = memo(() => {
 
   return (
     <Flexbox align={isMobile ? 'flex-start' : 'flex-end'} gap={8}>
-      <Flexbox
-        align={'center'}
-        direction={isMobile ? 'horizontal-reverse' : 'horizontal'}
-        gap={12}
-      >
+      <Flexbox align={'center'} direction={isMobile ? 'horizontal-reverse' : 'horizontal'} gap={12}>
         {!error && data?.models && (
           <Flexbox gap={4} horizontal>
             <CheckCircleFilled
               style={{
-                color: theme.colorSuccess
+                color: theme.colorSuccess,
               }}
             />
             {t('llm.checker.pass')}
@@ -59,11 +55,7 @@ const OllamaChecker = memo(() => {
             banner
             extra={
               <Flexbox>
-                <Highlighter
-                  copyButtonSize={'small'}
-                  language={'json'}
-                  type={'pure'}
-                >
+                <Highlighter copyButtonSize={'small'} language={'json'} type={'pure'}>
                   {JSON.stringify(error.body || error, null, 2)}
                 </Highlighter>
               </Flexbox>

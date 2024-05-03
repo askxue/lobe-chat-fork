@@ -33,7 +33,7 @@ const useStyles = createStyles(({ css, token }) => ({
   `,
   title: css`
     color: ${token.colorTextDescription};
-  `
+  `,
 }));
 
 const qa = shuffle([
@@ -51,7 +51,7 @@ const qa = shuffle([
   'q12',
   'q13',
   'q14',
-  'q15'
+  'q15',
 ]).slice(0, 5);
 
 const QuestionSuggest = memo(() => {

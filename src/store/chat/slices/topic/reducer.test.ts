@@ -18,8 +18,8 @@ describe('topicReducer', () => {
         type: 'addTopic',
         value: {
           title: 'Test Topic',
-          sessionId: ''
-        }
+          sessionId: '',
+        },
       };
 
       const newState = topicReducer(state, payload);
@@ -34,7 +34,7 @@ describe('topicReducer', () => {
         id: '1',
         title: 'Test Topic',
         createdAt: Date.now(),
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
       };
 
       state.push(topic);
@@ -42,7 +42,7 @@ describe('topicReducer', () => {
       const payload: ChatTopicDispatch = {
         type: 'updateTopic',
         id: '1',
-        value: { title: 'Updated Topic' }
+        value: { title: 'Updated Topic' },
       };
 
       const newState = topicReducer(state, payload);
@@ -55,7 +55,7 @@ describe('topicReducer', () => {
         id: '1',
         title: 'Test Topic',
         createdAt: Date.now() - 1,
-        updatedAt: Date.now() - 1 // 设定比当前时间前面一点
+        updatedAt: Date.now() - 1, // 设定比当前时间前面一点
       };
 
       state.push(topic);
@@ -63,14 +63,12 @@ describe('topicReducer', () => {
       const payload: ChatTopicDispatch = {
         type: 'updateTopic',
         id: '1',
-        value: { title: 'Updated Topic' }
+        value: { title: 'Updated Topic' },
       };
 
       const newState = topicReducer(state, payload);
 
-      expect(
-        (newState[0].updatedAt as unknown as Date).valueOf()
-      ).toBeGreaterThan(topic.updatedAt);
+      expect((newState[0].updatedAt as unknown as Date).valueOf()).toBeGreaterThan(topic.updatedAt);
     });
   });
 
@@ -80,14 +78,14 @@ describe('topicReducer', () => {
         id: '1',
         title: 'Test Topic',
         createdAt: Date.now(),
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
       };
 
       state.push(topic);
 
       const payload: ChatTopicDispatch = {
         type: 'deleteTopic',
-        id: '1'
+        id: '1',
       };
 
       const newState = topicReducer(state, payload);
@@ -99,7 +97,7 @@ describe('topicReducer', () => {
   describe('default', () => {
     it('should return the original state object', () => {
       const payload = {
-        type: 'unknown'
+        type: 'unknown',
       } as unknown as ChatTopicDispatch;
 
       const newState = topicReducer(state, payload);
@@ -114,8 +112,8 @@ describe('topicReducer', () => {
         type: 'addTopic',
         value: {
           title: 'Test Topic',
-          sessionId: '1'
-        }
+          sessionId: '1',
+        },
       };
 
       const newState = topicReducer(state, payload);
@@ -129,8 +127,8 @@ describe('topicReducer', () => {
         value: {
           title: 'Test Topic',
 
-          sessionId: '123'
-        }
+          sessionId: '123',
+        },
       };
 
       const newState = topicReducer(state, payload);

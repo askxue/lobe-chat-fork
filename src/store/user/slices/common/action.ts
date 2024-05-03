@@ -49,39 +49,26 @@ export const createCommonSlice: StateCreator<
         return messageService.messageCountToCheckTrace();
       },
       {
-        revalidateOnFocus: false
-      }
+        revalidateOnFocus: false,
+      },
     ),
 
   useFetchServerConfig: () =>
-    useSWR<GlobalServerConfig>(
-      'fetchGlobalConfig',
-      globalService.getGlobalConfig,
-      {
-        onSuccess: (data) => {
-          if (data) {
-            const serverSettings: DeepPartial<GlobalSettings> = {
-              defaultAgent: data.defaultAgent,
-              languageModel: data.languageModel
-            };
+    useSWR<GlobalServerConfig>('fetchGlobalConfig', globalService.getGlobalConfig, {
+      onSuccess: (data) => {
+        if (data) {
+          const serverSettings: DeepPartial<GlobalSettings> = {
+            defaultAgent: data.defaultAgent,
+            languageModel: data.languageModel,
+          };
 
-            const defaultSettings = merge(
-              get().defaultSettings,
-              serverSettings
-            );
+          const defaultSettings = merge(get().defaultSettings, serverSettings);
 
-            set(
-              { defaultSettings, serverConfig: data },
-              false,
-              n('initGlobalConfig')
-            );
+          set({ defaultSettings, serverConfig: data }, false, n('initGlobalConfig'));
 
-            get().refreshDefaultModelProviderList({
-              trigger: 'fetchServerConfig'
-            });
-          }
-        },
-        revalidateOnFocus: false
-      }
-    )
+          get().refreshDefaultModelProviderList({ trigger: 'fetchServerConfig' });
+        }
+      },
+      revalidateOnFocus: false,
+    }),
 });

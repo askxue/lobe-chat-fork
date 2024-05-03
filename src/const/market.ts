@@ -11,5 +11,5 @@ export const DEFAULT_AGENTS_MARKET_ITEM: AgentsMarketItem = {
   identifier: '',
   manifest: '',
   meta: DEFAULT_AGENT_META,
-  schemaVersion: 1
+  schemaVersion: 1,
 };

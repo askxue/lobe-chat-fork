@@ -22,7 +22,7 @@ const MobileContentLayout = ({
         position: 'relative',
         ...style,
         // TabNav Height
-        paddingBottom: withNav ? 48 : style?.paddingBottom
+        paddingBottom: withNav ? 48 : style?.paddingBottom,
       }}
       width="100%"
       {...rest}
@@ -34,11 +34,7 @@ const MobileContentLayout = ({
   if (!header) return content;
 
   return (
-    <Flexbox
-      height={'100%'}
-      style={{ overflow: 'hidden', position: 'relative' }}
-      width={'100%'}
-    >
+    <Flexbox height={'100%'} style={{ overflow: 'hidden', position: 'relative' }} width={'100%'}>
       {header}
       <Flexbox
         height="100%"
@@ -48,7 +44,7 @@ const MobileContentLayout = ({
           position: 'relative',
           ...style,
           // TabNav Height
-          paddingBottom: withNav ? 48 : style?.paddingBottom
+          paddingBottom: withNav ? 48 : style?.paddingBottom,
         }}
         width="100%"
         {...rest}

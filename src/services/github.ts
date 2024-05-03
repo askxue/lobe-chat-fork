@@ -13,9 +13,9 @@ class GitHubService {
       query: {
         body,
         labels: '❌ Database Migration Error',
-        title: `[Migration Error V${version}] ${message}`
+        title: `[Migration Error V${version}] ${message}`,
       },
-      url: urlJoin(GITHUB, '/issues/new')
+      url: urlJoin(GITHUB, '/issues/new'),
     });
 
     window.open(url, '_blank');

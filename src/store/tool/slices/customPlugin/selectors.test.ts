@@ -1,7 +1,4 @@
-import {
-  LobeChatPluginManifest,
-  LobeChatPluginMeta
-} from '@lobehub/chat-plugin-sdk';
+import { LobeChatPluginManifest, LobeChatPluginMeta } from '@lobehub/chat-plugin-sdk';
 import { describe, expect, it } from 'vitest';
 
 import { ToolStoreState, initialState } from '../../initialState';
@@ -11,7 +8,7 @@ const mockState = {
   ...initialState,
   pluginManifestLoading: {
     'plugin-1': false,
-    'plugin-2': true
+    'plugin-2': true,
   },
   installedPlugins: [
     {
@@ -20,18 +17,18 @@ const mockState = {
       manifest: {
         identifier: 'plugin-1',
         api: [{ name: 'api-1' }],
-        type: 'default'
-      } as LobeChatPluginManifest
+        type: 'default',
+      } as LobeChatPluginManifest,
     },
     {
       identifier: 'plugin-2',
       manifest: {
         identifier: 'plugin-2',
         api: [{ name: 'api-2' }],
-        type: 'default'
+        type: 'default',
       },
-      type: 'plugin'
-    }
+      type: 'plugin',
+    },
   ],
   pluginStoreList: [
     {
@@ -39,23 +36,22 @@ const mockState = {
       author: 'Author 1',
       createdAt: '2021-01-01',
       meta: { avatar: 'avatar-url-1', title: 'Plugin 1' },
-      homepage: 'http://homepage-1.com'
+      homepage: 'http://homepage-1.com',
     } as LobeChatPluginMeta,
     {
       identifier: 'plugin-2',
       author: 'Author 2',
       createdAt: '2022-02-02',
       meta: { avatar: 'avatar-url-2', title: 'Plugin 2' },
-      homepage: 'http://homepage-2.com'
-    }
-  ]
+      homepage: 'http://homepage-2.com',
+    },
+  ],
 } as ToolStoreState;
 
 describe('pluginSelectors', () => {
   describe('isCustomPlugin', () => {
     it('should return false for a non-custom plugin', () => {
-      const result =
-        customPluginSelectors.isCustomPlugin('plugin-1')(mockState);
+      const result = customPluginSelectors.isCustomPlugin('plugin-1')(mockState);
       expect(result).toBe(false);
     });
 
@@ -64,12 +60,10 @@ describe('pluginSelectors', () => {
         ...mockState,
         installedPlugins: [
           ...mockState.installedPlugins,
-          { identifier: 'custom-plugin', type: 'customPlugin' }
-        ]
+          { identifier: 'custom-plugin', type: 'customPlugin' },
+        ],
       } as ToolStoreState;
-      const result = customPluginSelectors.isCustomPlugin('custom-plugin')(
-        stateWithCustomPlugin
-      );
+      const result = customPluginSelectors.isCustomPlugin('custom-plugin')(stateWithCustomPlugin);
       expect(result).toBe(true);
     });
   });

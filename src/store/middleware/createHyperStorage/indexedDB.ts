@@ -1,16 +1,9 @@
 import { createStore, delMany, getMany, setMany } from 'idb-keyval';
 import { StorageValue } from 'zustand/middleware';
 
-export const createIndexedDB = <State extends any>(
-  dbName: string = 'indexedDB'
-) => ({
-  getItem: async <T extends State>(
-    name: string
-  ): Promise<StorageValue<T> | undefined> => {
-    const [version, state] = await getMany(
-      ['version', 'state'],
-      createStore(dbName, name)
-    );
+export const createIndexedDB = <State extends any>(dbName: string = 'indexedDB') => ({
+  getItem: async <T extends State>(name: string): Promise<StorageValue<T> | undefined> => {
+    const [version, state] = await getMany(['version', 'state'], createStore(dbName, name));
 
     if (!state) return undefined;
 
@@ -25,9 +18,9 @@ export const createIndexedDB = <State extends any>(
     await setMany(
       [
         ['version', version],
-        ['state', state]
+        ['state', state],
       ],
-      store
+      store,
     );
-  }
+  },
 });

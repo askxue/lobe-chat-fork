@@ -28,8 +28,7 @@ export const API_ENDPOINTS = mapWithBasePath({
 
   // chat
   chat: (provider: string) => withBasePath(`/api/chat/${provider}`),
-  chatModels: (provider: string) =>
-    withBasePath(`/api/chat/models/${provider}`),
+  chatModels: (provider: string) => withBasePath(`/api/chat/models/${provider}`),
 
   // trace
   trace: '/api/trace',
@@ -41,5 +40,5 @@ export const API_ENDPOINTS = mapWithBasePath({
   stt: '/api/openai/stt',
   tts: '/api/openai/tts',
   edge: '/api/tts/edge-speech',
-  microsoft: '/api/tts/microsoft-speech'
+  microsoft: '/api/tts/microsoft-speech',
 });

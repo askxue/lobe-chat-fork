@@ -5,10 +5,7 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import useMergeState from 'use-merge-value';
 
-import {
-  DESKTOP_HEADER_ICON_SIZE,
-  MOBILE_HEADER_ICON_SIZE
-} from '@/const/layoutTokens';
+import { DESKTOP_HEADER_ICON_SIZE, MOBILE_HEADER_ICON_SIZE } from '@/const/layoutTokens';
 import { useChatStore } from '@/store/chat';
 
 const ShareModal = dynamic(() => import('./ShareModal'));
@@ -22,7 +19,7 @@ const ShareButton = memo<ShareButtonProps>(({ mobile, setOpen, open }) => {
   const [isModalOpen, setIsModalOpen] = useMergeState(false, {
     defaultValue: false,
     onChange: setOpen,
-    value: open
+    value: open,
   });
   const { t } = useTranslation('common');
   const [shareLoading] = useChatStore((s) => [s.shareLoading]);

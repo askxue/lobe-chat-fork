@@ -11,10 +11,7 @@ const TopicSearchBar = memo<{ onClear?: () => void }>(({ onClear }) => {
 
   const [keywords, setKeywords] = useState('');
   const { mobile } = useResponsive();
-  const [activeSessionId, useSearchTopics] = useChatStore((s) => [
-    s.activeId,
-    s.useSearchTopics
-  ]);
+  const [activeSessionId, useSearchTopics] = useChatStore((s) => [s.activeId, s.useSearchTopics]);
 
   useSearchTopics(keywords, activeSessionId);
   useUnmount(() => {

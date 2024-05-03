@@ -21,8 +21,8 @@ vi.mock('@/services/session', () => ({
     updateSession: vi.fn(),
     updateSessionGroupId: vi.fn(),
     searchSessions: vi.fn(),
-    updateSessionPinned: vi.fn()
-  }
+    updateSessionPinned: vi.fn(),
+  },
 }));
 
 vi.mock('@/components/AntdStaticMethods', () => ({
@@ -30,8 +30,8 @@ vi.mock('@/components/AntdStaticMethods', () => ({
     loading: vi.fn(),
     success: vi.fn(),
     error: vi.fn(),
-    destroy: vi.fn()
-  }
+    destroy: vi.fn(),
+  },
 }));
 
 // Mock router
@@ -41,7 +41,7 @@ const mockRefresh = vi.fn();
 beforeEach(() => {
   vi.clearAllMocks();
   useSessionStore.setState({
-    refreshSessions: mockRefresh
+    refreshSessions: mockRefresh,
   });
 });
 
@@ -72,9 +72,7 @@ describe('SessionAction', () => {
       let createdSessionId;
 
       await act(async () => {
-        createdSessionId = await result.current.createSession({
-          config: { displayMode: 'docs' }
-        });
+        createdSessionId = await result.current.createSession({ config: { displayMode: 'docs' } });
       });
 
       const call = vi.mocked(sessionService.createSession).mock.calls[0];
@@ -94,7 +92,7 @@ describe('SessionAction', () => {
       await act(async () => {
         createdSessionId = await result.current.createSession(
           { config: { displayMode: 'docs' } },
-          false
+          false,
         );
       });
 
@@ -104,7 +102,7 @@ describe('SessionAction', () => {
 
       expect(createdSessionId).toBe(newSessionId);
       expect(mockRouterPush).not.toHaveBeenCalledWith(
-        SESSION_CHAT_URL(newSessionId, result.current.isMobile)
+        SESSION_CHAT_URL(newSessionId, result.current.isMobile),
       );
     });
   });
@@ -114,9 +112,7 @@ describe('SessionAction', () => {
       const { result } = renderHook(() => useSessionStore());
       const sessionId = 'session-id';
       const duplicatedSessionId = 'duplicated-session-id';
-      vi.mocked(sessionService.cloneSession).mockResolvedValue(
-        duplicatedSessionId
-      );
+      vi.mocked(sessionService.cloneSession).mockResolvedValue(duplicatedSessionId);
       vi.mocked(message.loading).mockResolvedValue(true);
 
       await act(async () => {
@@ -124,10 +120,7 @@ describe('SessionAction', () => {
       });
 
       expect(message.loading).toHaveBeenCalled();
-      expect(sessionService.cloneSession).toHaveBeenCalledWith(
-        sessionId,
-        undefined
-      );
+      expect(sessionService.cloneSession).toHaveBeenCalledWith(sessionId, undefined);
     });
   });
 
@@ -167,9 +160,7 @@ describe('SessionAction', () => {
         await result.current.pinSession(sessionId, true);
       });
 
-      expect(sessionService.updateSession).toHaveBeenCalledWith(sessionId, {
-        pinned: true
-      });
+      expect(sessionService.updateSession).toHaveBeenCalledWith(sessionId, { pinned: true });
       expect(mockRefresh).toHaveBeenCalled();
     });
 
@@ -181,9 +172,7 @@ describe('SessionAction', () => {
         await result.current.pinSession(sessionId, false);
       });
 
-      expect(sessionService.updateSession).toHaveBeenCalledWith(sessionId, {
-        pinned: false
-      });
+      expect(sessionService.updateSession).toHaveBeenCalledWith(sessionId, { pinned: false });
       expect(mockRefresh).toHaveBeenCalled();
     });
   });
@@ -198,9 +187,7 @@ describe('SessionAction', () => {
         await result.current.updateSessionGroupId(sessionId, groupId);
       });
 
-      expect(sessionService.updateSession).toHaveBeenCalledWith(sessionId, {
-        group: groupId
-      });
+      expect(sessionService.updateSession).toHaveBeenCalledWith(sessionId, { group: groupId });
       expect(mockRefresh).toHaveBeenCalled();
     });
   });
@@ -232,9 +219,7 @@ describe('SessionAction', () => {
       const refreshSessionsMock = vi.spyOn(result.current, 'refreshSessions');
 
       // 模拟有当前会话
-      vi.spyOn(sessionSelectors, 'currentSession').mockReturnValue({
-        id: 'session-id'
-      } as any);
+      vi.spyOn(sessionSelectors, 'currentSession').mockReturnValue({ id: 'session-id' } as any);
       vi.spyOn(result.current, 'activeId', 'get').mockReturnValue('session-id');
 
       await act(async () => {

@@ -23,9 +23,9 @@ const nextConfig = {
       '@lobehub/ui',
       'gpt-tokenizer',
       'chroma-js',
-      'shiki'
+      'shiki',
     ],
-    webVitalsAttribution: ['CLS', 'LCP']
+    webVitalsAttribution: ['CLS', 'LCP'],
   },
 
   output: buildWithDocker ? 'standalone' : undefined,
@@ -33,17 +33,14 @@ const nextConfig = {
   rewrites: async () => [
     // due to google api not work correct in some countries
     // we need a proxy to bypass the restriction
-    {
-      source: '/api/chat/google',
-      destination: `${API_PROXY_ENDPOINT}/api/chat/google`
-    }
+    { source: '/api/chat/google', destination: `${API_PROXY_ENDPOINT}/api/chat/google` },
   ],
   reactStrictMode: true,
 
   webpack(config) {
     config.experiments = {
       asyncWebAssembly: true,
-      layers: true
+      layers: true,
     };
 
     // to fix shikiji compile error
@@ -52,26 +49,25 @@ const nextConfig = {
       test: /\.m?js$/,
       type: 'javascript/auto',
       resolve: {
-        fullySpecified: false
-      }
+        fullySpecified: false,
+      },
     });
 
     return config;
-  }
+  },
 };
 
 const noWrapper = (config) => config;
 
-const withBundleAnalyzer =
-  process.env.ANALYZE === 'true' ? analyzer() : noWrapper;
+const withBundleAnalyzer = process.env.ANALYZE === 'true' ? analyzer() : noWrapper;
 
 const withPWA = isProd
   ? nextPWA({
       dest: 'public',
       register: true,
       workboxOptions: {
-        skipWaiting: true
-      }
+        skipWaiting: true,
+      },
     })
   : noWrapper;
 
@@ -88,7 +84,7 @@ const withSentry =
             // Suppresses source map uploading logs during build
             silent: true,
             org: process.env.SENTRY_ORG,
-            project: process.env.SENTRY_PROJECT
+            project: process.env.SENTRY_PROJECT,
           },
           {
             // For all available options, see:
@@ -115,8 +111,8 @@ const withSentry =
             // See the following for more information:
             // https://docs.sentry.io/product/crons/
             // https://vercel.com/docs/cron-jobs
-            automaticVercelMonitors: true
-          }
+            automaticVercelMonitors: true,
+          },
         )
     : noWrapper;
 

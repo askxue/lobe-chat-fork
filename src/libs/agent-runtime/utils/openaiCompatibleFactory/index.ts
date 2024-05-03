@@ -22,15 +22,13 @@ const CHAT_MODELS_BLOCK_LIST = [
   'babbage',
   'tts',
   'whisper',
-  'dall-e'
+  'dall-e',
 ];
 
 interface OpenAICompatibleFactoryOptions {
   baseURL?: string;
   chatCompletion?: {
-    handlePayload?: (
-      payload: ChatStreamPayload
-    ) => OpenAI.ChatCompletionCreateParamsStreaming;
+    handlePayload?: (payload: ChatStreamPayload) => OpenAI.ChatCompletionCreateParamsStreaming;
   };
   constructorOptions?: ClientOptions;
   debug?: {
@@ -55,7 +53,7 @@ export const LobeOpenAICompatibleFactory = ({
   debug,
   constructorOptions,
   chatCompletion,
-  models
+  models,
 }: OpenAICompatibleFactoryOptions) =>
   class LobeOpenAICompatibleAI implements LobeRuntimeAI {
     client: OpenAI;
@@ -65,12 +63,7 @@ export const LobeOpenAICompatibleFactory = ({
     constructor({ apiKey, baseURL = DEFAULT_BASE_URL, ...res }: ClientOptions) {
       if (!apiKey) throw AgentRuntimeError.createError(ErrorType.invalidAPIKey);
 
-      this.client = new OpenAI({
-        apiKey,
-        baseURL,
-        ...constructorOptions,
-        ...res
-      });
+      this.client = new OpenAI({ apiKey, baseURL, ...constructorOptions, ...res });
       this.baseURL = this.client.baseURL;
     }
 
@@ -80,14 +73,11 @@ export const LobeOpenAICompatibleFactory = ({
           ? chatCompletion.handlePayload(payload)
           : (payload as unknown as OpenAI.ChatCompletionCreateParamsStreaming);
 
-        const response = await this.client.chat.completions.create(
-          postPayload,
-          {
-            // https://github.com/lobehub/lobe-chat/pull/318
-            headers: { Accept: '*/*' },
-            signal: options?.signal
-          }
-        );
+        const response = await this.client.chat.completions.create(postPayload, {
+          // https://github.com/lobehub/lobe-chat/pull/318
+          headers: { Accept: '*/*' },
+          signal: options?.signal,
+        });
 
         const [prod, useForDebug] = response.tee();
 
@@ -95,12 +85,9 @@ export const LobeOpenAICompatibleFactory = ({
           debugStream(useForDebug.toReadableStream()).catch(console.error);
         }
 
-        return new StreamingTextResponse(
-          OpenAIStream(prod, options?.callback),
-          {
-            headers: options?.headers
-          }
-        );
+        return new StreamingTextResponse(OpenAIStream(prod, options?.callback), {
+          headers: options?.headers,
+        });
       } catch (error) {
         let desensitizedEndpoint = this.baseURL;
 
@@ -116,7 +103,7 @@ export const LobeOpenAICompatibleFactory = ({
                 endpoint: desensitizedEndpoint,
                 error: error as any,
                 errorType: ErrorType.invalidAPIKey,
-                provider: provider as any
+                provider: provider as any,
               });
             }
 
@@ -132,21 +119,20 @@ export const LobeOpenAICompatibleFactory = ({
           endpoint: desensitizedEndpoint,
           error: errorResult,
           errorType: RuntimeError || ErrorType.bizError,
-          provider: provider as any
+          provider: provider as any,
         });
       }
     }
 
     async models() {
-      if (typeof models === 'function')
-        return models({ apiKey: this.client.apiKey });
+      if (typeof models === 'function') return models({ apiKey: this.client.apiKey });
 
       const list = await this.client.models.list();
 
       return list.data
         .filter((model) => {
           return CHAT_MODELS_BLOCK_LIST.every(
-            (keyword) => !model.id.toLowerCase().includes(keyword)
+            (keyword) => !model.id.toLowerCase().includes(keyword),
           );
         })
         .map((item) => {
@@ -154,9 +140,7 @@ export const LobeOpenAICompatibleFactory = ({
             return models.transformModel(item);
           }
 
-          const knownModel = LOBE_DEFAULT_MODEL_LIST.find(
-            (model) => model.id === item.id
-          );
+          const knownModel = LOBE_DEFAULT_MODEL_LIST.find((model) => model.id === item.id);
 
           if (knownModel) return knownModel;
 

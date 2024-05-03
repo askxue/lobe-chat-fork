@@ -32,10 +32,10 @@ const ConfigMigrations = [
    * 2023.07.11
    * just the first version, Nothing to do
    */
-  MigrationV0ToV1
+  MigrationV0ToV1,
 ];
 
 export const Migration = new VersionController<ConfigStateAll>(
   ConfigMigrations,
-  CURRENT_CONFIG_VERSION
+  CURRENT_CONFIG_VERSION,
 );

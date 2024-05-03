@@ -3,5 +3,5 @@ export interface ChatShareState {
 }
 
 export const initialShareState: ChatShareState = {
-  shareLoading: false
+  shareLoading: false,
 };

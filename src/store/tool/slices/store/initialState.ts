@@ -13,5 +13,5 @@ export const initialPluginStoreState: PluginStoreState = {
   displayMode: 'grid',
   listType: 'all',
   pluginInstallLoading: {},
-  pluginStoreList: []
+  pluginStoreList: [],
 };
