@@ -12,9 +12,10 @@ import { isMobileDevice } from '@/utils/responsive';
 
 type RootLayoutProps = {
   children: ReactNode;
+  modal: ReactNode;
 };
 
-const RootLayout = async ({ children }: RootLayoutProps) => {
+const RootLayout = async ({ children, modal }: RootLayoutProps) => {
   const cookieStore = cookies();
 
   const lang = cookieStore.get(LOBE_LOCALE_COOKIE);
@@ -28,7 +29,10 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
     >
       <body>
         <GlobalProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            {children}
+            {modal}
+          </AuthProvider>
         </GlobalProvider>
         <Analytics />
         <SpeedInsights />

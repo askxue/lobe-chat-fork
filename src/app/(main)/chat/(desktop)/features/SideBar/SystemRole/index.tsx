@@ -1,66 +1,58 @@
 import { ActionIcon, EditableMessage } from '@lobehub/ui';
 import { Skeleton } from 'antd';
 import { Edit } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Flexbox } from 'react-layout-kit';
 import useMergeState from 'use-merge-value';
 
+import SidebarHeader from '@/components/SidebarHeader';
 import AgentInfo from '@/features/AgentInfo';
+import { useOpenChatSettings } from '@/hooks/useInterceptingRoutes';
 import { useAgentStore } from '@/store/agent';
 import { agentSelectors } from '@/store/agent/selectors';
 import { useGlobalStore } from '@/store/global';
+import { ChatSettingsTabs } from '@/store/global/initialState';
 import { useSessionStore } from '@/store/session';
-import {
-  sessionMetaSelectors,
-  sessionSelectors
-} from '@/store/session/selectors';
-import { pathString } from '@/utils/url';
+import { sessionMetaSelectors, sessionSelectors } from '@/store/session/selectors';
 
-import SidebarHeader from '../../../../components/SidebarHeader';
 import { useStyles } from './style';
 
 const SystemRole = memo(() => {
-  const router = useRouter();
   const [editing, setEditing] = useState(false);
   const { styles } = useStyles();
-
+  const openChatSettings = useOpenChatSettings(ChatSettingsTabs.Prompt);
   const [init, meta] = useSessionStore((s) => [
     sessionSelectors.isSomeSessionActive(s),
-    sessionMetaSelectors.currentAgentMeta(s)
+    sessionMetaSelectors.currentAgentMeta(s),
   ]);
 
   const [systemRole, updateAgentConfig] = useAgentStore((s) => [
     agentSelectors.currentAgentSystemRole(s),
-    s.updateAgentConfig
+    s.updateAgentConfig,
   ]);
 
   const [showSystemRole, toggleSystemRole] = useGlobalStore((s) => [
     s.preference.showSystemRole,
-    s.toggleSystemRole
+    s.toggleSystemRole,
   ]);
 
   const [open, setOpen] = useMergeState(false, {
     defaultValue: showSystemRole,
     onChange: toggleSystemRole,
-    value: showSystemRole
+    value: showSystemRole,
   });
 
   const { t } = useTranslation('common');
 
   const handleOpenWithEdit = () => {
-    if (!init) {
-      return;
-    }
+    if (!init) return;
     setEditing(true);
     setOpen(true);
   };
 
   const handleOpen = () => {
-    if (!init) {
-      return;
-    }
+    if (!init) return;
 
     setOpen(true);
   };
@@ -69,12 +61,7 @@ const SystemRole = memo(() => {
     <Flexbox height={'fit-content'}>
       <SidebarHeader
         actions={
-          <ActionIcon
-            icon={Edit}
-            onClick={handleOpenWithEdit}
-            size={'small'}
-            title={t('edit')}
-          />
+          <ActionIcon icon={Edit} onClick={handleOpenWithEdit} size={'small'} title={t('edit')} />
         }
         title={t('settingAgent.prompt.title', { ns: 'setting' })}
       />
@@ -83,9 +70,7 @@ const SystemRole = memo(() => {
         height={200}
         onClick={handleOpen}
         onDoubleClick={(e) => {
-          if (e.altKey) {
-            handleOpenWithEdit();
-          }
+          if (e.altKey) handleOpenWithEdit();
         }}
       >
         {!init ? (
@@ -107,15 +92,11 @@ const SystemRole = memo(() => {
                     onAvatarClick={() => {
                       setOpen(false);
                       setEditing(false);
-                      router.push(
-                        pathString('/chat/settings', {
-                          search: location.search
-                        })
-                      );
+                      openChatSettings();
                     }}
                     style={{ marginBottom: 16 }}
                   />
-                )
+                ),
               }}
               onChange={(e) => {
                 updateAgentConfig({ systemRole: e });
@@ -129,7 +110,7 @@ const SystemRole = memo(() => {
                 cancel: t('cancel'),
                 confirm: t('ok'),
                 edit: t('edit'),
-                title: t('settingAgent.prompt.title', { ns: 'setting' })
+                title: t('settingAgent.prompt.title', { ns: 'setting' }),
               }}
               value={systemRole}
             />
