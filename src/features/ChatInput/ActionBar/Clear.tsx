@@ -24,7 +24,11 @@ const Clear = memo(() => {
   const actionTitle: any = confirmOpened ? (
     void 0
   ) : (
-    <HotKeys desc={t('clearCurrentMessages', { ns: 'chat' })} inverseTheme keys={hotkeys} />
+    <HotKeys
+      desc={t('clearCurrentMessages', { ns: 'chat' })}
+      inverseTheme
+      keys={hotkeys}
+    />
   );
 
   return (

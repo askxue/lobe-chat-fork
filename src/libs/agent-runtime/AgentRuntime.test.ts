@@ -24,7 +24,7 @@ import {
   LobeRuntimeAI,
   LobeTogetherAI,
   LobeZhipuAI,
-  ModelProvider,
+  ModelProvider
 } from '@/libs/agent-runtime';
 
 import { AgentChatOptions } from './AgentRuntime';
@@ -50,19 +50,25 @@ vi.mock('@/config/server', () => ({
     ANTHROPIC_API_KEY: 'test-anthropic-key',
     MISTRAL_API_KEY: 'test-mistral-key',
     OPENROUTER_API_KEY: 'test-openrouter-key',
-    TOGETHERAI_API_KEY: 'test-togetherai-key',
-  })),
+    TOGETHERAI_API_KEY: 'test-togetherai-key'
+  }))
 }));
 
 describe('AgentRuntime', () => {
   describe('should initialize with various providers', () => {
     describe('OpenAI provider', () => {
       it('should initialize correctly', async () => {
-        const jwtPayload: ClientOptions = { apiKey: 'user-openai-key', baseURL: 'user-endpoint' };
+        const jwtPayload: ClientOptions = {
+          apiKey: 'user-openai-key',
+          baseURL: 'user-endpoint'
+        };
 
-        const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.OpenAI, {
-          openai: jwtPayload,
-        });
+        const runtime = await AgentRuntime.initializeWithProviderOptions(
+          ModelProvider.OpenAI,
+          {
+            openai: jwtPayload
+          }
+        );
 
         expect(runtime).toBeInstanceOf(AgentRuntime);
         expect(runtime['_runtime']).toBeInstanceOf(LobeOpenAI);
@@ -75,12 +81,15 @@ describe('AgentRuntime', () => {
         const jwtPayload = {
           apikey: 'user-azure-key',
           endpoint: 'user-azure-endpoint',
-          apiVersion: '2024-02-01',
+          apiVersion: '2024-02-01'
         };
 
-        const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.Azure, {
-          azure: jwtPayload,
-        });
+        const runtime = await AgentRuntime.initializeWithProviderOptions(
+          ModelProvider.Azure,
+          {
+            azure: jwtPayload
+          }
+        );
 
         expect(runtime).toBeInstanceOf(AgentRuntime);
         expect(runtime['_runtime']).toBeInstanceOf(LobeAzureOpenAI);
@@ -90,12 +99,15 @@ describe('AgentRuntime', () => {
         const jwtPayload = {
           apikey: 'user-openai-key',
           endpoint: 'user-endpoint',
-          apiVersion: 'custom-version',
+          apiVersion: 'custom-version'
         };
 
-        const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.Azure, {
-          azure: jwtPayload,
-        });
+        const runtime = await AgentRuntime.initializeWithProviderOptions(
+          ModelProvider.Azure,
+          {
+            azure: jwtPayload
+          }
+        );
 
         expect(runtime).toBeInstanceOf(AgentRuntime);
         const openAIRuntime = runtime['_runtime'] as LobeRuntimeAI;
@@ -105,11 +117,14 @@ describe('AgentRuntime', () => {
       it('should initialize with AzureAI correctly', async () => {
         const jwtPayload = {
           apikey: 'user-azure-key',
-          endpoint: 'user-azure-endpoint',
+          endpoint: 'user-azure-endpoint'
         };
-        const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.Azure, {
-          azure: jwtPayload,
-        });
+        const runtime = await AgentRuntime.initializeWithProviderOptions(
+          ModelProvider.Azure,
+          {
+            azure: jwtPayload
+          }
+        );
 
         expect(runtime['_runtime']).toBeInstanceOf(LobeAzureOpenAI);
       });
@@ -118,9 +133,12 @@ describe('AgentRuntime', () => {
     describe('ZhiPu AI provider', () => {
       it('should initialize correctly', async () => {
         const jwtPayload: JWTPayload = { apiKey: 'zhipu.user-key' };
-        const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.ZhiPu, {
-          zhipu: jwtPayload,
-        });
+        const runtime = await AgentRuntime.initializeWithProviderOptions(
+          ModelProvider.ZhiPu,
+          {
+            zhipu: jwtPayload
+          }
+        );
 
         // 假设 LobeZhipuAI 是 ZhiPu 提供者的实现类
         expect(runtime['_runtime']).toBeInstanceOf(LobeZhipuAI);
@@ -130,9 +148,12 @@ describe('AgentRuntime', () => {
     describe('Google provider', () => {
       it('should initialize correctly', async () => {
         const jwtPayload: JWTPayload = { apiKey: 'user-google-key' };
-        const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.Google, {
-          google: jwtPayload,
-        });
+        const runtime = await AgentRuntime.initializeWithProviderOptions(
+          ModelProvider.Google,
+          {
+            google: jwtPayload
+          }
+        );
 
         // 假设 LobeGoogleAI 是 Google 提供者的实现类
         expect(runtime['_runtime']).toBeInstanceOf(LobeGoogleAI);
@@ -142,9 +163,12 @@ describe('AgentRuntime', () => {
     describe('Moonshot AI provider', () => {
       it('should initialize correctly', async () => {
         const jwtPayload: JWTPayload = { apiKey: 'user-moonshot-key' };
-        const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.Moonshot, {
-          moonshot: jwtPayload,
-        });
+        const runtime = await AgentRuntime.initializeWithProviderOptions(
+          ModelProvider.Moonshot,
+          {
+            moonshot: jwtPayload
+          }
+        );
 
         // 假设 LobeMoonshotAI 是 Moonshot 提供者的实现类
         expect(runtime['_runtime']).toBeInstanceOf(LobeMoonshotAI);
@@ -156,11 +180,14 @@ describe('AgentRuntime', () => {
         const jwtPayload: LobeBedrockAIParams = {
           accessKeyId: 'user-aws-id',
           accessKeySecret: 'user-aws-secret',
-          region: 'user-aws-region',
+          region: 'user-aws-region'
         };
-        const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.Bedrock, {
-          bedrock: jwtPayload,
-        });
+        const runtime = await AgentRuntime.initializeWithProviderOptions(
+          ModelProvider.Bedrock,
+          {
+            bedrock: jwtPayload
+          }
+        );
 
         // 假设 LobeBedrockAI 是 Bedrock 提供者的实现类
         expect(runtime['_runtime']).toBeInstanceOf(LobeBedrockAI);
@@ -170,9 +197,12 @@ describe('AgentRuntime', () => {
     describe('Ollama provider', () => {
       it('should initialize correctly', async () => {
         const jwtPayload: JWTPayload = { endpoint: 'user-ollama-url' };
-        const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.Ollama, {
-          ollama: jwtPayload,
-        });
+        const runtime = await AgentRuntime.initializeWithProviderOptions(
+          ModelProvider.Ollama,
+          {
+            ollama: jwtPayload
+          }
+        );
 
         // 假设 LobeOllamaAI 是 Ollama 提供者的实现类
         expect(runtime['_runtime']).toBeInstanceOf(LobeOllamaAI);
@@ -182,9 +212,12 @@ describe('AgentRuntime', () => {
     describe('Perplexity AI provider', () => {
       it('should initialize correctly', async () => {
         const jwtPayload: JWTPayload = { apiKey: 'user-perplexity-key' };
-        const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.Perplexity, {
-          perplexity: jwtPayload,
-        });
+        const runtime = await AgentRuntime.initializeWithProviderOptions(
+          ModelProvider.Perplexity,
+          {
+            perplexity: jwtPayload
+          }
+        );
 
         // 假设 LobePerplexityAI 是 Perplexity 提供者的实现类
         expect(runtime['_runtime']).toBeInstanceOf(LobePerplexityAI);
@@ -194,9 +227,12 @@ describe('AgentRuntime', () => {
     describe('Anthropic AI provider', () => {
       it('should initialize correctly', async () => {
         const jwtPayload: JWTPayload = { apiKey: 'user-anthropic-key' };
-        const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.Anthropic, {
-          anthropic: jwtPayload,
-        });
+        const runtime = await AgentRuntime.initializeWithProviderOptions(
+          ModelProvider.Anthropic,
+          {
+            anthropic: jwtPayload
+          }
+        );
 
         // 假设 LobeAnthropicAI 是 Anthropic 提供者的实现类
         expect(runtime['_runtime']).toBeInstanceOf(LobeAnthropicAI);
@@ -206,9 +242,12 @@ describe('AgentRuntime', () => {
     describe('Mistral AI provider', () => {
       it('should initialize correctly', async () => {
         const jwtPayload: JWTPayload = { apiKey: 'user-mistral-key' };
-        const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.Mistral, {
-          mistral: jwtPayload,
-        });
+        const runtime = await AgentRuntime.initializeWithProviderOptions(
+          ModelProvider.Mistral,
+          {
+            mistral: jwtPayload
+          }
+        );
 
         // 假设 LobeMistralAI 是 Mistral 提供者的实现类
         expect(runtime['_runtime']).toBeInstanceOf(LobeMistralAI);
@@ -218,9 +257,12 @@ describe('AgentRuntime', () => {
     describe('OpenRouter AI provider', () => {
       it('should initialize correctly', async () => {
         const jwtPayload: JWTPayload = { apiKey: 'user-openrouter-key' };
-        const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.OpenRouter, {
-          openrouter: jwtPayload,
-        });
+        const runtime = await AgentRuntime.initializeWithProviderOptions(
+          ModelProvider.OpenRouter,
+          {
+            openrouter: jwtPayload
+          }
+        );
 
         // 假设 LobeOpenRouterAI 是 OpenRouter 提供者的实现类
         expect(runtime['_runtime']).toBeInstanceOf(LobeOpenRouterAI);
@@ -230,9 +272,12 @@ describe('AgentRuntime', () => {
     describe('Together AI provider', () => {
       it('should initialize correctly', async () => {
         const jwtPayload: JWTPayload = { apiKey: 'user-togetherai-key' };
-        const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.TogetherAI, {
-          togetherai: jwtPayload,
-        });
+        const runtime = await AgentRuntime.initializeWithProviderOptions(
+          ModelProvider.TogetherAI,
+          {
+            togetherai: jwtPayload
+          }
+        );
 
         // 假设 LobeTogetherAI 是 TogetherAI 提供者的实现类
         expect(runtime['_runtime']).toBeInstanceOf(LobeTogetherAI);
@@ -242,31 +287,45 @@ describe('AgentRuntime', () => {
 
   describe('AgentRuntime chat method', () => {
     it('should run correctly', async () => {
-      const jwtPayload: JWTPayload = { apiKey: 'user-openai-key', endpoint: 'user-endpoint' };
-      const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.OpenAI, {
-        openai: jwtPayload,
-      });
+      const jwtPayload: JWTPayload = {
+        apiKey: 'user-openai-key',
+        endpoint: 'user-endpoint'
+      };
+      const runtime = await AgentRuntime.initializeWithProviderOptions(
+        ModelProvider.OpenAI,
+        {
+          openai: jwtPayload
+        }
+      );
 
       const payload: ChatStreamPayload = {
         messages: [{ role: 'user', content: 'Hello, world!' }],
         model: 'text-davinci-002',
-        temperature: 0,
+        temperature: 0
       };
 
-      vi.spyOn(LobeOpenAI.prototype, 'chat').mockResolvedValue(new Response(''));
+      vi.spyOn(LobeOpenAI.prototype, 'chat').mockResolvedValue(
+        new Response('')
+      );
 
       await runtime.chat(payload);
     });
     it('should handle options correctly', async () => {
-      const jwtPayload: JWTPayload = { apiKey: 'user-openai-key', endpoint: 'user-endpoint' };
-      const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.OpenAI, {
-        openai: jwtPayload,
-      });
+      const jwtPayload: JWTPayload = {
+        apiKey: 'user-openai-key',
+        endpoint: 'user-endpoint'
+      };
+      const runtime = await AgentRuntime.initializeWithProviderOptions(
+        ModelProvider.OpenAI,
+        {
+          openai: jwtPayload
+        }
+      );
 
       const payload: ChatStreamPayload = {
         messages: [{ role: 'user', content: 'Hello, world!' }],
         model: 'text-davinci-002',
-        temperature: 0,
+        temperature: 0
       };
 
       const options: AgentChatOptions = {
@@ -277,25 +336,33 @@ describe('AgentRuntime', () => {
           sessionId: 'test-session-id',
           topicId: 'test-topic-id',
           tags: [],
-          userId: 'test-user-id',
-        },
+          userId: 'test-user-id'
+        }
       };
 
-      vi.spyOn(LobeOpenAI.prototype, 'chat').mockResolvedValue(new Response(''));
+      vi.spyOn(LobeOpenAI.prototype, 'chat').mockResolvedValue(
+        new Response('')
+      );
 
       await runtime.chat(payload, createTraceOptions(payload, options));
     });
 
     describe('callback', async () => {
-      const jwtPayload: JWTPayload = { apiKey: 'user-openai-key', endpoint: 'user-endpoint' };
-      const runtime = await AgentRuntime.initializeWithProviderOptions(ModelProvider.OpenAI, {
-        openai: jwtPayload,
-      });
+      const jwtPayload: JWTPayload = {
+        apiKey: 'user-openai-key',
+        endpoint: 'user-endpoint'
+      };
+      const runtime = await AgentRuntime.initializeWithProviderOptions(
+        ModelProvider.OpenAI,
+        {
+          openai: jwtPayload
+        }
+      );
 
       const payload: ChatStreamPayload = {
         messages: [{ role: 'user', content: 'Hello, world!' }],
         model: 'text-davinci-002',
-        temperature: 0,
+        temperature: 0
       };
 
       const options: AgentChatOptions = {
@@ -306,9 +373,9 @@ describe('AgentRuntime', () => {
           sessionId: 'test-session-id',
           topicId: 'test-topic-id',
           tags: [],
-          userId: 'test-user-id',
+          userId: 'test-user-id'
         },
-        enableTrace: true,
+        enableTrace: true
       };
 
       const updateMock = vi.fn();
@@ -316,7 +383,7 @@ describe('AgentRuntime', () => {
         vi.mocked(getServerConfig).mockReturnValue({
           ENABLE_LANGFUSE: true,
           LANGFUSE_PUBLIC_KEY: 'abc',
-          LANGFUSE_SECRET_KEY: 'DDD',
+          LANGFUSE_SECRET_KEY: 'DDD'
         } as any);
       });
 
@@ -329,41 +396,51 @@ describe('AgentRuntime', () => {
               await callback.experimental_onToolCall();
             }
             return new Response('abc');
-          },
+          }
         );
-        vi.spyOn(LangfuseTraceClient.prototype, 'update').mockImplementation(updateMock);
+        vi.spyOn(LangfuseTraceClient.prototype, 'update').mockImplementation(
+          updateMock
+        );
 
         await runtime.chat(payload, createTraceOptions(payload, options));
 
         expect(updateMock).toHaveBeenCalledWith({ tags: ['Tools Call'] });
       });
       it('should call onStart correctly', async () => {
-        vi.spyOn(LangfuseGenerationClient.prototype, 'update').mockImplementation(updateMock);
+        vi.spyOn(
+          LangfuseGenerationClient.prototype,
+          'update'
+        ).mockImplementation(updateMock);
         vi.spyOn(LobeOpenAI.prototype, 'chat').mockImplementation(
           async (payload, { callback }: any) => {
             if (callback?.onStart) {
               callback.onStart();
             }
             return new Response('Success');
-          },
+          }
         );
 
         await runtime.chat(payload, createTraceOptions(payload, options));
 
         // Verify onStart was called
-        expect(updateMock).toHaveBeenCalledWith({ completionStartTime: expect.any(Date) });
+        expect(updateMock).toHaveBeenCalledWith({
+          completionStartTime: expect.any(Date)
+        });
       });
 
       it('should call onCompletion correctly', async () => {
         // Spy on the chat method and trigger onCompletion callback
-        vi.spyOn(LangfuseGenerationClient.prototype, 'update').mockImplementation(updateMock);
+        vi.spyOn(
+          LangfuseGenerationClient.prototype,
+          'update'
+        ).mockImplementation(updateMock);
         vi.spyOn(LobeOpenAI.prototype, 'chat').mockImplementation(
           async (payload, { callback }: any) => {
             if (callback?.onCompletion) {
               await callback.onCompletion('Test completion');
             }
             return new Response('Success');
-          },
+          }
         );
 
         await runtime.chat(payload, createTraceOptions(payload, options));
@@ -373,9 +450,9 @@ describe('AgentRuntime', () => {
           endTime: expect.any(Date),
           metadata: {
             provider: 'openai',
-            tools: undefined,
+            tools: undefined
           },
-          output: 'Test completion',
+          output: 'Test completion'
         });
       });
       it('should call onFinal correctly', async () => {
@@ -385,10 +462,12 @@ describe('AgentRuntime', () => {
               await callback.onFinal('Test completion');
             }
             return new Response('Success');
-          },
+          }
         );
         const shutdownAsyncMock = vi.fn();
-        vi.spyOn(Langfuse.prototype, 'shutdownAsync').mockImplementation(shutdownAsyncMock);
+        vi.spyOn(Langfuse.prototype, 'shutdownAsync').mockImplementation(
+          shutdownAsyncMock
+        );
 
         await runtime.chat(payload, createTraceOptions(payload, options));
 

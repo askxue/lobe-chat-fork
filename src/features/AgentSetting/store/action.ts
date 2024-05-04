@@ -68,7 +68,10 @@ export type Store = Action & State;
 
 const t = setNamespace('AgentSettings');
 
-export const store: StateCreator<Store, [['zustand/devtools', never]]> = (set, get) => ({
+export const store: StateCreator<Store, [['zustand/devtools', never]]> = (
+  set,
+  get
+) => ({
   ...initialState,
   autoPickEmoji: async () => {
     const { config, meta, dispatchMeta } = get();
@@ -79,8 +82,12 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (set, g
       onLoadingChange: (loading) => {
         get().updateLoadingState('avatar', loading);
       },
-      params: chainPickEmoji([meta.title, meta.description, systemRole].filter(Boolean).join(',')),
-      trace: get().getCurrentTracePayload({ traceName: TraceNameMap.EmojiPicker }),
+      params: chainPickEmoji(
+        [meta.title, meta.description, systemRole].filter(Boolean).join(',')
+      ),
+      trace: get().getCurrentTracePayload({
+        traceName: TraceNameMap.EmojiPicker
+      })
     });
 
     if (emoji) {
@@ -88,11 +95,19 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (set, g
     }
   },
   autocompleteAgentDescription: async () => {
-    const { dispatchMeta, config, meta, updateLoadingState, streamUpdateMetaString } = get();
+    const {
+      dispatchMeta,
+      config,
+      meta,
+      updateLoadingState,
+      streamUpdateMetaString
+    } = get();
 
     const systemRole = config.systemRole;
 
-    if (!systemRole) return;
+    if (!systemRole) {
+      return;
+    }
 
     const preValue = meta.description;
 
@@ -108,15 +123,25 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (set, g
       },
       onMessageHandle: streamUpdateMetaString('description'),
       params: chainSummaryDescription(systemRole),
-      trace: get().getCurrentTracePayload({ traceName: TraceNameMap.SummaryAgentDescription }),
+      trace: get().getCurrentTracePayload({
+        traceName: TraceNameMap.SummaryAgentDescription
+      })
     });
   },
   autocompleteAgentTags: async () => {
-    const { dispatchMeta, config, meta, updateLoadingState, streamUpdateMetaArray } = get();
+    const {
+      dispatchMeta,
+      config,
+      meta,
+      updateLoadingState,
+      streamUpdateMetaArray
+    } = get();
 
     const systemRole = config.systemRole;
 
-    if (!systemRole) return;
+    if (!systemRole) {
+      return;
+    }
 
     const preValue = meta.tags;
 
@@ -132,17 +157,27 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (set, g
       },
       onMessageHandle: streamUpdateMetaArray('tags'),
       params: chainSummaryTags(
-        [meta.title, meta.description, systemRole].filter(Boolean).join(','),
+        [meta.title, meta.description, systemRole].filter(Boolean).join(',')
       ),
-      trace: get().getCurrentTracePayload({ traceName: TraceNameMap.SummaryAgentTags }),
+      trace: get().getCurrentTracePayload({
+        traceName: TraceNameMap.SummaryAgentTags
+      })
     });
   },
   autocompleteAgentTitle: async () => {
-    const { dispatchMeta, config, meta, updateLoadingState, streamUpdateMetaString } = get();
+    const {
+      dispatchMeta,
+      config,
+      meta,
+      updateLoadingState,
+      streamUpdateMetaString
+    } = get();
 
     const systemRole = config.systemRole;
 
-    if (!systemRole) return;
+    if (!systemRole) {
+      return;
+    }
 
     const previousTitle = meta.title;
 
@@ -157,8 +192,12 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (set, g
         updateLoadingState('title', loading);
       },
       onMessageHandle: streamUpdateMetaString('title'),
-      params: chainSummaryAgentName([meta.description, systemRole].filter(Boolean).join(',')),
-      trace: get().getCurrentTracePayload({ traceName: TraceNameMap.SummaryAgentTitle }),
+      params: chainSummaryAgentName(
+        [meta.description, systemRole].filter(Boolean).join(',')
+      ),
+      trace: get().getCurrentTracePayload({
+        traceName: TraceNameMap.SummaryAgentTitle
+      })
     });
   },
   autocompleteAllMeta: (replace) => {
@@ -185,7 +224,7 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (set, g
       autoPickEmoji,
       autocompleteAgentTitle,
       autocompleteAgentDescription,
-      autocompleteAgentTags,
+      autocompleteAgentTags
     } = get();
 
     switch (key) {
@@ -206,7 +245,6 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (set, g
 
       case 'tags': {
         autocompleteAgentTags();
-        return;
       }
     }
   },
@@ -227,7 +265,7 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (set, g
   getCurrentTracePayload: (data) => ({
     sessionId: get().id,
     topicId: TraceTopicType.AgentSettings,
-    ...data,
+    ...data
   }),
 
   resetAgentConfig: () => {
@@ -248,7 +286,10 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (set, g
     let value = '';
     return (text: string) => {
       value += text;
-      get().dispatchMeta({ type: 'update', value: { [key]: value.split(',') } });
+      get().dispatchMeta({
+        type: 'update',
+        value: { [key]: value.split(',') }
+      });
     };
   },
 
@@ -268,7 +309,7 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (set, g
     set(
       { autocompleteLoading: { ...get().autocompleteLoading, [key]: value } },
       false,
-      t('updateLoadingState', { key, value }),
+      t('updateLoadingState', { key, value })
     );
-  },
+  }
 });

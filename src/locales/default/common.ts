@@ -24,7 +24,7 @@ export default {
     all: '导出全局设置和所有助手数据',
     allAgent: '导出所有助手设定',
     allAgentWithMessage: '导出所有助手和消息',
-    globalSetting: '导出全局设置',
+    globalSetting: '导出全局设置'
   },
   feedback: '反馈与建议',
   follow: '在 {{name}} 上关注我们',
@@ -36,7 +36,7 @@ export default {
       onlySettings: '系统设置导入成功',
       start: '开始使用',
       subTitle: '数据导入成功，耗时 {{duration}} 秒。导入明细如下：',
-      title: '数据导入完成',
+      title: '数据导入完成'
     },
     loading: '数据导入中，请耐心等待...',
     result: {
@@ -47,19 +47,19 @@ export default {
       sessions: '助手',
       skips: '重复跳过',
       topics: '话题',
-      type: '数据类型',
+      type: '数据类型'
     },
-    title: '导入数据',
+    title: '导入数据'
   },
   lang: {
-    'ar': '阿拉伯语',
+    ar: '阿拉伯语',
     'bg-BG': '保加利亚语',
-    'bn': '孟加拉语',
+    bn: '孟加拉语',
     'cs-CZ': '捷克语',
     'da-DK': '丹麦语',
     'de-DE': '德语',
     'el-GR': '希腊语',
-    'en': '英语',
+    en: '英语',
     'en-US': '英语',
     'es-ES': '西班牙语',
     'fi-FI': '芬兰语',
@@ -84,9 +84,9 @@ export default {
     'tr-TR': '土耳其语',
     'uk-UA': '乌克兰语',
     'vi-VN': '越南语',
-    'zh': '简体中文',
+    zh: '简体中文',
     'zh-CN': '简体中文',
-    'zh-TW': '繁体中文',
+    'zh-TW': '繁体中文'
   },
   layoutInitializing: '正在加载布局...',
   noDescription: '暂无描述',
@@ -108,16 +108,16 @@ export default {
   sync: {
     actions: { settings: '同步设置', sync: '立即同步' },
     awareness: {
-      current: '当前设备',
+      current: '当前设备'
     },
     channel: '频道',
     disabled: {
       actions: { enable: '开启云端同步', settings: '配置同步参数' },
       desc: '当前会话数据仅存储于此浏览器中。如果你需要在多个设备间同步数据，请配置并开启云端同步。',
-      title: '数据同步未开启',
+      title: '数据同步未开启'
     },
     enabled: {
-      title: '数据同步',
+      title: '数据同步'
     },
     status: {
       connecting: '连接中',
@@ -125,23 +125,25 @@ export default {
       ready: '已连接',
       synced: '已同步',
       syncing: '同步中',
-      unconnected: '连接失败',
+      unconnected: '连接失败'
     },
     title: '同步状态',
-    unconnected: { tip: '信令服务器连接失败，将无法建立点对点通信频道，请检查网络后重试' },
+    unconnected: {
+      tip: '信令服务器连接失败，将无法建立点对点通信频道，请检查网络后重试'
+    }
   },
   tab: {
     chat: '会话',
     market: '发现',
     me: '我',
-    setting: '设置',
+    setting: '设置'
   },
   telemetry: {
     allow: '允许',
     deny: '拒绝',
     desc: '我们希望匿名获取你的使用信息，进而帮助我们改进 LobeChat，并为你提供更好的产品体验。你可以在「设置」 - 「关于」随时关闭。',
     learnMore: '了解更多',
-    title: '帮助 LobeChat 做得更好',
+    title: '帮助 LobeChat 做得更好'
   },
 
   temp: '临时',
@@ -150,7 +152,7 @@ export default {
   upgradeVersion: {
     action: '升级',
     hasNew: '有可用更新',
-    newVersion: '有新版本可用：{{version}}',
+    newVersion: '有新版本可用：{{version}}'
   },
   userPanel: {
     billing: '账单管理',
@@ -164,6 +166,6 @@ export default {
     plans: '订阅方案',
     profile: '账户管理',
     setting: '应用设置',
-    usages: '用量统计',
-  },
+    usages: '用量统计'
+  }
 };

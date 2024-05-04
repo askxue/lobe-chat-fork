@@ -6,17 +6,18 @@ import { ssoProviders } from './sso-providers';
 
 const { NEXTAUTH_SECRET, ENABLE_OAUTH_SSO, SSO_PROVIDERS } = getServerConfig();
 
-export const initSSOProviders = () => {
-  return ENABLE_OAUTH_SSO
+export const initSSOProviders = () =>
+  ENABLE_OAUTH_SSO
     ? SSO_PROVIDERS.split(/[,，]/).map((provider) => {
         const validProvider = ssoProviders.find((item) => item.id === provider);
 
-        if (validProvider) return validProvider.provider;
+        if (validProvider) {
+          return validProvider.provider;
+        }
 
         throw new Error(`[NextAuth] provider ${provider} is not supported`);
       })
     : [];
-};
 
 const nextAuth = NextAuth({
   callbacks: {
@@ -35,16 +36,16 @@ const nextAuth = NextAuth({
         session.user.id = (token.userId ?? session.user.id) as string;
       }
       return session;
-    },
+    }
   },
   providers: initSSOProviders(),
   secret: NEXTAUTH_SECRET,
-  trustHost: true,
+  trustHost: true
 });
 
 export const {
   handlers: { GET, POST },
-  auth,
+  auth
 } = nextAuth;
 
 declare module '@auth/core/jwt' {

@@ -12,13 +12,17 @@ const EditCustomPlugin = memo<{ identifier: string }>(({ identifier }) => {
   const { t } = useTranslation('plugin');
   const [showModal, setModal] = useState(false);
 
-  const [installCustomPlugin, updateNewDevPlugin, uninstallCustomPlugin] = useToolStore((s) => [
-    s.installCustomPlugin,
-    s.updateNewCustomPlugin,
-    s.uninstallCustomPlugin,
-  ]);
+  const [installCustomPlugin, updateNewDevPlugin, uninstallCustomPlugin] =
+    useToolStore((s) => [
+      s.installCustomPlugin,
+      s.updateNewCustomPlugin,
+      s.uninstallCustomPlugin
+    ]);
 
-  const customPlugin = useToolStore(pluginSelectors.getCustomPluginById(identifier), isEqual);
+  const customPlugin = useToolStore(
+    pluginSelectors.getCustomPluginById(identifier),
+    isEqual
+  );
 
   return (
     <div

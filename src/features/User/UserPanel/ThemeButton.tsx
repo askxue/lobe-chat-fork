@@ -12,14 +12,14 @@ import { settingsSelectors } from '@/store/user/selectors';
 const themeIcons = {
   auto: Monitor,
   dark: Moon,
-  light: Sun,
+  light: Sun
 };
 
 const ThemeButton = memo(() => {
   const theme = useTheme();
   const [themeMode, switchThemeMode] = useUserStore((s) => [
     settingsSelectors.currentSettings(s).themeMode,
-    s.switchThemeMode,
+    s.switchThemeMode
   ]);
 
   const { t } = useTranslation('setting');
@@ -30,22 +30,22 @@ const ThemeButton = memo(() => {
         icon: <Icon icon={themeIcons.auto} />,
         key: 'auto',
         label: t('settingTheme.themeMode.auto'),
-        onClick: () => switchThemeMode('auto'),
+        onClick: () => switchThemeMode('auto')
       },
       {
         icon: <Icon icon={themeIcons.light} />,
         key: 'light',
         label: t('settingTheme.themeMode.light'),
-        onClick: () => switchThemeMode('light'),
+        onClick: () => switchThemeMode('light')
       },
       {
         icon: <Icon icon={themeIcons.dark} />,
         key: 'dark',
         label: t('settingTheme.themeMode.dark'),
-        onClick: () => switchThemeMode('dark'),
-      },
+        onClick: () => switchThemeMode('dark')
+      }
     ],
-    [t],
+    [t]
   );
 
   return (
@@ -53,7 +53,7 @@ const ThemeButton = memo(() => {
       arrow={false}
       content={<Menu items={items} selectable selectedKeys={[themeMode]} />}
       overlayInnerStyle={{
-        padding: 0,
+        padding: 0
       }}
       placement={'right'}
       trigger={['click', 'hover']}

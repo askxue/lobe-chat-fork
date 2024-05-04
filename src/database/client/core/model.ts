@@ -7,9 +7,14 @@ import { BrowserDB, BrowserDBSchema, browserDB } from './db';
 import { dataSync } from './sync';
 import { DBBaseFieldsSchema } from './types/db';
 
-export class BaseModel<N extends keyof BrowserDBSchema = any, T = BrowserDBSchema[N]['table']> {
+export class BaseModel<
+  N extends keyof BrowserDBSchema = any,
+  T = BrowserDBSchema[N]['table']
+> {
   protected readonly db: BrowserDB;
+
   private readonly schema: ZodObject<any>;
+
   private readonly _tableName: keyof BrowserDBSchema;
 
   constructor(table: N, schema: ZodObject<any>, db = browserDB) {
@@ -34,7 +39,7 @@ export class BaseModel<N extends keyof BrowserDBSchema = any, T = BrowserDBSchem
   protected async _addWithSync<T = BrowserDBSchema[N]['model']>(
     data: T,
     id: string | number = nanoid(),
-    primaryKey: string = 'id',
+    primaryKey: string = 'id'
   ) {
     const result = this.schema.safeParse(data);
 
@@ -53,7 +58,7 @@ export class BaseModel<N extends keyof BrowserDBSchema = any, T = BrowserDBSchem
       ...result.data,
       createdAt: Date.now(),
       [primaryKey]: id,
-      updatedAt: Date.now(),
+      updatedAt: Date.now()
     };
 
     const newId = await this.db[tableName].add(record);
@@ -80,7 +85,7 @@ export class BaseModel<N extends keyof BrowserDBSchema = any, T = BrowserDBSchem
       createWithNewId?: boolean;
       idGenerator?: () => string;
       withSync?: boolean;
-    } = {},
+    } = {}
   ): Promise<{
     added: number;
     errors?: Error[];
@@ -88,7 +93,11 @@ export class BaseModel<N extends keyof BrowserDBSchema = any, T = BrowserDBSchem
     skips: string[];
     success: boolean;
   }> {
-    const { idGenerator = nanoid, createWithNewId = false, withSync = true } = options;
+    const {
+      idGenerator = nanoid,
+      createWithNewId = false,
+      withSync = true
+    } = options;
     const validatedData: any[] = [];
     const errors = [];
     const skips: string[] = [];
@@ -114,7 +123,7 @@ export class BaseModel<N extends keyof BrowserDBSchema = any, T = BrowserDBSchem
           ...item,
           createdAt: item.createdAt ?? Date.now(),
           id,
-          updatedAt: item.updatedAt ?? Date.now(),
+          updatedAt: item.updatedAt ?? Date.now()
         });
       } else {
         errors.push(result.error);
@@ -147,19 +156,22 @@ export class BaseModel<N extends keyof BrowserDBSchema = any, T = BrowserDBSchem
         added: validatedData.length,
         ids: validatedData.map((item) => item.id),
         skips,
-        success: true,
+        success: true
       };
     } catch (error) {
       const bulkError = error as BulkError;
       // Handle bulkAdd errors here
-      console.error(`[${this.db.name}][${this._tableName}] Bulk add error:`, bulkError);
+      console.error(
+        `[${this.db.name}][${this._tableName}] Bulk add error:`,
+        bulkError
+      );
       // Return the number of successfully added records and errors
       return {
         added: validatedData.length - skips.length - bulkError.failures.length,
         errors: bulkError.failures,
         ids: validatedData.map((item) => item.id),
         skips,
-        success: false,
+        success: false
       };
     }
   }
@@ -197,7 +209,9 @@ export class BaseModel<N extends keyof BrowserDBSchema = any, T = BrowserDBSchem
     // we need to check whether the data is valid
     // pick data related schema from the full schema
     const keys = Object.keys(data);
-    const partialSchema = this.schema.pick(Object.fromEntries(keys.map((key) => [key, true])));
+    const partialSchema = this.schema.pick(
+      Object.fromEntries(keys.map((key) => [key, true]))
+    );
 
     const result = partialSchema.safeParse(data);
     if (!result.success) {
@@ -209,7 +223,10 @@ export class BaseModel<N extends keyof BrowserDBSchema = any, T = BrowserDBSchem
       throw newError;
     }
 
-    const success = await this.table.update(id, { ...data, updatedAt: Date.now() });
+    const success = await this.table.update(id, {
+      ...data,
+      updatedAt: Date.now()
+    });
 
     // sync data to yjs data map
     this.updateYMapItem(id);

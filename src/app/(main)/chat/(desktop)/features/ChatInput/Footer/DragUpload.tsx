@@ -12,53 +12,51 @@ import { useFileStore } from '@/store/file';
 import { useUserStore } from '@/store/user';
 import { modelProviderSelectors } from '@/store/user/selectors';
 
-const useStyles = createStyles(({ css, token, stylish }) => {
-  return {
-    container: css`
-      width: 300px;
-      height: 300px;
-      padding: 16px;
+const useStyles = createStyles(({ css, token, stylish }) => ({
+  container: css`
+    width: 300px;
+    height: 300px;
+    padding: 16px;
 
-      color: ${token.colorWhite};
+    color: ${token.colorWhite};
 
-      background: ${token.geekblue};
-      border-radius: 16px;
-      box-shadow:
-        ${rgba(token.geekblue, 0.1)} 0 1px 1px 0 inset,
-        ${rgba(token.geekblue, 0.1)} 0 50px 100px -20px,
-        ${rgba(token.geekblue, 0.3)} 0 30px 60px -30px;
-    `,
-    content: css`
-      width: 100%;
-      height: 100%;
-      padding: 16px;
+    background: ${token.geekblue};
+    border-radius: 16px;
+    box-shadow:
+      ${rgba(token.geekblue, 0.1)} 0 1px 1px 0 inset,
+      ${rgba(token.geekblue, 0.1)} 0 50px 100px -20px,
+      ${rgba(token.geekblue, 0.3)} 0 30px 60px -30px;
+  `,
+  content: css`
+    width: 100%;
+    height: 100%;
+    padding: 16px;
 
-      border: 2px dashed ${token.colorWhite};
-      border-radius: 12px;
-    `,
-    desc: css`
-      color: ${rgba(token.colorTextLightSolid, 0.6)};
-    `,
-    title: css`
-      font-size: 24px;
-      font-weight: bold;
-    `,
-    wrapper: css`
-      position: fixed;
-      z-index: 10000000;
-      top: 0;
-      left: 0;
+    border: 2px dashed ${token.colorWhite};
+    border-radius: 12px;
+  `,
+  desc: css`
+    color: ${rgba(token.colorTextLightSolid, 0.6)};
+  `,
+  title: css`
+    font-size: 24px;
+    font-weight: bold;
+  `,
+  wrapper: css`
+    position: fixed;
+    z-index: 10000000;
+    top: 0;
+    left: 0;
 
-      width: 100%;
-      height: 100%;
+    width: 100%;
+    height: 100%;
 
-      transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 
-      background: ${token.colorBgMask};
-      ${stylish.blur};
-    `,
-  };
-});
+    background: ${token.colorBgMask};
+    ${stylish.blur};
+  `
+}));
 
 const handleDragOver = (e: DragEvent) => {
   e.preventDefault();
@@ -77,14 +75,20 @@ const DragUpload = memo(() => {
 
   const model = useAgentStore(agentSelectors.currentAgentModel);
 
-  const enabledFiles = useUserStore(modelProviderSelectors.isModelEnabledFiles(model));
+  const enabledFiles = useUserStore(
+    modelProviderSelectors.isModelEnabledFiles(model)
+  );
 
   const uploadImages = async (fileList: FileList | undefined) => {
-    if (!fileList || fileList.length === 0) return;
+    if (!fileList || fileList.length === 0) {
+      return;
+    }
 
     const pools = Array.from(fileList).map(async (file) => {
       // skip none-file items
-      if (!file.type.startsWith('image') && !enabledFiles) return;
+      if (!file.type.startsWith('image') && !enabledFiles) {
+        return;
+      }
       await uploadFile(file);
     });
 
@@ -148,7 +152,13 @@ const DragUpload = memo(() => {
       window.removeEventListener('drop', handleDrop);
       window.removeEventListener('paste', handlePaste);
     };
-  }, [handleDragEnter, handleDragOver, handleDragLeave, handleDrop, handlePaste]);
+  }, [
+    handleDragEnter,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handlePaste
+  ]);
 
   return (
     isDragging && (

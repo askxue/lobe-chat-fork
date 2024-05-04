@@ -14,7 +14,7 @@ const useStyles = createStyles(({ css, prefixCls }) => ({
       flex-direction: column;
       align-items: flex-end;
     }
-  `,
+  `
 }));
 interface SkeletonListProps {
   mobile?: boolean;
@@ -23,7 +23,11 @@ const SkeletonList = memo<SkeletonListProps>(({ mobile }) => {
   const { styles } = useStyles();
 
   return (
-    <Flexbox gap={24} padding={12} style={{ marginTop: 24 + (mobile ? 0 : 64) }}>
+    <Flexbox
+      gap={24}
+      padding={12}
+      style={{ marginTop: 24 + (mobile ? 0 : 64) }}
+    >
       <Skeleton
         active
         avatar={{ size: 40 }}
@@ -31,7 +35,12 @@ const SkeletonList = memo<SkeletonListProps>(({ mobile }) => {
         paragraph={{ width: ['50%', '30%'] }}
         title={false}
       />
-      <Skeleton active avatar={{ size: 40 }} paragraph={{ width: ['50%', '30%'] }} title={false} />
+      <Skeleton
+        active
+        avatar={{ size: 40 }}
+        paragraph={{ width: ['50%', '30%'] }}
+        title={false}
+      />
     </Flexbox>
   );
 });

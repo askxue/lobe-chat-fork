@@ -16,8 +16,12 @@ interface GlobalStoreProviderProps {
 
 export const ServerConfigStoreProvider = memo<GlobalStoreProviderProps>(
   ({ children, featureFlags, serverConfig, isMobile }) => (
-    <Provider createStore={() => createServerConfigStore({ featureFlags, isMobile, serverConfig })}>
+    <Provider
+      createStore={() =>
+        createServerConfigStore({ featureFlags, isMobile, serverConfig })
+      }
+    >
       {children}
     </Provider>
-  ),
+  )
 );

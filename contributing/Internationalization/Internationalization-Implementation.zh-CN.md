@@ -85,7 +85,7 @@ const createI18nInstance = (lang) => {
       resourcesToBackend((language, namespace) => {
         // 动态加载对应语言的翻译资源
         return import(`path/to/locales/${language}/${namespace}.json`);
-      }),
+      })
     );
 
   // 监听语言变化事件，动态设置文档方向

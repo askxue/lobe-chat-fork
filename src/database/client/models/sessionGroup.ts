@@ -1,5 +1,8 @@
 import { BaseModel } from '@/database/client/core';
-import { DB_SessionGroup, DB_SessionGroupSchema } from '@/database/client/schemas/sessionGroup';
+import {
+  DB_SessionGroup,
+  DB_SessionGroupSchema
+} from '@/database/client/schemas/sessionGroup';
 import { SessionGroups } from '@/types/session';
 import { nanoid } from '@/utils/uuid';
 
@@ -18,7 +21,9 @@ class _SessionGroupModel extends BaseModel {
       // 如果两个项都有 sort，则按 sort 排序
       if (a.sort !== undefined && b.sort !== undefined) {
         // 如果sort 一样，按时间倒序排序
-        if (a.sort === b.sort) return b.createdAt - a.createdAt;
+        if (a.sort === b.sort) {
+          return b.createdAt - a.createdAt;
+        }
 
         return a.sort - b.sort;
       }
@@ -62,7 +67,10 @@ class _SessionGroupModel extends BaseModel {
     if (!removeGroupItem) {
       return this._deleteWithSync(id);
     } else {
-      const sessionIds = await this.db.sessions.where('group').equals(id).primaryKeys();
+      const sessionIds = await this.db.sessions
+        .where('group')
+        .equals(id)
+        .primaryKeys();
 
       return await SessionModel.batchDelete(sessionIds);
     }

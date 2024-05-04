@@ -12,7 +12,7 @@ describe('PluginModel', () => {
       identifier: 'test-plugin',
       id: 'test-plugin',
       manifest: {},
-      type: 'plugin',
+      type: 'plugin'
     };
   });
 
@@ -41,7 +41,10 @@ describe('PluginModel', () => {
 
   describe('batchCreate', () => {
     it('should batch create plugin records', async () => {
-      await PluginModel.batchCreate([pluginData, { ...pluginData, identifier: 'abc' }]);
+      await PluginModel.batchCreate([
+        pluginData,
+        { ...pluginData, identifier: 'abc' }
+      ]);
       const plugins = await PluginModel.getList();
       expect(plugins).toHaveLength(2);
     });
@@ -61,12 +64,15 @@ describe('PluginModel', () => {
       await PluginModel.create(pluginData);
       const updatedPluginData: DB_Plugin = {
         ...pluginData,
-        type: 'customPlugin',
+        type: 'customPlugin'
       };
       await PluginModel.update(pluginData.identifier, updatedPluginData);
       const plugins = await PluginModel.getList();
       expect(plugins).toHaveLength(1);
-      expect(plugins[0]).toEqual({ ...updatedPluginData, updatedAt: expect.any(Number) });
+      expect(plugins[0]).toEqual({
+        ...updatedPluginData,
+        updatedAt: expect.any(Number)
+      });
     });
   });
 

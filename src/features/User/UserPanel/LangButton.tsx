@@ -14,7 +14,7 @@ const LangButton = memo(() => {
   const theme = useTheme();
   const [language, switchLocale] = useUserStore((s) => [
     settingsSelectors.currentSettings(s).language,
-    s.switchLocale,
+    s.switchLocale
   ]);
 
   const { t } = useTranslation('setting');
@@ -24,15 +24,15 @@ const LangButton = memo(() => {
       {
         key: 'auto',
         label: t('settingTheme.lang.autoMode'),
-        onClick: () => switchLocale('auto'),
+        onClick: () => switchLocale('auto')
       },
       ...localeOptions.map((item) => ({
         key: item.value,
         label: item.label,
-        onClick: () => switchLocale(item.value),
-      })),
+        onClick: () => switchLocale(item.value)
+      }))
     ],
-    [t],
+    [t]
   );
 
   return (
@@ -40,7 +40,7 @@ const LangButton = memo(() => {
       arrow={false}
       content={<Menu items={items} selectable selectedKeys={[language]} />}
       overlayInnerStyle={{
-        padding: 0,
+        padding: 0
       }}
       placement={'right'}
       trigger={['click', 'hover']}

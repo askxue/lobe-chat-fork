@@ -31,14 +31,14 @@ export interface UserPreferenceState {
 
 export const DEFAULT_PREFERENCE: UserPreference = {
   guide: {
-    moveSettingsToAvatar: true,
+    moveSettingsToAvatar: true
   },
   telemetry: null,
-  useCmdEnterToSend: false,
+  useCmdEnterToSend: false
 };
 
 export const initialPreferenceState: UserPreferenceState = {
   isPreferenceInit: false,
   preference: DEFAULT_PREFERENCE,
-  preferenceStorage: new AsyncLocalStorage('LOBE_PREFERENCE'),
+  preferenceStorage: new AsyncLocalStorage('LOBE_PREFERENCE')
 };

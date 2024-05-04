@@ -13,13 +13,13 @@ export const getMessageError = async (response: Response) => {
     chatMessageError = {
       body: data.body,
       message: t(`response.${data.errorType}` as any, { ns: 'error' }),
-      type: data.errorType,
+      type: data.errorType
     };
   } catch {
     // 如果无法正常返回，说明是常规报错
     chatMessageError = {
       message: t(`response.${response.status}` as any, { ns: 'error' }),
-      type: response.status as ErrorType,
+      type: response.status as ErrorType
     };
   }
 
@@ -34,7 +34,7 @@ export type OnFinishHandler = (
     observationId?: string | null;
     traceId?: string | null;
     type?: SSEFinishType;
-  },
+  }
 ) => Promise<void>;
 
 export interface FetchSSEOptions {
@@ -47,7 +47,10 @@ export interface FetchSSEOptions {
 /**
  * Fetch data using stream method
  */
-export const fetchSSE = async (fetchFn: () => Promise<Response>, options: FetchSSEOptions = {}) => {
+export const fetchSSE = async (
+  fetchFn: () => Promise<Response>,
+  options: FetchSSEOptions = {}
+) => {
   const response = await fetchFn();
 
   // 如果不 ok 说明有请求错误
@@ -62,7 +65,9 @@ export const fetchSSE = async (fetchFn: () => Promise<Response>, options: FetchS
 
   const data = response.body;
 
-  if (!data) return;
+  if (!data) {
+    return;
+  }
   let output = '';
   const reader = data.getReader();
   const decoder = new TextDecoder();
@@ -93,7 +98,11 @@ export const fetchSSE = async (fetchFn: () => Promise<Response>, options: FetchS
 
   const traceId = response.headers.get(LOBE_CHAT_TRACE_ID);
   const observationId = response.headers.get(LOBE_CHAT_OBSERVATION_ID);
-  await options?.onFinish?.(output, { observationId, traceId, type: finishedType });
+  await options?.onFinish?.(output, {
+    observationId,
+    traceId,
+    type: finishedType
+  });
 
   return returnRes;
 };

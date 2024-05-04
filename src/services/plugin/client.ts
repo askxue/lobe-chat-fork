@@ -11,13 +11,10 @@ export interface InstallPluginParams {
 }
 
 export class ClientService {
-  installPlugin = async (plugin: InstallPluginParams) => {
-    return PluginModel.create(plugin);
-  };
+  installPlugin = async (plugin: InstallPluginParams) =>
+    PluginModel.create(plugin);
 
-  getInstalledPlugins = () => {
-    return PluginModel.getList() as Promise<LobeTool[]>;
-  };
+  getInstalledPlugins = () => PluginModel.getList() as Promise<LobeTool[]>;
 
   uninstallPlugin(identifier: string) {
     return PluginModel.delete(identifier);
@@ -30,6 +27,7 @@ export class ClientService {
   async updatePlugin(id: string, value: LobeToolCustomPlugin) {
     return PluginModel.update(id, value);
   }
+
   async updatePluginManifest(id: string, manifest: LobeChatPluginManifest) {
     return PluginModel.update(id, { manifest });
   }

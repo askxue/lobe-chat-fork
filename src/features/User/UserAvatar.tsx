@@ -37,7 +37,7 @@ const useStyles = createStyles(({ css, token }) => ({
         transform: skewX(-45deg) translateX(400%);
       }
     }
-  `,
+  `
 }));
 
 export interface UserAvatarProps extends AvatarProps {
@@ -59,7 +59,7 @@ const UserAvatar = memo<UserAvatarProps>(
         {...rest}
       />
     );
-  },
+  }
 );
 
 UserAvatar.displayName = 'UserAvatar';

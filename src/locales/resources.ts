@@ -14,7 +14,7 @@ export const locales = [
   'tr-TR',
   'zh-CN',
   'zh-TW',
-  'vi-VN',
+  'vi-VN'
 ] as const;
 
 export type DefaultResources = typeof resources;
@@ -22,9 +22,13 @@ export type NS = keyof DefaultResources;
 export type Locales = (typeof locales)[number];
 
 export const normalizeLocale = (locale?: string): string => {
-  if (!locale) return 'en-US';
+  if (!locale) {
+    return 'en-US';
+  }
 
-  if (locale.startsWith('ar')) return 'ar';
+  if (locale.startsWith('ar')) {
+    return 'ar';
+  }
 
   for (const l of locales) {
     if (l.startsWith(locale)) {
@@ -43,72 +47,72 @@ type LocaleOptions = {
 export const localeOptions: LocaleOptions = [
   {
     label: 'English',
-    value: 'en-US',
+    value: 'en-US'
   },
   {
     label: '简体中文',
-    value: 'zh-CN',
+    value: 'zh-CN'
   },
   {
     label: '繁體中文',
-    value: 'zh-TW',
+    value: 'zh-TW'
   },
   {
     label: '日本語',
-    value: 'ja-JP',
+    value: 'ja-JP'
   },
   {
     label: '한국어',
-    value: 'ko-KR',
+    value: 'ko-KR'
   },
   {
     label: 'Deutsch',
-    value: 'de-DE',
+    value: 'de-DE'
   },
   {
     label: 'Español',
-    value: 'es-ES',
+    value: 'es-ES'
   },
   {
     label: 'العربية',
-    value: 'ar',
+    value: 'ar'
   },
   {
     label: 'Français',
-    value: 'fr-FR',
+    value: 'fr-FR'
   },
   {
     label: 'Português',
-    value: 'pt-BR',
+    value: 'pt-BR'
   },
   {
     label: 'Русский',
-    value: 'ru-RU',
+    value: 'ru-RU'
   },
   {
     label: 'Türkçe',
-    value: 'tr-TR',
+    value: 'tr-TR'
   },
   {
     label: 'Polski',
-    value: 'pl-PL',
+    value: 'pl-PL'
   },
   {
     label: 'Nederlands',
-    value: 'nl-NL',
+    value: 'nl-NL'
   },
   {
     label: 'Italiano',
-    value: 'it-IT',
+    value: 'it-IT'
   },
   {
     label: 'Tiếng Việt',
-    value: 'vi-VN',
+    value: 'vi-VN'
   },
   {
     label: 'Български',
-    value: 'bg-BG',
-  },
+    value: 'bg-BG'
+  }
 ] as LocaleOptions;
 
 export const supportLocales: string[] = [...locales, 'en', 'zh'];

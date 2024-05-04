@@ -18,9 +18,7 @@ class _PluginModel extends BaseModel {
   }
   // **************** Query *************** //
 
-  getList = async (): Promise<DB_Plugin[]> => {
-    return this.table.toArray();
-  };
+  getList = async (): Promise<DB_Plugin[]> => this.table.toArray();
   // **************** Create *************** //
 
   create = async (plugin: InstallPluginParams) => {
@@ -40,13 +38,17 @@ class _PluginModel extends BaseModel {
   delete(id: string) {
     return this._deleteWithSync(id);
   }
+
   clear() {
     return this._clearWithSync();
   }
 
   // **************** Update *************** //
 
-  update: (id: string, value: Partial<DB_Plugin>) => Promise<number> = async (id, value) => {
+  update: (id: string, value: Partial<DB_Plugin>) => Promise<number> = async (
+    id,
+    value
+  ) => {
     const { success } = await this._updateWithSync(id, value);
 
     return success;

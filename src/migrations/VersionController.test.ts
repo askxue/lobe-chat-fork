@@ -1,4 +1,8 @@
-import { Migration, MigrationData, VersionController } from './VersionController';
+import {
+  Migration,
+  MigrationData,
+  VersionController
+} from './VersionController';
 
 class TestMigration0 implements Migration {
   version = 0;
@@ -14,9 +18,9 @@ class TestMigration1 implements Migration {
     return {
       state: {
         ...data.state,
-        value1: data.state.value * 2,
+        value1: data.state.value * 2
       },
-      version: this.version,
+      version: this.version
     };
   }
 }
@@ -28,9 +32,9 @@ class TestMigration2 implements Migration {
     return {
       state: {
         ...data.state,
-        value2: data.state.value1 * 2,
+        value2: data.state.value1 * 2
       },
-      version: this.version,
+      version: this.version
     };
   }
 }
@@ -52,7 +56,7 @@ describe('VersionController', () => {
 
   it('should throw error if data version is undefined', () => {
     const data = {
-      state: { value: 10 },
+      state: { value: 10 }
     };
 
     expect(() => versionController.migrate(data as any)).toThrow();
@@ -61,28 +65,28 @@ describe('VersionController', () => {
   it('should migrate data correctly through multiple versions', () => {
     const data: MigrationData = {
       state: { value: 10 },
-      version: 0,
+      version: 0
     };
 
     const migratedData = versionController.migrate(data);
 
     expect(migratedData).toEqual({
       state: { value: 10, value1: 20, value2: 40 },
-      version: 3,
+      version: 3
     });
   });
 
   it('should migrate data correctly if starting from a specific version', () => {
     const data: MigrationData = {
       state: { value: 10, value1: 20 },
-      version: 1,
+      version: 1
     };
 
     const migratedData = versionController.migrate(data);
 
     expect(migratedData).toEqual({
       state: { value: 10, value1: 20, value2: 40 },
-      version: 3,
+      version: 3
     });
   });
 });

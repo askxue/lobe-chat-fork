@@ -15,11 +15,13 @@ const CreateGroupModal = memo<CreateGroupModalProps>(
   ({ id, open, onCancel }: CreateGroupModalProps) => {
     const { t } = useTranslation('chat');
 
-    const toggleExpandSessionGroup = useGlobalStore((s) => s.toggleExpandSessionGroup);
+    const toggleExpandSessionGroup = useGlobalStore(
+      (s) => s.toggleExpandSessionGroup
+    );
     const { message } = App.useApp();
     const [updateSessionGroup, addCustomGroup] = useSessionStore((s) => [
       s.updateSessionGroupId,
-      s.addSessionGroup,
+      s.addSessionGroup
     ]);
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
@@ -35,10 +37,13 @@ const CreateGroupModal = memo<CreateGroupModalProps>(
             onCancel?.(e);
           }}
           onOk={async (e: MouseEvent<HTMLButtonElement>) => {
-            if (!input) return;
+            if (!input) {
+              return;
+            }
 
-            if (input.length === 0 || input.length > 20)
+            if (input.length === 0 || input.length > 20) {
               return message.warning(t('sessionGroup.tooLong'));
+            }
 
             setLoading(true);
             const groupId = await addCustomGroup(input);
@@ -64,7 +69,7 @@ const CreateGroupModal = memo<CreateGroupModalProps>(
         </Modal>
       </div>
     );
-  },
+  }
 );
 
 export default CreateGroupModal;

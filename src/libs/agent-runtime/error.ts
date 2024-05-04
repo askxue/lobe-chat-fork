@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
 // ******* Runtime Biz Error ******* //
 export const AgentRuntimeErrorType = {
   AgentRuntimeError: 'AgentRuntimeError', // Agent Runtime 模块运行时错误
@@ -48,7 +47,7 @@ export const AgentRuntimeErrorType = {
   TogetherAIBizError: 'TogetherAIBizError',
 
   InvalidMinimaxAPIKey: 'InvalidMinimaxAPIKey',
-  MinimaxBizError: 'MinimaxBizError',
+  MinimaxBizError: 'MinimaxBizError'
 } as const;
 
 export type ILobeAgentRuntimeErrorType =

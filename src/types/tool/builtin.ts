@@ -33,4 +33,6 @@ export interface BuiltinRenderProps<Result = any> {
   messageId: string;
 }
 
-export type BuiltinRender = <T = any>(props: BuiltinRenderProps<T>) => ReactNode;
+export type BuiltinRender = <T = any>(
+  props: BuiltinRenderProps<T>
+) => ReactNode;

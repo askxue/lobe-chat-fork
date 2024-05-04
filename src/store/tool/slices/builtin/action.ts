@@ -8,7 +8,8 @@ import { ToolStore } from '../../store';
 
 const n = setNamespace('builtinTool');
 
-interface Text2ImageParams extends Pick<OpenAIImagePayload, 'quality' | 'style' | 'size'> {
+interface Text2ImageParams
+  extends Pick<OpenAIImagePayload, 'quality' | 'style' | 'size'> {
   prompts: string[];
 }
 
@@ -30,13 +31,17 @@ export const createBuiltinToolSlice: StateCreator<
   invokeBuiltinTool: async (key, params) => {
     const { builtinToolLoading, toggleBuiltinToolLoading } = get();
 
-    if (builtinToolLoading[key]) return;
+    if (builtinToolLoading[key]) {
+      return;
+    }
 
     toggleBuiltinToolLoading(key, true);
 
     const { [key as keyof BuiltinToolAction]: action } = get();
 
-    if (!action) return;
+    if (!action) {
+      return;
+    }
 
     // @ts-ignore
     const result = await action(params);
@@ -45,10 +50,18 @@ export const createBuiltinToolSlice: StateCreator<
 
     return JSON.stringify(result);
   },
-  text2image: ({ prompts, size = '1024x1024' as const, quality = 'standard', style = 'vivid' }) =>
-    prompts.map((p) => ({ prompt: p, quality, size, style })),
+  text2image: ({
+    prompts,
+    size = '1024x1024' as const,
+    quality = 'standard',
+    style = 'vivid'
+  }) => prompts.map((p) => ({ prompt: p, quality, size, style })),
 
   toggleBuiltinToolLoading: (key, value) => {
-    set({ builtinToolLoading: { [key]: value } }, false, n('toggleBuiltinToolLoading'));
-  },
+    set(
+      { builtinToolLoading: { [key]: value } },
+      false,
+      n('toggleBuiltinToolLoading')
+    );
+  }
 });

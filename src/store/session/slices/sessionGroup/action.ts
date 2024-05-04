@@ -8,7 +8,6 @@ import { SessionGroupItem } from '@/types/session';
 
 import { SessionGroupsDispatch, sessionGroupsReducer } from './reducer';
 
-/* eslint-disable typescript-sort-keys/interface */
 export interface SessionGroupAction {
   addSessionGroup: (name: string) => Promise<string>;
   clearSessionGroups: () => Promise<void>;
@@ -17,6 +16,7 @@ export interface SessionGroupAction {
   updateSessionGroupSort: (items: SessionGroupItem[]) => Promise<void>;
   internal_dispatchSessionGroups: (payload: SessionGroupsDispatch) => void;
 }
+
 /* eslint-enable */
 
 export const createSessionGroupSlice: StateCreator<
@@ -50,12 +50,15 @@ export const createSessionGroupSlice: StateCreator<
   updateSessionGroupSort: async (items) => {
     const sortMap = items.map((item, index) => ({ id: item.id, sort: index }));
 
-    get().internal_dispatchSessionGroups({ sortMap, type: 'updateSessionGroupOrder' });
+    get().internal_dispatchSessionGroups({
+      sortMap,
+      type: 'updateSessionGroupOrder'
+    });
 
     message.loading({
       content: t('sessionGroup.sorting', { ns: 'chat' }),
       duration: 0,
-      key: 'updateSessionGroupSort',
+      key: 'updateSessionGroupSort'
     });
 
     await sessionService.updateSessionGroupOrder(sortMap);
@@ -65,9 +68,15 @@ export const createSessionGroupSlice: StateCreator<
     await get().refreshSessions();
   },
 
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
   internal_dispatchSessionGroups: (payload) => {
-    const nextSessionGroups = sessionGroupsReducer(get().sessionGroups, payload);
-    get().internal_processSessions(get().sessions, nextSessionGroups, 'updateSessionGroups');
-  },
+    const nextSessionGroups = sessionGroupsReducer(
+      get().sessionGroups,
+      payload
+    );
+    get().internal_processSessions(
+      get().sessions,
+      nextSessionGroups,
+      'updateSessionGroups'
+    );
+  }
 });

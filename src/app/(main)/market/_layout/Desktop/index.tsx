@@ -8,33 +8,43 @@ import DetailSidebar from './DetailSidebar';
 import Header from './Header';
 import Hero from './Hero';
 
-const Layout = ({ children, detail }: LayoutProps) => {
-  return (
+const Layout = ({ children, detail }: LayoutProps) => (
+  <Flexbox
+    height={'100%'}
+    id={'lobe-market-container'}
+    style={{ position: 'relative' }}
+    width={'100%'}
+  >
+    <Header />
     <Flexbox
       height={'100%'}
-      id={'lobe-market-container'}
+      horizontal
       style={{ position: 'relative' }}
       width={'100%'}
     >
-      <Header />
-      <Flexbox height={'100%'} horizontal style={{ position: 'relative' }} width={'100%'}>
+      <Flexbox
+        align={'center'}
+        flex={1}
+        padding={16}
+        style={{
+          overflowX: 'hidden',
+          overflowY: 'scroll',
+          position: 'relative'
+        }}
+      >
+        <SafeSpacing />
         <Flexbox
-          align={'center'}
-          flex={1}
-          padding={16}
-          style={{ overflowX: 'hidden', overflowY: 'scroll', position: 'relative' }}
+          gap={16}
+          style={{ maxWidth: MAX_WIDTH, position: 'relative', width: '100%' }}
         >
-          <SafeSpacing />
-          <Flexbox gap={16} style={{ maxWidth: MAX_WIDTH, position: 'relative', width: '100%' }}>
-            <Hero />
-            {children}
-          </Flexbox>
+          <Hero />
+          {children}
         </Flexbox>
-        <DetailSidebar>{detail}</DetailSidebar>
       </Flexbox>
+      <DetailSidebar>{detail}</DetailSidebar>
     </Flexbox>
-  );
-};
+  </Flexbox>
+);
 
 Layout.displayName = 'DesktopMarketLayout';
 

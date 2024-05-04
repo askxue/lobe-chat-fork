@@ -7,29 +7,33 @@ import { API_ENDPOINTS } from './_url';
 import { initializeWithClientStore } from './chat';
 
 class ModelsService {
-  getChatModels = async (provider: string): Promise<ChatModelCard[] | undefined> => {
+  getChatModels = async (
+    provider: string
+  ): Promise<ChatModelCard[] | undefined> => {
     const headers = await createHeaderWithAuth({
       headers: { 'Content-Type': 'application/json' },
-      provider,
+      provider
     });
     try {
       /**
        * Use browser agent runtime
        */
-      const enableFetchOnClient = modelConfigSelectors.isProviderFetchOnClient(provider)(
-        useUserStore.getState(),
-      );
+      const enableFetchOnClient = modelConfigSelectors.isProviderFetchOnClient(
+        provider
+      )(useUserStore.getState());
       if (enableFetchOnClient) {
         const agentRuntime = await initializeWithClientStore(provider, {});
         return agentRuntime.models();
       }
 
       const res = await fetch(API_ENDPOINTS.chatModels(provider), { headers });
-      if (!res.ok) return;
+      if (!res.ok) {
+        return;
+      }
 
       return res.json();
     } catch {
-      return;
+      /* empty */
     }
   };
 }

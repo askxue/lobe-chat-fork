@@ -21,7 +21,7 @@ const useStyles = createStyles(
       border-color: ${token.colorPrimary};
       outline: none;
     }
-  `,
+  `
 );
 
 /**
@@ -31,7 +31,10 @@ const useStyles = createStyles(
  *
  * [How to extend HTML Elements](https://reacthustle.com/blog/how-to-extend-html-elements-in-react-typescript)
  */
-type PartialInputProps = Pick<React.ComponentPropsWithoutRef<'input'>, 'className' | 'style'>;
+type PartialInputProps = Pick<
+  React.ComponentPropsWithoutRef<'input'>,
+  'className' | 'style'
+>;
 
 interface OtpInputProps extends PartialInputProps {
   onChange?: (value: string) => void;
@@ -63,7 +66,6 @@ const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const prev = current.nextSibling as HTMLInputElement | null;
     prev?.focus();
     prev?.setSelectionRange(0, 1);
-    return;
   }
 };
 
@@ -78,18 +80,26 @@ const OtpInput = memo<OtpInputProps>((props) => {
     className,
     ...restProps
   } = props;
-  const [value, setValue] = useControllableValue({ onChange, value: outerValue });
+  const [value, setValue] = useControllableValue({
+    onChange,
+    value: outerValue
+  });
 
   const { styles, cx } = useStyles();
   // Create an array based on the size.
   const arr = Array.from({ length: size }).fill('-');
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const elem = e.target;
     const val = e.target.value;
 
     // check if the value is valid
-    if (!validationPattern.test(val) && val !== '') return;
+    if (!validationPattern.test(val) && val !== '') {
+      return;
+    }
 
     // change the value using onChange props
     const valueArr = value?.split('') || [];
@@ -113,22 +123,20 @@ const OtpInput = memo<OtpInputProps>((props) => {
 
   return (
     <Flexbox gap={12} horizontal>
-      {arr.map((_, index) => {
-        return (
-          <input
-            key={index}
-            {...restProps}
-            className={cx(styles, className)}
-            maxLength={6}
-            onChange={(e) => handleInputChange(e, index)}
-            onKeyUp={handleKeyUp}
-            onPaste={handlePaste}
-            pattern={validationPattern.source}
-            type="text"
-            value={value?.at(index) ?? ''}
-          />
-        );
-      })}
+      {arr.map((_, index) => (
+        <input
+          key={index}
+          {...restProps}
+          className={cx(styles, className)}
+          maxLength={6}
+          onChange={(e) => handleInputChange(e, index)}
+          onKeyUp={handleKeyUp}
+          onPaste={handlePaste}
+          pattern={validationPattern.source}
+          type="text"
+          value={value?.at(index) ?? ''}
+        />
+      ))}
     </Flexbox>
   );
 });

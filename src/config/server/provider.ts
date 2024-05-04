@@ -1,5 +1,3 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix , typescript-sort-keys/interface */
-
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
@@ -97,7 +95,9 @@ declare global {
 
 export const getProviderConfig = () => {
   if (typeof process === 'undefined') {
-    throw new Error('[Server Config] you are importing a server-only module outside of server');
+    throw new Error(
+      '[Server Config] you are importing a server-only module outside of server'
+    );
   }
 
   const AZURE_API_KEY = process.env.AZURE_API_KEY || '';
@@ -133,19 +133,19 @@ export const getProviderConfig = () => {
 
   if (process.env.CUSTOM_MODELS) {
     console.warn(
-      'DEPRECATED: `CUSTOM_MODELS` is deprecated, please use `OPENAI_MODEL_LIST` instead, we will remove `CUSTOM_MODELS` in the LobeChat 1.0',
+      'DEPRECATED: `CUSTOM_MODELS` is deprecated, please use `OPENAI_MODEL_LIST` instead, we will remove `CUSTOM_MODELS` in the LobeChat 1.0'
     );
   }
 
   if (process.env.OLLAMA_CUSTOM_MODELS) {
     console.warn(
-      'DEPRECATED: `OLLAMA_CUSTOM_MODELS` is deprecated, please use `OLLAMA_MODEL_LIST` instead, we will remove `OLLAMA_CUSTOM_MODELS` in the LobeChat 1.0',
+      'DEPRECATED: `OLLAMA_CUSTOM_MODELS` is deprecated, please use `OLLAMA_MODEL_LIST` instead, we will remove `OLLAMA_CUSTOM_MODELS` in the LobeChat 1.0'
     );
   }
 
   if (process.env.OPENROUTER_CUSTOM_MODELS) {
     console.warn(
-      'DEPRECATED: `OPENROUTER_CUSTOM_MODELS` is deprecated, please use `OPENROUTER_MODEL_LIST` instead, we will remove `OPENROUTER_CUSTOM_MODELS` in the LobeChat 1.0',
+      'DEPRECATED: `OPENROUTER_CUSTOM_MODELS` is deprecated, please use `OPENROUTER_MODEL_LIST` instead, we will remove `OPENROUTER_CUSTOM_MODELS` in the LobeChat 1.0'
     );
   }
 
@@ -154,7 +154,8 @@ export const getProviderConfig = () => {
 
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     OPENAI_PROXY_URL: process.env.OPENAI_PROXY_URL,
-    OPENAI_MODEL_LIST: process.env.OPENAI_MODEL_LIST || process.env.CUSTOM_MODELS,
+    OPENAI_MODEL_LIST:
+      process.env.OPENAI_MODEL_LIST || process.env.CUSTOM_MODELS,
     OPENAI_FUNCTION_REGIONS: regions,
 
     ENABLED_AZURE_OPENAI: !!AZURE_API_KEY,
@@ -209,6 +210,7 @@ export const getProviderConfig = () => {
 
     ENABLE_OLLAMA: process.env.ENABLE_OLLAMA as unknown as boolean,
     OLLAMA_PROXY_URL: process.env.OLLAMA_PROXY_URL || '',
-    OLLAMA_MODEL_LIST: process.env.OLLAMA_MODEL_LIST || process.env.OLLAMA_CUSTOM_MODELS,
+    OLLAMA_MODEL_LIST:
+      process.env.OLLAMA_MODEL_LIST || process.env.OLLAMA_CUSTOM_MODELS
   };
 };

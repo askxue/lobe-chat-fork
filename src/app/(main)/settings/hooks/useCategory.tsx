@@ -5,7 +5,10 @@ import { useTranslation } from 'react-i18next';
 
 import type { MenuProps } from '@/components/Menu';
 import { SettingsTabs } from '@/store/global/initialState';
-import { featureFlagsSelectors, useServerConfigStore } from '@/store/serverConfig';
+import {
+  featureFlagsSelectors,
+  useServerConfigStore
+} from '@/store/serverConfig';
 
 interface UseCategoryOptions {
   mobile?: boolean;
@@ -23,31 +26,35 @@ export const useCategory = ({ mobile }: UseCategoryOptions = {}) => {
         {
           icon: <Icon icon={Settings2} size={iconSize} />,
           key: SettingsTabs.Common,
-          label: t('tab.common'),
+          label: t('tab.common')
         },
         enableWebrtc && {
           icon: <Icon icon={Cloudy} size={iconSize} />,
           key: SettingsTabs.Sync,
-          label: t('tab.sync'),
+          label: t('tab.sync')
         },
         showLLM && {
           icon: <Icon icon={Webhook} size={iconSize} />,
           key: SettingsTabs.LLM,
-          label: t('tab.llm'),
+          label: t('tab.llm')
         },
-        { icon: <Icon icon={Mic2} size={iconSize} />, key: SettingsTabs.TTS, label: t('tab.tts') },
+        {
+          icon: <Icon icon={Mic2} size={iconSize} />,
+          key: SettingsTabs.TTS,
+          label: t('tab.tts')
+        },
         {
           icon: <Icon icon={Bot} size={iconSize} />,
           key: SettingsTabs.Agent,
-          label: t('tab.agent'),
+          label: t('tab.agent')
         },
         {
           icon: <Icon icon={Info} size={iconSize} />,
           key: SettingsTabs.About,
-          label: t('tab.about'),
-        },
+          label: t('tab.about')
+        }
       ].filter(Boolean) as MenuProps['items'],
-    [t, enableWebrtc, showLLM],
+    [t, enableWebrtc, showLLM]
   );
 
   return cateItems;

@@ -5,10 +5,10 @@ import { creatUrlStorage } from './urlStorage';
 // Mock global location and history objects
 const mockLocation = {
   hash: '',
-  search: '',
+  search: ''
 };
 const mockHistory = {
-  replaceState: vi.fn(),
+  replaceState: vi.fn()
 };
 
 global.location = mockLocation as Location;
@@ -58,12 +58,21 @@ describe('creatUrlStorage', () => {
     const storage = creatUrlStorage('search');
     storage.removeItem('key1');
 
-    expect(mockHistory.replaceState).toHaveBeenCalledWith({}, '', '?key2=value2');
+    expect(mockHistory.replaceState).toHaveBeenCalledWith(
+      {},
+      '',
+      '?key2=value2'
+    );
   });
 
   it('setItem should set state in URL hash', () => {
     const storage = creatUrlStorage('hash');
-    storage.setItem('state', { key1: 'value1', key2: 'value2', key3: 1, key4: false });
+    storage.setItem('state', {
+      key1: 'value1',
+      key2: 'value2',
+      key3: 1,
+      key4: false
+    });
 
     expect(location.hash).toEqual('key1=value1&key2=value2&key3=1&key4=0');
   });
@@ -72,13 +81,23 @@ describe('creatUrlStorage', () => {
     const storage = creatUrlStorage('search');
     storage.setItem('state', { key1: 'value1', key2: 'value2' });
 
-    expect(mockHistory.replaceState).toHaveBeenCalledWith({}, '', '?key1=value1&key2=value2');
+    expect(mockHistory.replaceState).toHaveBeenCalledWith(
+      {},
+      '',
+      '?key1=value1&key2=value2'
+    );
   });
 
   it('setItem should handle non-string values by JSON stringifying them', () => {
     const storage = creatUrlStorage('hash');
-    storage.setItem('state', { key1: { nested: 'value' }, key2: 123, key4: {} });
+    storage.setItem('state', {
+      key1: { nested: 'value' },
+      key2: 123,
+      key4: {}
+    });
 
-    expect(location.hash).toEqual(`key1=%7B%22nested%22%3A%22value%22%7D&key2=123`);
+    expect(location.hash).toEqual(
+      `key1=%7B%22nested%22%3A%22value%22%7D&key2=123`
+    );
   });
 });

@@ -4,14 +4,14 @@ import { BaseDataModel, MetaData } from './meta';
 
 export enum LobeSessionType {
   Agent = 'agent',
-  Group = 'group',
+  Group = 'group'
 }
 
 export type SessionGroupId = SessionDefaultGroup | string;
 
 export enum SessionDefaultGroup {
   Default = 'default',
-  Pinned = 'pinned',
+  Pinned = 'pinned'
 }
 
 export interface SessionGroupItem {

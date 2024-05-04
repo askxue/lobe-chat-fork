@@ -20,20 +20,28 @@ module.exports = defineConfig({
     'it-IT',
     'nl-NL',
     'pl-PL',
-    'vi-VN',
+    'vi-VN'
   ],
   temperature: 0,
   modelName: 'gpt-3.5-turbo-0125',
   splitToken: 2048,
   experimental: {
-    jsonMode: true,
+    jsonMode: true
   },
   markdown: {
     // reference: '你需要保持 mdx 的组件格式，输出文本不需要在最外层包裹任何代码块语法',
-    entry: ['./README.zh-CN.md', './contributing/**/*.zh-CN.md', './docs/**/*.zh-CN.mdx'],
+    entry: [
+      './README.zh-CN.md',
+      './contributing/**/*.zh-CN.md',
+      './docs/**/*.zh-CN.mdx'
+    ],
     entryLocale: 'zh-CN',
     outputLocales: ['en-US'],
-    exclude: ['./contributing/_Sidebar.md', './contributing/_Footer.md', './contributing/Home.md'],
+    exclude: [
+      './contributing/_Sidebar.md',
+      './contributing/_Footer.md',
+      './contributing/Home.md'
+    ],
     outputExtensions: (locale, { filePath }) => {
       if (filePath.includes('.mdx')) {
         if (locale === 'en-US') return '.mdx';
@@ -42,6 +50,6 @@ module.exports = defineConfig({
         if (locale === 'en-US') return '.md';
         return `.${locale}.md`;
       }
-    },
-  },
+    }
+  }
 });

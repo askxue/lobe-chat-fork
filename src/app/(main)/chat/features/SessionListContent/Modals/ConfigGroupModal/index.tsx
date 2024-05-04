@@ -24,16 +24,19 @@ const useStyles = createStyles(({ css, token, stylish }) => ({
       ${stylish.blur};
       background: ${token.colorFillTertiary};
     }
-  `,
+  `
 }));
 
 const ConfigGroupModal = memo<ModalProps>(({ open, onCancel }) => {
   const { t } = useTranslation('chat');
   const { styles } = useStyles();
-  const sessionGroupItems = useSessionStore(sessionGroupSelectors.sessionGroupItems, isEqual);
+  const sessionGroupItems = useSessionStore(
+    sessionGroupSelectors.sessionGroupItems,
+    isEqual
+  );
   const [addSessionGroup, updateSessionGroupSort] = useSessionStore((s) => [
     s.addSessionGroup,
-    s.updateSessionGroupSort,
+    s.updateSessionGroupSort
   ]);
   const [loading, setLoading] = useState(false);
 

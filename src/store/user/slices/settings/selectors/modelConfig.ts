@@ -6,20 +6,26 @@ import { currentLLMSettings, getProviderConfigById } from './settings';
 const isProviderEnabled = (provider: GlobalLLMProviderKey) => (s: UserStore) =>
   getProviderConfigById(provider)(s)?.enabled || false;
 
-const isProviderEndpointNotEmpty = (provider: GlobalLLMProviderKey | string) => (s: UserStore) =>
-  !!getProviderConfigById(provider)(s)?.endpoint;
+const isProviderEndpointNotEmpty =
+  (provider: GlobalLLMProviderKey | string) => (s: UserStore) =>
+    !!getProviderConfigById(provider)(s)?.endpoint;
 
-const isProviderFetchOnClient = (provider: GlobalLLMProviderKey | string) => (s: UserStore) => {
-  const config = getProviderConfigById(provider)(s);
-  if (typeof config?.fetchOnClient !== 'undefined') return config?.fetchOnClient;
+const isProviderFetchOnClient =
+  (provider: GlobalLLMProviderKey | string) => (s: UserStore) => {
+    const config = getProviderConfigById(provider)(s);
+    if (typeof config?.fetchOnClient !== 'undefined') {
+      return config?.fetchOnClient;
+    }
 
-  return isProviderEndpointNotEmpty(provider)(s);
-};
+    return isProviderEndpointNotEmpty(provider)(s);
+  };
 
 const getCustomModelCard =
   ({ id, provider }: { id?: string; provider?: string }) =>
   (s: UserStore) => {
-    if (!provider) return;
+    if (!provider) {
+      return;
+    }
 
     const config = getProviderConfigById(provider)(s);
 
@@ -27,7 +33,9 @@ const getCustomModelCard =
   };
 
 const currentEditingCustomModelCard = (s: UserStore) => {
-  if (!s.editingCustomCardModel) return;
+  if (!s.editingCustomCardModel) {
+    return;
+  }
   const { id, provider } = s.editingCustomCardModel;
 
   return getCustomModelCard({ id, provider })(s);
@@ -35,9 +43,8 @@ const currentEditingCustomModelCard = (s: UserStore) => {
 
 const isAutoFetchModelsEnabled =
   (provider: GlobalLLMProviderKey) =>
-  (s: UserStore): boolean => {
-    return getProviderConfigById(provider)(s)?.autoFetchModelLists || false;
-  };
+  (s: UserStore): boolean =>
+    getProviderConfigById(provider)(s)?.autoFetchModelLists || false;
 
 const openAIConfig = (s: UserStore) => currentLLMSettings(s).openai;
 const bedrockConfig = (s: UserStore) => currentLLMSettings(s).bedrock;
@@ -61,5 +68,5 @@ export const modelConfigSelectors = {
 
   ollamaConfig,
 
-  openAIConfig,
+  openAIConfig
 };

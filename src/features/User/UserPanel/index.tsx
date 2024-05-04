@@ -12,7 +12,7 @@ const useStyles = createStyles(({ css }) => ({
   popover: css`
     top: 8px !important;
     left: 8px !important;
-  `,
+  `
 }));
 
 const UserPanel = memo<PropsWithChildren>(({ children }) => {
@@ -21,8 +21,13 @@ const UserPanel = memo<PropsWithChildren>(({ children }) => {
   const { styles } = useStyles();
 
   const AvatarBadge = useCallback(
-    ({ children: badgeChildren, showBadge }: PropsWithChildren<{ showBadge?: boolean }>) => {
-      if (!showBadge) return badgeChildren;
+    ({
+      children: badgeChildren,
+      showBadge
+    }: PropsWithChildren<{ showBadge?: boolean }>) => {
+      if (!showBadge) {
+        return badgeChildren;
+      }
 
       return (
         <Flexbox>
@@ -34,7 +39,7 @@ const UserPanel = memo<PropsWithChildren>(({ children }) => {
         </Flexbox>
       );
     },
-    [],
+    []
   );
 
   return (
@@ -45,7 +50,7 @@ const UserPanel = memo<PropsWithChildren>(({ children }) => {
         onOpenChange={setOpen}
         open={open}
         overlayInnerStyle={{
-          padding: 0,
+          padding: 0
         }}
         placement={'topRight'}
         rootClassName={styles.popover}

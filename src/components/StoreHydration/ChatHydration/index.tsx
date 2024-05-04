@@ -11,7 +11,10 @@ const ChatHydration = memo(() => {
   const useStoreUpdater = createStoreUpdater(useChatStore);
 
   // two-way bindings the topic params to chat store
-  const [topic, setTopic] = useQueryState('topic', { history: 'replace', throttleMs: 500 });
+  const [topic, setTopic] = useQueryState('topic', {
+    history: 'replace',
+    throttleMs: 500
+  });
   useStoreUpdater('activeTopicId', topic);
 
   useEffect(() => {
@@ -19,7 +22,7 @@ const ChatHydration = memo(() => {
       (s) => s.activeTopicId,
       (state) => {
         setTopic(!state ? null : state);
-      },
+      }
     );
 
     return () => {

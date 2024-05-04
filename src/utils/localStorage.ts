@@ -11,7 +11,9 @@ export class AsyncLocalStorage<State> {
     this.storageKey = storageKey;
 
     // skip server side rendering
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') {
+      return;
+    }
 
     // migrate old data
     if (localStorage.getItem(PREV_KEY)) {
@@ -29,7 +31,10 @@ export class AsyncLocalStorage<State> {
   async saveToLocalStorage(state: object) {
     const data = await this.getFromLocalStorage();
 
-    localStorage.setItem(this.storageKey, JSON.stringify({ ...data, ...state }));
+    localStorage.setItem(
+      this.storageKey,
+      JSON.stringify({ ...data, ...state })
+    );
   }
 
   async getFromLocalStorage(key: StorageKey = this.storageKey): Promise<State> {

@@ -41,13 +41,18 @@ export type MessageDispatch =
   | UpdateMessageExtra
   | DeleteMessage;
 
-export const messagesReducer = (state: ChatMessage[], payload: MessageDispatch): ChatMessage[] => {
+export const messagesReducer = (
+  state: ChatMessage[],
+  payload: MessageDispatch
+): ChatMessage[] => {
   switch (payload.type) {
     case 'updateMessage': {
       return produce(state, (draftState) => {
         const { id, key, value } = payload;
         const message = draftState.find((i) => i.id === id);
-        if (!message) return;
+        if (!message) {
+          return;
+        }
 
         // @ts-ignore
         message[key] = value;
@@ -59,7 +64,9 @@ export const messagesReducer = (state: ChatMessage[], payload: MessageDispatch):
       return produce(state, (draftState) => {
         const { id, key, value } = payload;
         const message = draftState.find((i) => i.id === id);
-        if (!message) return;
+        if (!message) {
+          return;
+        }
 
         if (!message.extra) {
           message.extra = { [key]: value } as any;
@@ -75,7 +82,9 @@ export const messagesReducer = (state: ChatMessage[], payload: MessageDispatch):
       return produce(state, (draftState) => {
         const { id, key, value } = payload;
         const message = draftState.find((i) => i.id === id);
-        if (!message) return;
+        if (!message) {
+          return;
+        }
 
         let newState;
         if (!message.pluginState) {
@@ -84,7 +93,9 @@ export const messagesReducer = (state: ChatMessage[], payload: MessageDispatch):
           newState = merge(message.pluginState, { [key]: value });
         }
 
-        if (isEqual(message.pluginState, newState)) return;
+        if (isEqual(message.pluginState, newState)) {
+          return;
+        }
 
         message.pluginState = newState;
         message.updatedAt = Date.now();
@@ -95,7 +106,13 @@ export const messagesReducer = (state: ChatMessage[], payload: MessageDispatch):
       return produce(state, (draftState) => {
         const { value, id } = payload;
 
-        draftState.push({ ...value, createdAt: Date.now(), id, meta: {}, updatedAt: Date.now() });
+        draftState.push({
+          ...value,
+          createdAt: Date.now(),
+          id,
+          meta: {},
+          updatedAt: Date.now()
+        });
       });
     }
     case 'deleteMessage': {
@@ -104,7 +121,9 @@ export const messagesReducer = (state: ChatMessage[], payload: MessageDispatch):
 
         const index = draft.findIndex((m) => m.id === id);
 
-        if (index >= 0) draft.splice(index, 1);
+        if (index >= 0) {
+          draft.splice(index, 1);
+        }
       });
     }
     default: {

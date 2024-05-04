@@ -8,6 +8,11 @@ export const DefaultActionsBar: RenderAction = memo(({ onActionClick }) => {
   const { del } = useChatListActionsBar();
 
   return (
-    <ActionIconGroup dropdownMenu={[del]} items={[]} onActionClick={onActionClick} type="ghost" />
+    <ActionIconGroup
+      dropdownMenu={[del]}
+      items={[]}
+      onActionClick={onActionClick}
+      type="ghost"
+    />
   );
 });

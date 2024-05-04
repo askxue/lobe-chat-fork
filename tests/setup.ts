@@ -1,4 +1,3 @@
-/* eslint-disable import/newline-after-import,import/first */
 import '@testing-library/jest-dom';
 import { theme } from 'antd';
 // mock indexedDB to test with dexie
@@ -24,7 +23,7 @@ if (typeof window === 'undefined') {
 
   Object.defineProperty(global, 'crypto', {
     value: new Crypto(),
-    writable: true,
+    writable: true
   });
 }
 

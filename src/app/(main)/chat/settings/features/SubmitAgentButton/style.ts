@@ -42,5 +42,5 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => ({
     font-size: 20px;
     font-weight: 600;
     text-align: center;
-  `,
+  `
 }));

@@ -13,7 +13,7 @@ const useStyles = createStyles(({ css, token }) => ({
   username: css`
     line-height: 1;
     color: ${token.colorTextDescription};
-  `,
+  `
 }));
 
 // TODO
@@ -22,7 +22,13 @@ const UserInfo = memo<{ onClick?: () => void }>(({ onClick }) => {
   const { styles, theme } = useStyles();
 
   return (
-    <Flexbox align={'center'} gap={12} horizontal paddingBlock={12} paddingInline={16}>
+    <Flexbox
+      align={'center'}
+      gap={12}
+      horizontal
+      paddingBlock={12}
+      paddingInline={16}
+    >
       <UserAvatar background={theme.colorFill} onClick={onClick} size={48} />
       <Flexbox flex={1} gap={6}>
         <div className={styles.nickname}>{'社区版用户'}</div>

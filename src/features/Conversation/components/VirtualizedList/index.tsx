@@ -18,7 +18,9 @@ const WELCOME_ID = 'welcome';
 const itemContent = (index: number, id: string) => {
   const isMobile = isMobileScreen();
 
-  if (id === WELCOME_ID) return <InboxWelcome />;
+  if (id === WELCOME_ID) {
+    return <InboxWelcome />;
+  }
 
   return index === 0 ? (
     <div style={{ height: 24 + (isMobile ? 0 : 64) }} />
@@ -39,25 +41,32 @@ const VirtualizedList = memo<VirtualizedListProps>(({ mobile }) => {
 
   const [id, chatLoading] = useChatStore((s) => [
     chatSelectors.currentChatKey(s),
-    chatSelectors.currentChatLoadingState(s),
+    chatSelectors.currentChatLoadingState(s)
   ]);
 
   const data = useChatStore((s) => {
     const showInboxWelcome = chatSelectors.showInboxWelcome(s);
-    const ids = showInboxWelcome ? [WELCOME_ID] : chatSelectors.currentChatIDsWithGuideMessage(s);
+    const ids = showInboxWelcome
+      ? [WELCOME_ID]
+      : chatSelectors.currentChatIDsWithGuideMessage(s);
     return ['empty', ...ids];
   }, isEqual);
 
   useEffect(() => {
     if (virtuosoRef.current) {
-      virtuosoRef.current.scrollToIndex({ align: 'end', behavior: 'auto', index: 'LAST' });
+      virtuosoRef.current.scrollToIndex({
+        align: 'end',
+        behavior: 'auto',
+        index: 'LAST'
+      });
     }
   }, [id]);
 
   const prevDataLengthRef = useRef(data.length);
 
   const getFollowOutput = useCallback(() => {
-    const newFollowOutput = data.length > prevDataLengthRef.current ? 'auto' : false;
+    const newFollowOutput =
+      data.length > prevDataLengthRef.current ? 'auto' : false;
     prevDataLengthRef.current = data.length;
     return newFollowOutput;
   }, [data.length]);
@@ -89,11 +98,19 @@ const VirtualizedList = memo<VirtualizedListProps>(({ mobile }) => {
           const virtuoso = virtuosoRef.current;
           switch (type) {
             case 'auto': {
-              virtuoso?.scrollToIndex({ align: 'end', behavior: 'auto', index: 'LAST' });
+              virtuoso?.scrollToIndex({
+                align: 'end',
+                behavior: 'auto',
+                index: 'LAST'
+              });
               break;
             }
             case 'click': {
-              virtuoso?.scrollToIndex({ align: 'end', behavior: 'smooth', index: 'LAST' });
+              virtuoso?.scrollToIndex({
+                align: 'end',
+                behavior: 'smooth',
+                index: 'LAST'
+              });
               break;
             }
           }

@@ -10,7 +10,7 @@ describe('preferenceSelectors', () => {
 
   beforeEach(() => {
     store = {
-      ...initialPreferenceState,
+      ...initialPreferenceState
     } as unknown as UserStore;
   });
 

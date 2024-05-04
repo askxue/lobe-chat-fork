@@ -11,18 +11,22 @@ export const useStyles = createStyles(({ css, token }) => ({
     height: 100%;
     color: ${token.colorTextSecondary};
     background: ${token.colorBgContainer};
-  `,
+  `
 }));
 
 const FolderPanel = memo<PropsWithChildren>(({ children }) => {
   const { styles } = useStyles();
-  const [sessionsWidth, sessionExpandable, updatePreference] = useGlobalStore((s) => [
-    s.preference.sessionsWidth,
-    s.preference.showSessionPanel,
-    s.updatePreference,
-  ]);
+  const [sessionsWidth, sessionExpandable, updatePreference] = useGlobalStore(
+    (s) => [
+      s.preference.sessionsWidth,
+      s.preference.showSessionPanel,
+      s.updatePreference
+    ]
+  );
   const [tmpWidth, setWidth] = useState(sessionsWidth);
-  if (tmpWidth !== sessionsWidth) setWidth(sessionsWidth);
+  if (tmpWidth !== sessionsWidth) {
+    setWidth(sessionsWidth);
+  }
 
   return (
     <DraggablePanel
@@ -34,15 +38,22 @@ const FolderPanel = memo<PropsWithChildren>(({ children }) => {
       onExpandChange={(expand) => {
         updatePreference({
           sessionsWidth: expand ? 320 : 0,
-          showSessionPanel: expand,
+          showSessionPanel: expand
         });
       }}
       onSizeChange={(_, size) => {
-        if (!size) return;
+        if (!size) {
+          return;
+        }
 
-        const nextWidth = typeof size.width === 'string' ? Number.parseInt(size.width) : size.width;
+        const nextWidth =
+          typeof size.width === 'string'
+            ? Number.parseInt(size.width)
+            : size.width;
 
-        if (isEqual(nextWidth, sessionsWidth)) return;
+        if (isEqual(nextWidth, sessionsWidth)) {
+          return;
+        }
 
         setWidth(nextWidth);
         updatePreference({ sessionsWidth: nextWidth });
@@ -50,7 +61,9 @@ const FolderPanel = memo<PropsWithChildren>(({ children }) => {
       placement="left"
       size={{ height: '100%', width: sessionsWidth }}
     >
-      <DraggablePanelContainer style={{ flex: 'none', height: '100%', minWidth: FOLDER_WIDTH }}>
+      <DraggablePanelContainer
+        style={{ flex: 'none', height: '100%', minWidth: FOLDER_WIDTH }}
+      >
         {children}
       </DraggablePanelContainer>
     </DraggablePanel>

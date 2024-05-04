@@ -26,15 +26,19 @@ const AvatarWithUpload = memo<AvatarWithUploadProps>(
           updateAvatar(webpBase64);
         });
       }),
-      [],
+      []
     );
 
     return (
-      <Upload beforeUpload={handleUploadAvatar} itemRender={() => void 0} maxCount={1}>
+      <Upload
+        beforeUpload={handleUploadAvatar}
+        itemRender={() => void 0}
+        maxCount={1}
+      >
         <UserAvatar clickable size={size} {...rest} />
       </Upload>
     );
-  },
+  }
 );
 
 export default AvatarWithUpload;

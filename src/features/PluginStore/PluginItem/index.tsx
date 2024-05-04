@@ -28,53 +28,66 @@ const useStyles = createStyles(({ css, token }) => ({
     font-size: 14px;
     font-weight: bold;
     line-height: 1;
-  `,
+  `
 }));
 
-const PluginItem = memo<InstallPluginMeta>(({ identifier, homepage, author, type, meta = {} }) => {
-  const { styles } = useStyles();
+const PluginItem = memo<InstallPluginMeta>(
+  ({ identifier, homepage, author, type, meta = {} }) => {
+    const { styles } = useStyles();
 
-  return (
-    <Flexbox
-      align={'center'}
-      gap={8}
-      horizontal
-      justify={'space-between'}
-      style={{ position: 'relative' }}
-    >
+    return (
       <Flexbox
         align={'center'}
-        flex={1}
         gap={8}
         horizontal
-        style={{ overflow: 'hidden', position: 'relative' }}
+        justify={'space-between'}
+        style={{ position: 'relative' }}
       >
-        <Avatar avatar={meta.avatar} style={{ flex: 'none', overflow: 'hidden' }} />
-        <Flexbox flex={1} gap={4} style={{ overflow: 'hidden', position: 'relative' }}>
-          <Flexbox align={'center'} gap={8} horizontal>
-            <Tooltip title={identifier}>
-              {homepage ? (
-                <Link className={styles.link} href={homepage} target={'_blank'}>
+        <Flexbox
+          align={'center'}
+          flex={1}
+          gap={8}
+          horizontal
+          style={{ overflow: 'hidden', position: 'relative' }}
+        >
+          <Avatar
+            avatar={meta.avatar}
+            style={{ flex: 'none', overflow: 'hidden' }}
+          />
+          <Flexbox
+            flex={1}
+            gap={4}
+            style={{ overflow: 'hidden', position: 'relative' }}
+          >
+            <Flexbox align={'center'} gap={8} horizontal>
+              <Tooltip title={identifier}>
+                {homepage ? (
+                  <Link
+                    className={styles.link}
+                    href={homepage}
+                    target={'_blank'}
+                  >
+                    <Paragraph className={styles.title} ellipsis={{ rows: 1 }}>
+                      {meta.title}
+                    </Paragraph>
+                  </Link>
+                ) : (
                   <Paragraph className={styles.title} ellipsis={{ rows: 1 }}>
                     {meta.title}
                   </Paragraph>
-                </Link>
-              ) : (
-                <Paragraph className={styles.title} ellipsis={{ rows: 1 }}>
-                  {meta.title}
-                </Paragraph>
-              )}
-            </Tooltip>
-            <PluginTag author={author} type={type} />
+                )}
+              </Tooltip>
+              <PluginTag author={author} type={type} />
+            </Flexbox>
+            <Paragraph className={styles.desc} ellipsis={{ rows: 1 }}>
+              {meta.description}
+            </Paragraph>
           </Flexbox>
-          <Paragraph className={styles.desc} ellipsis={{ rows: 1 }}>
-            {meta.description}
-          </Paragraph>
         </Flexbox>
+        <Actions identifier={identifier} type={type} />
       </Flexbox>
-      <Actions identifier={identifier} type={type} />
-    </Flexbox>
-  );
-});
+    );
+  }
+);
 
 export default PluginItem;

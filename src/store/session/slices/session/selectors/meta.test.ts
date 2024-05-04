@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
 import { DEFAULT_AVATAR } from '@/const/meta';
-import { DEFAULT_AGENT_CONFIG, DEFAUTT_AGENT_TTS_CONFIG } from '@/const/settings';
+import {
+  DEFAULT_AGENT_CONFIG,
+  DEFAUTT_AGENT_TTS_CONFIG
+} from '@/const/settings';
 import { SessionStore } from '@/store/session';
 import { MetaData } from '@/types/meta';
 import { LobeAgentSession, LobeSessionType } from '@/types/session';
@@ -9,7 +12,7 @@ import { LobeAgentSession, LobeSessionType } from '@/types/session';
 import { sessionMetaSelectors } from './meta';
 
 vi.mock('i18next', () => ({
-  t: vi.fn((key) => key), // Simplified mock return value
+  t: vi.fn((key) => key) // Simplified mock return value
 }));
 
 const mockSessionStore = {
@@ -20,27 +23,29 @@ const mockSessionStore = {
       config: DEFAULT_AGENT_CONFIG,
       meta: {
         title: 'title1',
-        description: 'description1',
+        description: 'description1'
       },
-      type: LobeSessionType.Agent,
+      type: LobeSessionType.Agent
     } as LobeAgentSession,
     {
       id: '2',
       meta: {
         title: 'title2',
-        description: 'description2',
+        description: 'description2'
       },
       config: DEFAULT_AGENT_CONFIG,
-      type: LobeSessionType.Agent,
-    } as LobeAgentSession,
-  ],
+      type: LobeSessionType.Agent
+    } as LobeAgentSession
+  ]
 } as unknown as SessionStore;
 
 describe('sessionMetaSelectors', () => {
   describe('currentAgentMeta', () => {
     it('should return the merged default and session-specific meta data', () => {
       const meta = sessionMetaSelectors.currentAgentMeta(mockSessionStore);
-      expect(meta).toEqual(expect.objectContaining(mockSessionStore.sessions[0].meta));
+      expect(meta).toEqual(
+        expect.objectContaining(mockSessionStore.sessions[0].meta)
+      );
     });
 
     it('should return inbox defaults if it is an inbox session', () => {
@@ -59,7 +64,8 @@ describe('sessionMetaSelectors', () => {
 
   describe('currentAgentDescription', () => {
     it('should return the description from the session meta data', () => {
-      const description = sessionMetaSelectors.currentAgentDescription(mockSessionStore);
+      const description =
+        sessionMetaSelectors.currentAgentDescription(mockSessionStore);
       expect(description).toBe(mockSessionStore.sessions[0].meta.description);
     });
   });

@@ -5,7 +5,10 @@ import isEqual from 'fast-deep-equal';
 import { LucideToyBrick } from 'lucide-react';
 import { memo } from 'react';
 
-import { featureFlagsSelectors, useServerConfigStore } from '@/store/serverConfig';
+import {
+  featureFlagsSelectors,
+  useServerConfigStore
+} from '@/store/serverConfig';
 import { pluginHelpers, useToolStore } from '@/store/tool';
 import { toolSelectors } from '@/store/tool/selectors';
 
@@ -18,17 +21,30 @@ export interface PluginTagProps {
 const PluginTag = memo<PluginTagProps>(({ plugins }) => {
   const { showDalle } = useServerConfigStore(featureFlagsSelectors);
   const list = useToolStore(toolSelectors.metaList(showDalle), isEqual);
-  const displayPlugin = useToolStore(toolSelectors.getMetaById(plugins[0]), isEqual);
+  const displayPlugin = useToolStore(
+    toolSelectors.getMetaById(plugins[0]),
+    isEqual
+  );
 
-  if (plugins.length === 0) return null;
+  if (plugins.length === 0) {
+    return null;
+  }
 
   const items: MenuProps['items'] = plugins.map((id) => {
     const item = list.find((i) => i.identifier === id);
     const isDeprecated = !pluginHelpers.getPluginTitle(item?.meta);
-    const avatar = isDeprecated ? '♻️' : pluginHelpers.getPluginAvatar(item?.meta);
+    const avatar = isDeprecated
+      ? '♻️'
+      : pluginHelpers.getPluginAvatar(item?.meta);
 
     return {
-      icon: <Avatar avatar={avatar} size={24} style={{ marginLeft: -6, marginRight: 2 }} />,
+      icon: (
+        <Avatar
+          avatar={avatar}
+          size={24}
+          style={{ marginLeft: -6, marginRight: 2 }}
+        />
+      ),
       key: id,
       label: (
         <PluginStatus
@@ -36,7 +52,7 @@ const PluginTag = memo<PluginTagProps>(({ plugins }) => {
           id={id}
           title={pluginHelpers.getPluginTitle(item?.meta)}
         />
-      ),
+      )
     };
   });
 

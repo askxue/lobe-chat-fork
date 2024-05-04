@@ -15,5 +15,5 @@ export const initialState: StoreState = {
   agentMap: {},
   currentIdentifier: '',
   searchKeywords: '',
-  tagList: [],
+  tagList: []
 };

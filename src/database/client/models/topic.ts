@@ -25,16 +25,27 @@ class _TopicModel extends BaseModel {
 
   // **************** Query *************** //
 
-  async query({ pageSize = 9999, current = 0, sessionId }: QueryTopicParams): Promise<ChatTopic[]> {
+  async query({
+    pageSize = 9999,
+    current = 0,
+    sessionId
+  }: QueryTopicParams): Promise<ChatTopic[]> {
     const offset = current * pageSize;
 
     // get all topics
-    const allTopics = await this.table.where('sessionId').equals(sessionId).toArray();
+    const allTopics = await this.table
+      .where('sessionId')
+      .equals(sessionId)
+      .toArray();
 
     // 将所有主题按星标消息优先，时间倒序进行排序
     const sortedTopics = allTopics.sort((a, b) => {
-      if (a.favorite && !b.favorite) return -1; // a是星标，b不是，a排前面
-      if (!a.favorite && b.favorite) return 1; // b是星标，a不是，b排前面
+      if (a.favorite && !b.favorite) {
+        return -1;
+      } // a是星标，b不是，a排前面
+      if (!a.favorite && b.favorite) {
+        return 1;
+      } // b是星标，a不是，b排前面
 
       // 如果星标状态相同，则按时间倒序排序
       return b.createdAt - a.createdAt;
@@ -55,14 +66,21 @@ class _TopicModel extends BaseModel {
    * @param keyword The keyword to search for
    * @param sessionId The currently activated session id.
    */
-  async queryByKeyword(keyword: string, sessionId?: string): Promise<ChatTopic[]> {
-    if (!keyword) return [];
+  async queryByKeyword(
+    keyword: string,
+    sessionId?: string
+  ): Promise<ChatTopic[]> {
+    if (!keyword) {
+      return [];
+    }
 
     console.time('queryTopicsByKeyword');
     const keywordLowerCase = keyword.toLowerCase();
 
     // Find topics with matching title
-    const queryTable = sessionId ? this.table.where('sessionId').equals(sessionId) : this.table;
+    const queryTable = sessionId
+      ? this.table.where('sessionId').equals(sessionId)
+      : this.table;
     const matchingTopicsPromise = queryTable
       .filter((topic) => topic.title.toLowerCase().includes(keywordLowerCase))
       .toArray();
@@ -74,11 +92,15 @@ class _TopicModel extends BaseModel {
     const matchingMessagesPromise = queryMessages
       .filter((message) => {
         // check content
-        if (message.content.toLowerCase().includes(keywordLowerCase)) return true;
+        if (message.content.toLowerCase().includes(keywordLowerCase)) {
+          return true;
+        }
 
         // check translate content
         if (message.translate && message.translate.content) {
-          return message.translate.content.toLowerCase().includes(keywordLowerCase);
+          return message.translate.content
+            .toLowerCase()
+            .includes(keywordLowerCase);
         }
 
         return false;
@@ -88,16 +110,18 @@ class _TopicModel extends BaseModel {
     // Resolve both promises
     const [matchingTopics, matchingMessages] = await Promise.all([
       matchingTopicsPromise,
-      matchingMessagesPromise,
+      matchingMessagesPromise
     ]);
 
     // Extract topic IDs from messages
-    const topicIdsFromMessages = matchingMessages.map((message) => message.topicId);
+    const topicIdsFromMessages = matchingMessages.map(
+      (message) => message.topicId
+    );
 
     // Combine topic IDs from both sources
     const combinedTopicIds = new Set([
       ...topicIdsFromMessages,
-      ...matchingTopics.map((topic) => topic.id),
+      ...matchingTopics.map((topic) => topic.id)
     ]);
 
     // Retrieve unique topics by IDs
@@ -120,10 +144,13 @@ class _TopicModel extends BaseModel {
 
   // **************** Create *************** //
 
-  async create({ title, favorite, sessionId, messages }: CreateTopicParams, id = nanoid()) {
+  async create(
+    { title, favorite, sessionId, messages }: CreateTopicParams,
+    id = nanoid()
+  ) {
     const topic = await this._addWithSync(
       { favorite: favorite ? 1 : 0, sessionId, title: title },
-      id,
+      id
     );
 
     // add topicId to these messages
@@ -135,32 +162,39 @@ class _TopicModel extends BaseModel {
   }
 
   async batchCreate(topics: CreateTopicParams[]) {
-    return this._batchAdd(topics.map((t) => ({ ...t, favorite: t.favorite ? 1 : 0 })));
+    return this._batchAdd(
+      topics.map((t) => ({ ...t, favorite: t.favorite ? 1 : 0 }))
+    );
   }
 
   async duplicateTopic(topicId: string, newTitle?: string) {
-    return this.db.transaction('rw', [this.db.topics, this.db.messages], async () => {
-      // Step 1: get DB_Topic
-      const topic = await this.findById(topicId);
+    return this.db.transaction(
+      'rw',
+      [this.db.topics, this.db.messages],
+      async () => {
+        // Step 1: get DB_Topic
+        const topic = await this.findById(topicId);
 
-      if (!topic) {
-        throw new Error(`Topic with id ${topicId} not found`);
+        if (!topic) {
+          throw new Error(`Topic with id ${topicId} not found`);
+        }
+
+        // Step 3: 查询与 `topic` 关联的 `messages`
+        const originalMessages = await MessageModel.queryByTopicId(topicId);
+
+        const duplicateMessages =
+          await MessageModel.duplicateMessages(originalMessages);
+
+        const { id } = await this.create({
+          ...this.mapToChatTopic(topic),
+          messages: duplicateMessages.map((m) => m.id),
+          sessionId: topic.sessionId!,
+          title: newTitle || topic.title
+        });
+
+        return id;
       }
-
-      // Step 3: 查询与 `topic` 关联的 `messages`
-      const originalMessages = await MessageModel.queryByTopicId(topicId);
-
-      const duplicateMessages = await MessageModel.duplicateMessages(originalMessages);
-
-      const { id } = await this.create({
-        ...this.mapToChatTopic(topic),
-        messages: duplicateMessages.map((m) => m.id),
-        sessionId: topic.sessionId!,
-        title: newTitle || topic.title,
-      });
-
-      return id;
-    });
+    );
   }
 
   // **************** Delete *************** //
@@ -169,12 +203,16 @@ class _TopicModel extends BaseModel {
    * Deletes a topic and all messages associated with it.
    */
   async delete(id: string) {
-    return this.db.transaction('rw', [this.table, this.db.messages], async () => {
-      // Delete all messages associated with the topic
-      await MessageModel.batchDeleteByTopicId(id);
+    return this.db.transaction(
+      'rw',
+      [this.table, this.db.messages],
+      async () => {
+        // Delete all messages associated with the topic
+        await MessageModel.batchDeleteByTopicId(id);
 
-      await this._deleteWithSync(id);
-    });
+        await this._deleteWithSync(id);
+      }
+    );
   }
 
   /**
@@ -193,17 +231,22 @@ class _TopicModel extends BaseModel {
     // Use the bulkDelete method to delete all selected messages in bulk
     return this._bulkDeleteWithSync(topicIds);
   }
+
   /**
    * Deletes multiple topics and all messages associated with them in a transaction.
    */
   async batchDelete(topicIds: string[]) {
-    return this.db.transaction('rw', [this.table, this.db.messages], async () => {
-      // Iterate over each topicId and delete related messages, then delete the topic itself
-      for (const topicId of topicIds) {
-        // Delete all messages associated with the topic
-        await this.delete(topicId);
+    return this.db.transaction(
+      'rw',
+      [this.table, this.db.messages],
+      async () => {
+        // Iterate over each topicId and delete related messages, then delete the topic itself
+        for (const topicId of topicIds) {
+          // Delete all messages associated with the topic
+          await this.delete(topicId);
+        }
       }
-    });
+    );
   }
 
   async clearTable() {
@@ -222,7 +265,8 @@ class _TopicModel extends BaseModel {
     }
 
     // Toggle the 'favorite' status
-    const nextState = typeof newState !== 'undefined' ? newState : !topic.favorite;
+    const nextState =
+      typeof newState !== 'undefined' ? newState : !topic.favorite;
 
     await this.update(id, { favorite: nextState ? 1 : 0 });
 
@@ -233,7 +277,7 @@ class _TopicModel extends BaseModel {
 
   private mapToChatTopic = (dbTopic: DBModel<DB_Topic>): ChatTopic => ({
     ...dbTopic,
-    favorite: !!dbTopic.favorite,
+    favorite: !!dbTopic.favorite
   });
 }
 

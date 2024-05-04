@@ -1,9 +1,14 @@
-import { AgentRuntimeErrorType, ILobeAgentRuntimeErrorType } from '@/libs/agent-runtime';
+import {
+  AgentRuntimeErrorType,
+  ILobeAgentRuntimeErrorType
+} from '@/libs/agent-runtime';
 import { ChatErrorType, ErrorResponse, ErrorType } from '@/types/fetch';
 
 const getStatus = (errorType: ILobeAgentRuntimeErrorType | ErrorType) => {
   // InvalidAccessCode / InvalidAzureAPIKey / InvalidOpenAIAPIKey / InvalidZhipuAPIKey ....
-  if (errorType.toString().includes('Invalid')) return 401;
+  if (errorType.toString().includes('Invalid')) {
+    return 401;
+  }
 
   switch (errorType) {
     // TODO: Need to refactor to Invalid OpenAI API Key
@@ -71,7 +76,7 @@ const getStatus = (errorType: ILobeAgentRuntimeErrorType | ErrorType) => {
 
 export const createErrorResponse = (
   errorType: ErrorType | ILobeAgentRuntimeErrorType,
-  body?: any,
+  body?: any
 ) => {
   const statusCode = getStatus(errorType);
 
@@ -80,7 +85,7 @@ export const createErrorResponse = (
   if (typeof statusCode !== 'number' || statusCode < 200 || statusCode > 599) {
     console.error(
       `current StatusCode: \`${statusCode}\` .`,
-      'Please go to `./src/app/api/errorResponse.ts` to defined the statusCode.',
+      'Please go to `./src/app/api/errorResponse.ts` to defined the statusCode.'
     );
   }
 

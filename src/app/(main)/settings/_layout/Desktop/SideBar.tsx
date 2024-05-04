@@ -27,7 +27,7 @@ const useStyles = createStyles(({ token, css }) => ({
     font-size: 26px;
     font-weight: 600;
     line-height: 1.3;
-  `,
+  `
 }));
 
 interface SidebarLayoutProps extends FlexboxProps {
@@ -35,7 +35,13 @@ interface SidebarLayoutProps extends FlexboxProps {
   title?: string;
 }
 
-const SidebarLayout = ({ children, className, title, desc, ...rest }: SidebarLayoutProps) => {
+const SidebarLayout = ({
+  children,
+  className,
+  title,
+  desc,
+  ...rest
+}: SidebarLayoutProps) => {
   const { cx, styles } = useStyles();
   const { t } = useTranslation('setting');
   return (

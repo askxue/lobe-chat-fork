@@ -12,7 +12,9 @@ import { preferenceSelectors } from '@/store/user/selectors';
 
 const Avatar = memo(() => {
   const { t } = useTranslation('common');
-  const hideSettingsMoveGuide = useUserStore(preferenceSelectors.hideSettingsMoveGuide);
+  const hideSettingsMoveGuide = useUserStore(
+    preferenceSelectors.hideSettingsMoveGuide
+  );
   const updateGuideState = useUserStore((s) => s.updateGuideState);
   const content = (
     <UserPanel>

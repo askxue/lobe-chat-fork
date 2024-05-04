@@ -13,7 +13,9 @@ const TTS = memo<TTSProps>(
   (props) => {
     const { file, voice, content, contentMd5 } = props;
     const lang = useUserStore(settingsSelectors.currentLanguage);
-    const currentVoice = useAgentStore(agentSelectors.currentAgentTTSVoice(lang));
+    const currentVoice = useAgentStore(
+      agentSelectors.currentAgentTTSVoice(lang)
+    );
 
     const md5 = useMemo(() => Md5.hashStr(content).toString(), [content]);
 
@@ -25,8 +27,7 @@ const TTS = memo<TTSProps>(
 
     return <PlayerRender {...props} contentMd5={md5} />;
   },
-  (prevProps, nextProps) => {
-    return prevProps.id === nextProps.id && prevProps.content === nextProps.content;
-  },
+  (prevProps, nextProps) =>
+    prevProps.id === nextProps.id && prevProps.content === nextProps.content
 );
 export default TTS;

@@ -4,7 +4,7 @@ import {
   type AIStreamCallbacksAndOptions,
   createCallbacksTransformer,
   createStreamDataTransformer,
-  readableFromAsyncIterable,
+  readableFromAsyncIterable
 } from 'ai';
 import { ChatResponse } from 'ollama/browser';
 
@@ -23,9 +23,8 @@ const chatStreamable = async function* (stream: AsyncIterable<ChatResponse>) {
 
 export const OllamaStream = (
   res: AsyncIterable<ChatResponse>,
-  cb?: AIStreamCallbacksAndOptions,
-): ReadableStream<string> => {
-  return readableFromAsyncIterable(chatStreamable(res))
+  cb?: AIStreamCallbacksAndOptions
+): ReadableStream<string> =>
+  readableFromAsyncIterable(chatStreamable(res))
     .pipeThrough(createCallbacksTransformer(cb) as any)
     .pipeThrough(createStreamDataTransformer(cb?.experimental_streamData));
-};

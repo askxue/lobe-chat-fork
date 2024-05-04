@@ -7,7 +7,10 @@ import { isDev } from '@/utils/env';
 
 import { ToolStoreState, initialState } from './initialState';
 import { BuiltinToolAction, createBuiltinToolSlice } from './slices/builtin';
-import { CustomPluginAction, createCustomPluginSlice } from './slices/customPlugin';
+import {
+  CustomPluginAction,
+  createCustomPluginSlice
+} from './slices/customPlugin';
 import { PluginAction, createPluginSlice } from './slices/plugin';
 import { PluginStoreAction, createPluginStoreSlice } from './slices/store';
 
@@ -19,19 +22,21 @@ export type ToolStore = ToolStoreState &
   PluginStoreAction &
   BuiltinToolAction;
 
-const createStore: StateCreator<ToolStore, [['zustand/devtools', never]]> = (...parameters) => ({
+const createStore: StateCreator<ToolStore, [['zustand/devtools', never]]> = (
+  ...parameters
+) => ({
   ...initialState,
   ...createPluginSlice(...parameters),
   ...createCustomPluginSlice(...parameters),
   ...createPluginStoreSlice(...parameters),
-  ...createBuiltinToolSlice(...parameters),
+  ...createBuiltinToolSlice(...parameters)
 });
 
 //  ===============  实装 useStore ============ //
 
 export const useToolStore = createWithEqualityFn<ToolStore>()(
   devtools(createStore, {
-    name: 'LobeChat_Tool' + (isDev ? '_DEV' : ''),
+    name: 'LobeChat_Tool' + (isDev ? '_DEV' : '')
   }),
-  shallow,
+  shallow
 );

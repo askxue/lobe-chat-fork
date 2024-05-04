@@ -14,7 +14,7 @@ const DeviceName = memo(() => {
 
   const [deviceName, setSettings] = useUserStore((s) => [
     syncSettingsSelectors.deviceName(s),
-    s.setSettings,
+    s.setSettings
   ]);
 
   const [editing, setEditing] = useState(false);
@@ -30,7 +30,13 @@ const DeviceName = memo(() => {
       flex={1}
       height={40}
       horizontal
-      style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 1, minWidth: 240, paddingLeft: 8 }}
+      style={{
+        fontSize: 20,
+        fontWeight: 'bold',
+        lineHeight: 1,
+        minWidth: 240,
+        paddingLeft: 8
+      }}
     >
       {!deviceName && !editing && (
         <Flexbox
@@ -39,7 +45,9 @@ const DeviceName = memo(() => {
           }}
           style={{ cursor: 'pointer' }}
         >
-          <Typography.Text type={'secondary'}>{t('sync.device.deviceName.hint')}</Typography.Text>
+          <Typography.Text type={'secondary'}>
+            {t('sync.device.deviceName.hint')}
+          </Typography.Text>
         </Flexbox>
       )}
       <EditableText

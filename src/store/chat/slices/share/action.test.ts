@@ -10,7 +10,9 @@ describe('shareSlice actions', () => {
   let windowOpenSpy;
 
   beforeEach(() => {
-    shareServiceSpy = vi.spyOn(shareService, 'createShareGPTUrl').mockResolvedValue('test-url');
+    shareServiceSpy = vi
+      .spyOn(shareService, 'createShareGPTUrl')
+      .mockResolvedValue('test-url');
     windowOpenSpy = vi.spyOn(window, 'open');
   });
 
@@ -28,7 +30,11 @@ describe('shareSlice actions', () => {
       const withSystemRole = true;
 
       await act(async () => {
-        await result.current.shareToShareGPT({ avatar, withPluginInfo, withSystemRole });
+        await result.current.shareToShareGPT({
+          avatar,
+          withPluginInfo,
+          withSystemRole
+        });
       });
 
       expect(shareServiceSpy).toHaveBeenCalled();
@@ -41,7 +47,7 @@ describe('shareSlice actions', () => {
       await act(async () => {
         await result.current.shareToShareGPT({
           withPluginInfo: true,
-          withSystemRole: true,
+          withSystemRole: true
         });
       });
       // 根据你的逻辑添加对应的expect断言
@@ -53,7 +59,7 @@ describe('shareSlice actions', () => {
       const { result } = renderHook(() => useChatStore());
       await act(async () => {
         await result.current.shareToShareGPT({
-          withSystemRole: false,
+          withSystemRole: false
         });
       });
       // 根据你的逻辑添加对应的expect断言
@@ -67,8 +73,8 @@ describe('shareSlice actions', () => {
 
       expect(shareServiceSpy).toHaveBeenCalledWith(
         expect.objectContaining({
-          avatarUrl: DEFAULT_USER_AVATAR_URL,
-        }),
+          avatarUrl: DEFAULT_USER_AVATAR_URL
+        })
       );
     });
 
@@ -91,9 +97,9 @@ describe('shareSlice actions', () => {
           type: 'default',
           arguments: '{}',
           apiName: 'test-api',
-          identifier: 'test-identifier',
+          identifier: 'test-identifier'
         },
-        id: 'abc',
+        id: 'abc'
       } as ChatMessage;
 
       act(() => {
@@ -109,10 +115,10 @@ describe('shareSlice actions', () => {
           items: expect.arrayContaining([
             expect.objectContaining({
               from: 'gpt',
-              value: expect.stringContaining('Function Calling Plugin'),
-            }),
-          ]),
-        }),
+              value: expect.stringContaining('Function Calling Plugin')
+            })
+          ])
+        })
       );
     });
 
@@ -124,9 +130,9 @@ describe('shareSlice actions', () => {
           type: 'default',
           arguments: '{}',
           apiName: 'test-api',
-          identifier: 'test-identifier',
+          identifier: 'test-identifier'
         },
-        id: 'abc',
+        id: 'abc'
       } as ChatMessage;
 
       act(() => {
@@ -142,10 +148,10 @@ describe('shareSlice actions', () => {
           items: expect.not.arrayContaining([
             expect.objectContaining({
               from: 'gpt',
-              value: expect.stringContaining('Function Calling Plugin'),
-            }),
-          ]),
-        }),
+              value: expect.stringContaining('Function Calling Plugin')
+            })
+          ])
+        })
       );
     });
 
@@ -160,10 +166,10 @@ describe('shareSlice actions', () => {
             type: 'default',
             arguments: '{}',
             apiName: 'test-api',
-            identifier: 'test-identifier',
+            identifier: 'test-identifier'
           },
-          id: '3',
-        },
+          id: '3'
+        }
       ] as ChatMessage[];
 
       act(() => {
@@ -174,7 +180,7 @@ describe('shareSlice actions', () => {
       await act(async () => {
         await result.current.shareToShareGPT({
           withPluginInfo: true,
-          withSystemRole: true,
+          withSystemRole: true
         });
       });
 
@@ -183,14 +189,20 @@ describe('shareSlice actions', () => {
           items: [
             expect.objectContaining({ from: 'gpt' }), // Agent meta info
             expect.objectContaining({ from: 'human', value: 'user message' }),
-            expect.objectContaining({ from: 'gpt', value: 'assistant message' }),
             expect.objectContaining({
               from: 'gpt',
-              value: expect.stringContaining('Function Calling Plugin'),
+              value: 'assistant message'
             }),
-            expect.objectContaining({ from: 'gpt', value: expect.stringContaining('Share from') }), // Footer
-          ],
-        }),
+            expect.objectContaining({
+              from: 'gpt',
+              value: expect.stringContaining('Function Calling Plugin')
+            }),
+            expect.objectContaining({
+              from: 'gpt',
+              value: expect.stringContaining('Share from')
+            }) // Footer
+          ]
+        })
       );
     });
   });

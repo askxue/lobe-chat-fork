@@ -2,7 +2,10 @@ import { DeepPartial } from 'utility-types';
 
 import { BaseModel } from '@/database/client/core';
 import { DBModel } from '@/database/client/core/types/db';
-import { DB_Message, DB_MessageSchema } from '@/database/client/schemas/message';
+import {
+  DB_Message,
+  DB_MessageSchema
+} from '@/database/client/schemas/message';
 import { ChatMessage } from '@/types/message';
 import { nanoid } from '@/utils/uuid';
 
@@ -33,11 +36,11 @@ class _MessageModel extends BaseModel {
     sessionId,
     topicId,
     pageSize = 9999,
-    current = 0,
+    current = 0
   }: QueryMessageParams): Promise<ChatMessage[]> {
     const offset = current * pageSize;
 
-    const query = !!topicId
+    const query = topicId
       ? // TODO: The query {"sessionId":"xxx","topicId":"xxx"} on messages would benefit of a compound index [sessionId+topicId]
         this.table.where({ sessionId, topicId }) // Use a compound index
       : this.table
@@ -61,7 +64,9 @@ class _MessageModel extends BaseModel {
       }
     };
     const messageMap = new Map<string, ChatMessage>();
-    for (const item of messages) messageMap.set(item.id, item);
+    for (const item of messages) {
+      messageMap.set(item.id, item);
+    }
 
     for (const item of messages) {
       if (!item.parentId || !messageMap.has(item.parentId)) {
@@ -81,7 +86,9 @@ class _MessageModel extends BaseModel {
   }
 
   async queryAll() {
-    const data: DBModel<DB_Message>[] = await this.table.orderBy('updatedAt').toArray();
+    const data: DBModel<DB_Message>[] = await this.table
+      .orderBy('updatedAt')
+      .toArray();
 
     return data.map((element) => this.mapToChatMessage(element));
   }
@@ -91,7 +98,10 @@ class _MessageModel extends BaseModel {
   }
 
   queryByTopicId = async (topicId: string) => {
-    const dbMessages = await this.table.where('topicId').equals(topicId).toArray();
+    const dbMessages = await this.table
+      .where('topicId')
+      .equals(topicId)
+      .toArray();
 
     return dbMessages.map((message) => this.mapToChatMessage(message));
   };
@@ -105,13 +115,17 @@ class _MessageModel extends BaseModel {
   async create(data: CreateMessageParams) {
     const id = nanoid();
 
-    const messageData: DB_Message = this.mapChatMessageToDBMessage(data as ChatMessage);
+    const messageData: DB_Message = this.mapChatMessageToDBMessage(
+      data as ChatMessage
+    );
 
     return this._addWithSync(messageData, id);
   }
 
   async batchCreate(messages: ChatMessage[]) {
-    const data: DB_Message[] = messages.map((m) => this.mapChatMessageToDBMessage(m));
+    const data: DB_Message[] = messages.map((m) =>
+      this.mapChatMessageToDBMessage(m)
+    );
 
     return this._batchAdd(data, { withSync: true });
   }
@@ -142,10 +156,13 @@ class _MessageModel extends BaseModel {
    * @param {string | undefined} topicId - The identifier of the topic associated with the messages (optional).
    * @returns {Promise<void>}
    */
-  async batchDelete(sessionId: string, topicId: string | undefined): Promise<void> {
+  async batchDelete(
+    sessionId: string,
+    topicId: string | undefined
+  ): Promise<void> {
     // If topicId is specified, use both assistantId and topicId as the filter criteria in the query.
     // Otherwise, filter by assistantId and require that topicId is undefined.
-    const query = !!topicId
+    const query = topicId
       ? this.table.where({ sessionId, topicId }) // Use a compound index
       : this.table
           .where('sessionId')
@@ -162,7 +179,10 @@ class _MessageModel extends BaseModel {
   async batchDeleteBySessionId(sessionId: string): Promise<void> {
     // If topicId is specified, use both assistantId and topicId as the filter criteria in the query.
     // Otherwise, filter by assistantId and require that topicId is undefined.
-    const messageIds = await this.table.where('sessionId').equals(sessionId).primaryKeys();
+    const messageIds = await this.table
+      .where('sessionId')
+      .equals(sessionId)
+      .primaryKeys();
 
     // Use the bulkDelete method to delete all selected messages in bulk
     return this._bulkDeleteWithSync(messageIds);
@@ -173,7 +193,10 @@ class _MessageModel extends BaseModel {
    * @param topicId
    */
   async batchDeleteByTopicId(topicId: string): Promise<void> {
-    const messageIds = await this.table.where('topicId').equals(topicId).primaryKeys();
+    const messageIds = await this.table
+      .where('topicId')
+      .equals(topicId)
+      .primaryKeys();
 
     return this._bulkDeleteWithSync(messageIds);
   }
@@ -187,7 +210,9 @@ class _MessageModel extends BaseModel {
   async updatePluginState(id: string, key: string, value: any) {
     const item = await this.findById(id);
 
-    return this.update(id, { pluginState: { ...item.pluginState, [key]: value } });
+    return this.update(id, {
+      pluginState: { ...item.pluginState, [key]: value }
+    });
   }
 
   /**
@@ -197,14 +222,20 @@ class _MessageModel extends BaseModel {
    * @param {Partial<DB_Message>} updateFields - An object containing the fields to update and their new values.
    * @returns {Promise<number>} - The number of updated messages.
    */
-  async batchUpdate(messageIds: string[], updateFields: Partial<DB_Message>): Promise<number> {
+  async batchUpdate(
+    messageIds: string[],
+    updateFields: Partial<DB_Message>
+  ): Promise<number> {
     // Retrieve the messages by their IDs
-    const messagesToUpdate = await this.table.where('id').anyOf(messageIds).toArray();
+    const messagesToUpdate = await this.table
+      .where('id')
+      .anyOf(messageIds)
+      .toArray();
 
     // Update the specified fields of each message
     const updatedMessages = messagesToUpdate.map((message) => ({
       ...message,
-      ...updateFields,
+      ...updateFields
     }));
 
     // Use the bulkPut method to update the messages in bulk
@@ -215,7 +246,9 @@ class _MessageModel extends BaseModel {
 
   // **************** Helper *************** //
 
-  private async createDuplicateMessages(messages: ChatMessage[]): Promise<ChatMessage[]> {
+  private async createDuplicateMessages(
+    messages: ChatMessage[]
+  ): Promise<ChatMessage[]> {
     // 创建一个映射来存储原始消息ID和复制消息ID之间的关系
     const idMapping = new Map<string, string>();
 
@@ -229,7 +262,10 @@ class _MessageModel extends BaseModel {
 
     // 更新 parentId 为复制后的新ID
     for (const duplicatedMessage of duplicatedMessages) {
-      if (duplicatedMessage.parentId && idMapping.has(duplicatedMessage.parentId)) {
+      if (
+        duplicatedMessage.parentId &&
+        idMapping.has(duplicatedMessage.parentId)
+      ) {
         duplicatedMessage.parentId = idMapping.get(duplicatedMessage.parentId);
       }
     }
@@ -249,14 +285,12 @@ class _MessageModel extends BaseModel {
     translate,
     tts,
     ...item
-  }: DBModel<DB_Message>): ChatMessage => {
-    return {
-      ...item,
-      extra: { fromModel, fromProvider, translate, tts },
-      meta: {},
-      topicId: item.topicId ?? undefined,
-    };
-  };
+  }: DBModel<DB_Message>): ChatMessage => ({
+    ...item,
+    extra: { fromModel, fromProvider, translate, tts },
+    meta: {},
+    topicId: item.topicId ?? undefined
+  });
 }
 
 export const MessageModel = new _MessageModel();

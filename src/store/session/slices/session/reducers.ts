@@ -20,16 +20,27 @@ interface UpdateSession {
 
 export type SessionDispatch = AddSession | RemoveSession | UpdateSession;
 
-export const sessionsReducer = (state: LobeSessions, payload: SessionDispatch): LobeSessions => {
+export const sessionsReducer = (
+  state: LobeSessions,
+  payload: SessionDispatch
+): LobeSessions => {
   switch (payload.type) {
     case 'addSession': {
       return produce(state, (draft) => {
         const { session } = payload;
-        if (!session) return;
+        if (!session) {
+          return;
+        }
 
         // TODO: 后续将 Date 类型做个迁移，就可以移除这里的 ignore 了
         // @ts-ignore
-        draft.unshift({ ...session, createdAt: new Date(), updatedAt: new Date() });
+        draft.unshift({
+          ...session,
+          // @ts-ignore
+          createdAt: new Date(),
+          // @ts-ignore
+          updatedAt: new Date()
+        });
       });
     }
 
@@ -49,7 +60,12 @@ export const sessionsReducer = (state: LobeSessions, payload: SessionDispatch): 
 
         if (index !== -1) {
           // @ts-ignore
-          draftState[index] = { ...draftState[index], ...value, updatedAt: new Date() };
+          draftState[index] = {
+            ...draftState[index],
+            ...value,
+            // @ts-ignore
+            updatedAt: new Date()
+          };
         }
       });
     }

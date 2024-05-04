@@ -18,13 +18,13 @@ const noManifest = !!BASE_PATH;
 const metadata: Metadata = {
   appleWebApp: {
     statusBarStyle: 'black-translucent',
-    title,
+    title
   },
   description,
   icons: {
     apple: '/icons/apple-touch-icon.png',
     icon: '/favicon.ico',
-    shortcut: '/favicon-32x32.ico',
+    shortcut: '/favicon-32x32.ico'
   },
   manifest: noManifest ? undefined : '/manifest.json',
   metadataBase: new URL(SITE_URL),
@@ -35,35 +35,35 @@ const metadata: Metadata = {
         alt: title,
         height: 360,
         url: 'https://registry.npmmirror.com/@lobehub/assets-favicons/latest/files/assets/og-480x270.png',
-        width: 480,
+        width: 480
       },
       {
         alt: title,
         height: 720,
         url: 'https://registry.npmmirror.com/@lobehub/assets-favicons/latest/files/assets/og-960x540.png',
-        width: 960,
-      },
+        width: 960
+      }
     ],
     locale: 'en-US',
     siteName: title,
     title: title,
     type: 'website',
-    url: homepage,
+    url: homepage
   },
 
   title: {
     default: title,
-    template: '%s · LobeChat',
+    template: '%s · LobeChat'
   },
   twitter: {
     card: 'summary_large_image',
     description,
     images: [
-      'https://registry.npmmirror.com/@lobehub/assets-favicons/latest/files/assets/og-960x540.png',
+      'https://registry.npmmirror.com/@lobehub/assets-favicons/latest/files/assets/og-960x540.png'
     ],
     site: '@lobehub',
-    title,
-  },
+    title
+  }
 };
 
 export default metadata;

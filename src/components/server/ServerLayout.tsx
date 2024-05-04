@@ -8,7 +8,10 @@ interface ServerLayoutProps<T> {
 }
 
 const ServerLayout =
-  <T extends PropsWithChildren>({ Desktop, Mobile }: ServerLayoutProps<T>): FC<T> =>
+  <T extends PropsWithChildren>({
+    Desktop,
+    Mobile
+  }: ServerLayoutProps<T>): FC<T> =>
   (props: T) => {
     const mobile = isMobileDevice();
     return mobile ? <Mobile {...props} /> : <Desktop {...props} />;

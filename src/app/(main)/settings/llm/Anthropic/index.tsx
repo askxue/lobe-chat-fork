@@ -15,7 +15,12 @@ const AnthropicProvider = memo(() => {
       checkModel={'claude-3-haiku-20240307'}
       provider={ModelProvider.Anthropic}
       showEndpoint
-      title={<Anthropic.Text color={isDarkMode ? undefined : Claude.colorPrimary} size={15} />}
+      title={
+        <Anthropic.Text
+          color={isDarkMode ? undefined : Claude.colorPrimary}
+          size={15}
+        />
+      }
     />
   );
 });

@@ -12,7 +12,9 @@ import ExtraCate from './features/ExtraCate';
 const Page = () => {
   const mobile = isMobileDevice();
 
-  if (!mobile) return redirect('/chat');
+  if (!mobile) {
+    return redirect('/chat');
+  }
 
   return (
     <>

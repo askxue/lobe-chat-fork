@@ -146,7 +146,12 @@ src/store/session
 #### store.ts
 
 ```ts
-import { PersistOptions, devtools, persist, subscribeWithSelector } from 'zustand/middleware';
+import {
+  PersistOptions,
+  devtools,
+  persist,
+  subscribeWithSelector
+} from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
 import { devtools } from 'zustand/middleware';
 import { createWithEqualityFn } from 'zustand/traditional';
@@ -158,13 +163,13 @@ import { SessionAction, createSessionSlice } from './slices/session/action';
 //  ===============  聚合 createStoreFn ============ //
 
 export type SessionStore = SessionAction & AgentAction & SessionStoreState;
-const createStore: StateCreator<SessionStore, [['zustand/devtools', never]]> = (...parameters) => ({
+const createStore: StateCreator<SessionStore, [['zustand/devtools', never]]> = (
+  ...parameters
+) => ({
   ...initialState,
   ...createAgentSlice(...parameters),
-  ...createSessionSlice(...parameters),
+  ...createSessionSlice(...parameters)
 });
-
-
 
 //  ===============  实装 useStore ============ //
 
@@ -172,14 +177,13 @@ export const useSessionStore = createWithEqualityFn<SessionStore>()(
   persist(
     subscribeWithSelector(
       devtools(createStore, {
-        name: 'LobeChat_Session' + (isDev ? '_DEV' : ''),
-      }),
+        name: 'LobeChat_Session' + (isDev ? '_DEV' : '')
+      })
     ),
-    persistOptions,
+    persistOptions
   ),
-  shallow,
+  shallow
 );
-
 ```
 
 在这个 `store.ts` 文件中，我们创建了一个 `useSessionStore` 钩子，它使用 `zustand` 库来创建一个全局状态管理器。我们将 initialState 和每个 Slice 的状态和动作合并，以创建完整的 SessionStore。
@@ -206,7 +210,7 @@ export const createSessionSlice: StateCreator<
 > = (set, get) => ({
   useFetchSessions: () => {
     // ...初始化会话的逻辑
-  },
+  }
   // ...其他动作的实现
 });
 ```

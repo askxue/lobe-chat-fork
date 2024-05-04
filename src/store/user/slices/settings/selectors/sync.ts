@@ -10,5 +10,5 @@ export const syncSettingsSelectors = {
   deviceName,
   enableWebRTC,
   webrtcChannelName,
-  webrtcConfig,
+  webrtcConfig
 };

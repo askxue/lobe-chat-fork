@@ -9,7 +9,7 @@ export interface LobeRuntimeAI {
   baseURL?: string;
   chat(
     payload: ChatStreamPayload,
-    options?: ChatCompetitionOptions,
+    options?: ChatCompetitionOptions
   ): Promise<StreamingTextResponse>;
 
   models?(): Promise<any>;
@@ -17,11 +17,12 @@ export interface LobeRuntimeAI {
 
 export abstract class LobeOpenAICompatibleRuntime {
   abstract baseURL: string;
+
   abstract client: OpenAI;
 
   abstract chat(
     payload: ChatStreamPayload,
-    options?: ChatCompetitionOptions,
+    options?: ChatCompetitionOptions
   ): Promise<StreamingTextResponse>;
 
   abstract models(): Promise<ChatModelCard[]>;

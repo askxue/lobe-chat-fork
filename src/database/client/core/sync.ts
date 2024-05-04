@@ -8,7 +8,7 @@ import {
   OnSyncEvent,
   OnSyncStatusChange,
   PeerSyncStatus,
-  StartDataSyncParams,
+  StartDataSyncParams
 } from '@/types/sync';
 
 import { LobeDBSchemaMap, browserDB } from './db';
@@ -17,9 +17,11 @@ const LOG_NAME_SPACE = 'DataSync';
 
 class DataSync {
   private _ydoc: Doc | null = null;
+
   private provider: WebrtcProvider | null = null;
 
   private syncParams!: StartDataSyncParams;
+
   private onAwarenessChange!: OnAwarenessChange;
 
   private waitForConnecting: any;
@@ -30,9 +32,7 @@ class DataSync {
     this._ydoc?.transact(fn);
   }
 
-  getYMap = (tableKey: keyof LobeDBSchemaMap) => {
-    return this._ydoc?.getMap(tableKey);
-  };
+  getYMap = (tableKey: keyof LobeDBSchemaMap) => this._ydoc?.getMap(tableKey);
 
   startDataSync = async (params: StartDataSyncParams) => {
     this.syncParams = params;
@@ -54,7 +54,7 @@ class DataSync {
       onSyncStatusChange,
       user,
       onAwarenessChange,
-      signaling = 'wss://y-webrtc-signaling.lobehub.com',
+      signaling = 'wss://y-webrtc-signaling.lobehub.com'
     } = params;
     // ====== 1. init yjs doc ====== //
 
@@ -70,7 +70,7 @@ class DataSync {
     // clients connected to the same room-name share document updates
     this.provider = new WebrtcProvider(channel.name, this._ydoc!, {
       password: channel.password,
-      signaling: [signaling],
+      signaling: [signaling]
     });
 
     // when fast refresh in dev, the provider will be cached in window
@@ -97,7 +97,8 @@ class DataSync {
     let connectionCheckCount = 0;
 
     this.waitForConnecting = setInterval(() => {
-      const signalingConnection: IWebsocketClient = this.provider!.signalingConns[0];
+      const signalingConnection: IWebsocketClient =
+        this.provider!.signalingConns[0];
 
       if (signalingConnection.connected) {
         onSyncStatusChange?.(PeerSyncStatus.Ready);
@@ -153,7 +154,9 @@ class DataSync {
   }
 
   private initYDoc = async () => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') {
+      return;
+    }
 
     this.logger('[YJS] init YDoc...');
     const { Doc } = await import('yjs');
@@ -183,35 +186,46 @@ class DataSync {
 
   private initSync = async () => {
     await Promise.all(
-      ['sessions', 'sessionGroups', 'topics', 'messages', 'plugins'].map(async (tableKey) =>
-        this.loadDataFromDBtoYjs(tableKey as keyof LobeDBSchemaMap),
-      ),
+      ['sessions', 'sessionGroups', 'topics', 'messages', 'plugins'].map(
+        async (tableKey) =>
+          this.loadDataFromDBtoYjs(tableKey as keyof LobeDBSchemaMap)
+      )
     );
   };
 
-  private initYjsObserve = (onEvent: OnSyncEvent, onSyncStatusChange: OnSyncStatusChange) => {
-    ['sessions', 'sessionGroups', 'topics', 'messages', 'plugins'].forEach((tableKey) => {
-      // listen yjs change
-      this.observeYMapChange(tableKey as keyof LobeDBSchemaMap, onEvent, onSyncStatusChange);
-    });
+  private initYjsObserve = (
+    onEvent: OnSyncEvent,
+    onSyncStatusChange: OnSyncStatusChange
+  ) => {
+    ['sessions', 'sessionGroups', 'topics', 'messages', 'plugins'].forEach(
+      (tableKey) => {
+        // listen yjs change
+        this.observeYMapChange(
+          tableKey as keyof LobeDBSchemaMap,
+          onEvent,
+          onSyncStatusChange
+        );
+      }
+    );
   };
 
   private observeYMapChange = (
     tableKey: keyof LobeDBSchemaMap,
     onEvent: OnSyncEvent,
-    onSyncStatusChange: OnSyncStatusChange,
+    onSyncStatusChange: OnSyncStatusChange
   ) => {
     const table = browserDB[tableKey];
     const yItemMap = this.getYMap(tableKey);
     const updateSyncEvent = throttle(onEvent, 1000);
 
     // 定义一个变量来保存定时器的ID
-    // eslint-disable-next-line no-undef
     let debounceTimer: NodeJS.Timeout;
 
     yItemMap?.observe(async (event) => {
       // abort local change
-      if (event.transaction.local) return;
+      if (event.transaction.local) {
+        return;
+      }
 
       // 每次有变更时，都先清除之前的定时器（如果有的话），然后设置新的定时器
       clearTimeout(debounceTimer);
@@ -278,13 +292,19 @@ class DataSync {
     this.logger('[DB]:', tableKey, yItemMap?.size);
   };
 
-  private initAwareness = ({ user }: Pick<StartDataSyncParams, 'user' | 'onAwarenessChange'>) => {
-    if (!this.provider) return;
+  private initAwareness = ({
+    user
+  }: Pick<StartDataSyncParams, 'user' | 'onAwarenessChange'>) => {
+    if (!this.provider) {
+      return;
+    }
 
     const awareness = this.provider.awareness;
 
     awareness.setLocalState({ clientID: awareness.clientID, user });
-    this.onAwarenessChange?.([{ ...user, clientID: awareness.clientID, current: true }]);
+    this.onAwarenessChange?.([
+      { ...user, clientID: awareness.clientID, current: true }
+    ]);
 
     awareness.on('change', () => this.syncAwarenessToUI());
   };
@@ -292,12 +312,14 @@ class DataSync {
   private syncAwarenessToUI = async () => {
     const awareness = this.provider?.awareness;
 
-    if (!awareness) return;
+    if (!awareness) {
+      return;
+    }
 
     const state = Array.from(awareness.getStates().values()).map((s) => ({
       ...s.user,
       clientID: s.clientID,
-      current: s.clientID === awareness.clientID,
+      current: s.clientID === awareness.clientID
     }));
 
     this.onAwarenessChange?.(uniqBy(state, 'id'));
@@ -308,13 +330,20 @@ export const dataSync = new DataSync();
 
 interface IWebsocketClient {
   binaryType: 'arraybuffer' | 'blob' | null;
+
   connect(): void;
+
   connected: boolean;
   connecting: boolean;
+
   destroy(): void;
+
   disconnect(): void;
+
   lastMessageReceived: number;
+
   send(message: any): void;
+
   shouldConnect: boolean;
   unsuccessfulReconnects: number;
   url: string;

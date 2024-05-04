@@ -2,13 +2,17 @@ import {
   AzureKeyCredential,
   ChatRequestMessage,
   GetChatCompletionsOptions,
-  OpenAIClient,
+  OpenAIClient
 } from '@azure/openai';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 
 import { LobeRuntimeAI } from '../BaseAI';
 import { AgentRuntimeErrorType } from '../error';
-import { ChatCompetitionOptions, ChatStreamPayload, ModelProvider } from '../types';
+import {
+  ChatCompetitionOptions,
+  ChatStreamPayload,
+  ModelProvider
+} from '../types';
 import { AgentRuntimeError } from '../utils/createError';
 import { debugStream } from '../utils/debugStream';
 
@@ -16,10 +20,15 @@ export class LobeAzureOpenAI implements LobeRuntimeAI {
   client: OpenAIClient;
 
   constructor(endpoint?: string, apikey?: string, apiVersion?: string) {
-    if (!apikey || !endpoint)
-      throw AgentRuntimeError.createError(AgentRuntimeErrorType.InvalidAzureAPIKey);
+    if (!apikey || !endpoint) {
+      throw AgentRuntimeError.createError(
+        AgentRuntimeErrorType.InvalidAzureAPIKey
+      );
+    }
 
-    this.client = new OpenAIClient(endpoint, new AzureKeyCredential(apikey), { apiVersion });
+    this.client = new OpenAIClient(endpoint, new AzureKeyCredential(apikey), {
+      apiVersion
+    });
 
     this.baseURL = endpoint;
   }
@@ -36,7 +45,7 @@ export class LobeAzureOpenAI implements LobeRuntimeAI {
       const response = await this.client.streamChatCompletions(
         model,
         messages as ChatRequestMessage[],
-        { ...params, abortSignal: options?.signal } as GetChatCompletionsOptions,
+        { ...params, abortSignal: options?.signal } as GetChatCompletionsOptions
       );
 
       const stream = OpenAIStream(response as any);
@@ -61,7 +70,7 @@ export class LobeAzureOpenAI implements LobeRuntimeAI {
         error = {
           cause: error.cause,
           message: error.message,
-          name: error.name,
+          name: error.name
         } as any;
       }
 
@@ -73,7 +82,7 @@ export class LobeAzureOpenAI implements LobeRuntimeAI {
         endpoint: this.baseURL,
         error,
         errorType,
-        provider: ModelProvider.Azure,
+        provider: ModelProvider.Azure
       });
     }
   }

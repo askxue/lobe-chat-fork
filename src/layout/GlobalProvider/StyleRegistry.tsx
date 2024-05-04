@@ -10,7 +10,9 @@ const StyleRegistry = ({ children }: PropsWithChildren) => {
   useServerInsertedHTML(() => {
     // avoid duplicate css insert
     // refs: https://github.com/vercel/next.js/discussions/49354#discussioncomment-6279917
-    if (isInsert.current) return;
+    if (isInsert.current) {
+      return;
+    }
 
     isInsert.current = true;
 
@@ -18,7 +20,9 @@ const StyleRegistry = ({ children }: PropsWithChildren) => {
     return extractStaticStyle().map((item) => item.style);
   });
 
-  return <StyleProvider cache={extractStaticStyle.cache}>{children}</StyleProvider>;
+  return (
+    <StyleProvider cache={extractStaticStyle.cache}>{children}</StyleProvider>
+  );
 };
 
 export default StyleRegistry;

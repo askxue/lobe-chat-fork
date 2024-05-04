@@ -25,13 +25,14 @@ const OllamaModelForm = memo<OllamaModelFormProps>(({ id, model }) => {
   const [completed, setCompleted] = useState(0);
   const [total, setTotal] = useState(0);
   const { remainingTime, downloadSpeed } = useDownloadMonitor(total, completed);
-  const percent = useMemo(() => {
-    return total ? Number(((completed / total) * 100).toFixed(0)) : 0;
-  }, [completed, total]);
+  const percent = useMemo(
+    () => (total ? Number(((completed / total) * 100).toFixed(0)) : 0),
+    [completed, total]
+  );
 
   const [delAndRegenerateMessage, deleteMessage] = useChatStore((s) => [
     s.delAndRegenerateMessage,
-    s.deleteMessage,
+    s.deleteMessage
   ]);
   const theme = useTheme();
 
@@ -52,8 +53,8 @@ const OllamaModelForm = memo<OllamaModelFormProps>(({ id, model }) => {
         delAndRegenerateMessage(id);
       },
       revalidateOnFocus: false,
-      revalidateOnMount: false,
-    },
+      revalidateOnMount: false
+    }
   );
 
   return (
@@ -61,7 +62,9 @@ const OllamaModelForm = memo<OllamaModelFormProps>(({ id, model }) => {
       <FormAction
         avatar={<Ollama color={theme.colorPrimary} size={64} />}
         description={
-          isDownloading ? settingT('ollama.download.desc') : t('unlock.ollama.description')
+          isDownloading
+            ? settingT('ollama.download.desc')
+            : t('unlock.ollama.description')
         }
         title={
           isDownloading
@@ -117,7 +120,7 @@ const OllamaModelForm = memo<OllamaModelFormProps>(({ id, model }) => {
               ? t('unlock.ollama.starting')
               : t('unlock.ollama.downloaded', {
                   completed: formatSize(completed),
-                  total: formatSize(total),
+                  total: formatSize(total)
                 })}
         </Button>
         {isDownloading ? (

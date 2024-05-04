@@ -6,7 +6,11 @@ import { ClientOptions } from 'openai';
 
 import { LobeRuntimeAI } from '../BaseAI';
 import { AgentRuntimeErrorType } from '../error';
-import { ChatCompetitionOptions, ChatStreamPayload, ModelProvider } from '../types';
+import {
+  ChatCompetitionOptions,
+  ChatStreamPayload,
+  ModelProvider
+} from '../types';
 import { AgentRuntimeError } from '../utils/createError';
 import { debugStream } from '../utils/debugStream';
 import { desensitizeUrl } from '../utils/desensitizeUrl';
@@ -20,7 +24,11 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
   baseURL: string;
 
   constructor({ apiKey, baseURL = DEFAULT_BASE_URL }: ClientOptions) {
-    if (!apiKey) throw AgentRuntimeError.createError(AgentRuntimeErrorType.InvalidAnthropicAPIKey);
+    if (!apiKey) {
+      throw AgentRuntimeError.createError(
+        AgentRuntimeErrorType.InvalidAnthropicAPIKey
+      );
+    }
 
     this.client = new Anthropic({ apiKey, baseURL });
     this.baseURL = this.client.baseURL;
@@ -40,9 +48,9 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
           stream: true,
           system: system_message?.content as string,
           temperature: temperature,
-          top_p: top_p,
+          top_p: top_p
         },
-        { signal: options?.signal },
+        { signal: options?.signal }
       );
 
       const [prod, debug] = response.tee();
@@ -51,9 +59,12 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
         debugStream(debug.toReadableStream()).catch(console.error);
       }
 
-      return new StreamingTextResponse(AnthropicStream(prod, options?.callback), {
-        headers: options?.headers,
-      });
+      return new StreamingTextResponse(
+        AnthropicStream(prod, options?.callback),
+        {
+          headers: options?.headers
+        }
+      );
     } catch (error) {
       let desensitizedEndpoint = this.baseURL;
 
@@ -68,7 +79,7 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
               endpoint: desensitizedEndpoint,
               error: error as any,
               errorType: AgentRuntimeErrorType.InvalidAnthropicAPIKey,
-              provider: ModelProvider.Anthropic,
+              provider: ModelProvider.Anthropic
             });
           }
           default: {
@@ -80,7 +91,7 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
         endpoint: desensitizedEndpoint,
         error: error as any,
         errorType: AgentRuntimeErrorType.AnthropicBizError,
-        provider: ModelProvider.Anthropic,
+        provider: ModelProvider.Anthropic
       });
     }
   }

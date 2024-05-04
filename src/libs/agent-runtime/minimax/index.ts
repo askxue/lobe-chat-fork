@@ -10,7 +10,7 @@ import {
   ChatCompetitionOptions,
   ChatCompletionErrorPayload,
   ChatStreamPayload,
-  ModelProvider,
+  ModelProvider
 } from '../types';
 import { AgentRuntimeError } from '../utils/createError';
 
@@ -21,7 +21,8 @@ interface MinimaxBaseResponse {
   };
 }
 
-type MinimaxResponse = Partial<OpenAI.ChatCompletionChunk> & MinimaxBaseResponse;
+type MinimaxResponse = Partial<OpenAI.ChatCompletionChunk> &
+  MinimaxBaseResponse;
 
 function throwIfErrorResponse(data: MinimaxResponse) {
   // error status code
@@ -33,19 +34,19 @@ function throwIfErrorResponse(data: MinimaxResponse) {
     throw AgentRuntimeError.chat({
       error: {
         code: data.base_resp.status_code,
-        message: data.base_resp.status_msg,
+        message: data.base_resp.status_msg
       },
       errorType: AgentRuntimeErrorType.InvalidMinimaxAPIKey,
-      provider: ModelProvider.Minimax,
+      provider: ModelProvider.Minimax
     });
   }
   throw AgentRuntimeError.chat({
     error: {
       code: data.base_resp.status_code,
-      message: data.base_resp.status_msg,
+      message: data.base_resp.status_msg
     },
     errorType: AgentRuntimeErrorType.MinimaxBizError,
-    provider: ModelProvider.Minimax,
+    provider: ModelProvider.Minimax
   });
 }
 
@@ -64,39 +65,46 @@ export class LobeMinimaxAI implements LobeRuntimeAI {
   apiKey: string;
 
   constructor({ apiKey }: { apiKey?: string }) {
-    if (!apiKey) throw AgentRuntimeError.createError(AgentRuntimeErrorType.InvalidMinimaxAPIKey);
+    if (!apiKey) {
+      throw AgentRuntimeError.createError(
+        AgentRuntimeErrorType.InvalidMinimaxAPIKey
+      );
+    }
 
     this.apiKey = apiKey;
   }
 
   async chat(
     payload: ChatStreamPayload,
-    options?: ChatCompetitionOptions,
+    options?: ChatCompetitionOptions
   ): Promise<StreamingTextResponse> {
     try {
       let streamController: ReadableStreamDefaultController | undefined;
       const readableStream = new ReadableStream({
         start(controller) {
           streamController = controller;
-        },
+        }
       });
 
-      const response = await fetch('https://api.minimax.chat/v1/text/chatcompletion_v2', {
-        body: JSON.stringify(this.buildCompletionsParams(payload)),
-        headers: {
-          'Authorization': `Bearer ${this.apiKey}`,
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      });
+      const response = await fetch(
+        'https://api.minimax.chat/v1/text/chatcompletion_v2',
+        {
+          body: JSON.stringify(this.buildCompletionsParams(payload)),
+          headers: {
+            Authorization: `Bearer ${this.apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          method: 'POST'
+        }
+      );
       if (!response.body || !response.ok) {
         throw AgentRuntimeError.chat({
           error: {
             status: response.status,
-            statusText: response.statusText,
+            statusText: response.statusText
           },
           errorType: AgentRuntimeErrorType.MinimaxBizError,
-          provider: ModelProvider.Minimax,
+          provider: ModelProvider.Minimax
         });
       }
 
@@ -112,7 +120,9 @@ export class LobeMinimaxAI implements LobeRuntimeAI {
       // wait for the first response, and throw error if minix returns an error
       await this.parseFirstResponse(prod2.getReader());
 
-      return new StreamingTextResponse(readableStream, { headers: options?.headers });
+      return new StreamingTextResponse(readableStream, {
+        headers: options?.headers
+      });
     } catch (error) {
       console.log('error', error);
       const err = error as Error | ChatCompletionErrorPayload;
@@ -123,12 +133,12 @@ export class LobeMinimaxAI implements LobeRuntimeAI {
         cause: err.cause,
         message: err.message,
         name: err.name,
-        stack: err.stack,
+        stack: err.stack
       };
       throw AgentRuntimeError.chat({
         error: errorResult,
         errorType: AgentRuntimeErrorType.MinimaxBizError,
-        provider: ModelProvider.Minimax,
+        provider: ModelProvider.Minimax
       });
     }
   }
@@ -154,13 +164,13 @@ export class LobeMinimaxAI implements LobeRuntimeAI {
       max_tokens: this.getMaxTokens(payload.model),
       stream: true,
       temperature: temperature === 0 ? undefined : temperature,
-      top_p: top_p === 0 ? undefined : top_p,
+      top_p: top_p === 0 ? undefined : top_p
     };
   }
 
   private async parseResponse(
     reader: ReadableStreamDefaultReader<Uint8Array>,
-    streamController: ReadableStreamDefaultController | undefined,
+    streamController: ReadableStreamDefaultController | undefined
   ) {
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
@@ -178,7 +188,9 @@ export class LobeMinimaxAI implements LobeRuntimeAI {
     streamController?.close();
   }
 
-  private async parseFirstResponse(reader: ReadableStreamDefaultReader<Uint8Array>) {
+  private async parseFirstResponse(
+    reader: ReadableStreamDefaultReader<Uint8Array>
+  ) {
     const decoder = new TextDecoder();
 
     const { value } = await reader.read();

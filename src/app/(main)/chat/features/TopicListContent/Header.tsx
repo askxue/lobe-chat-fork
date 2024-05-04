@@ -13,11 +13,13 @@ import TopicSearchBar from './TopicSearchBar';
 
 const Header = memo(() => {
   const { t } = useTranslation('chat');
-  const [topicLength, removeUnstarredTopic, removeAllTopic] = useChatStore((s) => [
-    topicSelectors.currentTopicLength(s),
-    s.removeUnstarredTopic,
-    s.removeSessionTopics,
-  ]);
+  const [topicLength, removeUnstarredTopic, removeAllTopic] = useChatStore(
+    (s) => [
+      topicSelectors.currentTopicLength(s),
+      s.removeUnstarredTopic,
+      s.removeSessionTopics
+    ]
+  );
 
   const [showSearch, setShowSearch] = useState(false);
   const { modal } = App.useApp();
@@ -33,9 +35,9 @@ const Header = memo(() => {
             centered: true,
             okButtonProps: { danger: true },
             onOk: removeUnstarredTopic,
-            title: t('topic.confirmRemoveUnstarred', { ns: 'chat' }),
+            title: t('topic.confirmRemoveUnstarred', { ns: 'chat' })
           });
-        },
+        }
       },
       {
         danger: true,
@@ -47,12 +49,12 @@ const Header = memo(() => {
             centered: true,
             okButtonProps: { danger: true },
             onOk: removeAllTopic,
-            title: t('topic.confirmRemoveAll', { ns: 'chat' }),
+            title: t('topic.confirmRemoveAll', { ns: 'chat' })
           });
-        },
-      },
+        }
+      }
     ],
-    [],
+    []
   );
 
   return showSearch ? (
@@ -63,14 +65,18 @@ const Header = memo(() => {
     <SidebarHeader
       actions={
         <>
-          <ActionIcon icon={Search} onClick={() => setShowSearch(true)} size={'small'} />
+          <ActionIcon
+            icon={Search}
+            onClick={() => setShowSearch(true)}
+            size={'small'}
+          />
           <Dropdown
             arrow={false}
             menu={{
               items: items,
               onClick: ({ domEvent }) => {
                 domEvent.stopPropagation();
-              },
+              }
             }}
             trigger={['click']}
           >

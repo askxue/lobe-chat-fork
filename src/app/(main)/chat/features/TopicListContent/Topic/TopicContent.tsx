@@ -8,7 +8,7 @@ import {
   PencilLine,
   Star,
   Trash,
-  Wand2,
+  Wand2
 } from 'lucide-react';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +27,7 @@ const useStyles = createStyles(({ css }) => ({
     height: 28px;
     line-height: 28px;
     text-align: start;
-  `,
+  `
 }));
 const { Paragraph } = Typography;
 
@@ -48,7 +48,7 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
     removeTopic,
     autoRenameTopicTitle,
     duplicateTopic,
-    isLoading,
+    isLoading
   ] = useChatStore((s) => [
     s.topicRenamingId === id,
     s.favoriteTopic,
@@ -56,7 +56,7 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
     s.removeTopic,
     s.autoRenameTopicTitle,
     s.duplicateTopic,
-    s.topicLoadingIds.includes(id),
+    s.topicLoadingIds.includes(id)
   ]);
   const { styles, theme } = useStyles();
 
@@ -74,7 +74,7 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
         label: t('topic.actions.autoRename', { ns: 'chat' }),
         onClick: () => {
           autoRenameTopicTitle(id);
-        },
+        }
       },
       {
         icon: <Icon icon={PencilLine} />,
@@ -82,10 +82,10 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
         label: t('rename'),
         onClick: () => {
           toggleEditing(true);
-        },
+        }
       },
       {
-        type: 'divider',
+        type: 'divider'
       },
       {
         icon: <Icon icon={LucideCopy} />,
@@ -93,7 +93,7 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
         label: t('topic.actions.duplicate', { ns: 'chat' }),
         onClick: () => {
           duplicateTopic(id);
-        },
+        }
       },
       // {
       //   icon: <Icon icon={LucideDownload} />,
@@ -104,7 +104,7 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
       //   },
       // },
       {
-        type: 'divider',
+        type: 'divider'
       },
       // {
       //   icon: <Icon icon={Share2} />,
@@ -117,7 +117,9 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
         key: 'delete',
         label: t('delete'),
         onClick: () => {
-          if (!id) return;
+          if (!id) {
+            return;
+          }
 
           modal.confirm({
             centered: true,
@@ -125,12 +127,12 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
             onOk: async () => {
               await removeTopic(id);
             },
-            title: t('topic.confirmRemoveTopic', { ns: 'chat' }),
+            title: t('topic.confirmRemoveTopic', { ns: 'chat' })
           });
-        },
-      },
+        }
+      }
     ],
-    [],
+    []
   );
 
   return (
@@ -140,8 +142,12 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
       horizontal
       justify={'space-between'}
       onDoubleClick={(e) => {
-        if (!id) return;
-        if (e.altKey) toggleEditing(true);
+        if (!id) {
+          return;
+        }
+        if (e.altKey) {
+          toggleEditing(true);
+        }
       }}
     >
       <ActionIcon
@@ -150,7 +156,9 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
         icon={isLoading ? LucideLoader2 : Star}
         onClick={(e) => {
           e.stopPropagation();
-          if (!id) return;
+          if (!id) {
+            return;
+          }
           favoriteTopic(id, !fav);
         }}
         size={'small'}
@@ -177,7 +185,7 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
           showEditIcon={false}
           size={'small'}
           style={{
-            height: 28,
+            height: 28
           }}
           type={'pure'}
           value={title}
@@ -190,7 +198,7 @@ const TopicContent = memo<TopicContentProps>(({ id, title, fav, showMore }) => {
             items: items,
             onClick: ({ domEvent }) => {
               domEvent.stopPropagation();
-            },
+            }
           }}
           trigger={['click']}
         >

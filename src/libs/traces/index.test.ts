@@ -9,7 +9,7 @@ import { TraceClient } from './index';
 describe('TraceClient', () => {
   it('should not initialize Langfuse client when ENABLE_LANGFUSE is false', () => {
     vi.spyOn(server, 'getServerConfig').mockReturnValue({
-      ENABLE_LANGFUSE: false,
+      ENABLE_LANGFUSE: false
     } as any);
     const client = new TraceClient();
     expect(client['_client']).toBeUndefined();
@@ -17,7 +17,7 @@ describe('TraceClient', () => {
 
   it('should throw error if LANGFUSE keys are missing', () => {
     vi.spyOn(server, 'getServerConfig').mockReturnValue({
-      ENABLE_LANGFUSE: true,
+      ENABLE_LANGFUSE: true
     } as any);
     expect(() => new TraceClient()).toThrow('NO_LANGFUSE_KEY_ERROR');
   });
@@ -31,7 +31,7 @@ describe('TraceClient', () => {
       ENABLE_LANGFUSE: true,
       LANGFUSE_PUBLIC_KEY: 'public-key',
       LANGFUSE_SECRET_KEY: 'secret-key',
-      LANGFUSE_HOST: 'host',
+      LANGFUSE_HOST: 'host'
     } as any);
 
     const client = new TraceClient();
@@ -44,12 +44,14 @@ describe('TraceClient', () => {
   it('should call shutdownAsync method of Langfuse client', async () => {
     const mockShutdownAsync = vi.fn();
 
-    vi.spyOn(Langfuse.prototype, 'shutdownAsync').mockImplementation(mockShutdownAsync);
+    vi.spyOn(Langfuse.prototype, 'shutdownAsync').mockImplementation(
+      mockShutdownAsync
+    );
     vi.spyOn(server, 'getServerConfig').mockReturnValue({
       ENABLE_LANGFUSE: true,
       LANGFUSE_PUBLIC_KEY: 'public-key',
       LANGFUSE_SECRET_KEY: 'secret-key',
-      LANGFUSE_HOST: 'host',
+      LANGFUSE_HOST: 'host'
     } as any);
 
     const client = new TraceClient();

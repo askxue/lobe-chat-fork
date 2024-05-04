@@ -8,7 +8,7 @@ import { LOBE_LOCALE_COOKIE } from '@/const/locale';
 import {
   LOBE_THEME_APPEARANCE,
   LOBE_THEME_NEUTRAL_COLOR,
-  LOBE_THEME_PRIMARY_COLOR,
+  LOBE_THEME_PRIMARY_COLOR
 } from '@/const/theme';
 import { getServerGlobalConfig } from '@/server/globalConfig';
 import { ServerConfigStoreProvider } from '@/store/serverConfig';
@@ -25,7 +25,6 @@ let DebugUI: FC = () => null;
 // we need use Constant Folding to remove code below in production
 // refs: https://webpack.js.org/plugins/internal-plugins/#constplugin
 if (process.env.NODE_ENV === 'development') {
-  // eslint-disable-next-line unicorn/no-lonely-if
   if (getClientConfig().DEBUG_MODE) {
     DebugUI = dynamic(() => import('@/features/DebugUI'), { ssr: false }) as FC;
   }

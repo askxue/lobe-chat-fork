@@ -7,11 +7,11 @@ import Avatar from './Avatar';
 
 // Mock UserAvatar and UserPanel components
 vi.mock('@/features/User/UserAvatar', () => ({
-  default: vi.fn(() => <div>Mocked UserAvatar</div>),
+  default: vi.fn(() => <div>Mocked UserAvatar</div>)
 }));
 
 vi.mock('@/features/User/UserPanel', () => ({
-  default: vi.fn(({ children }) => <div>Mocked UserPanel {children}</div>),
+  default: vi.fn(({ children }) => <div>Mocked UserPanel {children}</div>)
 }));
 
 beforeEach(() => {
@@ -50,6 +50,8 @@ describe('Avatar', () => {
 
     fireEvent.click(screen.getByRole('close-guide'));
 
-    expect(updateGuideStateMock).toHaveBeenCalledWith({ moveSettingsToAvatar: true });
+    expect(updateGuideStateMock).toHaveBeenCalledWith({
+      moveSettingsToAvatar: true
+    });
   });
 });

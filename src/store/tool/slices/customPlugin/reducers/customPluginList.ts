@@ -20,11 +20,14 @@ export type UpdatePluginAction = {
   type: 'updateItem';
 };
 
-export type CustomPluginListDispatch = AddPluginAction | DeletePluginAction | UpdatePluginAction;
+export type CustomPluginListDispatch =
+  | AddPluginAction
+  | DeletePluginAction
+  | UpdatePluginAction;
 
 export const devPluginListReducer = (
   state: DevListState,
-  payload: CustomPluginListDispatch,
+  payload: CustomPluginListDispatch
 ): DevListState => {
   switch (payload.type) {
     case 'addItem': {
@@ -33,7 +36,9 @@ export const devPluginListReducer = (
 
     case 'deleteItem': {
       return produce(state, (draftState) => {
-        const deleteIndex = state.findIndex((plugin) => plugin.identifier === payload.id);
+        const deleteIndex = state.findIndex(
+          (plugin) => plugin.identifier === payload.id
+        );
         if (deleteIndex !== -1) {
           draftState.splice(deleteIndex, 1);
         }
@@ -42,7 +47,9 @@ export const devPluginListReducer = (
 
     case 'updateItem': {
       return produce(state, (draftState) => {
-        const updateIndex = state.findIndex((plugin) => plugin.identifier === payload.id);
+        const updateIndex = state.findIndex(
+          (plugin) => plugin.identifier === payload.id
+        );
         if (updateIndex !== -1) {
           draftState[updateIndex] = payload.plugin;
         }

@@ -5,8 +5,8 @@ import { LobeMetaDataSchema } from '@/types/meta';
 const fewShotsSchema = z.array(
   z.object({
     content: z.string(),
-    role: z.string(),
-  }),
+    role: z.string()
+  })
 );
 
 const ttsSchema = z.object({
@@ -17,9 +17,9 @@ const ttsSchema = z.object({
     .object({
       edge: z.string().optional(),
       microsoft: z.string().optional(),
-      openai: z.string().default(''),
+      openai: z.string().default('')
     })
-    .optional(),
+    .optional()
 });
 
 export const AgentSchema = z.object({
@@ -39,12 +39,12 @@ export const AgentSchema = z.object({
     max_tokens: z.number().optional(),
     presence_penalty: z.number().default(0).optional(),
     temperature: z.number().default(0.6).optional(),
-    top_p: z.number().default(1).optional(),
+    top_p: z.number().default(1).optional()
   }),
   plugins: z.array(z.string()).optional(),
   provider: z.string().default('openai').optional(),
   systemRole: z.string().default(''),
-  tts: ttsSchema.optional(),
+  tts: ttsSchema.optional()
 });
 
 export const DB_SessionSchema = z.object({
@@ -52,7 +52,7 @@ export const DB_SessionSchema = z.object({
   group: z.string().default('default'),
   meta: LobeMetaDataSchema,
   pinned: z.number().int().min(0).max(1).optional(),
-  type: z.enum(['agent', 'group']).default('agent'),
+  type: z.enum(['agent', 'group']).default('agent')
 });
 
 export type DB_Session = z.infer<typeof DB_SessionSchema>;

@@ -32,7 +32,7 @@ const WebRTC = memo(() => {
         children: <ChannelNameInput form={form} />,
         desc: t('sync.webrtc.channelName.desc'),
         label: t('sync.webrtc.channelName.title'),
-        name: ['sync', 'webrtc', 'channelName'],
+        name: ['sync', 'webrtc', 'channelName']
       },
       {
         children: (
@@ -43,7 +43,7 @@ const WebRTC = memo(() => {
         ),
         desc: t('sync.webrtc.channelPassword.desc'),
         label: t('sync.webrtc.channelPassword.title'),
-        name: ['sync', 'webrtc', 'channelPassword'],
+        name: ['sync', 'webrtc', 'channelPassword']
       },
       {
         children: !channelName ? (
@@ -57,8 +57,8 @@ const WebRTC = memo(() => {
 
         label: t('sync.webrtc.enabled.title'),
         minWidth: undefined,
-        name: ['sync', 'webrtc', 'enabled'],
-      },
+        name: ['sync', 'webrtc', 'enabled']
+      }
     ],
     extra: (
       <div
@@ -79,7 +79,7 @@ const WebRTC = memo(() => {
           {t('sync.webrtc.desc')}
         </Typography.Text>
       </Flexbox>
-    ),
+    )
   };
 
   return (

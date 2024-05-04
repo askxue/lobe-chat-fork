@@ -1,7 +1,12 @@
 import { Icon } from '@lobehub/ui';
 import { Button, Dropdown } from 'antd';
 import { createStyles } from 'antd-style';
-import { BotMessageSquare, LucideCheck, LucideChevronDown, MessageSquarePlus } from 'lucide-react';
+import {
+  BotMessageSquare,
+  LucideCheck,
+  LucideChevronDown,
+  MessageSquarePlus
+} from 'lucide-react';
 import { memo } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useTranslation } from 'react-i18next';
@@ -15,15 +20,13 @@ import { useUserStore } from '@/store/user';
 import { preferenceSelectors } from '@/store/user/selectors';
 import { isMacOS } from '@/utils/platform';
 
-const useStyles = createStyles(({ css, prefixCls }) => {
-  return {
-    arrow: css`
-      &.${prefixCls}-btn.${prefixCls}-btn-icon-only {
-        width: 28px;
-      }
-    `,
-  };
-});
+const useStyles = createStyles(({ css, prefixCls }) => ({
+  arrow: css`
+    &.${prefixCls}-btn.${prefixCls}-btn-icon-only {
+      width: 28px;
+    }
+  `
+}));
 
 const isMac = isMacOS();
 
@@ -34,7 +37,7 @@ const SendMore = memo(() => {
 
   const [useCmdEnterToSend, updatePreference] = useUserStore((s) => [
     preferenceSelectors.useCmdEnterToSend(s),
-    s.updatePreference,
+    s.updatePreference
   ]);
   const addAIMessage = useChatStore((s) => s.addAIMessage);
 
@@ -49,8 +52,8 @@ const SendMore = memo(() => {
     },
     {
       enableOnFormTags: true,
-      preventDefault: true,
-    },
+      preventDefault: true
+    }
   );
 
   return (
@@ -63,17 +66,17 @@ const SendMore = memo(() => {
             label: t('input.sendWithEnter'),
             onClick: () => {
               updatePreference({ useCmdEnterToSend: false });
-            },
+            }
           },
           {
             icon: useCmdEnterToSend ? <Icon icon={LucideCheck} /> : <div />,
             key: 'sendWithCmdEnter',
             label: t('input.sendWithCmdEnter', {
-              meta: isMac ? 'Cmd' : 'Ctrl',
+              meta: isMac ? 'Cmd' : 'Ctrl'
             }),
             onClick: () => {
               updatePreference({ useCmdEnterToSend: true });
-            },
+            }
           },
           { type: 'divider' },
           {
@@ -82,7 +85,7 @@ const SendMore = memo(() => {
             label: t('input.addAi'),
             onClick: () => {
               addAIMessage();
-            },
+            }
           },
           {
             icon: <Icon icon={MessageSquarePlus} />,
@@ -95,9 +98,9 @@ const SendMore = memo(() => {
             ),
             onClick: () => {
               sendMessage({ onlyAddUserMessage: true });
-            },
-          },
-        ],
+            }
+          }
+        ]
       }}
       placement={'topRight'}
       trigger={['hover']}

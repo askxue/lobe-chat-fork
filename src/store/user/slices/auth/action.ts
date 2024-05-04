@@ -23,7 +23,9 @@ export interface UserAuthAction {
   logout: () => Promise<void>;
   refreshUserConfig: () => Promise<void>;
 
-  useFetchUserConfig: (initServer: boolean) => SWRResponse<UserConfig | undefined>;
+  useFetchUserConfig: (
+    initServer: boolean
+  ) => SWRResponse<UserConfig | undefined>;
 }
 
 export const createAuthSlice: StateCreator<
@@ -54,17 +56,21 @@ export const createAuthSlice: StateCreator<
     useSWR<UserConfig | undefined>(
       [USER_CONFIG_FETCH_KEY, initServer],
       async () => {
-        if (!initServer) return;
+        if (!initServer) {
+          return;
+        }
         return userService.getUserConfig();
       },
       {
         onSuccess: (data) => {
-          if (!data) return;
+          if (!data) {
+            return;
+          }
 
           set(
             { avatar: data.avatar, settings: data.settings, userId: data.uuid },
             false,
-            n('fetchUserConfig', data),
+            n('fetchUserConfig', data)
           );
 
           // when get the user config ,refresh the model provider list to the latest
@@ -75,7 +81,7 @@ export const createAuthSlice: StateCreator<
             switchLang('auto');
           }
         },
-        revalidateOnFocus: false,
-      },
-    ),
+        revalidateOnFocus: false
+      }
+    )
 });

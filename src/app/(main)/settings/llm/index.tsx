@@ -19,28 +19,26 @@ import ZeroOne from './ZeroOne';
 import Zhipu from './Zhipu';
 import Footer from './components/Footer';
 
-const Page = () => {
-  return (
-    <Flexbox gap={24}>
-      <OpenAI />
-      <Ollama />
-      <Azure />
-      <Google />
-      <Anthropic />
-      <Bedrock />
-      <OpenRouter />
-      <TogetherAI />
-      <Groq />
-      <Perplexity />
-      <Minimax />
-      <Mistral />
-      <Moonshot />
-      <Zhipu />
-      <ZeroOne />
-      <Footer />
-    </Flexbox>
-  );
-};
+const Page = () => (
+  <Flexbox gap={24}>
+    <OpenAI />
+    <Ollama />
+    <Azure />
+    <Google />
+    <Anthropic />
+    <Bedrock />
+    <OpenRouter />
+    <TogetherAI />
+    <Groq />
+    <Perplexity />
+    <Minimax />
+    <Mistral />
+    <Moonshot />
+    <Zhipu />
+    <ZeroOne />
+    <Footer />
+  </Flexbox>
+);
 
 Page.displayName = 'LlmSetting';
 

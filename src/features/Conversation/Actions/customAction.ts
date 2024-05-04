@@ -11,17 +11,17 @@ export const useCustomActions = () => {
   const translate = {
     children: localeOptions.map((i) => ({
       key: i.value,
-      label: t(`lang.${i.value}`, { ns: 'common' }),
+      label: t(`lang.${i.value}`, { ns: 'common' })
     })),
     icon: LanguagesIcon,
     key: 'translate',
-    label: t('translate.action'),
+    label: t('translate.action')
   } as ActionIconGroupItems;
 
   const tts = {
     icon: Play,
     key: 'tts',
-    label: t('tts.action'),
+    label: t('tts.action')
   } as ActionIconGroupItems;
 
   return useMemo(() => ({ translate, tts }), []);

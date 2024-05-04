@@ -26,7 +26,7 @@ const useStyles = createStyles(({ css, responsive }) => ({
     ${responsive.mobile} {
       font-size: 20px;
     }
-  `,
+  `
 }));
 
 export interface AgentListProps {
@@ -37,7 +37,7 @@ const AgentList = memo<AgentListProps>(({ mobile }) => {
   const { t } = useTranslation('market');
   const [searchKeywords, useFetchAgentList] = useMarketStore((s) => [
     s.searchKeywords,
-    s.useFetchAgentList,
+    s.useFetchAgentList
   ]);
   const { isLoading } = useFetchAgentList();
   const agentList = useMarketStore(agentMarketSelectors.getAgentList, isEqual);
@@ -55,7 +55,7 @@ const AgentList = memo<AgentListProps>(({ mobile }) => {
         <AgentCard variant={'compact'} {...props} />
       </LazyLoad>
     ),
-    [],
+    []
   );
 
   if (isLoading || (!searchKeywords && agentList?.length === 0)) {
@@ -70,7 +70,9 @@ const AgentList = memo<AgentListProps>(({ mobile }) => {
   }
 
   if (searchKeywords) {
-    if (agentList.length === 0) return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+    if (agentList.length === 0) {
+      return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+    }
     return (
       <Grid rows={3}>
         {agentList.map((item) => (

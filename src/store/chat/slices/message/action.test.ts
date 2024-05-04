@@ -16,7 +16,7 @@ import { useChatStore } from '../../store';
 
 vi.stubGlobal(
   'fetch',
-  vi.fn(() => Promise.resolve(new Response('mock'))),
+  vi.fn(() => Promise.resolve(new Response('mock')))
 );
 
 // Mock service
@@ -28,13 +28,13 @@ vi.mock('@/services/message', () => ({
     removeMessages: vi.fn(() => Promise.resolve()),
     createMessage: vi.fn(() => Promise.resolve('new-message-id')),
     updateMessage: vi.fn(),
-    removeAllMessages: vi.fn(() => Promise.resolve()),
-  },
+    removeAllMessages: vi.fn(() => Promise.resolve())
+  }
 }));
 vi.mock('@/services/topic', () => ({
   topicService: {
-    removeTopic: vi.fn(() => Promise.resolve()),
-  },
+    removeTopic: vi.fn(() => Promise.resolve())
+  }
 }));
 vi.mock('@/services/chat', async (importOriginal) => {
   const module = await importOriginal();
@@ -42,15 +42,16 @@ vi.mock('@/services/chat', async (importOriginal) => {
   return {
     chatService: {
       createAssistantMessage: vi.fn(() => Promise.resolve('assistant-message')),
-      createAssistantMessageStream: (module as any).chatService.createAssistantMessageStream,
-    },
+      createAssistantMessageStream: (module as any).chatService
+        .createAssistantMessageStream
+    }
   };
 });
 
 vi.mock('@/store/chat/selectors', () => ({
   chatSelectors: {
-    currentChats: vi.fn(),
-  },
+    currentChats: vi.fn()
+  }
 }));
 
 const realCoreProcessMessage = useChatStore.getState().coreProcessMessage;
@@ -63,14 +64,18 @@ const mockState = {
   refreshMessages: vi.fn(),
   refreshTopic: vi.fn(),
   coreProcessMessage: vi.fn(),
-  saveToTopic: vi.fn(),
+  saveToTopic: vi.fn()
 };
 
 beforeEach(() => {
   vi.clearAllMocks();
   useChatStore.setState(mockState, false);
-  vi.spyOn(agentSelectors, 'currentAgentConfig').mockImplementation(() => DEFAULT_AGENT_CONFIG);
-  vi.spyOn(sessionMetaSelectors, 'currentAgentMeta').mockImplementation(() => ({ tags: [] }));
+  vi.spyOn(agentSelectors, 'currentAgentConfig').mockImplementation(
+    () => DEFAULT_AGENT_CONFIG
+  );
+  vi.spyOn(sessionMetaSelectors, 'currentAgentMeta').mockImplementation(() => ({
+    tags: []
+  }));
 });
 
 afterEach(() => {
@@ -174,7 +179,9 @@ describe('chatMessage actions', () => {
       expect(mockState.activeTopicId).not.toBeUndefined(); // 确保在测试前 activeTopicId 存在
       expect(refreshTopicSpy).toHaveBeenCalled();
       expect(mockState.refreshMessages).toHaveBeenCalled();
-      expect(topicService.removeTopic).toHaveBeenCalledWith(mockState.activeTopicId);
+      expect(topicService.removeTopic).toHaveBeenCalledWith(
+        mockState.activeTopicId
+      );
       expect(switchTopicSpy).toHaveBeenCalled();
     });
   });
@@ -226,7 +233,9 @@ describe('chatMessage actions', () => {
       const files = [{ id: 'file-id', url: 'file-url' }];
 
       // Mock messageService.create to resolve with a message id
-      (messageService.createMessage as Mock).mockResolvedValue('new-message-id');
+      (messageService.createMessage as Mock).mockResolvedValue(
+        'new-message-id'
+      );
 
       await act(async () => {
         await result.current.sendMessage({ message, files });
@@ -237,7 +246,7 @@ describe('chatMessage actions', () => {
         files: files.map((f) => f.id),
         role: 'user',
         sessionId: mockState.activeId,
-        topicId: mockState.activeTopicId,
+        topicId: mockState.activeTopicId
       });
       expect(result.current.refreshMessages).toHaveBeenCalled();
       expect(result.current.coreProcessMessage).toHaveBeenCalled();
@@ -251,17 +260,21 @@ describe('chatMessage actions', () => {
         const enableAutoCreateTopic = false;
 
         // Mock messageService.create to resolve with a message id
-        (messageService.createMessage as Mock).mockResolvedValue('new-message-id');
+        (messageService.createMessage as Mock).mockResolvedValue(
+          'new-message-id'
+        );
 
         // Mock agent config to simulate auto-create topic behavior
         (agentSelectors.currentAgentConfig as Mock).mockImplementation(() => ({
           autoCreateTopicThreshold,
-          enableAutoCreateTopic,
+          enableAutoCreateTopic
         }));
 
         // Mock the currentChats selector to return a list that does not reach the threshold
         (chatSelectors.currentChats as Mock).mockReturnValue(
-          Array.from({ length: autoCreateTopicThreshold + 1 }, (_, i) => ({ id: `msg-${i}` })),
+          Array.from({ length: autoCreateTopicThreshold + 1 }, (_, i) => ({
+            id: `msg-${i}`
+          }))
         );
 
         // Mock saveToTopic and switchTopic to simulate not being called
@@ -273,7 +286,7 @@ describe('chatMessage actions', () => {
             ...mockState,
             activeTopicId: undefined,
             saveToTopic: saveToTopicMock,
-            switchTopic: switchTopicMock,
+            switchTopic: switchTopicMock
           });
 
           await result.current.sendMessage({ message });
@@ -292,15 +305,19 @@ describe('chatMessage actions', () => {
         // Mock agent config to simulate auto-create topic behavior
         (agentSelectors.currentAgentConfig as Mock).mockImplementation(() => ({
           autoCreateTopicThreshold,
-          enableAutoCreateTopic,
+          enableAutoCreateTopic
         }));
 
         // Mock messageService.create to resolve with a message id
-        (messageService.createMessage as Mock).mockResolvedValue('new-message-id');
+        (messageService.createMessage as Mock).mockResolvedValue(
+          'new-message-id'
+        );
 
         // Mock the currentChats selector to return a list that reaches the threshold
         (chatSelectors.currentChats as Mock).mockReturnValue(
-          Array.from({ length: autoCreateTopicThreshold }, (_, i) => ({ id: `msg-${i}` })),
+          Array.from({ length: autoCreateTopicThreshold }, (_, i) => ({
+            id: `msg-${i}`
+          }))
         );
 
         // Mock saveToTopic to resolve with a topic id and switchTopic to switch to the new topic
@@ -312,7 +329,7 @@ describe('chatMessage actions', () => {
             ...mockState,
             activeTopicId: undefined,
             saveToTopic: saveToTopicMock,
-            switchTopic: switchTopicMock,
+            switchTopic: switchTopicMock
           });
         });
 
@@ -331,17 +348,21 @@ describe('chatMessage actions', () => {
         const enableAutoCreateTopic = true;
 
         // Mock messageService.create to resolve with a message id
-        (messageService.createMessage as Mock).mockResolvedValue('new-message-id');
+        (messageService.createMessage as Mock).mockResolvedValue(
+          'new-message-id'
+        );
 
         // Mock agent config to simulate auto-create topic behavior
         (agentSelectors.currentAgentConfig as Mock).mockImplementation(() => ({
           autoCreateTopicThreshold,
-          enableAutoCreateTopic,
+          enableAutoCreateTopic
         }));
 
         // Mock the currentChats selector to return a list that does not reach the threshold
         (chatSelectors.currentChats as Mock).mockReturnValue(
-          Array.from({ length: autoCreateTopicThreshold - 1 }, (_, i) => ({ id: `msg-${i}` })),
+          Array.from({ length: autoCreateTopicThreshold - 1 }, (_, i) => ({
+            id: `msg-${i}`
+          }))
         );
 
         // Mock saveToTopic and switchTopic to simulate not being called
@@ -353,7 +374,7 @@ describe('chatMessage actions', () => {
             ...mockState,
             activeTopicId: undefined,
             saveToTopic: saveToTopicMock,
-            switchTopic: switchTopicMock,
+            switchTopic: switchTopicMock
           });
 
           await result.current.sendMessage({ message });
@@ -373,7 +394,7 @@ describe('chatMessage actions', () => {
       // Mock the currentChats selector to return a list that includes the message to be resent
       (chatSelectors.currentChats as Mock).mockReturnValue([
         // ... other messages
-        { id: messageId, role: 'user', content: 'Resend this message' },
+        { id: messageId, role: 'user', content: 'Resend this message' }
         // ... other messages
       ]);
 
@@ -385,7 +406,11 @@ describe('chatMessage actions', () => {
       });
 
       expect(messageService.removeMessage).not.toHaveBeenCalledWith(messageId);
-      expect(mockState.coreProcessMessage).toHaveBeenCalledWith(expect.any(Array), messageId, {});
+      expect(mockState.coreProcessMessage).toHaveBeenCalledWith(
+        expect.any(Array),
+        messageId,
+        {}
+      );
     });
 
     it('should not perform any action if the message id does not exist', async () => {
@@ -414,10 +439,15 @@ describe('chatMessage actions', () => {
       const newContent = 'Updated content';
 
       await act(async () => {
-        await result.current.internalUpdateMessageContent(messageId, newContent);
+        await result.current.internalUpdateMessageContent(
+          messageId,
+          newContent
+        );
       });
 
-      expect(messageService.updateMessage).toHaveBeenCalledWith(messageId, { content: newContent });
+      expect(messageService.updateMessage).toHaveBeenCalledWith(messageId, {
+        content: newContent
+      });
     });
 
     it('should dispatch message update action', async () => {
@@ -427,14 +457,17 @@ describe('chatMessage actions', () => {
       const dispatchMessageSpy = vi.spyOn(result.current, 'dispatchMessage');
 
       await act(async () => {
-        await result.current.internalUpdateMessageContent(messageId, newContent);
+        await result.current.internalUpdateMessageContent(
+          messageId,
+          newContent
+        );
       });
 
       expect(dispatchMessageSpy).toHaveBeenCalledWith({
         id: messageId,
         key: 'content',
         type: 'updateMessage',
-        value: newContent,
+        value: newContent
       });
     });
 
@@ -444,7 +477,10 @@ describe('chatMessage actions', () => {
       const newContent = 'Updated content';
 
       await act(async () => {
-        await result.current.internalUpdateMessageContent(messageId, newContent);
+        await result.current.internalUpdateMessageContent(
+          messageId,
+          newContent
+        );
       });
 
       expect(result.current.refreshMessages).toHaveBeenCalled();
@@ -461,16 +497,20 @@ describe('chatMessage actions', () => {
         role: 'user',
         content: 'Hello, world!',
         sessionId: mockState.activeId,
-        topicId: mockState.activeTopicId,
+        topicId: mockState.activeTopicId
       } as ChatMessage;
       const messages = [userMessage];
 
       // 模拟 AI 响应
       const aiResponse = 'Hello, human!';
-      (chatService.createAssistantMessage as Mock).mockResolvedValue(aiResponse);
+      (chatService.createAssistantMessage as Mock).mockResolvedValue(
+        aiResponse
+      );
       const spy = vi.spyOn(chatService, 'createAssistantMessageStream');
       // 模拟消息创建
-      (messageService.createMessage as Mock).mockResolvedValue('assistant-message-id');
+      (messageService.createMessage as Mock).mockResolvedValue(
+        'assistant-message-id'
+      );
 
       await act(async () => {
         await result.current.coreProcessMessage(messages, userMessage.id);
@@ -484,8 +524,8 @@ describe('chatMessage actions', () => {
           fromModel: expect.anything(),
           parentId: userMessage.id,
           sessionId: mockState.activeId,
-          topicId: mockState.activeTopicId,
-        }),
+          topicId: mockState.activeTopicId
+        })
       );
 
       // 验证 AI 服务是否被调用
@@ -499,7 +539,10 @@ describe('chatMessage actions', () => {
   describe('stopGenerateMessage action', () => {
     it('should stop generating message and set loading states correctly', async () => {
       const { result } = renderHook(() => useChatStore());
-      const toggleChatLoadingSpy = vi.spyOn(result.current, 'toggleChatLoading');
+      const toggleChatLoadingSpy = vi.spyOn(
+        result.current,
+        'toggleChatLoading'
+      );
       const abortController = new AbortController();
 
       act(() => {
@@ -511,7 +554,11 @@ describe('chatMessage actions', () => {
       });
 
       expect(abortController.signal.aborted).toBe(true);
-      expect(toggleChatLoadingSpy).toHaveBeenCalledWith(false, undefined, expect.any(String));
+      expect(toggleChatLoadingSpy).toHaveBeenCalledWith(
+        false,
+        undefined,
+        expect.any(String)
+      );
     });
 
     it('should not do anything if there is no abortController', async () => {
@@ -535,7 +582,7 @@ describe('chatMessage actions', () => {
         const actual = await vi.importActual('swr');
         return {
           ...(actual as any),
-          mutate: vi.fn(),
+          mutate: vi.fn()
         };
       });
     });
@@ -556,7 +603,11 @@ describe('chatMessage actions', () => {
       });
 
       // 确保 mutate 调用了正确的参数
-      expect(mutate).toHaveBeenCalledWith(['SWR_USE_FETCH_MESSAGES', activeId, activeTopicId]);
+      expect(mutate).toHaveBeenCalledWith([
+        'SWR_USE_FETCH_MESSAGES',
+        activeId,
+        activeTopicId
+      ]);
     });
     it('should handle errors during refreshing messages', async () => {
       useChatStore.setState({ refreshMessages: realRefreshMessages });
@@ -568,7 +619,9 @@ describe('chatMessage actions', () => {
       });
 
       await act(async () => {
-        await expect(result.current.refreshMessages()).rejects.toThrow('Mutate error');
+        await expect(result.current.refreshMessages()).rejects.toThrow(
+          'Mutate error'
+        );
       });
 
       // 确保恢复 mutate 的模拟，以免影响其他测试
@@ -589,7 +642,9 @@ describe('chatMessage actions', () => {
       // 设置模拟返回值
       (messageService.getMessages as Mock).mockResolvedValue(messages);
 
-      const { result } = renderHook(() => useChatStore().useFetchMessages(sessionId, topicId));
+      const { result } = renderHook(() =>
+        useChatStore().useFetchMessages(sessionId, topicId)
+      );
 
       // 等待异步操作完成
       await waitFor(() => {
@@ -601,14 +656,19 @@ describe('chatMessage actions', () => {
   describe('fetchAIChatMessage', () => {
     it('should fetch AI chat message and return content', async () => {
       const { result } = renderHook(() => useChatStore());
-      const messages = [{ id: 'message-id', content: 'Hello', role: 'user' }] as ChatMessage[];
+      const messages = [
+        { id: 'message-id', content: 'Hello', role: 'user' }
+      ] as ChatMessage[];
       const assistantMessageId = 'assistant-message-id';
       const aiResponse = 'Hello, human!';
 
       (fetch as Mock).mockResolvedValueOnce(new Response(aiResponse));
 
       await act(async () => {
-        const response = await result.current.fetchAIChatMessage(messages, assistantMessageId);
+        const response = await result.current.fetchAIChatMessage(
+          messages,
+          assistantMessageId
+        );
         expect(response.content).toEqual(aiResponse);
         expect(response.isFunctionCall).toEqual(false);
         expect(response.functionCallAtEnd).toEqual(false);
@@ -618,7 +678,9 @@ describe('chatMessage actions', () => {
 
     it('should handle function call message at start of AI response', async () => {
       const { result } = renderHook(() => useChatStore());
-      const messages = [{ id: 'message-id', content: 'Hello', role: 'user' }] as ChatMessage[];
+      const messages = [
+        { id: 'message-id', content: 'Hello', role: 'user' }
+      ] as ChatMessage[];
       const assistantMessageId = 'assistant-message-id';
       const aiResponse =
         '{"tool_calls":[{"id":"call_sbca","type":"function","function":{"name":"pluginName____apiName","arguments":{"key":"value"}}}]}';
@@ -627,7 +689,10 @@ describe('chatMessage actions', () => {
       vi.mocked(fetch).mockResolvedValueOnce(new Response(aiResponse));
 
       await act(async () => {
-        const response = await result.current.fetchAIChatMessage(messages, assistantMessageId);
+        const response = await result.current.fetchAIChatMessage(
+          messages,
+          assistantMessageId
+        );
         expect(response.content).toEqual(aiResponse);
         expect(response.isFunctionCall).toEqual(true);
         expect(response.functionCallAtEnd).toEqual(false);
@@ -637,7 +702,9 @@ describe('chatMessage actions', () => {
 
     it('should handle function message at end of AI response', async () => {
       const { result } = renderHook(() => useChatStore());
-      const messages = [{ id: 'message-id', content: 'Hello', role: 'user' }] as ChatMessage[];
+      const messages = [
+        { id: 'message-id', content: 'Hello', role: 'user' }
+      ] as ChatMessage[];
       const assistantMessageId = 'assistant-message-id';
       const aiResponse =
         'Hello, human! {"tool_calls":[{"id":"call_sbca","type":"function","function":{"name":"pluginName____apiName","arguments":{"key":"value"}}}]}';
@@ -646,19 +713,24 @@ describe('chatMessage actions', () => {
       vi.mocked(fetch).mockResolvedValue(new Response(aiResponse));
 
       await act(async () => {
-        const response = await result.current.fetchAIChatMessage(messages, assistantMessageId);
+        const response = await result.current.fetchAIChatMessage(
+          messages,
+          assistantMessageId
+        );
         expect(response.content).toEqual(aiResponse);
         expect(response.isFunctionCall).toEqual(true);
         expect(response.functionCallAtEnd).toEqual(true);
         expect(response.functionCallContent).toEqual(
-          '{"tool_calls":[{"id":"call_sbca","type":"function","function":{"name":"pluginName____apiName","arguments":{"key":"value"}}}]}',
+          '{"tool_calls":[{"id":"call_sbca","type":"function","function":{"name":"pluginName____apiName","arguments":{"key":"value"}}}]}'
         );
       });
     });
 
     it('should handle errors during AI response fetching', async () => {
       const { result } = renderHook(() => useChatStore());
-      const messages = [{ id: 'message-id', content: 'Hello', role: 'user' }] as ChatMessage[];
+      const messages = [
+        { id: 'message-id', content: 'Hello', role: 'user' }
+      ] as ChatMessage[];
       const assistantMessageId = 'assistant-message-id';
 
       // Mock fetch to reject with an error
@@ -667,7 +739,7 @@ describe('chatMessage actions', () => {
 
       await act(async () => {
         await expect(
-          result.current.fetchAIChatMessage(messages, assistantMessageId),
+          result.current.fetchAIChatMessage(messages, assistantMessageId)
         ).rejects.toThrow(errorMessage);
       });
     });
@@ -693,7 +765,11 @@ describe('chatMessage actions', () => {
 
       // Set initial loading state
       act(() => {
-        result.current.toggleChatLoading(true, 'message-id', 'start-loading-action');
+        result.current.toggleChatLoading(
+          true,
+          'message-id',
+          'start-loading-action'
+        );
       });
 
       // Stop loading
@@ -714,7 +790,10 @@ describe('chatMessage actions', () => {
         result.current.toggleChatLoading(true, 'message-id', 'loading-action');
       });
 
-      expect(addEventListenerSpy).toHaveBeenCalledWith('beforeunload', expect.any(Function));
+      expect(addEventListenerSpy).toHaveBeenCalledWith(
+        'beforeunload',
+        expect.any(Function)
+      );
     });
 
     it('should remove beforeunload event listener when loading stops', () => {
@@ -723,11 +802,22 @@ describe('chatMessage actions', () => {
 
       // Start and then stop loading to trigger the removal of the event listener
       act(() => {
-        result.current.toggleChatLoading(true, 'message-id', 'start-loading-action');
-        result.current.toggleChatLoading(false, undefined, 'stop-loading-action');
+        result.current.toggleChatLoading(
+          true,
+          'message-id',
+          'start-loading-action'
+        );
+        result.current.toggleChatLoading(
+          false,
+          undefined,
+          'stop-loading-action'
+        );
       });
 
-      expect(removeEventListenerSpy).toHaveBeenCalledWith('beforeunload', expect.any(Function));
+      expect(removeEventListenerSpy).toHaveBeenCalledWith(
+        'beforeunload',
+        expect.any(Function)
+      );
     });
 
     it('should not create a new AbortController if one already exists', () => {

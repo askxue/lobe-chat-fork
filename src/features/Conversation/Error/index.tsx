@@ -2,7 +2,10 @@ import { IPluginErrorType, PluginErrorType } from '@lobehub/chat-plugin-sdk';
 import type { AlertProps } from '@lobehub/ui';
 import { memo } from 'react';
 
-import { AgentRuntimeErrorType, ILobeAgentRuntimeErrorType } from '@/libs/agent-runtime';
+import {
+  AgentRuntimeErrorType,
+  ILobeAgentRuntimeErrorType
+} from '@/libs/agent-runtime';
 import { ChatErrorType, ErrorType } from '@/types/fetch';
 import { ChatMessage, ChatMessageError } from '@/types/message';
 
@@ -15,20 +18,24 @@ import PluginSettings from './PluginSettings';
 
 // Config for the errorMessage display
 export const getErrorAlertConfig = (
-  errorType?: IPluginErrorType | ILobeAgentRuntimeErrorType | ErrorType,
+  errorType?: IPluginErrorType | ILobeAgentRuntimeErrorType | ErrorType
 ): AlertProps | undefined => {
   // OpenAIBizError / ZhipuBizError / GoogleBizError / ...
-  if (typeof errorType === 'string' && (errorType.includes('Biz') || errorType.includes('Invalid')))
+  if (
+    typeof errorType === 'string' &&
+    (errorType.includes('Biz') || errorType.includes('Invalid'))
+  ) {
     return {
       extraDefaultExpand: true,
       extraIsolate: true,
-      type: 'warning',
+      type: 'warning'
     };
+  }
 
   switch (errorType) {
     case AgentRuntimeErrorType.LocationNotSupportError: {
       return {
-        type: 'warning',
+        type: 'warning'
       };
     }
 
@@ -36,7 +43,7 @@ export const getErrorAlertConfig = (
       return {
         extraDefaultExpand: true,
         extraIsolate: true,
-        type: 'warning',
+        type: 'warning'
       };
     }
 
@@ -48,7 +55,9 @@ export const getErrorAlertConfig = (
 
 const ErrorMessageExtra = memo<{ data: ChatMessage }>(({ data }) => {
   const error = data.error as ChatMessageError;
-  if (!error?.type) return;
+  if (!error?.type) {
+    return;
+  }
 
   switch (error.type) {
     case PluginErrorType.PluginSettingsInvalid: {
@@ -64,7 +73,9 @@ const ErrorMessageExtra = memo<{ data: ChatMessage }>(({ data }) => {
     }
 
     case ChatErrorType.InvalidAccessCode: {
-      return <InvalidAccessCode id={data.id} provider={data.error?.body?.provider} />;
+      return (
+        <InvalidAccessCode id={data.id} provider={data.error?.body?.provider} />
+      );
     }
 
     case AgentRuntimeErrorType.InvalidBedrockCredentials:
@@ -80,7 +91,9 @@ const ErrorMessageExtra = memo<{ data: ChatMessage }>(({ data }) => {
     case AgentRuntimeErrorType.InvalidTogetherAIAPIKey:
     case AgentRuntimeErrorType.InvalidZeroOneAPIKey:
     case AgentRuntimeErrorType.NoOpenAIAPIKey: {
-      return <InvalidAPIKey id={data.id} provider={data.error?.body?.provider} />;
+      return (
+        <InvalidAPIKey id={data.id} provider={data.error?.body?.provider} />
+      );
     }
 
     default: {

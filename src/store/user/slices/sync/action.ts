@@ -21,7 +21,7 @@ export interface SyncAction {
   useEnabledSync: (
     userEnableSync: boolean,
     userId: string | undefined,
-    onEvent: OnSyncEvent,
+    onEvent: OnSyncEvent
   ) => SWRResponse;
 }
 
@@ -34,7 +34,9 @@ export const createSyncSlice: StateCreator<
   refreshConnection: async (onEvent) => {
     const userId = userProfileSelectors.userId(get());
 
-    if (!userId) return;
+    if (!userId) {
+      return;
+    }
 
     await get().triggerEnableSync(userId, onEvent);
   },
@@ -43,7 +45,9 @@ export const createSyncSlice: StateCreator<
     // double-check the sync ability
     // if there is no channelName, don't start sync
     const sync = syncSettingsSelectors.webrtcConfig(get());
-    if (!sync.channelName) return false;
+    if (!sync.channelName) {
+      return false;
+    }
 
     const name = syncSettingsSelectors.deviceName(get());
 
@@ -53,7 +57,7 @@ export const createSyncSlice: StateCreator<
     return globalService.enabledSync({
       channel: {
         name: sync.channelName,
-        password: sync.channelPassword,
+        password: sync.channelPassword
       },
       onAwarenessChange(state) {
         set({ syncAwareness: state });
@@ -67,8 +71,8 @@ export const createSyncSlice: StateCreator<
         id: userId,
         // if user don't set the name, use default name
         name: name || defaultUserName,
-        ...browserInfo,
-      },
+        ...browserInfo
+      }
     });
   },
 
@@ -77,10 +81,14 @@ export const createSyncSlice: StateCreator<
       ['enableSync', userEnableSync, userId],
       async () => {
         // if user don't enable sync or no userId ,don't start sync
-        if (!userId) return false;
+        if (!userId) {
+          return false;
+        }
 
         // if user don't enable sync, stop sync
-        if (!userEnableSync) return globalService.disableSync();
+        if (!userEnableSync) {
+          return globalService.disableSync();
+        }
 
         return get().triggerEnableSync(userId, onEvent);
       },
@@ -88,7 +96,7 @@ export const createSyncSlice: StateCreator<
         onSuccess: (syncEnabled) => {
           set({ syncEnabled }, false, n('useEnabledSync'));
         },
-        revalidateOnFocus: false,
-      },
-    ),
+        revalidateOnFocus: false
+      }
+    )
 });

@@ -8,16 +8,20 @@ export const pathString = (
   path: string,
   {
     hash = '',
-    search = '',
+    search = ''
   }: {
     hash?: string;
     search?: string;
-  } = {},
+  } = {}
 ) => {
   const tempBase = 'https://a.com';
   const url = new URL(path, tempBase);
 
-  if (hash) url.hash = hash;
-  if (search) url.search = search;
+  if (hash) {
+    url.hash = hash;
+  }
+  if (search) {
+    url.search = search;
+  }
   return url.toString().replace(tempBase, '');
 };

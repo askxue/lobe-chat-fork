@@ -44,11 +44,14 @@ export const createPreferenceSlice: StateCreator<
           const isEmpty = Object.keys(preference).length === 0;
 
           set(
-            { isPreferenceInit: true, preference: isEmpty ? DEFAULT_PREFERENCE : preference },
+            {
+              isPreferenceInit: true,
+              preference: isEmpty ? DEFAULT_PREFERENCE : preference
+            },
             false,
-            n('initPreference'),
+            n('initPreference')
           );
-        },
-      },
-    ),
+        }
+      }
+    )
 });

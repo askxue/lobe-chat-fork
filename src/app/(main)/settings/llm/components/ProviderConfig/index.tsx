@@ -13,7 +13,7 @@ import {
   LLMProviderApiTokenKey,
   LLMProviderBaseUrlKey,
   LLMProviderConfigKey,
-  LLMProviderModelListKey,
+  LLMProviderModelListKey
 } from '@/app/(main)/settings/llm/const';
 import { FORM_STYLE } from '@/const/layoutTokens';
 import { useUserStore } from '@/store/user';
@@ -28,7 +28,7 @@ const useStyles = createStyles(() => ({
     svg {
       width: unset !important;
     }
-  `,
+  `
 }));
 
 interface ProviderConfigProps {
@@ -60,7 +60,7 @@ const ProviderConfig = memo<ProviderConfigProps>(
     title,
     checkerItem,
     modelList,
-    showBrowserRequest,
+    showBrowserRequest
   }) => {
     const { t } = useTranslation('setting');
     const { t: modelT } = useTranslation('modelProvider');
@@ -71,13 +71,13 @@ const ProviderConfig = memo<ProviderConfigProps>(
       setSettings,
       enabled,
       isFetchOnClient,
-      isProviderEndpointNotEmpty,
+      isProviderEndpointNotEmpty
     ] = useUserStore((s) => [
       s.toggleProviderEnabled,
       s.setSettings,
       modelConfigSelectors.isProviderEnabled(provider)(s),
       modelConfigSelectors.isProviderFetchOnClient(provider)(s),
-      modelConfigSelectors.isProviderEndpointNotEmpty(provider)(s),
+      modelConfigSelectors.isProviderEndpointNotEmpty(provider)(s)
     ]);
 
     useSyncSettings(form);
@@ -94,38 +94,47 @@ const ProviderConfig = memo<ProviderConfigProps>(
             ),
             desc: modelT(`${provider}.token.desc` as any),
             label: modelT(`${provider}.token.title` as any),
-            name: [LLMProviderConfigKey, provider, LLMProviderApiTokenKey],
-          },
+            name: [LLMProviderConfigKey, provider, LLMProviderApiTokenKey]
+          }
         ];
 
     const formItems = [
       ...apiKeyItem,
       showEndpoint && {
         children: (
-          <Input allowClear placeholder={modelT(`${provider}.endpoint.placeholder` as any)} />
+          <Input
+            allowClear
+            placeholder={modelT(`${provider}.endpoint.placeholder` as any)}
+          />
         ),
         desc: modelT(`${provider}.endpoint.desc` as any),
         label: modelT(`${provider}.endpoint.title` as any),
-        name: [LLMProviderConfigKey, provider, LLMProviderBaseUrlKey],
+        name: [LLMProviderConfigKey, provider, LLMProviderBaseUrlKey]
       },
       (showBrowserRequest || (showEndpoint && isProviderEndpointNotEmpty)) && {
         children: (
           <Switch
             onChange={(enabled) => {
-              setSettings({ [LLMProviderConfigKey]: { [provider]: { fetchOnClient: enabled } } });
+              setSettings({
+                [LLMProviderConfigKey]: {
+                  [provider]: { fetchOnClient: enabled }
+                }
+              });
             }}
             value={isFetchOnClient}
           />
         ),
         desc: t('llm.fetchOnClient.desc'),
         label: t('llm.fetchOnClient.title'),
-        minWidth: undefined,
+        minWidth: undefined
       },
       {
         children: (
           <ProviderModelListSelect
             notFoundContent={modelList?.notFoundContent}
-            placeholder={modelList?.placeholder ?? t('llm.modelList.placeholder')}
+            placeholder={
+              modelList?.placeholder ?? t('llm.modelList.placeholder')
+            }
             provider={provider}
             showAzureDeployName={modelList?.azureDeployName}
             showModelFetcher={modelList?.showModelFetcher}
@@ -133,14 +142,14 @@ const ProviderConfig = memo<ProviderConfigProps>(
         ),
         desc: t('llm.modelList.desc'),
         label: t('llm.modelList.title'),
-        name: [LLMProviderConfigKey, provider, LLMProviderModelListKey],
+        name: [LLMProviderConfigKey, provider, LLMProviderModelListKey]
       },
       checkerItem ?? {
         children: <Checker model={checkModel!} provider={provider} />,
         desc: t('llm.checker.desc'),
         label: t('llm.checker.title'),
-        minWidth: undefined,
-      },
+        minWidth: undefined
+      }
     ].filter(Boolean) as FormItemProps[];
 
     const model: ItemGroup = {
@@ -163,12 +172,14 @@ const ProviderConfig = memo<ProviderConfigProps>(
           style={{
             height: 24,
             maxHeight: 24,
-            ...(enabled ? {} : { filter: 'grayscale(100%)', maxHeight: 24, opacity: 0.66 }),
+            ...(enabled
+              ? {}
+              : { filter: 'grayscale(100%)', maxHeight: 24, opacity: 0.66 })
           }}
         >
           {title}
         </Flexbox>
-      ),
+      )
     };
 
     return (
@@ -180,7 +191,7 @@ const ProviderConfig = memo<ProviderConfigProps>(
         itemMinWidth={'max(50%,400px)'}
       />
     );
-  },
+  }
 );
 
 export default ProviderConfig;

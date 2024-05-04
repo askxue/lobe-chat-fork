@@ -4,15 +4,15 @@ import { ChatStore } from '../../store';
 
 const currentTopics = (s: ChatStore): ChatTopic[] => s.topics;
 
-const currentActiveTopic = (s: ChatStore): ChatTopic | undefined => {
-  return s.topics.find((topic) => topic.id === s.activeTopicId);
-};
+const currentActiveTopic = (s: ChatStore): ChatTopic | undefined =>
+  s.topics.find((topic) => topic.id === s.activeTopicId);
 const searchTopics = (s: ChatStore): ChatTopic[] => s.searchTopics;
 
 const displayTopics = (s: ChatStore): ChatTopic[] =>
   s.isSearchingTopic ? searchTopics(s) : currentTopics(s);
 
-const currentUnFavTopics = (s: ChatStore): ChatTopic[] => s.topics.filter((s) => !s.favorite);
+const currentUnFavTopics = (s: ChatStore): ChatTopic[] =>
+  s.topics.filter((s) => !s.favorite);
 
 const currentTopicLength = (s: ChatStore): number => currentTopics(s).length;
 
@@ -28,5 +28,5 @@ export const topicSelectors = {
   currentUnFavTopics,
   displayTopics,
   getTopicById,
-  searchTopics,
+  searchTopics
 };

@@ -16,7 +16,11 @@ import { LobeOpenAI } from './openai';
 import { LobeOpenRouterAI } from './openrouter';
 import { LobePerplexityAI } from './perplexity';
 import { LobeTogetherAI } from './togetherai';
-import { ChatCompetitionOptions, ChatStreamPayload, ModelProvider } from './types';
+import {
+  ChatCompetitionOptions,
+  ChatStreamPayload,
+  ModelProvider
+} from './types';
 import { LobeZeroOneAI } from './zeroone';
 import { LobeZhipuAI } from './zhipu';
 
@@ -105,7 +109,7 @@ class AgentRuntime {
       togetherai: Partial<ClientOptions>;
       zeroone: Partial<ClientOptions>;
       zhipu: Partial<ClientOptions>;
-    }>,
+    }>
   ) {
     let runtimeModel: LobeRuntimeAI;
 
@@ -113,7 +117,9 @@ class AgentRuntime {
       default:
       case ModelProvider.OpenAI: {
         // Will use the openai as default provider
-        runtimeModel = new LobeOpenAI(params.openai ?? (params as any)[provider]);
+        runtimeModel = new LobeOpenAI(
+          params.openai ?? (params as any)[provider]
+        );
         break;
       }
 
@@ -121,7 +127,7 @@ class AgentRuntime {
         runtimeModel = new LobeAzureOpenAI(
           params.azure?.endpoint,
           params.azure?.apikey,
-          params.azure?.apiVersion,
+          params.azure?.apiVersion
         );
         break;
       }

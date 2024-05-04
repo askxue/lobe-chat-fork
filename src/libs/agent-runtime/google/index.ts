@@ -7,7 +7,7 @@ import {
   ChatCompetitionOptions,
   ChatStreamPayload,
   OpenAIChatMessage,
-  UserMessageContentPart,
+  UserMessageContentPart
 } from '../types';
 import { ModelProvider } from '../types/type';
 import { AgentRuntimeError } from '../utils/createError';
@@ -18,19 +18,24 @@ enum HarmCategory {
   HARM_CATEGORY_DANGEROUS_CONTENT = 'HARM_CATEGORY_DANGEROUS_CONTENT',
   HARM_CATEGORY_HARASSMENT = 'HARM_CATEGORY_HARASSMENT',
   HARM_CATEGORY_HATE_SPEECH = 'HARM_CATEGORY_HATE_SPEECH',
-  HARM_CATEGORY_SEXUALLY_EXPLICIT = 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+  HARM_CATEGORY_SEXUALLY_EXPLICIT = 'HARM_CATEGORY_SEXUALLY_EXPLICIT'
 }
 
 enum HarmBlockThreshold {
-  BLOCK_NONE = 'BLOCK_NONE',
+  BLOCK_NONE = 'BLOCK_NONE'
 }
 
 export class LobeGoogleAI implements LobeRuntimeAI {
   private client: GoogleGenerativeAI;
+
   baseURL?: string;
 
   constructor({ apiKey, baseURL }: { apiKey?: string; baseURL?: string }) {
-    if (!apiKey) throw AgentRuntimeError.createError(AgentRuntimeErrorType.InvalidGoogleAPIKey);
+    if (!apiKey) {
+      throw AgentRuntimeError.createError(
+        AgentRuntimeErrorType.InvalidGoogleAPIKey
+      );
+    }
 
     this.client = new GoogleGenerativeAI(apiKey);
     this.baseURL = baseURL;
@@ -48,7 +53,7 @@ export class LobeGoogleAI implements LobeRuntimeAI {
             generationConfig: {
               maxOutputTokens: payload.max_tokens,
               temperature: payload.temperature,
-              topP: payload.top_p,
+              topP: payload.top_p
             },
             model,
             // avoid wide sensitive words
@@ -56,23 +61,23 @@ export class LobeGoogleAI implements LobeRuntimeAI {
             safetySettings: [
               {
                 category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                threshold: HarmBlockThreshold.BLOCK_NONE,
+                threshold: HarmBlockThreshold.BLOCK_NONE
               },
               {
                 category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-                threshold: HarmBlockThreshold.BLOCK_NONE,
+                threshold: HarmBlockThreshold.BLOCK_NONE
               },
               {
                 category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-                threshold: HarmBlockThreshold.BLOCK_NONE,
+                threshold: HarmBlockThreshold.BLOCK_NONE
               },
               {
                 category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-                threshold: HarmBlockThreshold.BLOCK_NONE,
-              },
-            ],
+                threshold: HarmBlockThreshold.BLOCK_NONE
+              }
+            ]
           },
-          { apiVersion: 'v1beta', baseUrl: this.baseURL },
+          { apiVersion: 'v1beta', baseUrl: this.baseURL }
         )
         .generateContentStream({ contents });
 
@@ -92,11 +97,17 @@ export class LobeGoogleAI implements LobeRuntimeAI {
 
       const { errorType, error } = this.parseErrorMessage(err.message);
 
-      throw AgentRuntimeError.chat({ error, errorType, provider: ModelProvider.Google });
+      throw AgentRuntimeError.chat({
+        error,
+        errorType,
+        provider: ModelProvider.Google
+      });
     }
   }
 
-  private convertContentToGooglePart = (content: UserMessageContentPart): Part => {
+  private convertContentToGooglePart = (
+    content: UserMessageContentPart
+  ): Part => {
     switch (content.type) {
       case 'text': {
         return { text: content.text };
@@ -111,14 +122,16 @@ export class LobeGoogleAI implements LobeRuntimeAI {
         return {
           inlineData: {
             data: base64,
-            mimeType: mimeType || 'image/png',
-          },
+            mimeType: mimeType || 'image/png'
+          }
         };
       }
     }
   };
 
-  private convertOAIMessagesToGoogleMessage = (message: OpenAIChatMessage): Content => {
+  private convertOAIMessagesToGoogleMessage = (
+    message: OpenAIChatMessage
+  ): Content => {
     const content = message.content as string | UserMessageContentPart[];
 
     return {
@@ -126,13 +139,16 @@ export class LobeGoogleAI implements LobeRuntimeAI {
         typeof content === 'string'
           ? [{ text: content }]
           : content.map((c) => this.convertContentToGooglePart(c)),
-      role: message.role === 'assistant' ? 'model' : 'user',
+      role: message.role === 'assistant' ? 'model' : 'user'
     };
   };
 
   // convert messages from the Vercel AI SDK Format to the format
   // that is expected by the Google GenAI SDK
-  private buildGoogleMessages = (messages: OpenAIChatMessage[], model: string): Content[] => {
+  private buildGoogleMessages = (
+    messages: OpenAIChatMessage[],
+    model: string
+  ): Content[] => {
     // if the model is gemini-1.5-pro-latest, we don't need any special handling
     if (model === 'gemini-1.5-pro-latest') {
       return messages
@@ -153,7 +169,10 @@ export class LobeGoogleAI implements LobeRuntimeAI {
       // if the last message is a model message and the current message is a model message
       // then we need to add a user message to separate them
       if (lastRole === googleMessage.role) {
-        contents.push({ parts: [{ text: '' }], role: lastRole === 'user' ? 'model' : 'user' });
+        contents.push({
+          parts: [{ text: '' }],
+          role: lastRole === 'user' ? 'model' : 'user'
+        });
       }
 
       // add the current message to the contents
@@ -180,7 +199,9 @@ export class LobeGoogleAI implements LobeRuntimeAI {
       const noNeedVision = messages.every((m) => typeof m.content === 'string');
 
       // so we need to downgrade to gemini-pro
-      if (noNeedVision) finalModel = 'gemini-pro';
+      if (noNeedVision) {
+        finalModel = 'gemini-pro';
+      }
     }
 
     return finalModel;
@@ -192,11 +213,15 @@ export class LobeGoogleAI implements LobeRuntimeAI {
   } {
     const defaultError = {
       error: { message },
-      errorType: AgentRuntimeErrorType.GoogleBizError,
+      errorType: AgentRuntimeErrorType.GoogleBizError
     };
 
-    if (message.includes('location is not supported'))
-      return { error: { message }, errorType: AgentRuntimeErrorType.LocationNotSupportError };
+    if (message.includes('location is not supported')) {
+      return {
+        error: { message },
+        errorType: AgentRuntimeErrorType.LocationNotSupportError
+      };
+    }
 
     try {
       const startIndex = message.lastIndexOf('[');
@@ -214,11 +239,17 @@ export class LobeGoogleAI implements LobeRuntimeAI {
 
       switch (bizError.reason) {
         case 'API_KEY_INVALID': {
-          return { ...defaultError, errorType: AgentRuntimeErrorType.InvalidGoogleAPIKey };
+          return {
+            ...defaultError,
+            errorType: AgentRuntimeErrorType.InvalidGoogleAPIKey
+          };
         }
 
         default: {
-          return { error: json, errorType: AgentRuntimeErrorType.GoogleBizError };
+          return {
+            error: json,
+            errorType: AgentRuntimeErrorType.GoogleBizError
+          };
         }
       }
     } catch {
@@ -234,9 +265,9 @@ type GoogleChatErrors = GoogleChatError[];
 
 interface GoogleChatError {
   '@type': string;
-  'domain': string;
-  'metadata': {
+  domain: string;
+  metadata: {
     service: string;
   };
-  'reason': string;
+  reason: string;
 }

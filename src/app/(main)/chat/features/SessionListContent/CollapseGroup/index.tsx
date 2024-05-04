@@ -35,7 +35,7 @@ const useStyles = createStyles(({ css, prefixCls, token, responsive }) => ({
   `,
   icon: css`
     transition: all 100ms ${token.motionEaseOut};
-  `,
+  `
 }));
 
 const CollapseGroup = memo<CollapseProps>((props) => {

@@ -11,7 +11,10 @@ const TopicSearchBar = memo<{ onClear?: () => void }>(({ onClear }) => {
 
   const [keywords, setKeywords] = useState('');
   const { mobile } = useResponsive();
-  const [activeSessionId, useSearchTopics] = useChatStore((s) => [s.activeId, s.useSearchTopics]);
+  const [activeSessionId, useSearchTopics] = useChatStore((s) => [
+    s.activeId,
+    s.useSearchTopics
+  ]);
 
   useSearchTopics(keywords, activeSessionId);
   useUnmount(() => {
@@ -21,7 +24,9 @@ const TopicSearchBar = memo<{ onClear?: () => void }>(({ onClear }) => {
     <SearchBar
       autoFocus
       onBlur={() => {
-        if (keywords === '') onClear?.();
+        if (keywords === '') {
+          onClear?.();
+        }
       }}
       onChange={(e) => {
         const value = e.target.value;

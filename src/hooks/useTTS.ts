@@ -5,7 +5,7 @@ import {
   TTSOptions,
   useEdgeSpeech,
   useMicrosoftSpeech,
-  useOpenAITTS,
+  useOpenAITTS
 } from '@lobehub/tts/react';
 import isEqual from 'fast-deep-equal';
 
@@ -25,7 +25,10 @@ interface TTSConfig extends TTSOptions {
 
 export const useTTS = (content: string, config?: TTSConfig) => {
   const ttsSettings = useUserStore(settingsSelectors.currentTTS, isEqual);
-  const ttsAgentSettings = useAgentStore(agentSelectors.currentAgentTTS, isEqual);
+  const ttsAgentSettings = useAgentStore(
+    agentSelectors.currentAgentTTS,
+    isEqual
+  );
   const lang = useUserStore(settingsSelectors.currentLanguage);
   const voice = useAgentStore(agentSelectors.currentAgentTTSVoice(lang));
   let useSelectedTTS;
@@ -36,12 +39,12 @@ export const useTTS = (content: string, config?: TTSConfig) => {
       options = {
         api: {
           headers: createHeaderWithOpenAI(),
-          serviceUrl: API_ENDPOINTS.tts,
+          serviceUrl: API_ENDPOINTS.tts
         },
         options: {
           model: ttsSettings.openAI.ttsModel,
-          voice: config?.voice || voice,
-        },
+          voice: config?.voice || voice
+        }
       } as OpenAITTSOptions;
       break;
     }
@@ -55,8 +58,8 @@ export const useTTS = (content: string, config?: TTSConfig) => {
            */
         },
         options: {
-          voice: config?.voice || voice,
-        },
+          voice: config?.voice || voice
+        }
       } as EdgeSpeechOptions;
       break;
     }
@@ -64,11 +67,11 @@ export const useTTS = (content: string, config?: TTSConfig) => {
       useSelectedTTS = useMicrosoftSpeech;
       options = {
         api: {
-          serviceUrl: API_ENDPOINTS.microsoft,
+          serviceUrl: API_ENDPOINTS.microsoft
         },
         options: {
-          voice: config?.voice || voice,
-        },
+          voice: config?.voice || voice
+        }
       } as MicrosoftSpeechOptions;
       break;
     }
@@ -79,6 +82,6 @@ export const useTTS = (content: string, config?: TTSConfig) => {
     ...options,
     onFinish: (arraybuffers) => {
       config?.onUpload?.(options.voice || 'alloy', arraybuffers);
-    },
+    }
   });
 };

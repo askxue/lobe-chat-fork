@@ -3,5 +3,5 @@ import { ttsFilesSelectors } from './slices/tts';
 
 export const filesSelectors = {
   ...imageFilesSelectors,
-  ...ttsFilesSelectors,
+  ...ttsFilesSelectors
 };

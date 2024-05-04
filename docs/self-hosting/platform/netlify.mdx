@@ -31,8 +31,9 @@ Go to [OpenAI API Key](https://platform.openai.com/account/api-keys) to obtain y
 ### Import to Netlify Workspace
 
 <Callout>
-  After testing, it is currently not supported to have a one-click deployment button similar to
-  Vercel/Zeabur. The reason is unknown. Therefore, manual import is required.
+  After testing, it is currently not supported to have a one-click deployment
+  button similar to Vercel/Zeabur. The reason is unknown. Therefore, manual
+  import is required.
 </Callout>
 
 Click "Import from git"
@@ -41,7 +42,9 @@ Click "Import from git"
   alt={'Click "Import from git" in the Netlify workspace'}
   height={362}
   inStep
-  src={'https://github.com/lobehub/lobe-chat/assets/28616219/31b999e5-2a74-45fc-935b-f036e72a684d'}
+  src={
+    'https://github.com/lobehub/lobe-chat/assets/28616219/31b999e5-2a74-45fc-935b-f036e72a684d'
+  }
 />
 
 Then click "Deploy with Github" and authorize Netlify to access your GitHub account.
@@ -50,7 +53,9 @@ Then click "Deploy with Github" and authorize Netlify to access your GitHub acco
   alt={'Authorize Netlify to access your GitHub account'}
   height={273}
   inStep
-  src={'https://github.com/lobehub/lobe-chat/assets/28616219/c9c58141-5ec6-43f1-8d97-0a84a04dcdba'}
+  src={
+    'https://github.com/lobehub/lobe-chat/assets/28616219/c9c58141-5ec6-43f1-8d97-0a84a04dcdba'
+  }
 />
 
 Next, select the LobeChat project:
@@ -59,7 +64,9 @@ Next, select the LobeChat project:
   alt={'Select the LobeChat github project'}
   height={228}
   inStep
-  src={'https://github.com/lobehub/lobe-chat/assets/28616219/6c3968a8-fbbb-4268-a587-edaced2d96af'}
+  src={
+    'https://github.com/lobehub/lobe-chat/assets/28616219/6c3968a8-fbbb-4268-a587-edaced2d96af'
+  }
 />
 
 ### Configure Site Name and Environment Variables
@@ -70,7 +77,9 @@ In this step, you need to configure your site, including the site name, build co
   alt={'Configure LobeChat site name'}
   height={712}
   inStep
-  src={'https://github.com/lobehub/lobe-chat/assets/28616219/f3885537-6d43-422f-b1b8-e70732401025'}
+  src={
+    'https://github.com/lobehub/lobe-chat/assets/28616219/f3885537-6d43-422f-b1b8-e70732401025'
+  }
 />
 
 Click the "Add environment variables" button to add site environment variables:
@@ -79,20 +88,23 @@ Click the "Add environment variables" button to add site environment variables:
   alt={'Add LobeChat site environment variables'}
   height={537}
   inStep
-  src={'https://github.com/lobehub/lobe-chat/assets/28616219/3b607482-4d99-455a-bc10-3090dd4fe3c5'}
+  src={
+    'https://github.com/lobehub/lobe-chat/assets/28616219/3b607482-4d99-455a-bc10-3090dd4fe3c5'
+  }
 />
 
 Taking OpenAI as an example, the environment variables you need to add are as follows:
 
-| Environment Variable | Type | Description | Example |
-| --- | --- | --- | --- |
-| `OPENAI_API_KEY` | Required | This is the API key you applied for on the OpenAI account page | `sk-xxxxxx...xxxxxx` |
-| `ACCESS_CODE` | Required | Add a password to access this service. You can set a long password to prevent brute force attacks. When this value is separated by commas, it becomes an array of passwords | `awCT74` or `e3@09!` or `code1,code2,code3` |
-| `OPENAI_PROXY_URL` | Optional | If you manually configure the OpenAI interface proxy, you can use this configuration to override the default OpenAI API request base URL | `https://aihubmix.com/v1`, default value: `https://api.openai.com/v1` |
+| Environment Variable | Type     | Description                                                                                                                                                                 | Example                                                               |
+| -------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `OPENAI_API_KEY`     | Required | This is the API key you applied for on the OpenAI account page                                                                                                              | `sk-xxxxxx...xxxxxx`                                                  |
+| `ACCESS_CODE`        | Required | Add a password to access this service. You can set a long password to prevent brute force attacks. When this value is separated by commas, it becomes an array of passwords | `awCT74` or `e3@09!` or `code1,code2,code3`                           |
+| `OPENAI_PROXY_URL`   | Optional | If you manually configure the OpenAI interface proxy, you can use this configuration to override the default OpenAI API request base URL                                    | `https://aihubmix.com/v1`, default value: `https://api.openai.com/v1` |
 
 <Callout type={'tip'}>
-  For a complete list of environment variables supported by LobeChat, please refer to the [📘
-  Environment Variables](/docs/self-hosting/environment-variables)
+  For a complete list of environment variables supported by LobeChat, please
+  refer to the [📘 Environment
+  Variables](/docs/self-hosting/environment-variables)
 </Callout>
 
 Afteradding the variables, finally click "Deploy lobe-chat" to enter the deployment phase
@@ -101,7 +113,9 @@ Afteradding the variables, finally click "Deploy lobe-chat" to enter the deploym
   alt={'Environment variables added'}
   height={600}
   inStep
-  src={'https://github.com/lobehub/lobe-chat/assets/28616219/c9f74ec4-ce63-4ce9-b9e2-34bda6fda10b'}
+  src={
+    'https://github.com/lobehub/lobe-chat/assets/28616219/c9f74ec4-ce63-4ce9-b9e2-34bda6fda10b'
+  }
 />
 
 ### Wait for Deployment to Complete
@@ -112,7 +126,9 @@ After clicking deploy, you will enter the site details page, where you can click
   alt={'Netlify site details page'}
   height={396}
   inStep
-  src={'https://github.com/lobehub/lobe-chat/assets/28616219/a7fd85d5-fd32-4756-814e-ff7ab7567fe1'}
+  src={
+    'https://github.com/lobehub/lobe-chat/assets/28616219/a7fd85d5-fd32-4756-814e-ff7ab7567fe1'
+  }
 />
 
 Upon entering the deployment details, you will see the following interface, indicating that your LobeChat is currently being deployed. Simply wait for the deployment to complete.
@@ -121,7 +137,9 @@ Upon entering the deployment details, you will see the following interface, indi
   alt={'LobeChat deployment in progress'}
   height={325}
   inStep
-  src={'https://github.com/lobehub/lobe-chat/assets/28616219/1ed8b13d-046e-47c8-bd61-116ffdf5d01b'}
+  src={
+    'https://github.com/lobehub/lobe-chat/assets/28616219/1ed8b13d-046e-47c8-bd61-116ffdf5d01b'
+  }
 />
 
 During the deployment and build process:
@@ -130,7 +148,9 @@ During the deployment and build process:
   alt={'Deployment in progress'}
   height={558}
   inStep
-  src={'https://github.com/lobehub/lobe-chat/assets/28616219/1c82d707-cb6f-4924-b246-a5235a919864'}
+  src={
+    'https://github.com/lobehub/lobe-chat/assets/28616219/1c82d707-cb6f-4924-b246-a5235a919864'
+  }
 />
 
 ### Deployment Successful, Start Using
@@ -141,7 +161,9 @@ If your Deploy Log in the interface looks like the following, it means your Lobe
   alt={'Deployment Successful'}
   height={558}
   inStep
-  src={'https://github.com/lobehub/lobe-chat/assets/28616219/c1f945d1-f3e2-4100-b6bb-24d4cb13c438'}
+  src={
+    'https://github.com/lobehub/lobe-chat/assets/28616219/c1f945d1-f3e2-4100-b6bb-24d4cb13c438'
+  }
 />
 
 At this point, you can click on "Open production deploy" to access your LobeChat site.

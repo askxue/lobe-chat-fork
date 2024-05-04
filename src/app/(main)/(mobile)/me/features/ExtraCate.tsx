@@ -14,7 +14,9 @@ const ExtraCate = memo(() => {
   return (
     <Flexbox width={'100%'}>
       {mainItems?.map(({ key, icon, label, type, onClick }: any, index) => {
-        if (type === 'divider') return <Divider key={index} />;
+        if (type === 'divider') {
+          return <Divider key={index} />;
+        }
         return <Cell icon={icon} key={key} label={label} onClick={onClick} />;
       })}
     </Flexbox>

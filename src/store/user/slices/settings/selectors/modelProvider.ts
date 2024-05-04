@@ -18,7 +18,9 @@ const serverProviderModelCards =
       | ServerModelProviderConfig
       | undefined;
 
-    if (!config) return;
+    if (!config) {
+      return;
+    }
 
     return config.serverModelCards;
   };
@@ -26,11 +28,12 @@ const serverProviderModelCards =
 const remoteProviderModelCards =
   (provider: GlobalLLMProviderKey) =>
   (s: UserStore): ChatModelCard[] | undefined => {
-    const cards = currentSettings(s).languageModel?.[provider]?.remoteModelCards as
-      | ChatModelCard[]
-      | undefined;
+    const cards = currentSettings(s).languageModel?.[provider]
+      ?.remoteModelCards as ChatModelCard[] | undefined;
 
-    if (!cards) return;
+    if (!cards) {
+      return;
+    }
 
     return cards;
   };
@@ -43,10 +46,12 @@ const isProviderEnabled = (provider: GlobalLLMProviderKey) => (s: UserStore) =>
 /**
  * define all the model list of providers
  */
-const defaultModelProviderList = (s: UserStore): ModelProviderCard[] => s.defaultModelProviderList;
+const defaultModelProviderList = (s: UserStore): ModelProviderCard[] =>
+  s.defaultModelProviderList;
 
-export const getDefaultModeProviderById = (provider: string) => (s: UserStore) =>
-  defaultModelProviderList(s).find((s) => s.id === provider);
+export const getDefaultModeProviderById =
+  (provider: string) => (s: UserStore) =>
+    defaultModelProviderList(s).find((s) => s.id === provider);
 
 /**
  * get the default enabled models for a provider
@@ -56,7 +61,9 @@ export const getDefaultModeProviderById = (provider: string) => (s: UserStore) =
 const getDefaultEnabledModelsById = (provider: string) => (s: UserStore) => {
   const modelProvider = getDefaultModeProviderById(provider)(s);
 
-  if (modelProvider) return filterEnabledModels(modelProvider);
+  if (modelProvider) {
+    return filterEnabledModels(modelProvider);
+  }
 
   return undefined;
 };
@@ -72,30 +79,36 @@ const getDefaultModelCardById = (id: string) => (s: UserStore) => {
 const getModelCardsById =
   (provider: string) =>
   (s: UserStore): ChatModelCard[] => {
-    const builtinCards = getDefaultModeProviderById(provider)(s)?.chatModels || [];
+    const builtinCards =
+      getDefaultModeProviderById(provider)(s)?.chatModels || [];
 
-    const userCards = (getProviderConfigById(provider)(s)?.customModelCards || []).map((model) => ({
+    const userCards = (
+      getProviderConfigById(provider)(s)?.customModelCards || []
+    ).map((model) => ({
       ...model,
-      isCustom: true,
+      isCustom: true
     }));
 
     return uniqBy([...userCards, ...builtinCards], 'id');
   };
 
 const getEnableModelsById = (provider: string) => (s: UserStore) => {
-  if (!getProviderConfigById(provider)(s)?.enabledModels) return;
+  if (!getProviderConfigById(provider)(s)?.enabledModels) {
+    return;
+  }
 
   return getProviderConfigById(provider)(s)?.enabledModels?.filter(Boolean);
 };
 
-const modelProviderList = (s: UserStore): ModelProviderCard[] => s.modelProviderList;
+const modelProviderList = (s: UserStore): ModelProviderCard[] =>
+  s.modelProviderList;
 
 const modelProviderListForModelSelect = (s: UserStore): ModelProviderCard[] =>
   modelProviderList(s)
     .filter((s) => s.enabled)
     .map((provider) => ({
       ...provider,
-      chatModels: provider.chatModels.filter((model) => model.enabled),
+      chatModels: provider.chatModels.filter((model) => model.enabled)
     }));
 
 const getModelCardById = (id: string) => (s: UserStore) => {
@@ -112,7 +125,8 @@ const isModelEnabledFunctionCall = (id: string) => (s: UserStore) =>
 const isModelEnabledVision = (id: string) => (s: UserStore) =>
   getModelCardById(id)(s)?.vision || id.includes('vision');
 
-const isModelEnabledFiles = (id: string) => (s: UserStore) => getModelCardById(id)(s)?.files;
+const isModelEnabledFiles = (id: string) => (s: UserStore) =>
+  getModelCardById(id)(s)?.files;
 
 const isModelEnabledUpload = (id: string) => (s: UserStore) =>
   isModelEnabledVision(id)(s) || isModelEnabledFiles(id)(s);
@@ -120,7 +134,8 @@ const isModelEnabledUpload = (id: string) => (s: UserStore) =>
 const isModelHasMaxToken = (id: string) => (s: UserStore) =>
   typeof getModelCardById(id)(s)?.tokens !== 'undefined';
 
-const modelMaxToken = (id: string) => (s: UserStore) => getModelCardById(id)(s)?.tokens || 0;
+const modelMaxToken = (id: string) => (s: UserStore) =>
+  getModelCardById(id)(s)?.tokens || 0;
 
 export const modelProviderSelectors = {
   defaultModelProviderList,
@@ -145,5 +160,5 @@ export const modelProviderSelectors = {
   modelProviderListForModelSelect,
 
   remoteProviderModelCards,
-  serverProviderModelCards,
+  serverProviderModelCards
 };

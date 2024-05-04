@@ -2,7 +2,8 @@ import AzureAD from 'next-auth/providers/azure-ad';
 
 import { getServerConfig } from '@/config/server';
 
-const { AZURE_AD_CLIENT_ID, AZURE_AD_CLIENT_SECRET, AZURE_AD_TENANT_ID } = getServerConfig();
+const { AZURE_AD_CLIENT_ID, AZURE_AD_CLIENT_SECRET, AZURE_AD_TENANT_ID } =
+  getServerConfig();
 
 const provider = {
   id: 'azure-ad',
@@ -12,8 +13,8 @@ const provider = {
     authorization: { params: { scope: 'openid email profile' } },
     clientId: AZURE_AD_CLIENT_ID,
     clientSecret: AZURE_AD_CLIENT_SECRET,
-    tenantId: AZURE_AD_TENANT_ID,
-  }),
+    tenantId: AZURE_AD_TENANT_ID
+  })
 };
 
 export default provider;

@@ -5,9 +5,16 @@ import type { Store } from './store';
 
 const getAgentList = (s: Store) => {
   const { searchKeywords, agentList } = s;
-  if (!searchKeywords) return agentList;
+  if (!searchKeywords) {
+    return agentList;
+  }
   return agentList.filter(({ meta }) => {
-    const checkMeta: string = [meta.tags, meta.title, meta.description, meta.avatar]
+    const checkMeta: string = [
+      meta.tags,
+      meta.title,
+      meta.description,
+      meta.avatar
+    ]
       .filter(Boolean)
       .join('');
     return checkMeta.toLowerCase().includes(searchKeywords.toLowerCase());
@@ -21,7 +28,9 @@ const currentAgentItem = (s: Store) => getAgentItemById(s.currentIdentifier)(s);
 
 const currentAgentItemSafe = (s: Store): AgentsMarketItem => {
   const item = getAgentItemById(s.currentIdentifier)(s);
-  if (!item) return DEFAULT_AGENTS_MARKET_ITEM;
+  if (!item) {
+    return DEFAULT_AGENTS_MARKET_ITEM;
+  }
 
   return item;
 };
@@ -34,5 +43,5 @@ export const agentMarketSelectors = {
   getAgentItemById,
   getAgentList,
   getAgentTagList,
-  showSideBar,
+  showSideBar
 };

@@ -17,7 +17,9 @@ export interface PluginAction {
   removeAllPlugins: () => Promise<void>;
   updatePluginSettings: <T>(id: string, settings: Partial<T>) => Promise<void>;
   useCheckPluginsIsInstalled: (plugins: string[]) => SWRResponse;
-  validatePluginSettings: (identifier: string) => Promise<ValidationResult | undefined>;
+  validatePluginSettings: (
+    identifier: string
+  ) => Promise<ValidationResult | undefined>;
 }
 
 export const createPluginSlice: StateCreator<
@@ -28,7 +30,9 @@ export const createPluginSlice: StateCreator<
 > = (set, get) => ({
   checkPluginsIsInstalled: async (plugins) => {
     // if there is no plugins, just skip.
-    if (plugins.length === 0) return;
+    if (plugins.length === 0) {
+      return;
+    }
 
     const { loadPluginStore, installPlugins } = get();
 
@@ -52,10 +56,13 @@ export const createPluginSlice: StateCreator<
 
     await get().refreshPlugins();
   },
-  useCheckPluginsIsInstalled: (plugins) => useSWR(plugins, get().checkPluginsIsInstalled),
+  useCheckPluginsIsInstalled: (plugins) =>
+    useSWR(plugins, get().checkPluginsIsInstalled),
   validatePluginSettings: async (identifier) => {
     const manifest = pluginSelectors.getPluginManifestById(identifier)(get());
-    if (!manifest || !manifest.settings) return;
+    if (!manifest || !manifest.settings) {
+      return;
+    }
     const settings = pluginSelectors.getPluginSettingsById(identifier)(get());
 
     // validate the settings
@@ -63,8 +70,10 @@ export const createPluginSlice: StateCreator<
     const validator = new Validator(manifest.settings as Schema);
     const result = validator.validate(settings);
 
-    if (!result.valid) return { errors: result.errors, valid: false };
+    if (!result.valid) {
+      return { errors: result.errors, valid: false };
+    }
 
     return { errors: [], valid: true };
-  },
+  }
 });

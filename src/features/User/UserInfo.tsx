@@ -18,7 +18,7 @@ const useStyles = createStyles(({ css, token }) => ({
   username: css`
     line-height: 1;
     color: ${token.colorTextDescription};
-  `,
+  `
 }));
 
 const UserInfo = memo<{ onClick?: () => void }>(({ onClick }) => {
@@ -28,7 +28,13 @@ const UserInfo = memo<{ onClick?: () => void }>(({ onClick }) => {
   const DEFAULT_NICKNAME = t('userPanel.defaultNickname');
 
   return (
-    <Flexbox align={'center'} gap={12} horizontal paddingBlock={12} paddingInline={16}>
+    <Flexbox
+      align={'center'}
+      gap={12}
+      horizontal
+      paddingBlock={12}
+      paddingInline={16}
+    >
       <UserAvatar background={theme.colorFill} onClick={onClick} size={48} />
       <Flexbox flex={1} gap={6}>
         <div className={styles.nickname}>{DEFAULT_NICKNAME}</div>

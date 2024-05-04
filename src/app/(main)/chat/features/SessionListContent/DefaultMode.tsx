@@ -26,13 +26,22 @@ const SessionDefaultMode = memo(() => {
   const [useFetchSessions] = useSessionStore((s) => [s.useFetchSessions]);
   useFetchSessions();
 
-  const defaultSessions = useSessionStore(sessionSelectors.defaultSessions, isEqual);
-  const customSessionGroups = useSessionStore(sessionSelectors.customSessionGroups, isEqual);
-  const pinnedSessions = useSessionStore(sessionSelectors.pinnedSessions, isEqual);
+  const defaultSessions = useSessionStore(
+    sessionSelectors.defaultSessions,
+    isEqual
+  );
+  const customSessionGroups = useSessionStore(
+    sessionSelectors.customSessionGroups,
+    isEqual
+  );
+  const pinnedSessions = useSessionStore(
+    sessionSelectors.pinnedSessions,
+    isEqual
+  );
 
   const [sessionGroupKeys, updatePreference] = useGlobalStore((s) => [
     preferenceSelectors.sessionGroupKeys(s),
-    s.updatePreference,
+    s.updatePreference
   ]);
 
   const items = useMemo(
@@ -41,9 +50,14 @@ const SessionDefaultMode = memo(() => {
         pinnedSessions &&
           pinnedSessions.length > 0 && {
             children: <SessionList dataSource={pinnedSessions} />,
-            extra: <Actions isPinned openConfigModal={() => setConfigGroupModalOpen(true)} />,
+            extra: (
+              <Actions
+                isPinned
+                openConfigModal={() => setConfigGroupModalOpen(true)}
+              />
+            ),
             key: SessionDefaultGroup.Pinned,
-            label: t('pin'),
+            label: t('pin')
           },
         ...(customSessionGroups || []).map(({ id, name, children }) => ({
           children: <SessionList dataSource={children} groupId={id} />,
@@ -52,23 +66,27 @@ const SessionDefaultMode = memo(() => {
               id={id}
               isCustomGroup
               onOpenChange={(isOpen) => {
-                if (isOpen) setActiveGroupId(id);
+                if (isOpen) {
+                  setActiveGroupId(id);
+                }
               }}
               openConfigModal={() => setConfigGroupModalOpen(true)}
               openRenameModal={() => setRenameGroupModalOpen(true)}
             />
           ),
           key: id,
-          label: name,
+          label: name
         })),
         {
           children: <SessionList dataSource={defaultSessions || []} />,
-          extra: <Actions openConfigModal={() => setConfigGroupModalOpen(true)} />,
+          extra: (
+            <Actions openConfigModal={() => setConfigGroupModalOpen(true)} />
+          ),
           key: SessionDefaultGroup.Default,
-          label: t('defaultList'),
-        },
+          label: t('defaultList')
+        }
       ].filter(Boolean) as CollapseProps['items'],
-    [customSessionGroups, pinnedSessions, defaultSessions],
+    [customSessionGroups, pinnedSessions, defaultSessions]
   );
 
   return (
@@ -78,7 +96,8 @@ const SessionDefaultMode = memo(() => {
         activeKey={sessionGroupKeys}
         items={items}
         onChange={(keys) => {
-          const expandSessionGroupKeys = typeof keys === 'string' ? [keys] : keys;
+          const expandSessionGroupKeys =
+            typeof keys === 'string' ? [keys] : keys;
 
           updatePreference({ expandSessionGroupKeys });
         }}

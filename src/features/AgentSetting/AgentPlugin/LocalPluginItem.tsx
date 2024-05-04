@@ -8,15 +8,21 @@ import { useToolStore } from '@/store/tool';
 import { useStore } from '../store';
 
 const MarketList = memo<{ id: string }>(({ id }) => {
-  const [toggleAgentPlugin, hasPlugin] = useStore((s) => [s.toggleAgentPlugin, !!s.config.plugins]);
+  const [toggleAgentPlugin, hasPlugin] = useStore((s) => [
+    s.toggleAgentPlugin,
+    !!s.config.plugins
+  ]);
   const plugins = useStore((s) => s.config.plugins || []);
 
   const [useFetchPluginList, fetchPluginManifest] = useToolStore((s) => [
     s.useFetchPluginStore,
-    s.installPlugin,
+    s.installPlugin
   ]);
 
-  const pluginManifestLoading = useToolStore((s) => s.pluginInstallLoading, isEqual);
+  const pluginManifestLoading = useToolStore(
+    (s) => s.pluginInstallLoading,
+    isEqual
+  );
 
   useFetchPluginList();
 

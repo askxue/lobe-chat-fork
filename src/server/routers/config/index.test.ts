@@ -57,9 +57,9 @@ describe('configRouter', () => {
 
           const result = response.languageModel?.openai?.serverModelCards;
 
-          expect(result?.find((s) => s.id === 'gpt-4-0125-preview')?.displayName).toEqual(
-            'gpt-4-32k',
-          );
+          expect(
+            result?.find((s) => s.id === 'gpt-4-0125-preview')?.displayName
+          ).toEqual('gpt-4-32k');
 
           process.env.OPENAI_MODEL_LIST = '';
         });
@@ -88,7 +88,7 @@ describe('configRouter', () => {
             functionCall: true,
             enabled: true,
             id: 'gpt-4-1106-preview',
-            tokens: 128000,
+            tokens: 128000
           });
 
           process.env.OPENAI_MODEL_LIST = '';
@@ -104,22 +104,22 @@ describe('configRouter', () => {
           expect(result).toContainEqual({
             displayName: 'model1',
             id: 'model1',
-            enabled: true,
+            enabled: true
           });
           expect(result).toContainEqual({
             displayName: 'model2',
             enabled: true,
-            id: 'model2',
+            id: 'model2'
           });
           expect(result).toContainEqual({
             displayName: 'model3',
             enabled: true,
-            id: 'model3',
+            id: 'model3'
           });
           expect(result).toContainEqual({
             displayName: 'model4',
             enabled: true,
-            id: 'model4',
+            id: 'model4'
           });
 
           process.env.OPENAI_MODEL_LIST = '';
@@ -169,7 +169,7 @@ describe('configRouter', () => {
         enableAutoCreateTopic: true,
         model: 'gemini-pro',
         plugins: ['search-engine', 'lobe-image-designer'],
-        provider: 'google',
+        provider: 'google'
       });
 
       process.env.DEFAULT_AGENT_CONFIG = '';
@@ -185,7 +185,7 @@ describe('configRouter', () => {
         enableAutoCreateTopic: true,
         model: 'meta-11ama/11ama-3-70b-instruct:nitro',
         params: { max_tokens: 700 },
-        provider: 'openrouter',
+        provider: 'openrouter'
       });
 
       process.env.DEFAULT_AGENT_CONFIG = '';

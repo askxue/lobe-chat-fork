@@ -4,25 +4,25 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   optimizeDeps: {
     exclude: ['crypto', 'util', 'tty'],
-    include: ['@lobehub/tts'],
+    include: ['@lobehub/tts']
   },
   test: {
     alias: {
       '@': resolve(__dirname, './src'),
-      '~test-utils': resolve(__dirname, './tests/utils.tsx'),
+      '~test-utils': resolve(__dirname, './tests/utils.tsx')
     },
     coverage: {
       all: false,
       exclude: ['__mocks__/**'],
       provider: 'v8',
-      reporter: ['text', 'json', 'lcov', 'text-summary'],
+      reporter: ['text', 'json', 'lcov', 'text-summary']
     },
     deps: {
-      inline: ['vitest-canvas-mock'],
+      inline: ['vitest-canvas-mock']
     },
     // threads: false,
     environment: 'happy-dom',
     globals: true,
-    setupFiles: './tests/setup.ts',
-  },
+    setupFiles: './tests/setup.ts'
+  }
 });

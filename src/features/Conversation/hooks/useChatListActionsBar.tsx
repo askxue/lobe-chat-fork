@@ -20,36 +20,36 @@ export const useChatListActionsBar = (): ChatListActionsBar => {
       copy: {
         icon: Copy,
         key: 'copy',
-        label: t('copy', { defaultValue: 'Copy' }),
+        label: t('copy', { defaultValue: 'Copy' })
       },
       del: {
         danger: true,
         icon: Trash,
         key: 'del',
-        label: t('delete', { defaultValue: 'Delete' }),
+        label: t('delete', { defaultValue: 'Delete' })
       },
       delAndRegenerate: {
         icon: ListRestart,
         key: 'delAndRegenerate',
         label: t('messageAction.delAndRegenerate', {
           defaultValue: 'Delete and regenerate',
-          ns: 'chat',
-        }),
+          ns: 'chat'
+        })
       },
       divider: {
-        type: 'divider',
+        type: 'divider'
       },
       edit: {
         icon: Edit,
         key: 'edit',
-        label: t('edit', { defaultValue: 'Edit' }),
+        label: t('edit', { defaultValue: 'Edit' })
       },
       regenerate: {
         icon: RotateCcw,
         key: 'regenerate',
-        label: t('regenerate', { defaultValue: 'Regenerate' }),
-      },
+        label: t('regenerate', { defaultValue: 'Regenerate' })
+      }
     }),
-    [],
+    []
   );
 };

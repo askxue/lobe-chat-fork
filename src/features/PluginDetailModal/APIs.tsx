@@ -11,9 +11,14 @@ const APIs = memo<{
   id: string;
 }>(({ id }) => {
   const { t } = useTranslation('plugin');
-  const pluginManifest = useToolStore(pluginSelectors.getPluginManifestById(id), isEqual);
+  const pluginManifest = useToolStore(
+    pluginSelectors.getPluginManifestById(id),
+    isEqual
+  );
 
-  if (!pluginManifest?.api) return <Empty />;
+  if (!pluginManifest?.api) {
+    return <Empty />;
+  }
 
   return (
     <Flexbox paddingBlock={16} width={'100%'}>
@@ -24,13 +29,13 @@ const APIs = memo<{
             dataIndex: 'name',
             ellipsis: true,
             render: (name: string) => <code>{name}</code>,
-            title: t('detailModal.info.name'),
+            title: t('detailModal.info.name')
           },
           {
             dataIndex: 'description',
             ellipsis: true,
-            title: t('detailModal.info.description'),
-          },
+            title: t('detailModal.info.description')
+          }
         ]}
         dataSource={pluginManifest.api}
         pagination={false}

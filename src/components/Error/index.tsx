@@ -9,7 +9,10 @@ import { Flexbox } from 'react-layout-kit';
 
 import { MAX_WIDTH } from '@/const/layoutTokens';
 
-import { type ErrorType, sentryCaptureException } from './sentryCaptureException';
+import {
+  type ErrorType,
+  sentryCaptureException
+} from './sentryCaptureException';
 
 interface ErrorCaptureProps {
   error: ErrorType;
@@ -24,7 +27,11 @@ const ErrorCapture = memo<ErrorCaptureProps>(({ reset, error }) => {
   }, [error]);
 
   return (
-    <Flexbox align={'center'} justify={'center'} style={{ height: '100%', width: '100%' }}>
+    <Flexbox
+      align={'center'}
+      justify={'center'}
+      style={{ height: '100%', width: '100%' }}
+    >
       <h1
         style={{
           filter: 'blur(8px)',
@@ -33,7 +40,7 @@ const ErrorCapture = memo<ErrorCaptureProps>(({ reset, error }) => {
           margin: 0,
           opacity: 0.12,
           position: 'absolute',
-          zIndex: 0,
+          zIndex: 0
         }}
       >
         ERROR

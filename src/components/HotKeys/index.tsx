@@ -21,13 +21,17 @@ const useStyles = createStyles(
       padding-inline: 8px;
 
       line-height: 22px;
-      color: ${inverseTheme ? token.colorTextTertiary : token.colorTextSecondary};
+      color: ${inverseTheme
+        ? token.colorTextTertiary
+        : token.colorTextSecondary};
       text-align: center;
 
-      background: ${inverseTheme ? rgba(token.colorTextTertiary, 0.15) : token.colorFillTertiary};
+      background: ${inverseTheme
+        ? rgba(token.colorTextTertiary, 0.15)
+        : token.colorFillTertiary};
       border-radius: ${token.borderRadius}px;
     }
-  `,
+  `
 );
 
 export interface HotKeysProps {
@@ -46,7 +50,7 @@ const HotKeys = memo<HotKeysProps>(({ keys, desc, inverseTheme }) => {
     const mapping: Record<string, any> = {
       [ALT_KEY]: isApple ? <Icon icon={Option} /> : 'alt',
       [CLEAN_MESSAGE_KEY]: isApple ? <Icon icon={Delete} /> : 'backspace',
-      [META_KEY]: isApple ? <Icon icon={Command} /> : 'ctrl',
+      [META_KEY]: isApple ? <Icon icon={Command} /> : 'ctrl'
     };
     const newValue = keys
       .split('+')
@@ -59,13 +63,17 @@ const HotKeys = memo<HotKeysProps>(({ keys, desc, inverseTheme }) => {
     <Flexbox align={'center'} className={styles} gap={4} horizontal>
       {keysGroup.map((key, index) => (
         <kbd key={index}>
-          <span style={{ visibility }}>{isString(key) ? key.toUpperCase() : key}</span>
+          <span style={{ visibility }}>
+            {isString(key) ? key.toUpperCase() : key}
+          </span>
         </kbd>
       ))}
     </Flexbox>
   );
 
-  if (!desc) return content;
+  if (!desc) {
+    return content;
+  }
   return (
     <Flexbox gap={16} horizontal>
       {desc}

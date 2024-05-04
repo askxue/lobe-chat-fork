@@ -29,7 +29,12 @@
       },
       "languageModel": {
         "anthropic": { "apiKey": "", "enabled": false },
-        "azure": { "apiKey": "", "deployments": "", "enabled": false, "endpoint": "" },
+        "azure": {
+          "apiKey": "",
+          "deployments": "",
+          "enabled": false,
+          "endpoint": ""
+        },
         "bedrock": {
           "accessKeyId": "",
           "enabled": false,

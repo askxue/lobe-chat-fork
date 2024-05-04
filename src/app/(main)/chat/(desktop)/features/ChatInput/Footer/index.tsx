@@ -14,39 +14,40 @@ import { useAgentStore } from '@/store/agent';
 import { agentSelectors } from '@/store/agent/slices/chat';
 import { useChatStore } from '@/store/chat';
 import { useUserStore } from '@/store/user';
-import { modelProviderSelectors, preferenceSelectors } from '@/store/user/selectors';
+import {
+  modelProviderSelectors,
+  preferenceSelectors
+} from '@/store/user/selectors';
 import { isMacOS } from '@/utils/platform';
 
 import DragUpload from './DragUpload';
 import { LocalFiles } from './LocalFiles';
 import SendMore from './SendMore';
 
-const useStyles = createStyles(({ css, prefixCls, token }) => {
-  return {
-    arrow: css`
-      &.${prefixCls}-btn.${prefixCls}-btn-icon-only {
-        width: 28px;
-      }
-    `,
-    loadingButton: css`
+const useStyles = createStyles(({ css, prefixCls, token }) => ({
+  arrow: css`
+    &.${prefixCls}-btn.${prefixCls}-btn-icon-only {
+      width: 28px;
+    }
+  `,
+  loadingButton: css`
+    display: flex;
+    align-items: center;
+  `,
+  overrideAntdIcon: css`
+    .${prefixCls}-btn.${prefixCls}-btn-icon-only {
       display: flex;
       align-items: center;
-    `,
-    overrideAntdIcon: css`
-      .${prefixCls}-btn.${prefixCls}-btn-icon-only {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+      justify-content: center;
+    }
 
-      .${prefixCls}-btn.${prefixCls}-dropdown-trigger {
-        &::before {
-          background-color: ${rgba(token.colorBgLayout, 0.1)} !important;
-        }
+    .${prefixCls}-btn.${prefixCls}-dropdown-trigger {
+      &::before {
+        background-color: ${rgba(token.colorBgLayout, 0.1)} !important;
       }
-    `,
-  };
-});
+    }
+  `
+}));
 
 const isMac = isMacOS();
 
@@ -61,14 +62,14 @@ const Footer = memo<FooterProps>(({ setExpand }) => {
 
   const [loading, stopGenerateMessage] = useChatStore((s) => [
     !!s.chatLoadingId,
-    s.stopGenerateMessage,
+    s.stopGenerateMessage
   ]);
 
   const model = useAgentStore(agentSelectors.currentAgentModel);
 
   const [useCmdEnterToSend, canUpload] = useUserStore((s) => [
     preferenceSelectors.useCmdEnterToSend(s),
-    modelProviderSelectors.isModelEnabledUpload(model)(s),
+    modelProviderSelectors.isModelEnabledUpload(model)(s)
   ]);
 
   const sendMessage = useSendMessage();
@@ -112,7 +113,11 @@ const Footer = memo<FooterProps>(({ setExpand }) => {
         <Flexbox
           gap={4}
           horizontal
-          style={{ color: theme.colorTextDescription, fontSize: 12, marginRight: 12 }}
+          style={{
+            color: theme.colorTextDescription,
+            fontSize: 12,
+            marginRight: 12
+          }}
         >
           {sendShortcut}
           <span>{t('input.send')}</span>

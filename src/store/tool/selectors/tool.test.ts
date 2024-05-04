@@ -1,4 +1,7 @@
-import { LobeChatPluginManifest, LobeChatPluginMeta } from '@lobehub/chat-plugin-sdk';
+import {
+  LobeChatPluginManifest,
+  LobeChatPluginMeta
+} from '@lobehub/chat-plugin-sdk';
 import { describe, expect, it } from 'vitest';
 
 import { initialState } from '../initialState';
@@ -13,17 +16,17 @@ const mockState = {
       manifest: {
         identifier: 'plugin-1',
         api: [{ name: 'api-1' }],
-        meta: { title: 'Plugin 1', description: 'Plugin 1 description' },
+        meta: { title: 'Plugin 1', description: 'Plugin 1 description' }
       } as LobeChatPluginManifest,
-      type: 'plugin',
+      type: 'plugin'
     },
     {
       identifier: 'plugin-2',
       manifest: {
         identifier: 'plugin-2',
-        api: [{ name: 'api-2' }],
+        api: [{ name: 'api-2' }]
       } as LobeChatPluginManifest,
-      type: 'plugin',
+      type: 'plugin'
     },
     {
       identifier: 'plugin-3',
@@ -34,12 +37,15 @@ const mockState = {
             name: 'api-3',
             url: 'bac',
             description: '123123',
-            parameters: { type: 'object', properties: { a: { type: 'string' } } },
-          },
-        ],
+            parameters: {
+              type: 'object',
+              properties: { a: { type: 'string' } }
+            }
+          }
+        ]
       },
-      type: 'customPlugin',
-    },
+      type: 'customPlugin'
+    }
   ],
   builtinTools: [
     {
@@ -48,33 +54,35 @@ const mockState = {
       manifest: {
         identifier: 'builtin-1',
         api: [{ name: 'builtin-api-1' }],
-        meta: { title: 'Builtin 1', description: 'Builtin 1 description' },
-      } as LobeChatPluginManifest,
-    },
+        meta: { title: 'Builtin 1', description: 'Builtin 1 description' }
+      } as LobeChatPluginManifest
+    }
   ],
   pluginInstallLoading: {
     'plugin-1': false,
-    'plugin-2': true,
-  },
+    'plugin-2': true
+  }
 } as ToolStoreState;
 
 describe('toolSelectors', () => {
   describe('enabledSchema', () => {
     it('enabledSchema should return correct ChatCompletionFunctions array', () => {
-      const result = toolSelectors.enabledSchema(['plugin-1', 'plugin-2'])(mockState);
+      const result = toolSelectors.enabledSchema(['plugin-1', 'plugin-2'])(
+        mockState
+      );
       expect(result).toEqual([
         {
           type: 'function',
           function: {
-            name: 'plugin-1____api-1',
-          },
+            name: 'plugin-1____api-1'
+          }
         },
         {
           type: 'function',
           function: {
-            name: 'plugin-2____api-2',
-          },
-        },
+            name: 'plugin-2____api-2'
+          }
+        }
       ]);
     });
 
@@ -88,19 +96,19 @@ describe('toolSelectors', () => {
             manifest: {
               identifier: 'plugin-4',
               api: [{ name: 'api-4' }],
-              type: 'standalone',
+              type: 'standalone'
             },
-            type: 'plugin',
-          },
-        ],
+            type: 'plugin'
+          }
+        ]
       } as ToolStoreState);
       expect(result).toEqual([
         {
           type: 'function',
           function: {
-            name: 'plugin-4____api-4____standalone',
-          },
-        },
+            name: 'plugin-4____api-4____standalone'
+          }
+        }
       ]);
     });
 
@@ -113,19 +121,19 @@ describe('toolSelectors', () => {
             identifier: 'long-long-plugin-with-id',
             manifest: {
               identifier: 'long-long-plugin-with-id',
-              api: [{ name: 'long-long-manifest-long-long-apiName' }],
+              api: [{ name: 'long-long-manifest-long-long-apiName' }]
             },
-            type: 'plugin',
-          },
-        ],
+            type: 'plugin'
+          }
+        ]
       } as ToolStoreState);
       expect(result).toEqual([
         {
           type: 'function',
           function: {
-            name: 'long-long-plugin-with-id____MD5HASH_396eae4c671da3fb642c49ad2b9e8790',
-          },
-        },
+            name: 'long-long-plugin-with-id____MD5HASH_396eae4c671da3fb642c49ad2b9e8790'
+          }
+        }
       ]);
     });
 
@@ -143,11 +151,11 @@ describe('toolSelectors', () => {
         parameters: {
           properties: {
             a: {
-              type: 'string',
-            },
+              type: 'string'
+            }
           },
-          type: 'object',
-        },
+          type: 'object'
+        }
       });
 
       expect(result[0].function).not.toHaveProperty('url');
@@ -156,17 +164,21 @@ describe('toolSelectors', () => {
 
   describe('getPluginManifestLoadingStatus', () => {
     it('should return "loading" if the plugin manifest is being loaded', () => {
-      const result = toolSelectors.getManifestLoadingStatus('plugin-2')(mockState);
+      const result =
+        toolSelectors.getManifestLoadingStatus('plugin-2')(mockState);
       expect(result).toBe('loading');
     });
 
     it('should return "error" if the plugin manifest is not found', () => {
-      const result = toolSelectors.getManifestLoadingStatus('non-existing-plugin')(mockState);
+      const result = toolSelectors.getManifestLoadingStatus(
+        'non-existing-plugin'
+      )(mockState);
       expect(result).toBe('error');
     });
 
     it('should return "success" if the plugin manifest is loaded', () => {
-      const result = toolSelectors.getManifestLoadingStatus('plugin-1')(mockState);
+      const result =
+        toolSelectors.getManifestLoadingStatus('plugin-1')(mockState);
       expect(result).toBe('success');
     });
   });
@@ -179,28 +191,31 @@ describe('toolSelectors', () => {
           type: 'builtin',
           author: 'LobeHub',
           identifier: 'builtin-1',
-          meta: { title: 'Builtin 1', description: 'Builtin 1 description' },
+          meta: { title: 'Builtin 1', description: 'Builtin 1 description' }
         },
         {
           identifier: 'plugin-1',
           type: 'plugin',
-          meta: { title: 'Plugin 1', description: 'Plugin 1 description' },
+          meta: { title: 'Plugin 1', description: 'Plugin 1 description' }
         },
         {
           type: 'plugin',
           identifier: 'plugin-2',
-          meta: undefined,
+          meta: undefined
         },
         {
           identifier: 'plugin-3',
-          type: 'customPlugin',
-        },
+          type: 'customPlugin'
+        }
       ]);
     });
 
     it('should return the correct metadata by identifier', () => {
       const result = toolSelectors.getMetaById('plugin-1')(mockState);
-      expect(result).toEqual({ title: 'Plugin 1', description: 'Plugin 1 description' });
+      expect(result).toEqual({
+        title: 'Plugin 1',
+        description: 'Plugin 1 description'
+      });
     });
 
     it('should return undefined for non-existent identifier', () => {
@@ -215,7 +230,7 @@ describe('toolSelectors', () => {
       expect(result).toEqual({
         identifier: 'plugin-1',
         api: [{ name: 'api-1' }],
-        meta: { title: 'Plugin 1', description: 'Plugin 1 description' },
+        meta: { title: 'Plugin 1', description: 'Plugin 1 description' }
       });
     });
 
@@ -225,9 +240,15 @@ describe('toolSelectors', () => {
     });
 
     it('should return the correct loading status for a plugin', () => {
-      expect(toolSelectors.getManifestLoadingStatus('plugin-1')(mockState)).toBe('success');
-      expect(toolSelectors.getManifestLoadingStatus('plugin-2')(mockState)).toBe('loading');
-      expect(toolSelectors.getManifestLoadingStatus('non-existent')(mockState)).toBe('error');
+      expect(
+        toolSelectors.getManifestLoadingStatus('plugin-1')(mockState)
+      ).toBe('success');
+      expect(
+        toolSelectors.getManifestLoadingStatus('plugin-2')(mockState)
+      ).toBe('loading');
+      expect(
+        toolSelectors.getManifestLoadingStatus('non-existent')(mockState)
+      ).toBe('error');
     });
   });
 });

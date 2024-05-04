@@ -30,10 +30,10 @@ const Analytics = memo(() => {
         desc: t('analytics.telemetry.desc'),
         label: t('analytics.telemetry.title'),
         minWidth: undefined,
-        valuePropName: 'checked',
-      },
+        valuePropName: 'checked'
+      }
     ],
-    title: t('analytics.title'),
+    title: t('analytics.title')
   };
 
   return <Form items={[items]} itemsType={'group'} {...FORM_STYLE} />;

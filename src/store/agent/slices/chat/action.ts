@@ -26,9 +26,10 @@ export interface AgentChatAction {
   useFetchAgentConfig: (id: string) => SWRResponse<LobeAgentConfig>;
   useFetchDefaultAgentConfig: () => SWRResponse<DeepPartial<LobeAgentConfig>>;
 
-  /* eslint-disable typescript-sort-keys/interface */
-
-  internal_updateAgentConfig: (id: string, data: DeepPartial<LobeAgentConfig>) => Promise<void>;
+  internal_updateAgentConfig: (
+    id: string,
+    data: DeepPartial<LobeAgentConfig>
+  ) => Promise<void>;
   internal_refreshAgentConfig: (id: string) => Promise<void>;
   /* eslint-enable */
 }
@@ -72,7 +73,9 @@ export const createChatSlice: StateCreator<
   updateAgentConfig: async (config) => {
     const { activeId } = get();
 
-    if (!activeId) return;
+    if (!activeId) {
+      return;
+    }
 
     await get().internal_updateAgentConfig(activeId, config);
   },
@@ -82,11 +85,17 @@ export const createChatSlice: StateCreator<
       ([, id]: string[]) => sessionService.getSessionConfig(id),
       {
         onSuccess: (data) => {
-          if (get().isAgentConfigInit && isEqual(get().agentConfig, data)) return;
+          if (get().isAgentConfigInit && isEqual(get().agentConfig, data)) {
+            return;
+          }
 
-          set({ agentConfig: data, isAgentConfigInit: true }, false, 'fetchAgentConfig');
-        },
-      },
+          set(
+            { agentConfig: data, isAgentConfigInit: true },
+            false,
+            'fetchAgentConfig'
+          );
+        }
+      }
     ),
   useFetchDefaultAgentConfig: () =>
     useSWR<DeepPartial<LobeAgentConfig>>(
@@ -98,32 +107,36 @@ export const createChatSlice: StateCreator<
             set(
               {
                 defaultAgentConfig: merge(DEFAULT_AGENT_CONFIG, data),
-                isDefaultAgentConfigInit: true,
+                isDefaultAgentConfigInit: true
               },
               false,
-              'fetchDefaultAgentConfig',
+              'fetchDefaultAgentConfig'
             );
           }
         },
-        revalidateOnFocus: false,
-      },
+        revalidateOnFocus: false
+      }
     ),
-
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
 
   internal_updateAgentConfig: async (id, data) => {
     const prevModel = agentSelectors.currentAgentModel(get());
     // optimistic update at frontend
-    set({ agentConfig: merge(get().agentConfig, data) }, false, 'optimistic_updateAgentConfig');
+    set(
+      { agentConfig: merge(get().agentConfig, data) },
+      false,
+      'optimistic_updateAgentConfig'
+    );
 
     await sessionService.updateSessionConfig(id, data);
     await get().internal_refreshAgentConfig(id);
 
     // refresh sessions to update the agent config if the model has changed
-    if (prevModel !== data.model) await useSessionStore.getState().refreshSessions();
+    if (prevModel !== data.model) {
+      await useSessionStore.getState().refreshSessions();
+    }
   },
 
   internal_refreshAgentConfig: async (id) => {
     await mutate([FETCH_AGENT_CONFIG_KEY, id]);
-  },
+  }
 });

@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 /**
  * 本动态加载模块使用 SystemJS 实现，在 Lobe Chat 中缓存了 React、ReactDOM、antd、antd-style 四个模块。
  */
@@ -11,11 +9,11 @@ import 'systemjs';
 
 System.addImportMap({
   imports: {
-    'React': 'app:React',
-    'ReactDOM': 'app:ReactDOM',
-    'antd': 'app:antd',
-    'antd-style': 'app:antd-style',
-  },
+    React: 'app:React',
+    ReactDOM: 'app:ReactDOM',
+    antd: 'app:antd',
+    'antd-style': 'app:antd-style'
+  }
 });
 
 System.set('app:React', { default: React, ...React });

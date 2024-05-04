@@ -21,31 +21,33 @@ const persistOptions: PersistOptions<Store> = {
   storage: createHyperStorage({
     localStorage: {
       dbName: 'LobeHub',
-      selectors: ['agentMap'],
+      selectors: ['agentMap']
     },
     url: {
       mode: 'search',
       selectors: [
         // map state key to storage key
-        { currentIdentifier: 'agent' },
-      ],
-    },
+        { currentIdentifier: 'agent' }
+      ]
+    }
   }),
 
-  version: 0,
+  version: 0
 };
 
-const createStore: StateCreator<Store, [['zustand/devtools', never]]> = (...parameters) => ({
+const createStore: StateCreator<Store, [['zustand/devtools', never]]> = (
+  ...parameters
+) => ({
   ...initialState,
-  ...createMarketAction(...parameters),
+  ...createMarketAction(...parameters)
 });
 
 export const useMarketStore = createWithEqualityFn<Store>()(
   persist(
     devtools(createStore, {
-      name: LOBE_AGENT_MARKET + (isDev ? '_DEV' : ''),
+      name: LOBE_AGENT_MARKET + (isDev ? '_DEV' : '')
     }),
-    persistOptions,
+    persistOptions
   ),
-  shallow,
+  shallow
 );

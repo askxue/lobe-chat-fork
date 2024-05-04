@@ -16,12 +16,14 @@ interface ToolBarProps {
 
 const ToolBar = memo<ToolBarProps>(({ content, messageId }) => {
   const { t } = useTranslation('tool');
-  const generateImageFromPrompts = useChatStore((s) => s.generateImageFromPrompts);
+  const generateImageFromPrompts = useChatStore(
+    (s) => s.generateImageFromPrompts
+  );
   const isLoading = useChatStore(chatToolSelectors.isGeneratingDallEImage);
 
   const [isAutoGenerate, setSettings] = useUserStore((s) => [
     settingsSelectors.isDalleAutoGenerating(s),
-    s.setSettings,
+    s.setSettings
   ]);
 
   const genImages = () => {
@@ -37,13 +39,20 @@ const ToolBar = memo<ToolBarProps>(({ content, messageId }) => {
         <Checkbox
           checked={isAutoGenerate}
           onChange={(e) => {
-            setSettings({ tool: { dalle: { autoGenerate: e.target.checked } } });
+            setSettings({
+              tool: { dalle: { autoGenerate: e.target.checked } }
+            });
           }}
         >
           {t('dalle.autoGenerate')}
         </Checkbox>
         {canGen && (
-          <Button loading={isLoading} onClick={genImages} size={'small'} type={'primary'}>
+          <Button
+            loading={isLoading}
+            onClick={genImages}
+            size={'small'}
+            type={'primary'}
+          >
             {t('dalle.generate')}
           </Button>
         )}

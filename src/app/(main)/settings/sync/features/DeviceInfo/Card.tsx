@@ -17,7 +17,7 @@ const useStyles = createStyles(({ css, token, responsive }) => ({
   `,
   title: css`
     font-size: 16px;
-  `,
+  `
 }));
 
 const Card = memo<{ icon: ReactNode; title: string }>(({ title, icon }) => {

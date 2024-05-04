@@ -25,14 +25,18 @@ export type CustomModelCardDispatch =
 
 export const customModelCardsReducer = (
   state: ChatModelCard[] | undefined,
-  payload: CustomModelCardDispatch,
+  payload: CustomModelCardDispatch
 ): ChatModelCard[] => {
   switch (payload.type) {
     case 'add': {
       return produce(state || [], (draftState) => {
         const { id } = payload.modelCard;
-        if (!id) return;
-        if (draftState.some((card) => card.id === id)) return;
+        if (!id) {
+          return;
+        }
+        if (draftState.some((card) => card.id === id)) {
+          return;
+        }
 
         draftState.push(payload.modelCard);
       });

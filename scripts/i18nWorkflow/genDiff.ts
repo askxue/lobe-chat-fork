@@ -8,7 +8,7 @@ import {
   entryLocaleJsonFilepath,
   i18nConfig,
   outputLocaleJsonFilepath,
-  srcDefaultLocales,
+  srcDefaultLocales
 } from './const';
 import { readJSON, tagWhite, writeJSON } from './utils';
 
@@ -20,7 +20,9 @@ export const genDiff = () => {
 
   for (const [ns, devJSON] of data) {
     const filepath = entryLocaleJsonFilepath(`${ns}.json`);
-    if (!existsSync(filepath)) continue;
+    if (!existsSync(filepath)) {
+      continue;
+    }
     const prodJSON = readJSON(filepath);
 
     const diffResult = diff(prodJSON, devJSON as any);
@@ -32,9 +34,14 @@ export const genDiff = () => {
 
     const clearLocals = [];
 
-    for (const locale of [i18nConfig.entryLocale, ...i18nConfig.outputLocales]) {
+    for (const locale of [
+      i18nConfig.entryLocale,
+      ...i18nConfig.outputLocales
+    ]) {
       const localeFilepath = outputLocaleJsonFilepath(locale, `${ns}.json`);
-      if (!existsSync(localeFilepath)) continue;
+      if (!existsSync(localeFilepath)) {
+        continue;
+      }
       const localeJSON = readJSON(localeFilepath);
 
       for (const item of remove) {

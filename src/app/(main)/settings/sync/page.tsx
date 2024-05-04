@@ -9,13 +9,15 @@ import Page from './index';
 export const generateMetadata = async () => {
   const { t } = await translation('setting');
   return {
-    title: t('tab.sync'),
+    title: t('tab.sync')
   };
 };
 
 export default () => {
   const enableWebrtc = serverFeatureFlags().enableWebrtc;
-  if (!enableWebrtc) return notFound();
+  if (!enableWebrtc) {
+    return notFound();
+  }
 
   const isMobile = isMobileDevice();
   const { os, browser } = gerServerDeviceInfo();

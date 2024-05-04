@@ -2,8 +2,6 @@
  * the client config is only used in Vercel deployment
  */
 
-/* eslint-disable sort-keys-fix/sort-keys-fix , typescript-sort-keys/interface */
-
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
@@ -52,7 +50,8 @@ export const getClientConfig = () => ({
   // Umami Analytics
   ANALYTICS_UMAMI: process.env.NEXT_PUBLIC_ANALYTICS_UMAMI === '1',
   UMAMI_SCRIPT_URL:
-    process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL || 'https://analytics.umami.is/script.js',
+    process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL ||
+    'https://analytics.umami.is/script.js',
   UMAMI_WEBSITE_ID: process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID,
 
   // Sentry
@@ -64,5 +63,5 @@ export const getClientConfig = () => ({
   I18N_DEBUG_SERVER: process.env.NEXT_PUBLIC_I18N_DEBUG_SERVER === '1',
 
   // developer debug mode
-  DEBUG_MODE: process.env.NEXT_PUBLIC_DEVELOPER_DEBUG === '1',
+  DEBUG_MODE: process.env.NEXT_PUBLIC_DEVELOPER_DEBUG === '1'
 });

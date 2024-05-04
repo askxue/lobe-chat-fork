@@ -10,7 +10,7 @@ import {
   Perplexity,
   Together,
   ZeroOne,
-  Zhipu,
+  Zhipu
 } from '@lobehub/icons';
 import { useTheme } from 'antd-style';
 import { memo } from 'react';

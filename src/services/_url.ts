@@ -1,10 +1,9 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
 import { transform } from 'lodash-es';
 
 import { withBasePath } from '@/utils/basePath';
 
-const mapWithBasePath = <T extends object>(apis: T): T => {
-  return transform(apis, (result, value, key) => {
+const mapWithBasePath = <T extends object>(apis: T): T =>
+  transform(apis, (result, value, key) => {
     if (typeof value === 'string') {
       // @ts-ignore
       result[key] = withBasePath(value);
@@ -12,7 +11,6 @@ const mapWithBasePath = <T extends object>(apis: T): T => {
       result[key] = value;
     }
   });
-};
 
 export const API_ENDPOINTS = mapWithBasePath({
   proxy: '/api/proxy',
@@ -28,7 +26,8 @@ export const API_ENDPOINTS = mapWithBasePath({
 
   // chat
   chat: (provider: string) => withBasePath(`/api/chat/${provider}`),
-  chatModels: (provider: string) => withBasePath(`/api/chat/models/${provider}`),
+  chatModels: (provider: string) =>
+    withBasePath(`/api/chat/models/${provider}`),
 
   // trace
   trace: '/api/trace',
@@ -40,5 +39,5 @@ export const API_ENDPOINTS = mapWithBasePath({
   stt: '/api/openai/stt',
   tts: '/api/openai/tts',
   edge: '/api/tts/edge-speech',
-  microsoft: '/api/tts/microsoft-speech',
+  microsoft: '/api/tts/microsoft-speech'
 });

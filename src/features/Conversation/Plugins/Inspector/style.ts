@@ -22,5 +22,5 @@ export const useStyles = createStyles(({ css, token }) => ({
     gap: 4px;
     align-items: center;
     width: fit-content;
-  `,
+  `
 }));

@@ -44,13 +44,17 @@ describe('createPreferenceSlice', () => {
     it('should return false when userId is empty', async () => {
       const { result } = renderHook(() => useUserStore());
 
-      vi.spyOn(result.current.preferenceStorage, 'getFromLocalStorage').mockResolvedValueOnce(
-        {} as any,
-      );
+      vi.spyOn(
+        result.current.preferenceStorage,
+        'getFromLocalStorage'
+      ).mockResolvedValueOnce({} as any);
 
-      const { result: prefernce } = renderHook(() => result.current.useInitPreference(), {
-        wrapper: withSWR,
-      });
+      const { result: prefernce } = renderHook(
+        () => result.current.useInitPreference(),
+        {
+          wrapper: withSWR
+        }
+      );
 
       await waitFor(() => {
         expect(prefernce.current.data).toEqual({});
@@ -60,12 +64,13 @@ describe('createPreferenceSlice', () => {
     it('should return default preference when local storage is empty', async () => {
       const { result } = renderHook(() => useUserStore());
 
-      vi.spyOn(result.current.preferenceStorage, 'getFromLocalStorage').mockResolvedValueOnce(
-        {} as any,
-      );
+      vi.spyOn(
+        result.current.preferenceStorage,
+        'getFromLocalStorage'
+      ).mockResolvedValueOnce({} as any);
 
       renderHook(() => result.current.useInitPreference(), {
-        wrapper: withSWR,
+        wrapper: withSWR
       });
 
       await waitFor(() => {
@@ -79,16 +84,20 @@ describe('createPreferenceSlice', () => {
       const savedPreference: UserPreference = {
         ...DEFAULT_PREFERENCE,
         hideSyncAlert: true,
-        guide: { topic: false, moveSettingsToAvatar: true },
+        guide: { topic: false, moveSettingsToAvatar: true }
       };
 
-      vi.spyOn(result.current.preferenceStorage, 'getFromLocalStorage').mockResolvedValueOnce(
-        savedPreference,
-      );
+      vi.spyOn(
+        result.current.preferenceStorage,
+        'getFromLocalStorage'
+      ).mockResolvedValueOnce(savedPreference);
 
-      const { result: prefernce } = renderHook(() => result.current.useInitPreference(), {
-        wrapper: withSWR,
-      });
+      const { result: prefernce } = renderHook(
+        () => result.current.useInitPreference(),
+        {
+          wrapper: withSWR
+        }
+      );
 
       await waitFor(() => {
         expect(prefernce.current.data).toEqual(savedPreference);

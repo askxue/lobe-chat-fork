@@ -21,8 +21,8 @@ interface ShareMessage {
 const Footer: ShareMessage = {
   from: 'gpt',
   value: `Share from [**🤯 LobeChat**](https://github.com/lobehub/lobe-chat) - ${dayjs().format(
-    'YYYY-MM-DD',
-  )}`,
+    'YYYY-MM-DD'
+  )}`
 };
 
 const PLUGIN_INFO = (plugin: {
@@ -39,8 +39,8 @@ const PLUGIN_INFO = (plugin: {
     ``,
     '```json',
     plugin.content,
-    '```',
-  ].join('\n'),
+    '```'
+  ].join('\n')
 });
 
 // const t = setNamespace('chat/share');
@@ -52,14 +52,18 @@ export interface ShareAction {
   }) => Promise<void>;
 }
 
-export const chatShare: StateCreator<ChatStore, [['zustand/devtools', never]], [], ShareAction> = (
-  set,
-  get,
-) => ({
+export const chatShare: StateCreator<
+  ChatStore,
+  [['zustand/devtools', never]],
+  [],
+  ShareAction
+> = (set, get) => ({
   shareToShareGPT: async ({ withSystemRole, withPluginInfo, avatar }) => {
     const messages = chatSelectors.currentChats(get());
     const config = agentSelectors.currentAgentConfig(useAgentStore.getState());
-    const meta = sessionMetaSelectors.currentAgentMeta(useSessionStore.getState());
+    const meta = sessionMetaSelectors.currentAgentMeta(
+      useSessionStore.getState()
+    );
 
     const defaultMsg: ShareGPTConversation['items'] = [];
     const showSystemRole = withSystemRole && !!config.systemRole;
@@ -69,10 +73,10 @@ export const chatShare: StateCreator<ChatStore, [['zustand/devtools', never]], [
         value: [
           `${meta.avatar} **${meta.title}** - ${meta.description}`,
           showSystemRole && '---',
-          showSystemRole && config.systemRole,
+          showSystemRole && config.systemRole
         ]
           .filter(Boolean)
-          .join('\n\n'),
+          .join('\n\n')
       });
 
       for (const i of messages) {
@@ -82,14 +86,15 @@ export const chatShare: StateCreator<ChatStore, [['zustand/devtools', never]], [
             break;
           }
           case 'function': {
-            if (withPluginInfo)
+            if (withPluginInfo) {
               draft.push(
                 PLUGIN_INFO({
                   apiName: i.plugin?.apiName || 'undefined',
                   content: i.content,
-                  identifier: i.plugin?.identifier || 'undefined',
-                }),
+                  identifier: i.plugin?.identifier || 'undefined'
+                })
               );
+            }
             break;
           }
           case 'user': {
@@ -106,12 +111,12 @@ export const chatShare: StateCreator<ChatStore, [['zustand/devtools', never]], [
 
     const res = await shareService.createShareGPTUrl({
       avatarUrl: avatar || DEFAULT_USER_AVATAR_URL,
-      items: shareMsgs,
+      items: shareMsgs
     });
     set({ shareLoading: false });
 
     window.open(res, '_blank');
-  },
+  }
   // genShareUrl: () => {
   //   const session = sessionSelectors.currentSession(get());
   //   if (!session) return '';

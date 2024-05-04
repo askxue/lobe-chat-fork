@@ -21,10 +21,10 @@ vi.mock('zustand/traditional');
 
 const setModelProviderConfig = <T extends GlobalLLMProviderKey>(
   provider: T,
-  config: Partial<GlobalLLMConfig[T]>,
+  config: Partial<GlobalLLMConfig[T]>
 ) => {
   useUserStore.setState({
-    settings: { languageModel: { [provider]: config } },
+    settings: { languageModel: { [provider]: config } }
   });
 };
 
@@ -97,7 +97,7 @@ describe('getProviderAuthPayload', () => {
     const mockBedrockConfig = {
       accessKeyId: 'bedrock-access-key-id',
       region: 'bedrock-region',
-      secretAccessKey: 'bedrock-secret-access-key',
+      secretAccessKey: 'bedrock-secret-access-key'
     };
     act(() => {
       setModelProviderConfig('bedrock', mockBedrockConfig);
@@ -108,7 +108,7 @@ describe('getProviderAuthPayload', () => {
       apiKey: mockBedrockConfig.secretAccessKey + mockBedrockConfig.accessKeyId,
       awsAccessKeyId: mockBedrockConfig.accessKeyId,
       awsRegion: mockBedrockConfig.region,
-      awsSecretAccessKey: mockBedrockConfig.secretAccessKey,
+      awsSecretAccessKey: mockBedrockConfig.secretAccessKey
     });
   });
 
@@ -117,7 +117,7 @@ describe('getProviderAuthPayload', () => {
     const mockAzureConfig = {
       apiKey: 'azure-api-key',
       apiVersion: 'azure-api-version',
-      endpoint: 'azure-endpoint',
+      endpoint: 'azure-endpoint'
     };
     act(() => {
       setModelProviderConfig('azure', mockAzureConfig);
@@ -127,7 +127,7 @@ describe('getProviderAuthPayload', () => {
     expect(payload).toEqual({
       apiKey: mockAzureConfig.apiKey,
       azureApiVersion: mockAzureConfig.apiVersion,
-      endpoint: mockAzureConfig.endpoint,
+      endpoint: mockAzureConfig.endpoint
     });
   });
 
@@ -140,7 +140,7 @@ describe('getProviderAuthPayload', () => {
 
     const payload = getProviderAuthPayload(ModelProvider.Ollama);
     expect(payload).toEqual({
-      endpoint: mockOllamaProxyUrl,
+      endpoint: mockOllamaProxyUrl
     });
   });
 
@@ -150,7 +150,7 @@ describe('getProviderAuthPayload', () => {
       apiKey: 'openai-api-key',
       endpoint: 'openai-endpoint',
       useAzure: true,
-      azureApiVersion: 'openai-azure-api-version',
+      azureApiVersion: 'openai-azure-api-version'
     };
     act(() => {
       setModelProviderConfig('openai', mockOpenAIConfig);
@@ -159,7 +159,7 @@ describe('getProviderAuthPayload', () => {
     const payload = getProviderAuthPayload(ModelProvider.OpenAI);
     expect(payload).toEqual({
       apiKey: mockOpenAIConfig.apiKey,
-      endpoint: mockOpenAIConfig.endpoint,
+      endpoint: mockOpenAIConfig.endpoint
     });
   });
 

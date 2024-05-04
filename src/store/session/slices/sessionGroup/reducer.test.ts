@@ -11,15 +11,15 @@ describe('sessionGroupsReducer', () => {
       id: nanoid(),
       name: 'Group 1',
       createdAt: Date.now(),
-      updatedAt: Date.now(),
+      updatedAt: Date.now()
     },
     {
       id: nanoid(),
       name: 'Group 2',
       createdAt: Date.now(),
       updatedAt: Date.now(),
-      sort: 1,
-    },
+      sort: 1
+    }
   ];
 
   it('should add a new session group item', () => {
@@ -27,12 +27,12 @@ describe('sessionGroupsReducer', () => {
       id: nanoid(),
       name: 'New Group',
       createdAt: Date.now(),
-      updatedAt: Date.now(),
+      updatedAt: Date.now()
     };
 
     const result = sessionGroupsReducer(initialState, {
       type: 'addSessionGroupItem',
-      item: newItem,
+      item: newItem
     });
 
     expect(result).toHaveLength(3);
@@ -44,11 +44,13 @@ describe('sessionGroupsReducer', () => {
 
     const result = sessionGroupsReducer(initialState, {
       type: 'deleteSessionGroupItem',
-      id: itemToDelete,
+      id: itemToDelete
     });
 
     expect(result).toHaveLength(1);
-    expect(result).not.toContainEqual(expect.objectContaining({ id: itemToDelete }));
+    expect(result).not.toContainEqual(
+      expect.objectContaining({ id: itemToDelete })
+    );
   });
 
   it('should update a session group item', () => {
@@ -58,20 +60,25 @@ describe('sessionGroupsReducer', () => {
     const result = sessionGroupsReducer(initialState, {
       type: 'updateSessionGroupItem',
       id: itemToUpdate,
-      item: updatedItem,
+      item: updatedItem
     });
 
     expect(result).toHaveLength(2);
-    expect(result).toContainEqual(expect.objectContaining({ id: itemToUpdate, ...updatedItem }));
+    expect(result).toContainEqual(
+      expect.objectContaining({ id: itemToUpdate, ...updatedItem })
+    );
   });
 
   it('should update session group order', () => {
     const sortMap = [
       { id: initialState[1].id, sort: 0 },
-      { id: initialState[0].id, sort: 1 },
+      { id: initialState[0].id, sort: 1 }
     ];
 
-    const result = sessionGroupsReducer(initialState, { type: 'updateSessionGroupOrder', sortMap });
+    const result = sessionGroupsReducer(initialState, {
+      type: 'updateSessionGroupOrder',
+      sortMap
+    });
 
     expect(result).toHaveLength(2);
     expect(result[0].id).toBe(initialState[1].id);
@@ -79,7 +86,9 @@ describe('sessionGroupsReducer', () => {
   });
 
   it('should return the initial state for unknown action', () => {
-    const result = sessionGroupsReducer(initialState, { type: 'unknown' } as any);
+    const result = sessionGroupsReducer(initialState, {
+      type: 'unknown'
+    } as any);
 
     expect(result).toEqual(initialState);
   });

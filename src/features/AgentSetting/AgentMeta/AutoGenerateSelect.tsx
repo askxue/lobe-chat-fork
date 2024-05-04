@@ -31,7 +31,7 @@ const AutoGenerateSelect = memo<AutoGenerateInputProps>(
               size={'small'}
               style={{
                 color: theme.colorInfo,
-                marginRight: -4,
+                marginRight: -4
               }}
               title={t('autoGenerate')}
             />
@@ -42,7 +42,7 @@ const AutoGenerateSelect = memo<AutoGenerateInputProps>(
         {...props}
       />
     );
-  },
+  }
 );
 
 export default AutoGenerateSelect;

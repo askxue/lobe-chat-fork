@@ -1,5 +1,3 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix , typescript-sort-keys/interface */
-
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
@@ -31,10 +29,13 @@ const DEFAULT_IMAGUR_CLIENT_ID = 'e415f320d6e24f9';
 
 export const getAppConfig = () => {
   if (typeof process === 'undefined') {
-    throw new Error('[Server Config] you are importing a server-only module outside of server');
+    throw new Error(
+      '[Server Config] you are importing a server-only module outside of server'
+    );
   }
 
-  const ACCESS_CODES = process.env.ACCESS_CODE?.split(',').filter(Boolean) || [];
+  const ACCESS_CODES =
+    process.env.ACCESS_CODE?.split(',').filter(Boolean) || [];
 
   return {
     ACCESS_CODES,
@@ -47,11 +48,11 @@ export const getAppConfig = () => {
 
     IMGUR_CLIENT_ID: process.env.IMGUR_CLIENT_ID || DEFAULT_IMAGUR_CLIENT_ID,
 
-    AGENTS_INDEX_URL: !!process.env.AGENTS_INDEX_URL
+    AGENTS_INDEX_URL: process.env.AGENTS_INDEX_URL
       ? process.env.AGENTS_INDEX_URL
       : 'https://chat-agents.lobehub.com',
 
-    PLUGINS_INDEX_URL: !!process.env.PLUGINS_INDEX_URL
+    PLUGINS_INDEX_URL: process.env.PLUGINS_INDEX_URL
       ? process.env.PLUGINS_INDEX_URL
       : 'https://chat-plugins.lobehub.com',
 
@@ -60,6 +61,6 @@ export const getAppConfig = () => {
     ENABLE_LANGFUSE: process.env.ENABLE_LANGFUSE === '1',
     LANGFUSE_SECRET_KEY: process.env.LANGFUSE_SECRET_KEY || '',
     LANGFUSE_PUBLIC_KEY: process.env.LANGFUSE_PUBLIC_KEY || '',
-    LANGFUSE_HOST: process.env.LANGFUSE_HOST || 'https://cloud.langfuse.com',
+    LANGFUSE_HOST: process.env.LANGFUSE_HOST || 'https://cloud.langfuse.com'
   };
 };

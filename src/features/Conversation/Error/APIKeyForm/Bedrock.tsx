@@ -16,12 +16,14 @@ const BedrockForm = memo(() => {
   const { t } = useTranslation('modelProvider');
   const [showRegion, setShow] = useState(false);
 
-  const [accessKeyId, secretAccessKey, region, setConfig] = useUserStore((s) => [
-    modelConfigSelectors.bedrockConfig(s).accessKeyId,
-    modelConfigSelectors.bedrockConfig(s).secretAccessKey,
-    modelConfigSelectors.bedrockConfig(s).region,
-    s.setModelProviderConfig,
-  ]);
+  const [accessKeyId, secretAccessKey, region, setConfig] = useUserStore(
+    (s) => [
+      modelConfigSelectors.bedrockConfig(s).accessKeyId,
+      modelConfigSelectors.bedrockConfig(s).secretAccessKey,
+      modelConfigSelectors.bedrockConfig(s).region,
+      s.setModelProviderConfig
+    ]
+  );
 
   const theme = useTheme();
   return (
@@ -55,7 +57,7 @@ const BedrockForm = memo(() => {
           }}
           options={['us-east-1', 'us-west-2', 'ap-southeast-1'].map((i) => ({
             label: i,
-            value: i,
+            value: i
           }))}
           placeholder={'https://api.openai.com/v1'}
           style={{ width: '100%' }}

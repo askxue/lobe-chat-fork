@@ -12,8 +12,10 @@ export const parseAgentConfig = (envStr: string) => {
 
   while ((match = regex.exec(envStr)) !== null) {
     const key = match[1].trim();
-    let value = match[2].trim();
-    if (!key || !value) return;
+    const value = match[2].trim();
+    if (!key || !value) {
+      return;
+    }
 
     let finalValue: any = value;
 
@@ -26,13 +28,18 @@ export const parseAgentConfig = (envStr: string) => {
       finalValue = Number(value);
     }
     // Handle boolean values
-    else if (value.toLowerCase() === 'true' || value.toLowerCase() === 'false') {
+    else if (
+      value.toLowerCase() === 'true' ||
+      value.toLowerCase() === 'false'
+    ) {
       finalValue = value.toLowerCase() === 'true';
     }
     // Handle arrays
     else if (value.includes(',') || value.includes('，')) {
       const array = value.replaceAll('，', ',').split(',');
-      finalValue = array.map((item) => (isNaN(item as any) ? item : Number(item)));
+      finalValue = array.map((item) =>
+        isNaN(item as any) ? item : Number(item)
+      );
     }
 
     // handle plugins if it's a string

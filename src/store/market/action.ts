@@ -40,7 +40,9 @@ export const createMarketAction: StateCreator<
       draft[key] = value;
     });
 
-    if (isEqual(nextAgentMap, agentMap)) return;
+    if (isEqual(nextAgentMap, agentMap)) {
+      return;
+    }
 
     set({ agentMap: nextAgentMap }, false, `setAgentMap/${key}`);
   },
@@ -54,8 +56,8 @@ export const createMarketAction: StateCreator<
         },
         onSuccess: (data) => {
           get().updateAgentMap(identifier, data);
-        },
-      },
+        }
+      }
     ),
   useFetchAgentList: () =>
     useSWR<LobeChatAgentsMarketIndex>(
@@ -64,11 +66,14 @@ export const createMarketAction: StateCreator<
       {
         onSuccess: (agentMarketIndex) => {
           set(
-            { agentList: agentMarketIndex.agents, tagList: agentMarketIndex.tags },
+            {
+              agentList: agentMarketIndex.agents,
+              tagList: agentMarketIndex.tags
+            },
             false,
-            'useFetchAgentList',
+            'useFetchAgentList'
           );
-        },
-      },
-    ),
+        }
+      }
+    )
 });

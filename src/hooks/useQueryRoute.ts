@@ -18,8 +18,17 @@ interface GenHrefOptions extends QueryRouteOptions {
   url: string;
 }
 
-const genHref = ({ hash, replace, url, prevQuery = {}, query = {} }: GenHrefOptions): string => {
-  let href = qs.stringifyUrl({ query: replace ? query : { ...prevQuery, ...query }, url });
+const genHref = ({
+  hash,
+  replace,
+  url,
+  prevQuery = {},
+  query = {}
+}: GenHrefOptions): string => {
+  let href = qs.stringifyUrl({
+    query: replace ? query : { ...prevQuery, ...query },
+    url
+  });
 
   if (!isOnServerSide && hash) {
     href = [href, hash || location?.hash?.slice(1)].filter(Boolean).join('#');
@@ -34,13 +43,11 @@ export const useQueryRoute = () => {
 
   return useMemo(
     () => ({
-      push: (url: string, options: QueryRouteOptions = {}) => {
-        return router.push(genHref({ prevQuery, url, ...options }));
-      },
-      replace: (url: string, options: QueryRouteOptions = {}) => {
-        return router.replace(genHref({ prevQuery, url, ...options }));
-      },
+      push: (url: string, options: QueryRouteOptions = {}) =>
+        router.push(genHref({ prevQuery, url, ...options })),
+      replace: (url: string, options: QueryRouteOptions = {}) =>
+        router.replace(genHref({ prevQuery, url, ...options }))
     }),
-    [prevQuery],
+    [prevQuery]
   );
 };

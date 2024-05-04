@@ -8,13 +8,15 @@ import Page from './index';
 export const generateMetadata = async () => {
   const { t } = await translation('setting');
   return {
-    title: t('tab.llm'),
+    title: t('tab.llm')
   };
 };
 
 export default () => {
   const showLLM = serverFeatureFlags().showLLM;
-  if (!showLLM) return notFound();
+  if (!showLLM) {
+    return notFound();
+  }
 
   return <Page />;
 };

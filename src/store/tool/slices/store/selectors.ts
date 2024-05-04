@@ -3,7 +3,9 @@ import { InstallPluginMeta } from '@/types/tool/plugin';
 import type { ToolStoreState } from '../../initialState';
 
 const onlinePluginStore = (s: ToolStoreState) => {
-  const installedPluginIds = new Set(s.installedPlugins.map((i) => i.identifier));
+  const installedPluginIds = new Set(
+    s.installedPlugins.map((i) => i.identifier)
+  );
   const list =
     s.listType === 'all'
       ? s.pluginStoreList
@@ -15,18 +17,18 @@ const onlinePluginStore = (s: ToolStoreState) => {
     homepage: p.homepage,
     identifier: p.identifier,
     meta: p.meta,
-    type: 'plugin',
+    type: 'plugin'
   }));
 };
 
-const isPluginInstallLoading = (id: string) => (s: ToolStoreState) => s.pluginInstallLoading[id];
+const isPluginInstallLoading = (id: string) => (s: ToolStoreState) =>
+  s.pluginInstallLoading[id];
 
-const getPluginById = (id: string) => (s: ToolStoreState) => {
-  return s.pluginStoreList.find((i) => i.identifier === id);
-};
+const getPluginById = (id: string) => (s: ToolStoreState) =>
+  s.pluginStoreList.find((i) => i.identifier === id);
 
 export const pluginStoreSelectors = {
   getPluginById,
   isPluginInstallLoading,
-  onlinePluginStore,
+  onlinePluginStore
 };

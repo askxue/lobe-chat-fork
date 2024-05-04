@@ -12,20 +12,26 @@ export type UseSendMessageParams = Pick<
 export const useSendMessage = () => {
   const [sendMessage, updateInputMessage] = useChatStore((s) => [
     s.sendMessage,
-    s.updateInputMessage,
+    s.updateInputMessage
   ]);
 
   return useCallback((params: UseSendMessageParams = {}) => {
     const store = useChatStore.getState();
-    if (!!store.chatLoadingId) return;
-    if (!store.inputMessage) return;
+    if (store.chatLoadingId) {
+      return;
+    }
+    if (!store.inputMessage) {
+      return;
+    }
 
-    const imageList = filesSelectors.imageUrlOrBase64List(useFileStore.getState());
+    const imageList = filesSelectors.imageUrlOrBase64List(
+      useFileStore.getState()
+    );
 
     sendMessage({
       files: imageList,
       message: store.inputMessage,
-      ...params,
+      ...params
     });
 
     updateInputMessage('');

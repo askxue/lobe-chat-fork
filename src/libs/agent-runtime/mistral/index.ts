@@ -11,15 +11,15 @@ export const LobeMistralAI = LobeOpenAICompatibleFactory({
       model: payload.model,
       stream: true,
       temperature: payload.temperature,
-      top_p: payload.top_p,
-    }),
+      top_p: payload.top_p
+    })
   },
   debug: {
-    chatCompletion: () => process.env.DEBUG_MISTRAL_CHAT_COMPLETION === '1',
+    chatCompletion: () => process.env.DEBUG_MISTRAL_CHAT_COMPLETION === '1'
   },
   errorType: {
     bizError: AgentRuntimeErrorType.MistralBizError,
-    invalidAPIKey: AgentRuntimeErrorType.InvalidMistralAPIKey,
+    invalidAPIKey: AgentRuntimeErrorType.InvalidMistralAPIKey
   },
-  provider: ModelProvider.Mistral,
+  provider: ModelProvider.Mistral
 });

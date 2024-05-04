@@ -12,7 +12,11 @@ import { MAX_WIDTH } from '@/const/layoutTokens';
 const NotFound = memo(() => {
   const { t } = useTranslation('error');
   return (
-    <Flexbox align={'center'} justify={'center'} style={{ height: '100%', width: '100%' }}>
+    <Flexbox
+      align={'center'}
+      justify={'center'}
+      style={{ height: '100%', width: '100%' }}
+    >
       <h1
         style={{
           filter: 'blur(8px)',
@@ -21,7 +25,7 @@ const NotFound = memo(() => {
           margin: 0,
           opacity: 0.12,
           position: 'absolute',
-          zIndex: 0,
+          zIndex: 0
         }}
       >
         404

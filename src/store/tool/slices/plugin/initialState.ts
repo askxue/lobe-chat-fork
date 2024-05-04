@@ -11,5 +11,5 @@ export interface PluginState {
 export const initialPluginState: PluginState = {
   installedPlugins: [],
   loadingInstallPlugins: true,
-  pluginsSettings: {},
+  pluginsSettings: {}
 };

@@ -22,8 +22,8 @@ describe('TraceEventClient', () => {
       const scoreSpy = vi.fn(); // 创建一个 spy 函数
       const mockLangfuseTraceClient = {
         client: {
-          score: scoreSpy, // 使用 spy 函数代替实际的 score 方法
-        },
+          score: scoreSpy // 使用 spy 函数代替实际的 score 方法
+        }
       } as unknown as LangfuseTraceClient; // 使用 unknown 转换绕过类型检查
 
       const client = new TraceEventClient(mockLangfuseTraceClient);
@@ -31,7 +31,7 @@ describe('TraceEventClient', () => {
         name: 'test',
         observationId: 'obs123',
         traceId: 'trace456',
-        value: 0.5,
+        value: 0.5
       };
 
       // 执行
@@ -46,8 +46,8 @@ describe('TraceEventClient', () => {
       const scoreSpy = vi.fn();
       const mockLangfuseTraceClient = {
         client: {
-          score: scoreSpy,
-        },
+          score: scoreSpy
+        }
       } as unknown as LangfuseTraceClient;
 
       const client = new TraceEventClient(mockLangfuseTraceClient);
@@ -55,7 +55,7 @@ describe('TraceEventClient', () => {
         name: 'test',
         // 注意，这里没有提供 observationId
         traceId: 'trace456',
-        value: 0.5,
+        value: 0.5
       };
 
       // 执行
@@ -70,7 +70,9 @@ describe('TraceEventClient', () => {
     it('should trigger _trace.event and scoreObservation with correct parameters', async () => {
       const eventSpy = vi.fn();
       const scoreObservationSpy = vi.fn();
-      const mockLangfuseTraceClient = { event: eventSpy } as unknown as LangfuseTraceClient;
+      const mockLangfuseTraceClient = {
+        event: eventSpy
+      } as unknown as LangfuseTraceClient;
 
       const client = new TraceEventClient(mockLangfuseTraceClient);
       // 使用 spy 替换 scoreObservation 方法
@@ -79,7 +81,7 @@ describe('TraceEventClient', () => {
       const params = {
         traceId: 'trace123',
         observationId: 'obs456',
-        content: 'test content',
+        content: 'test content'
       };
 
       await client.copyMessage(params as any);
@@ -88,7 +90,7 @@ describe('TraceEventClient', () => {
       expect(eventSpy).toHaveBeenCalledWith({
         input: params.content,
         metadata: { score: EventScore.Copy },
-        name: TraceEventType.CopyMessage,
+        name: TraceEventType.CopyMessage
       });
 
       // 验证 scoreObservation 是否被正确调用
@@ -96,7 +98,7 @@ describe('TraceEventClient', () => {
         name: 'copy message',
         observationId: params.observationId,
         traceId: params.traceId,
-        value: EventScore.Copy,
+        value: EventScore.Copy
       });
     });
   });
@@ -109,40 +111,49 @@ describe('TraceEventClient', () => {
 
       const mockLangfuseTraceClient = {
         event: eventSpy,
-        update: updateSpy,
+        update: updateSpy
       } as unknown as LangfuseTraceClient;
 
       const client = new TraceEventClient(mockLangfuseTraceClient);
       // @ts-ignore
-      const spy = vi.spyOn(client, 'scoreObservation').mockImplementation(() => vi.fn());
+      const spy = vi
+        // @ts-ignore
+        .spyOn(client, 'scoreObservation')
+        // @ts-ignore
+        .mockImplementation(() => vi.fn());
 
       const params = {
         content: 'hello',
         nextContent: 'hallo',
         observationId: 'obs789',
-        traceId: 'trace321',
+        traceId: 'trace321'
       };
 
       vi.mock('diff', () => ({
-        diffChars: vi.fn().mockReturnValue([{ added: true, count: 1, value: 'a' }]),
+        diffChars: vi
+          .fn()
+          .mockReturnValue([{ added: true, count: 1, value: 'a' }])
       }));
 
       await client.modifyMessage(params as any);
 
       // 验证 diffChars 是否被调用
-      expect(diffChars).toHaveBeenCalledWith(params.content, params.nextContent);
+      expect(diffChars).toHaveBeenCalledWith(
+        params.content,
+        params.nextContent
+      );
 
       // 验证 _trace.event 是否被正确调用
       expect(eventSpy).toHaveBeenCalledWith({
         input: params.content,
         metadata: { diffs: mockValue, score: EventScore.Modify },
         name: TraceEventType.ModifyMessage,
-        output: params.nextContent,
+        output: params.nextContent
       });
 
       // 验证 _trace.update 是否被调用
       expect(updateSpy).toHaveBeenCalledWith({
-        output: params.nextContent,
+        output: params.nextContent
         // tags: [TraceNameMap.UserEvents] // 当支持时添加
       });
 
@@ -151,7 +162,7 @@ describe('TraceEventClient', () => {
         name: 'modify message',
         observationId: params.observationId,
         traceId: params.traceId,
-        value: EventScore.Modify,
+        value: EventScore.Modify
       });
     });
   });

@@ -5,7 +5,6 @@ export const OAUTH_AUTHORIZED = 'X-oauth-authorized';
 export const JWT_SECRET_KEY = 'LobeHub · LobeChat';
 export const NON_HTTP_PREFIX = 'http_nosafe';
 
-/* eslint-disable typescript-sort-keys/interface */
 export interface JWTPayload {
   /**
    * password
@@ -29,4 +28,5 @@ export interface JWTPayload {
   awsRegion?: string;
   awsSecretAccessKey?: string;
 }
+
 /* eslint-enable */

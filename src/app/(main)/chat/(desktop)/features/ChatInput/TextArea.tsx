@@ -12,24 +12,22 @@ import { isCommandPressed } from '@/utils/keyboard';
 
 import { useAutoFocus } from './useAutoFocus';
 
-const useStyles = createStyles(({ css }) => {
-  return {
-    textarea: css`
-      resize: none !important;
+const useStyles = createStyles(({ css }) => ({
+  textarea: css`
+    resize: none !important;
 
-      height: 100% !important;
-      padding: 0 24px;
+    height: 100% !important;
+    padding: 0 24px;
 
-      line-height: 1.5;
+    line-height: 1.5;
 
-      box-shadow: none !important;
-    `,
-    textareaContainer: css`
-      position: relative;
-      flex: 1;
-    `,
-  };
-});
+    box-shadow: none !important;
+  `,
+  textareaContainer: css`
+    position: relative;
+    flex: 1;
+  `
+}));
 
 interface InputAreaProps {
   setExpand?: (expand: boolean) => void;
@@ -44,7 +42,7 @@ const InputArea = memo<InputAreaProps>(({ setExpand }) => {
   const [loading, value, updateInputMessage] = useChatStore((s) => [
     !!s.chatLoadingId,
     s.inputMessage,
-    s.updateInputMessage,
+    s.updateInputMessage
   ]);
 
   const useCmdEnterToSend = useUserStore(preferenceSelectors.useCmdEnterToSend);
@@ -88,9 +86,10 @@ const InputArea = memo<InputAreaProps>(({ setExpand }) => {
           isChineseInput.current = true;
         }}
         onPressEnter={(e) => {
-          if (loading || e.altKey || e.shiftKey || isChineseInput.current) return;
+          if (loading || e.altKey || e.shiftKey || isChineseInput.current) {
+            return;
+          }
 
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const send = () => {
             // avoid inserting newline when sending message.
             // refs: https://github.com/lobehub/lobe-chat/pull/989
@@ -103,7 +102,9 @@ const InputArea = memo<InputAreaProps>(({ setExpand }) => {
 
           // when user like cmd + enter to send message
           if (useCmdEnterToSend) {
-            if (commandKey) send();
+            if (commandKey) {
+              send();
+            }
           } else {
             // cmd + enter to wrap
             if (commandKey) {

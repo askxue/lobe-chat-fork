@@ -29,7 +29,6 @@ export const generalSettingsSlice: StateCreator<
 > = (set, get) => ({
   importAppSettings: async (importAppSettings) => {
     const { setSettings } = get();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _, ...settings } = importAppSettings;
 
     await setSettings(settings);
@@ -43,7 +42,9 @@ export const generalSettingsSlice: StateCreator<
 
     const nextSettings = merge(prevSetting, settings);
 
-    if (isEqual(prevSetting, nextSettings)) return;
+    if (isEqual(prevSetting, nextSettings)) {
+      return;
+    }
 
     const diffs = difference(nextSettings, defaultSettings);
 
@@ -60,5 +61,5 @@ export const generalSettingsSlice: StateCreator<
   },
   updateDefaultAgent: async (defaultAgent) => {
     await get().setSettings({ defaultAgent });
-  },
+  }
 });
