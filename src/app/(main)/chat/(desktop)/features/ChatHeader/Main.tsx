@@ -6,21 +6,25 @@ import { Flexbox } from 'react-layout-kit';
 
 import { useOpenChatSettings } from '@/hooks/useInterceptingRoutes';
 import { useSessionStore } from '@/store/session';
-import { sessionMetaSelectors, sessionSelectors } from '@/store/session/selectors';
+import {
+  sessionMetaSelectors,
+  sessionSelectors
+} from '@/store/session/selectors';
 
 import Tags from './Tags';
 
 const Main = memo(() => {
   const { t } = useTranslation('chat');
 
-  const [init, isInbox, title, description, avatar, backgroundColor] = useSessionStore((s) => [
-    sessionSelectors.isSomeSessionActive(s),
-    sessionSelectors.isInboxSession(s),
-    sessionMetaSelectors.currentAgentTitle(s),
-    sessionMetaSelectors.currentAgentDescription(s),
-    sessionMetaSelectors.currentAgentAvatar(s),
-    sessionMetaSelectors.currentAgentBackgroundColor(s),
-  ]);
+  const [init, isInbox, title, description, avatar, backgroundColor] =
+    useSessionStore((s) => [
+      sessionSelectors.isSomeSessionActive(s),
+      sessionSelectors.isInboxSession(s),
+      sessionMetaSelectors.currentAgentTitle(s),
+      sessionMetaSelectors.currentAgentDescription(s),
+      sessionMetaSelectors.currentAgentAvatar(s),
+      sessionMetaSelectors.currentAgentBackgroundColor(s)
+    ]);
 
   const openChatSettings = useOpenChatSettings();
 

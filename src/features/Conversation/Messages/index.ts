@@ -17,7 +17,9 @@ export const renderMessages: Record<string, RenderMessage> = {
 };
 
 export const useAvatarsClick = (): OnAvatarsClick => {
-  const [isInbox] = useSessionStore((s) => [sessionSelectors.isInboxSession(s)]);
+  const [isInbox] = useSessionStore((s) => [
+    sessionSelectors.isInboxSession(s)
+  ]);
   const [toggleSystemRole] = useGlobalStore((s) => [s.toggleSystemRole]);
   const openChatSettings = useOpenChatSettings();
 

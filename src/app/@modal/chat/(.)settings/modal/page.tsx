@@ -11,25 +11,34 @@ const loading = () => <Skeleton />;
 
 const AgentMeta = dynamic(() => import('@/features/AgentSetting/AgentMeta'), {
   loading,
-  ssr: false,
+  ssr: false
 });
 const AgentChat = dynamic(() => import('@/features/AgentSetting/AgentChat'), {
   loading,
-  ssr: false,
+  ssr: false
 });
-const AgentPrompt = dynamic(() => import('@/features/AgentSetting/AgentPrompt'), {
-  loading,
-  ssr: false,
-});
-const AgentPlugin = dynamic(() => import('@/features/AgentSetting/AgentPlugin'), {
-  loading,
-  ssr: false,
-});
+const AgentPrompt = dynamic(
+  () => import('@/features/AgentSetting/AgentPrompt'),
+  {
+    loading,
+    ssr: false
+  }
+);
+const AgentPlugin = dynamic(
+  () => import('@/features/AgentSetting/AgentPlugin'),
+  {
+    loading,
+    ssr: false
+  }
+);
 const AgentModal = dynamic(() => import('@/features/AgentSetting/AgentModal'), {
   loading,
-  ssr: false,
+  ssr: false
 });
-const AgentTTS = dynamic(() => import('@/features/AgentSetting/AgentTTS'), { loading, ssr: false });
+const AgentTTS = dynamic(() => import('@/features/AgentSetting/AgentTTS'), {
+  loading,
+  ssr: false
+});
 
 /**
  * @description: Agent Settings Modal (intercepting route: /chat/settings/modal )

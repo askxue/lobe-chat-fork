@@ -17,7 +17,7 @@ import SettingModalLayout from '../../../_layout/SettingModalLayout';
 
 const CategoryContent = dynamic(() => import('./features/CategoryContent'), {
   loading: () => <Skeleton paragraph={{ rows: 6 }} title={false} />,
-  ssr: false,
+  ssr: false
 });
 
 const Layout = memo<PropsWithChildren>(({ children }) => {
@@ -29,7 +29,7 @@ const Layout = memo<PropsWithChildren>(({ children }) => {
 
   const [updateAgentMeta] = useSessionStore((s) => [
     s.updateSessionMeta,
-    sessionMetaSelectors.currentAgentTitle(s),
+    sessionMetaSelectors.currentAgentTitle(s)
   ]);
 
   return (

@@ -5,7 +5,6 @@ import { Wand2 } from 'lucide-react';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-
 export interface AutoGenerateInputProps extends InputProps {
   canAutoGenerate?: boolean;
   loading?: boolean;
@@ -30,7 +29,7 @@ const AutoGenerateInput = memo<AutoGenerateInputProps>(
               size="small"
               style={{
                 color: theme.colorInfo,
-              marginRight: -4,
+                marginRight: -4
               }}
               title={t('autoGenerate')}
             />
@@ -40,7 +39,7 @@ const AutoGenerateInput = memo<AutoGenerateInputProps>(
         {...props}
       />
     );
-  },
+  }
 );
 
 export default AutoGenerateInput;

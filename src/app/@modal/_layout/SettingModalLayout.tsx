@@ -14,45 +14,51 @@ interface SettingLayoutProps {
   title?: string;
 }
 
-const SettingModalLayout = memo<SettingLayoutProps>(({ children, category, desc, title }) => {
-  const ref = useRef<any>(null);
-  const theme = useTheme();
-  const { isDarkMode } = useThemeMode();
-  const { md = true } = useResponsive();
+const SettingModalLayout = memo<SettingLayoutProps>(
+  ({ children, category, desc, title }) => {
+    const ref = useRef<any>(null);
+    const theme = useTheme();
+    const { isDarkMode } = useThemeMode();
+    const { md = true } = useResponsive();
 
-  return (
-    <>
-      {md ? (
-        <SideBar
-          desc={desc}
+    return (
+      <>
+        {md ? (
+          <SideBar
+            desc={desc}
+            style={{
+              background: isDarkMode
+                ? theme.colorBgContainer
+                : theme.colorFillTertiary,
+              borderColor: theme.colorFillTertiary
+            }}
+            title={title}
+          >
+            {category}
+          </SideBar>
+        ) : (
+          <Header getContainer={() => ref.current}>{category}</Header>
+        )}
+        <Flexbox
+          align={'center'}
+          gap={64}
           style={{
-            background: isDarkMode ? theme.colorBgContainer : theme.colorFillTertiary,
-            borderColor: theme.colorFillTertiary,
+            background: isDarkMode
+              ? theme.colorFillQuaternary
+              : theme.colorBgElevated,
+            overflowX: 'hidden',
+            overflowY: 'auto',
+            paddingBlock: 40,
+            paddingInline: 56
           }}
-          title={title}
+          width={'100%'}
         >
-          {category}
-        </SideBar>
-      ) : (
-        <Header getContainer={() => ref.current}>{category}</Header>
-      )}
-      <Flexbox
-        align={'center'}
-        gap={64}
-        style={{
-          background: isDarkMode ? theme.colorFillQuaternary : theme.colorBgElevated,
-          overflowX: 'hidden',
-          overflowY: 'auto',
-          paddingBlock: 40,
-          paddingInline: 56,
-        }}
-        width={'100%'}
-      >
-        {children}
-      </Flexbox>
-    </>
-  );
-});
+          {children}
+        </Flexbox>
+      </>
+    );
+  }
+);
 
 SettingModalLayout.displayName = 'SettingModalLayout';
 

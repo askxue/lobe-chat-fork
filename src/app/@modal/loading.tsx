@@ -1,5 +1,3 @@
 import { Skeleton } from 'antd';
 
-export default () => {
-  return <Skeleton paragraph={{ rows: 6 }} style={{ padding: 56 }} />;
-};
+export default () => <Skeleton paragraph={{ rows: 6 }} style={{ padding: 56 }} />;

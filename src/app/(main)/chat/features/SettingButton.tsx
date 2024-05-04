@@ -3,7 +3,10 @@ import { AlignJustify } from 'lucide-react';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { DESKTOP_HEADER_ICON_SIZE, MOBILE_HEADER_ICON_SIZE } from '@/const/layoutTokens';
+import {
+  DESKTOP_HEADER_ICON_SIZE,
+  MOBILE_HEADER_ICON_SIZE
+} from '@/const/layoutTokens';
 import { useOpenChatSettings } from '@/hooks/useInterceptingRoutes';
 
 const SettingButton = memo<{ mobile?: boolean }>(({ mobile }) => {

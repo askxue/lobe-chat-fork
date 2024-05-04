@@ -8,7 +8,7 @@ import {
   LifeBuoy,
   Mail,
   Maximize,
-  Settings2,
+  Settings2
 } from 'lucide-react';
 import Link from 'next/link';
 import { PropsWithChildren, useCallback } from 'react';
@@ -34,15 +34,21 @@ export const useMenu = () => {
 
   const NewVersionBadge = useCallback(
     ({ children, showBadge }: PropsWithChildren & { showBadge?: boolean }) => {
-      if (!showBadge) return children;
+      if (!showBadge) {return children;}
       return (
-        <Flexbox align={'center'} distribution={'space-between'} gap={8} horizontal width={'100%'}>
+        <Flexbox
+          align={'center'}
+          distribution={'space-between'}
+          gap={8}
+          horizontal
+          width={'100%'}
+        >
           <span>{children}</span>
           <Badge count={t('upgradeVersion.hasNew')} />
         </Flexbox>
       );
     },
-    [t],
+    [t]
   );
 
   const settings: MenuProps['items'] = [
@@ -52,61 +58,65 @@ export const useMenu = () => {
       label: (
         <Flexbox align={'center'} horizontal>
           <Flexbox flex={1} horizontal onClick={openSettings}>
-            <NewVersionBadge showBadge={hasNewVersion}>{t('userPanel.setting')}</NewVersionBadge>
+            <NewVersionBadge showBadge={hasNewVersion}>
+              {t('userPanel.setting')}
+            </NewVersionBadge>
           </Flexbox>
           <ActionIcon
             icon={Maximize}
-            onClick={() => router.push(urlJoin('/settings', SettingsTabs.Common))}
+            onClick={() =>
+              router.push(urlJoin('/settings', SettingsTabs.Common))
+            }
             size={'small'}
             title={t('fullscreen')}
           />
         </Flexbox>
-      ),
+      )
     },
     {
-      type: 'divider',
-    },
+      type: 'divider'
+    }
   ];
 
   const exports: MenuProps['items'] = [
     {
       icon: <Icon icon={HardDriveUpload} />,
       key: 'import',
-      label: <DataImporter>{t('import')}</DataImporter>,
+      label: <DataImporter>{t('import')}</DataImporter>
     },
     {
       children: [
         {
           key: 'allAgent',
           label: t('exportType.allAgent'),
-          onClick: configService.exportAgents,
+          onClick: configService.exportAgents
         },
         {
           key: 'allAgentWithMessage',
           label: t('exportType.allAgentWithMessage'),
-          onClick: configService.exportSessions,
+          onClick: configService.exportSessions
         },
         {
           key: 'globalSetting',
           label: t('exportType.globalSetting'),
-          onClick: configService.exportSettings,
+          onClick: configService.exportSettings
         },
         {
-          type: 'divider',
+          type: 'divider'
         },
         {
           key: 'all',
           label: t('exportType.all'),
-          onClick: configService.exportAll,
-        },
+          onClick: configService.exportAll
+        }
       ],
       icon: <Icon icon={HardDriveDownload} />,
       key: 'export',
-      label: t('export'),
+      label: t('export')
     },
     {
-      type: 'divider',
-    },
+      type: 'divider'
+    }
   ];
 
   const helps: MenuProps['items'] = [
@@ -117,7 +127,7 @@ export const useMenu = () => {
         <Link href={DISCORD} target={'_blank'}>
           {t('userPanel.discord')}
         </Link>
-      ),
+      )
     },
     {
       children: [
@@ -128,7 +138,7 @@ export const useMenu = () => {
             <Link href={DOCUMENTS} target={'_blank'}>
               {t('userPanel.docs')}
             </Link>
-          ),
+          )
         },
         {
           icon: <Icon icon={Feather} />,
@@ -137,7 +147,7 @@ export const useMenu = () => {
             <Link href={GITHUB_ISSUES} target={'_blank'}>
               {t('userPanel.feedback')}
             </Link>
-          ),
+          )
         },
         {
           icon: <Icon icon={Mail} />,
@@ -146,28 +156,28 @@ export const useMenu = () => {
             <Link href={`mailto:${EMAIL_SUPPORT}`} target={'_blank'}>
               {t('userPanel.email')}
             </Link>
-          ),
-        },
+          )
+        }
       ],
       icon: <Icon icon={LifeBuoy} />,
       key: 'help',
-      label: t('userPanel.help'),
-    },
+      label: t('userPanel.help')
+    }
   ];
 
   const mainItems = [
     {
-      type: 'divider',
+      type: 'divider'
     },
     ...settings,
     ...exports,
     ...helps,
     {
-      type: 'divider',
-    },
+      type: 'divider'
+    }
   ].filter(Boolean) as MenuProps['items'];
 
   return {
-    mainItems,
+    mainItems
   };
 };

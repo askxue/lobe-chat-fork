@@ -16,7 +16,7 @@ export enum ChatSettingsTabs {
   Modal = 'modal',
   Plugin = 'plugin',
   Prompt = 'prompt',
-  TTS = 'tts',
+  TTS = 'tts'
 }
 
 export enum SettingsTabs {

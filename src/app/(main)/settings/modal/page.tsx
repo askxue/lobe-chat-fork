@@ -18,7 +18,9 @@ const SettingsModalFallback = () => {
   const router = useQueryRoute();
 
   useLayoutEffect(() => {
-    router.replace(urlJoin('/settings', tab as SettingsTabs), { query: { tab: '' } });
+    router.replace(urlJoin('/settings', tab as SettingsTabs), {
+      query: { tab: '' }
+    });
   }, []);
 
   return null;

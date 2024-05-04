@@ -5,7 +5,11 @@ import { describe, expect, it, vi } from 'vitest';
 import { INBOX_SESSION_ID } from '@/const/session';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { useGlobalStore } from '@/store/global';
-import { ChatSettingsTabs, SettingsTabs, SidebarTabKey } from '@/store/global/initialState';
+import {
+  ChatSettingsTabs,
+  SettingsTabs,
+  SidebarTabKey
+} from '@/store/global/initialState';
 import { useSessionStore } from '@/store/session';
 
 import { useOpenChatSettings, useOpenSettings } from './useInterceptingRoutes';
@@ -14,22 +18,22 @@ import { useOpenChatSettings, useOpenSettings } from './useInterceptingRoutes';
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(() => ({
     push: vi.fn((href) => href),
-    replace: vi.fn((href) => href),
-  })),
+    replace: vi.fn((href) => href)
+  }))
 }));
 vi.mock('@/hooks/useQuery', () => ({
-  useQuery: vi.fn(() => ({})),
+  useQuery: vi.fn(() => ({}))
 }));
 vi.mock('@/hooks/useIsMobile', () => ({
-  useIsMobile: vi.fn(),
+  useIsMobile: vi.fn()
 }));
 vi.mock('@/store/session', () => ({
-  useSessionStore: vi.fn(),
+  useSessionStore: vi.fn()
 }));
 vi.mock('@/store/global', () => ({
   useGlobalStore: {
-    setState: vi.fn(),
-  },
+    setState: vi.fn()
+  }
 }));
 
 describe('useOpenSettings', () => {
@@ -57,14 +61,18 @@ describe('useOpenChatSettings', () => {
   it('should handle mobile route for chat settings', () => {
     vi.mocked(useSessionStore).mockReturnValue('123');
     vi.mocked(useIsMobile).mockReturnValue(true);
-    const { result } = renderHook(() => useOpenChatSettings(ChatSettingsTabs.Meta));
+    const { result } = renderHook(() =>
+      useOpenChatSettings(ChatSettingsTabs.Meta)
+    );
     expect(result.current()).toBe('/chat/settings');
   });
 
   it('should handle desktop route for chat settings with session and tab', () => {
     vi.mocked(useSessionStore).mockReturnValue('456');
     vi.mocked(useIsMobile).mockReturnValue(false);
-    const { result } = renderHook(() => useOpenChatSettings(ChatSettingsTabs.Meta));
+    const { result } = renderHook(() =>
+      useOpenChatSettings(ChatSettingsTabs.Meta)
+    );
     expect(result.current()).toBe('/chat/settings/modal?session=456&tab=meta');
   });
 });

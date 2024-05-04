@@ -8,14 +8,19 @@ import SettingModalLayout from '../../_layout/SettingModalLayout';
 
 const CategoryContent = dynamic(
   () => import('@/app/(main)/settings/@category/features/CategoryContent'),
-  { loading: () => <Skeleton paragraph={{ rows: 6 }} title={false} />, ssr: false },
+  {
+    loading: () => <Skeleton paragraph={{ rows: 6 }} title={false} />,
+    ssr: false
+  }
 );
-const UpgradeAlert = dynamic(() => import('@/app/(main)/settings/features/UpgradeAlert'), {
-  ssr: false,
-});
+const UpgradeAlert = dynamic(
+  () => import('@/app/(main)/settings/features/UpgradeAlert'),
+  {
+    ssr: false
+  }
+);
 
-const Layout = memo<PropsWithChildren>(({ children }) => {
-  return (
+const Layout = memo<PropsWithChildren>(({ children }) => (
     <SettingModalLayout
       category={
         <>
@@ -26,7 +31,6 @@ const Layout = memo<PropsWithChildren>(({ children }) => {
     >
       {children}
     </SettingModalLayout>
-  );
-});
+  ));
 
 export default Layout;

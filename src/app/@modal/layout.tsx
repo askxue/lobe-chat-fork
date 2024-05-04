@@ -17,7 +17,12 @@ const SessionSettingsModal = memo<PropsWithChildren>(({ children }) => {
       onCancel={() => setOpen(false)}
       open={open}
       styles={{
-        body: { display: 'flex', minHeight: 'min(75vh, 750px)', overflow: 'hidden', padding: 0 },
+        body: {
+          display: 'flex',
+          minHeight: 'min(75vh, 750px)',
+          overflow: 'hidden',
+          padding: 0
+        }
       }}
       title={false}
       width={1024}
